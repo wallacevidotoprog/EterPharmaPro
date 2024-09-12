@@ -1,14 +1,17 @@
+using EterPharmaPro.Enums;
+using EterPharmaPro.Models.DbModels;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 namespace EterPharmaPro.Interfaces
 {
 	public interface IEterDbEndereco
 	{
-		//Task<long?> CreateEndereco(EnderecoCliente model);
+		Task<long?> CreateEndereco(EnderecoClienteModel  model);
 
-		//Task<bool> UpdateEndereco(EnderecoCliente model);
+		Task<bool> UpdateEndereco(EnderecoClienteModel model);
 
-		//Task<bool> DeleteEndereco(string id);
+		Task<bool> DeleteEndereco(string id);
 
-		//Task<object> GetEndereco(string queryID = null, bool id = false);
+		Task<List<EnderecoClienteModel>> GetEndereco(string queryID = null, QueryClienteEnum queryCliente = QueryClienteEnum.NONE);
 	}
 }

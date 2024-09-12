@@ -1,4 +1,4 @@
-using EterPharmaPro.Enuns;
+using EterPharmaPro.Enums;
 using EterPharmaPro.Interfaces;
 using EterPharmaPro.Models.DbModels;
 using EterPharmaPro.Utils.Extencions;

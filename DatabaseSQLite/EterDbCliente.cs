@@ -1,3 +1,4 @@
+using EterPharmaPro.Enums;
 using EterPharmaPro.Interfaces;
 using EterPharmaPro.Models.DbModels;
 using EterPharmaPro.Utils.Extencions;
@@ -131,7 +132,18 @@ namespace EterPharmaPro.DatabaseSQLite
 			}
 			return false;
 		}
-
+		public async Task<List<ClienteModel>> GetCliente(string query = null, TypeDoc typeDoc = TypeDoc.NONE)
+		{
+			try
+			{
+				return await new MapDbEter(_databaseConnection).QueryAsync<ClienteModel>($"SELECT * FROM CLIENTES {(typeDoc == TypeDoc.ID ? " WHERE ID = " + query : typeDoc == TypeDoc.CPF ? " WHERE CPF = " + query : typeDoc == TypeDoc.RG ? " WHERE RG = " + query : string.Empty)}");
+			}
+			catch (Exception ex)
+			{
+				ex.ErrorGet();
+			}
+			return null;
+		}
 		//public async Task<List<ClienteModel>> GetCliente(string queryID = null, TypeDoc typeDoc = TypeDoc.NONE)
 		//{
 		//	if (queryID != null && typeDoc == TypeDoc.NONE)

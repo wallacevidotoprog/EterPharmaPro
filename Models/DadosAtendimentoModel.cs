@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace EterPharmaPro.Models.DbModels
+namespace EterPharmaPro.Models
 {
 	public class DadosAtendimentoModel
 	{

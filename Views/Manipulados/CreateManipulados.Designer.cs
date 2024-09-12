@@ -29,14 +29,25 @@
 		private void InitializeComponent()
 		{
 			this.toolStrip_topMenu = new System.Windows.Forms.ToolStrip();
+			this.toolStripButton_exit = new System.Windows.Forms.ToolStripButton();
+			this.toolStripDropDownButton_print = new System.Windows.Forms.ToolStripButton();
+			this.toolStripButton_clear = new System.Windows.Forms.ToolStripButton();
 			this.panel_center = new System.Windows.Forms.Panel();
-			this.groupBox2 = new System.Windows.Forms.GroupBox();
-			this.comboBox_user = new System.Windows.Forms.ComboBox();
-			this.textBox_atn = new System.Windows.Forms.TextBox();
-			this.label3 = new System.Windows.Forms.Label();
-			this.label2 = new System.Windows.Forms.Label();
-			this.label1 = new System.Windows.Forms.Label();
-			this.dateTimePicker_data = new System.Windows.Forms.DateTimePicker();
+			this.groupBox7 = new System.Windows.Forms.GroupBox();
+			this.groupBox8 = new System.Windows.Forms.GroupBox();
+			this.textBox_valorT = new System.Windows.Forms.TextBox();
+			this.comboBox_modo = new System.Windows.Forms.ComboBox();
+			this.label13 = new System.Windows.Forms.Label();
+			this.comboBox_pag = new System.Windows.Forms.ComboBox();
+			this.label12 = new System.Windows.Forms.Label();
+			this.comboBox_situacao = new System.Windows.Forms.ComboBox();
+			this.label11 = new System.Windows.Forms.Label();
+			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.groupBox6 = new System.Windows.Forms.GroupBox();
+			this.textBox_obsGeral = new System.Windows.Forms.TextBox();
+			this.groupBox5 = new System.Windows.Forms.GroupBox();
+			this.dataGridView_medicamentos = new System.Windows.Forms.DataGridView();
+			this.DADOS = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
 			this.groupBox4 = new System.Windows.Forms.GroupBox();
 			this.textBox_obsEnd = new System.Windows.Forms.TextBox();
@@ -51,37 +62,26 @@
 			this.label14 = new System.Windows.Forms.Label();
 			this.textBox_cpf = new System.Windows.Forms.TextBox();
 			this.label6 = new System.Windows.Forms.Label();
+			this.groupBox2 = new System.Windows.Forms.GroupBox();
+			this.comboBox_user = new System.Windows.Forms.ComboBox();
+			this.textBox_atn = new System.Windows.Forms.TextBox();
+			this.label3 = new System.Windows.Forms.Label();
+			this.label2 = new System.Windows.Forms.Label();
+			this.label1 = new System.Windows.Forms.Label();
+			this.dateTimePicker_data = new System.Windows.Forms.DateTimePicker();
 			this.ePictureBox_search = new EterPharmaPro.Utils.eControl.ePictureBox();
-			this.toolStripButton_exit = new System.Windows.Forms.ToolStripButton();
-			this.toolStripDropDownButton_print = new System.Windows.Forms.ToolStripButton();
-			this.toolStripButton_clear = new System.Windows.Forms.ToolStripButton();
-			this.groupBox1 = new System.Windows.Forms.GroupBox();
-			this.groupBox6 = new System.Windows.Forms.GroupBox();
-			this.textBox_obsGeral = new System.Windows.Forms.TextBox();
-			this.groupBox5 = new System.Windows.Forms.GroupBox();
-			this.dataGridView_medicamentos = new System.Windows.Forms.DataGridView();
-			this.DADOS = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.groupBox7 = new System.Windows.Forms.GroupBox();
-			this.groupBox8 = new System.Windows.Forms.GroupBox();
-			this.textBox_valorT = new System.Windows.Forms.TextBox();
-			this.comboBox_modo = new System.Windows.Forms.ComboBox();
-			this.label13 = new System.Windows.Forms.Label();
-			this.comboBox_pag = new System.Windows.Forms.ComboBox();
-			this.label12 = new System.Windows.Forms.Label();
-			this.comboBox_situacao = new System.Windows.Forms.ComboBox();
-			this.label11 = new System.Windows.Forms.Label();
 			this.toolStrip_topMenu.SuspendLayout();
 			this.panel_center.SuspendLayout();
-			this.groupBox2.SuspendLayout();
-			this.groupBox3.SuspendLayout();
-			this.groupBox4.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.ePictureBox_search)).BeginInit();
+			this.groupBox7.SuspendLayout();
+			this.groupBox8.SuspendLayout();
 			this.groupBox1.SuspendLayout();
 			this.groupBox6.SuspendLayout();
 			this.groupBox5.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView_medicamentos)).BeginInit();
-			this.groupBox7.SuspendLayout();
-			this.groupBox8.SuspendLayout();
+			this.groupBox3.SuspendLayout();
+			this.groupBox4.SuspendLayout();
+			this.groupBox2.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.ePictureBox_search)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// toolStrip_topMenu
@@ -97,269 +97,6 @@
 			this.toolStrip_topMenu.Size = new System.Drawing.Size(1100, 93);
 			this.toolStrip_topMenu.TabIndex = 4;
 			this.toolStrip_topMenu.Text = "toolStrip1";
-			// 
-			// panel_center
-			// 
-			this.panel_center.AutoScroll = true;
-			this.panel_center.BackColor = System.Drawing.Color.WhiteSmoke;
-			this.panel_center.Controls.Add(this.groupBox7);
-			this.panel_center.Controls.Add(this.groupBox1);
-			this.panel_center.Controls.Add(this.groupBox3);
-			this.panel_center.Controls.Add(this.groupBox2);
-			this.panel_center.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panel_center.Location = new System.Drawing.Point(0, 93);
-			this.panel_center.Name = "panel_center";
-			this.panel_center.Size = new System.Drawing.Size(1100, 473);
-			this.panel_center.TabIndex = 5;
-			// 
-			// groupBox2
-			// 
-			this.groupBox2.Controls.Add(this.comboBox_user);
-			this.groupBox2.Controls.Add(this.textBox_atn);
-			this.groupBox2.Controls.Add(this.label3);
-			this.groupBox2.Controls.Add(this.label2);
-			this.groupBox2.Controls.Add(this.label1);
-			this.groupBox2.Controls.Add(this.dateTimePicker_data);
-			this.groupBox2.Dock = System.Windows.Forms.DockStyle.Top;
-			this.groupBox2.Location = new System.Drawing.Point(0, 0);
-			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(1083, 100);
-			this.groupBox2.TabIndex = 1;
-			this.groupBox2.TabStop = false;
-			// 
-			// comboBox_user
-			// 
-			this.comboBox_user.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Append;
-			this.comboBox_user.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-			this.comboBox_user.Font = new System.Drawing.Font("Microsoft Tai Le", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.comboBox_user.FormattingEnabled = true;
-			this.comboBox_user.Location = new System.Drawing.Point(8, 44);
-			this.comboBox_user.Name = "comboBox_user";
-			this.comboBox_user.Size = new System.Drawing.Size(257, 33);
-			this.comboBox_user.TabIndex = 0;
-			this.comboBox_user.Text = " ";
-			// 
-			// textBox_atn
-			// 
-			this.textBox_atn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.textBox_atn.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-			this.textBox_atn.Font = new System.Drawing.Font("Microsoft Tai Le", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.textBox_atn.Location = new System.Drawing.Point(759, 44);
-			this.textBox_atn.Name = "textBox_atn";
-			this.textBox_atn.Size = new System.Drawing.Size(318, 33);
-			this.textBox_atn.TabIndex = 2;
-			// 
-			// label3
-			// 
-			this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.label3.AutoSize = true;
-			this.label3.Font = new System.Drawing.Font("Microsoft Tai Le", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label3.Location = new System.Drawing.Point(759, 16);
-			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(298, 25);
-			this.label3.TabIndex = 4;
-			this.label3.Text = "ATENDENTE DA MANIPULAÇÃO:";
-			// 
-			// label2
-			// 
-			this.label2.AutoSize = true;
-			this.label2.Font = new System.Drawing.Font("Microsoft Tai Le", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label2.Location = new System.Drawing.Point(6, 16);
-			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(143, 25);
-			this.label2.TabIndex = 3;
-			this.label2.Text = "VENDEDOR(A):";
-			// 
-			// label1
-			// 
-			this.label1.AutoSize = true;
-			this.label1.Font = new System.Drawing.Font("Microsoft Tai Le", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label1.Location = new System.Drawing.Point(266, 16);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(66, 25);
-			this.label1.TabIndex = 1;
-			this.label1.Text = "DATA:";
-			// 
-			// dateTimePicker_data
-			// 
-			this.dateTimePicker_data.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.dateTimePicker_data.Font = new System.Drawing.Font("Microsoft Tai Le", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.dateTimePicker_data.Location = new System.Drawing.Point(271, 44);
-			this.dateTimePicker_data.Name = "dateTimePicker_data";
-			this.dateTimePicker_data.Size = new System.Drawing.Size(482, 33);
-			this.dateTimePicker_data.TabIndex = 1;
-			// 
-			// groupBox3
-			// 
-			this.groupBox3.Controls.Add(this.ePictureBox_search);
-			this.groupBox3.Controls.Add(this.groupBox4);
-			this.groupBox3.Controls.Add(this.textBox5_tel);
-			this.groupBox3.Controls.Add(this.textBox_nomeC);
-			this.groupBox3.Controls.Add(this.label7);
-			this.groupBox3.Controls.Add(this.label4);
-			this.groupBox3.Controls.Add(this.textBox_rg);
-			this.groupBox3.Controls.Add(this.label14);
-			this.groupBox3.Controls.Add(this.textBox_cpf);
-			this.groupBox3.Controls.Add(this.label6);
-			this.groupBox3.Dock = System.Windows.Forms.DockStyle.Top;
-			this.groupBox3.Location = new System.Drawing.Point(0, 100);
-			this.groupBox3.Name = "groupBox3";
-			this.groupBox3.Size = new System.Drawing.Size(1083, 243);
-			this.groupBox3.TabIndex = 2;
-			this.groupBox3.TabStop = false;
-			this.groupBox3.Text = "DADOS DO CLIENTE";
-			// 
-			// groupBox4
-			// 
-			this.groupBox4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.groupBox4.Controls.Add(this.textBox_obsEnd);
-			this.groupBox4.Controls.Add(this.label10);
-			this.groupBox4.Controls.Add(this.textBox_log);
-			this.groupBox4.Controls.Add(this.label5);
-			this.groupBox4.Location = new System.Drawing.Point(6, 83);
-			this.groupBox4.Name = "groupBox4";
-			this.groupBox4.Size = new System.Drawing.Size(1071, 153);
-			this.groupBox4.TabIndex = 14;
-			this.groupBox4.TabStop = false;
-			this.groupBox4.Text = "ENDEREÇO DO CLIENTE";
-			// 
-			// textBox_obsEnd
-			// 
-			this.textBox_obsEnd.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.textBox_obsEnd.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-			this.textBox_obsEnd.Font = new System.Drawing.Font("Microsoft Tai Le", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.textBox_obsEnd.Location = new System.Drawing.Point(6, 108);
-			this.textBox_obsEnd.Name = "textBox_obsEnd";
-			this.textBox_obsEnd.Size = new System.Drawing.Size(1059, 33);
-			this.textBox_obsEnd.TabIndex = 1;
-			// 
-			// label10
-			// 
-			this.label10.AutoSize = true;
-			this.label10.Font = new System.Drawing.Font("Microsoft Tai Le", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label10.Location = new System.Drawing.Point(6, 80);
-			this.label10.Name = "label10";
-			this.label10.Size = new System.Drawing.Size(140, 25);
-			this.label10.TabIndex = 15;
-			this.label10.Text = "OBSERVAÇÃO:";
-			// 
-			// textBox_log
-			// 
-			this.textBox_log.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.textBox_log.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-			this.textBox_log.Font = new System.Drawing.Font("Microsoft Tai Le", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.textBox_log.Location = new System.Drawing.Point(6, 44);
-			this.textBox_log.Name = "textBox_log";
-			this.textBox_log.Size = new System.Drawing.Size(1059, 33);
-			this.textBox_log.TabIndex = 0;
-			// 
-			// label5
-			// 
-			this.label5.AutoSize = true;
-			this.label5.Font = new System.Drawing.Font("Microsoft Tai Le", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label5.Location = new System.Drawing.Point(6, 16);
-			this.label5.Name = "label5";
-			this.label5.Size = new System.Drawing.Size(114, 25);
-			this.label5.TabIndex = 8;
-			this.label5.Text = "ENDEREÇO:";
-			// 
-			// textBox5_tel
-			// 
-			this.textBox5_tel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.textBox5_tel.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-			this.textBox5_tel.Font = new System.Drawing.Font("Microsoft Tai Le", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.textBox5_tel.Location = new System.Drawing.Point(750, 44);
-			this.textBox5_tel.Name = "textBox5_tel";
-			this.textBox5_tel.Size = new System.Drawing.Size(327, 33);
-			this.textBox5_tel.TabIndex = 3;
-			// 
-			// textBox_nomeC
-			// 
-			this.textBox_nomeC.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.textBox_nomeC.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-			this.textBox_nomeC.Font = new System.Drawing.Font("Microsoft Tai Le", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.textBox_nomeC.Location = new System.Drawing.Point(424, 44);
-			this.textBox_nomeC.Name = "textBox_nomeC";
-			this.textBox_nomeC.Size = new System.Drawing.Size(320, 33);
-			this.textBox_nomeC.TabIndex = 2;
-			// 
-			// label7
-			// 
-			this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.label7.AutoSize = true;
-			this.label7.Font = new System.Drawing.Font("Microsoft Tai Le", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label7.Location = new System.Drawing.Point(759, 16);
-			this.label7.Name = "label7";
-			this.label7.Size = new System.Drawing.Size(105, 25);
-			this.label7.TabIndex = 12;
-			this.label7.Text = "TELEFONE:";
-			// 
-			// label4
-			// 
-			this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.label4.AutoSize = true;
-			this.label4.Font = new System.Drawing.Font("Microsoft Tai Le", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label4.Location = new System.Drawing.Point(419, 16);
-			this.label4.Name = "label4";
-			this.label4.Size = new System.Drawing.Size(74, 25);
-			this.label4.TabIndex = 6;
-			this.label4.Text = "NOME:";
-			// 
-			// textBox_rg
-			// 
-			this.textBox_rg.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-			this.textBox_rg.Font = new System.Drawing.Font("Microsoft Tai Le", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.textBox_rg.Location = new System.Drawing.Point(196, 44);
-			this.textBox_rg.Name = "textBox_rg";
-			this.textBox_rg.Size = new System.Drawing.Size(184, 33);
-			this.textBox_rg.TabIndex = 1;
-			// 
-			// label14
-			// 
-			this.label14.AutoSize = true;
-			this.label14.Font = new System.Drawing.Font("Microsoft Tai Le", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label14.Location = new System.Drawing.Point(196, 16);
-			this.label14.Name = "label14";
-			this.label14.Size = new System.Drawing.Size(42, 25);
-			this.label14.TabIndex = 10;
-			this.label14.Text = "RG:";
-			// 
-			// textBox_cpf
-			// 
-			this.textBox_cpf.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-			this.textBox_cpf.Font = new System.Drawing.Font("Microsoft Tai Le", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.textBox_cpf.Location = new System.Drawing.Point(6, 44);
-			this.textBox_cpf.Name = "textBox_cpf";
-			this.textBox_cpf.Size = new System.Drawing.Size(184, 33);
-			this.textBox_cpf.TabIndex = 0;
-			// 
-			// label6
-			// 
-			this.label6.AutoSize = true;
-			this.label6.Font = new System.Drawing.Font("Microsoft Tai Le", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label6.Location = new System.Drawing.Point(6, 16);
-			this.label6.Name = "label6";
-			this.label6.Size = new System.Drawing.Size(49, 25);
-			this.label6.TabIndex = 10;
-			this.label6.Text = "CPF:";
-			// 
-			// ePictureBox_search
-			// 
-			this.ePictureBox_search.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.ePictureBox_search.Image = global::EterPharmaPro.Properties.Resources.lupa;
-			this.ePictureBox_search.Location = new System.Drawing.Point(386, 44);
-			this.ePictureBox_search.Name = "ePictureBox_search";
-			this.ePictureBox_search.Size = new System.Drawing.Size(32, 33);
-			this.ePictureBox_search.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-			this.ePictureBox_search.TabIndex = 15;
-			this.ePictureBox_search.TabStop = false;
-			this.ePictureBox_search.ToolTipText = "Buscar Cliente";
 			// 
 			// toolStripButton_exit
 			// 
@@ -412,70 +149,19 @@
 			this.toolStripButton_clear.ToolTipText = "IMPRESSOS";
 			this.toolStripButton_clear.Click += new System.EventHandler(this.CleanAll);
 			// 
-			// groupBox1
+			// panel_center
 			// 
-			this.groupBox1.Controls.Add(this.groupBox6);
-			this.groupBox1.Controls.Add(this.groupBox5);
-			this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
-			this.groupBox1.Location = new System.Drawing.Point(0, 343);
-			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(1083, 176);
-			this.groupBox1.TabIndex = 3;
-			this.groupBox1.TabStop = false;
-			// 
-			// groupBox6
-			// 
-			this.groupBox6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.groupBox6.Controls.Add(this.textBox_obsGeral);
-			this.groupBox6.Location = new System.Drawing.Point(517, 19);
-			this.groupBox6.Name = "groupBox6";
-			this.groupBox6.Size = new System.Drawing.Size(554, 152);
-			this.groupBox6.TabIndex = 5;
-			this.groupBox6.TabStop = false;
-			this.groupBox6.Text = "OBSERVAÇÕES GERAIS";
-			// 
-			// textBox_obsGeral
-			// 
-			this.textBox_obsGeral.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.textBox_obsGeral.Font = new System.Drawing.Font("Microsoft Tai Le", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.textBox_obsGeral.Location = new System.Drawing.Point(3, 16);
-			this.textBox_obsGeral.Multiline = true;
-			this.textBox_obsGeral.Name = "textBox_obsGeral";
-			this.textBox_obsGeral.Size = new System.Drawing.Size(548, 133);
-			this.textBox_obsGeral.TabIndex = 0;
-			// 
-			// groupBox5
-			// 
-			this.groupBox5.Controls.Add(this.dataGridView_medicamentos);
-			this.groupBox5.Location = new System.Drawing.Point(12, 19);
-			this.groupBox5.Name = "groupBox5";
-			this.groupBox5.Size = new System.Drawing.Size(499, 152);
-			this.groupBox5.TabIndex = 4;
-			this.groupBox5.TabStop = false;
-			this.groupBox5.Text = "MANIPULADO";
-			// 
-			// dataGridView_medicamentos
-			// 
-			this.dataGridView_medicamentos.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-			this.dataGridView_medicamentos.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
-			this.dataGridView_medicamentos.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.dataGridView_medicamentos.ColumnHeadersVisible = false;
-			this.dataGridView_medicamentos.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.DADOS});
-			this.dataGridView_medicamentos.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.dataGridView_medicamentos.Location = new System.Drawing.Point(3, 16);
-			this.dataGridView_medicamentos.MultiSelect = false;
-			this.dataGridView_medicamentos.Name = "dataGridView_medicamentos";
-			this.dataGridView_medicamentos.RowHeadersVisible = false;
-			this.dataGridView_medicamentos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-			this.dataGridView_medicamentos.Size = new System.Drawing.Size(493, 133);
-			this.dataGridView_medicamentos.TabIndex = 0;
-			// 
-			// DADOS
-			// 
-			this.DADOS.HeaderText = "Column1";
-			this.DADOS.Name = "DADOS";
+			this.panel_center.AutoScroll = true;
+			this.panel_center.BackColor = System.Drawing.Color.WhiteSmoke;
+			this.panel_center.Controls.Add(this.groupBox7);
+			this.panel_center.Controls.Add(this.groupBox1);
+			this.panel_center.Controls.Add(this.groupBox3);
+			this.panel_center.Controls.Add(this.groupBox2);
+			this.panel_center.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panel_center.Location = new System.Drawing.Point(0, 93);
+			this.panel_center.Name = "panel_center";
+			this.panel_center.Size = new System.Drawing.Size(1100, 473);
+			this.panel_center.TabIndex = 5;
 			// 
 			// groupBox7
 			// 
@@ -600,6 +286,325 @@
 			this.label11.TabIndex = 5;
 			this.label11.Text = "SITUAÇÃO:";
 			// 
+			// groupBox1
+			// 
+			this.groupBox1.Controls.Add(this.groupBox6);
+			this.groupBox1.Controls.Add(this.groupBox5);
+			this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
+			this.groupBox1.Location = new System.Drawing.Point(0, 343);
+			this.groupBox1.Name = "groupBox1";
+			this.groupBox1.Size = new System.Drawing.Size(1083, 176);
+			this.groupBox1.TabIndex = 3;
+			this.groupBox1.TabStop = false;
+			// 
+			// groupBox6
+			// 
+			this.groupBox6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.groupBox6.Controls.Add(this.textBox_obsGeral);
+			this.groupBox6.Location = new System.Drawing.Point(517, 19);
+			this.groupBox6.Name = "groupBox6";
+			this.groupBox6.Size = new System.Drawing.Size(554, 152);
+			this.groupBox6.TabIndex = 5;
+			this.groupBox6.TabStop = false;
+			this.groupBox6.Text = "OBSERVAÇÕES GERAIS";
+			// 
+			// textBox_obsGeral
+			// 
+			this.textBox_obsGeral.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.textBox_obsGeral.Font = new System.Drawing.Font("Microsoft Tai Le", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.textBox_obsGeral.Location = new System.Drawing.Point(3, 16);
+			this.textBox_obsGeral.Multiline = true;
+			this.textBox_obsGeral.Name = "textBox_obsGeral";
+			this.textBox_obsGeral.Size = new System.Drawing.Size(548, 133);
+			this.textBox_obsGeral.TabIndex = 0;
+			// 
+			// groupBox5
+			// 
+			this.groupBox5.Controls.Add(this.dataGridView_medicamentos);
+			this.groupBox5.Location = new System.Drawing.Point(12, 19);
+			this.groupBox5.Name = "groupBox5";
+			this.groupBox5.Size = new System.Drawing.Size(499, 152);
+			this.groupBox5.TabIndex = 4;
+			this.groupBox5.TabStop = false;
+			this.groupBox5.Text = "MANIPULADO";
+			// 
+			// dataGridView_medicamentos
+			// 
+			this.dataGridView_medicamentos.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+			this.dataGridView_medicamentos.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
+			this.dataGridView_medicamentos.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.dataGridView_medicamentos.ColumnHeadersVisible = false;
+			this.dataGridView_medicamentos.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.DADOS});
+			this.dataGridView_medicamentos.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.dataGridView_medicamentos.Location = new System.Drawing.Point(3, 16);
+			this.dataGridView_medicamentos.MultiSelect = false;
+			this.dataGridView_medicamentos.Name = "dataGridView_medicamentos";
+			this.dataGridView_medicamentos.RowHeadersVisible = false;
+			this.dataGridView_medicamentos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
+			this.dataGridView_medicamentos.Size = new System.Drawing.Size(493, 133);
+			this.dataGridView_medicamentos.TabIndex = 0;
+			// 
+			// DADOS
+			// 
+			this.DADOS.HeaderText = "Column1";
+			this.DADOS.Name = "DADOS";
+			// 
+			// groupBox3
+			// 
+			this.groupBox3.Controls.Add(this.ePictureBox_search);
+			this.groupBox3.Controls.Add(this.groupBox4);
+			this.groupBox3.Controls.Add(this.textBox5_tel);
+			this.groupBox3.Controls.Add(this.textBox_nomeC);
+			this.groupBox3.Controls.Add(this.label7);
+			this.groupBox3.Controls.Add(this.label4);
+			this.groupBox3.Controls.Add(this.textBox_rg);
+			this.groupBox3.Controls.Add(this.label14);
+			this.groupBox3.Controls.Add(this.textBox_cpf);
+			this.groupBox3.Controls.Add(this.label6);
+			this.groupBox3.Dock = System.Windows.Forms.DockStyle.Top;
+			this.groupBox3.Location = new System.Drawing.Point(0, 100);
+			this.groupBox3.Name = "groupBox3";
+			this.groupBox3.Size = new System.Drawing.Size(1083, 243);
+			this.groupBox3.TabIndex = 2;
+			this.groupBox3.TabStop = false;
+			this.groupBox3.Text = "DADOS DO CLIENTE";
+			// 
+			// groupBox4
+			// 
+			this.groupBox4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.groupBox4.Controls.Add(this.textBox_obsEnd);
+			this.groupBox4.Controls.Add(this.label10);
+			this.groupBox4.Controls.Add(this.textBox_log);
+			this.groupBox4.Controls.Add(this.label5);
+			this.groupBox4.Location = new System.Drawing.Point(6, 83);
+			this.groupBox4.Name = "groupBox4";
+			this.groupBox4.Size = new System.Drawing.Size(1071, 153);
+			this.groupBox4.TabIndex = 14;
+			this.groupBox4.TabStop = false;
+			this.groupBox4.Text = "ENDEREÇO DO CLIENTE";
+			// 
+			// textBox_obsEnd
+			// 
+			this.textBox_obsEnd.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.textBox_obsEnd.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+			this.textBox_obsEnd.Font = new System.Drawing.Font("Microsoft Tai Le", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.textBox_obsEnd.Location = new System.Drawing.Point(6, 108);
+			this.textBox_obsEnd.Name = "textBox_obsEnd";
+			this.textBox_obsEnd.Size = new System.Drawing.Size(1059, 33);
+			this.textBox_obsEnd.TabIndex = 1;
+			// 
+			// label10
+			// 
+			this.label10.AutoSize = true;
+			this.label10.Font = new System.Drawing.Font("Microsoft Tai Le", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label10.Location = new System.Drawing.Point(6, 80);
+			this.label10.Name = "label10";
+			this.label10.Size = new System.Drawing.Size(140, 25);
+			this.label10.TabIndex = 15;
+			this.label10.Text = "OBSERVAÇÃO:";
+			// 
+			// textBox_log
+			// 
+			this.textBox_log.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.textBox_log.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+			this.textBox_log.Font = new System.Drawing.Font("Microsoft Tai Le", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.textBox_log.Location = new System.Drawing.Point(6, 44);
+			this.textBox_log.Name = "textBox_log";
+			this.textBox_log.Size = new System.Drawing.Size(1059, 33);
+			this.textBox_log.TabIndex = 0;
+			this.textBox_log.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox_log_KeyDown);
+			// 
+			// label5
+			// 
+			this.label5.AutoSize = true;
+			this.label5.Font = new System.Drawing.Font("Microsoft Tai Le", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label5.Location = new System.Drawing.Point(6, 16);
+			this.label5.Name = "label5";
+			this.label5.Size = new System.Drawing.Size(114, 25);
+			this.label5.TabIndex = 8;
+			this.label5.Text = "ENDEREÇO:";
+			// 
+			// textBox5_tel
+			// 
+			this.textBox5_tel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.textBox5_tel.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+			this.textBox5_tel.Font = new System.Drawing.Font("Microsoft Tai Le", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.textBox5_tel.Location = new System.Drawing.Point(750, 44);
+			this.textBox5_tel.Name = "textBox5_tel";
+			this.textBox5_tel.Size = new System.Drawing.Size(327, 33);
+			this.textBox5_tel.TabIndex = 3;
+			this.textBox5_tel.Validated += new System.EventHandler(this.textBox5_tel_Validated);
+			// 
+			// textBox_nomeC
+			// 
+			this.textBox_nomeC.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.textBox_nomeC.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+			this.textBox_nomeC.Font = new System.Drawing.Font("Microsoft Tai Le", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.textBox_nomeC.Location = new System.Drawing.Point(424, 44);
+			this.textBox_nomeC.Name = "textBox_nomeC";
+			this.textBox_nomeC.Size = new System.Drawing.Size(320, 33);
+			this.textBox_nomeC.TabIndex = 2;
+			// 
+			// label7
+			// 
+			this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.label7.AutoSize = true;
+			this.label7.Font = new System.Drawing.Font("Microsoft Tai Le", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label7.Location = new System.Drawing.Point(759, 16);
+			this.label7.Name = "label7";
+			this.label7.Size = new System.Drawing.Size(105, 25);
+			this.label7.TabIndex = 12;
+			this.label7.Text = "TELEFONE:";
+			// 
+			// label4
+			// 
+			this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.label4.AutoSize = true;
+			this.label4.Font = new System.Drawing.Font("Microsoft Tai Le", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label4.Location = new System.Drawing.Point(419, 16);
+			this.label4.Name = "label4";
+			this.label4.Size = new System.Drawing.Size(74, 25);
+			this.label4.TabIndex = 6;
+			this.label4.Text = "NOME:";
+			// 
+			// textBox_rg
+			// 
+			this.textBox_rg.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+			this.textBox_rg.Font = new System.Drawing.Font("Microsoft Tai Le", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.textBox_rg.Location = new System.Drawing.Point(196, 44);
+			this.textBox_rg.Name = "textBox_rg";
+			this.textBox_rg.Size = new System.Drawing.Size(184, 33);
+			this.textBox_rg.TabIndex = 1;
+			this.textBox_rg.Validated += new System.EventHandler(this.textBox_rg_Validated);
+			// 
+			// label14
+			// 
+			this.label14.AutoSize = true;
+			this.label14.Font = new System.Drawing.Font("Microsoft Tai Le", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label14.Location = new System.Drawing.Point(196, 16);
+			this.label14.Name = "label14";
+			this.label14.Size = new System.Drawing.Size(42, 25);
+			this.label14.TabIndex = 10;
+			this.label14.Text = "RG:";
+			// 
+			// textBox_cpf
+			// 
+			this.textBox_cpf.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+			this.textBox_cpf.Font = new System.Drawing.Font("Microsoft Tai Le", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.textBox_cpf.Location = new System.Drawing.Point(6, 44);
+			this.textBox_cpf.Name = "textBox_cpf";
+			this.textBox_cpf.Size = new System.Drawing.Size(184, 33);
+			this.textBox_cpf.TabIndex = 0;
+			this.textBox_cpf.Validated += new System.EventHandler(this.textBox_cpf_Validated);
+			// 
+			// label6
+			// 
+			this.label6.AutoSize = true;
+			this.label6.Font = new System.Drawing.Font("Microsoft Tai Le", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label6.Location = new System.Drawing.Point(6, 16);
+			this.label6.Name = "label6";
+			this.label6.Size = new System.Drawing.Size(49, 25);
+			this.label6.TabIndex = 10;
+			this.label6.Text = "CPF:";
+			// 
+			// groupBox2
+			// 
+			this.groupBox2.Controls.Add(this.comboBox_user);
+			this.groupBox2.Controls.Add(this.textBox_atn);
+			this.groupBox2.Controls.Add(this.label3);
+			this.groupBox2.Controls.Add(this.label2);
+			this.groupBox2.Controls.Add(this.label1);
+			this.groupBox2.Controls.Add(this.dateTimePicker_data);
+			this.groupBox2.Dock = System.Windows.Forms.DockStyle.Top;
+			this.groupBox2.Location = new System.Drawing.Point(0, 0);
+			this.groupBox2.Name = "groupBox2";
+			this.groupBox2.Size = new System.Drawing.Size(1083, 100);
+			this.groupBox2.TabIndex = 1;
+			this.groupBox2.TabStop = false;
+			// 
+			// comboBox_user
+			// 
+			this.comboBox_user.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Append;
+			this.comboBox_user.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+			this.comboBox_user.Font = new System.Drawing.Font("Microsoft Tai Le", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.comboBox_user.FormattingEnabled = true;
+			this.comboBox_user.Location = new System.Drawing.Point(8, 44);
+			this.comboBox_user.Name = "comboBox_user";
+			this.comboBox_user.Size = new System.Drawing.Size(257, 33);
+			this.comboBox_user.TabIndex = 0;
+			this.comboBox_user.Text = " ";
+			// 
+			// textBox_atn
+			// 
+			this.textBox_atn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.textBox_atn.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+			this.textBox_atn.Font = new System.Drawing.Font("Microsoft Tai Le", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.textBox_atn.Location = new System.Drawing.Point(759, 44);
+			this.textBox_atn.Name = "textBox_atn";
+			this.textBox_atn.Size = new System.Drawing.Size(318, 33);
+			this.textBox_atn.TabIndex = 2;
+			// 
+			// label3
+			// 
+			this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.label3.AutoSize = true;
+			this.label3.Font = new System.Drawing.Font("Microsoft Tai Le", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label3.Location = new System.Drawing.Point(759, 16);
+			this.label3.Name = "label3";
+			this.label3.Size = new System.Drawing.Size(298, 25);
+			this.label3.TabIndex = 4;
+			this.label3.Text = "ATENDENTE DA MANIPULAÇÃO:";
+			// 
+			// label2
+			// 
+			this.label2.AutoSize = true;
+			this.label2.Font = new System.Drawing.Font("Microsoft Tai Le", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label2.Location = new System.Drawing.Point(6, 16);
+			this.label2.Name = "label2";
+			this.label2.Size = new System.Drawing.Size(143, 25);
+			this.label2.TabIndex = 3;
+			this.label2.Text = "VENDEDOR(A):";
+			// 
+			// label1
+			// 
+			this.label1.AutoSize = true;
+			this.label1.Font = new System.Drawing.Font("Microsoft Tai Le", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label1.Location = new System.Drawing.Point(266, 16);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(66, 25);
+			this.label1.TabIndex = 1;
+			this.label1.Text = "DATA:";
+			// 
+			// dateTimePicker_data
+			// 
+			this.dateTimePicker_data.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.dateTimePicker_data.Font = new System.Drawing.Font("Microsoft Tai Le", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.dateTimePicker_data.Location = new System.Drawing.Point(271, 44);
+			this.dateTimePicker_data.Name = "dateTimePicker_data";
+			this.dateTimePicker_data.Size = new System.Drawing.Size(482, 33);
+			this.dateTimePicker_data.TabIndex = 1;
+			// 
+			// ePictureBox_search
+			// 
+			this.ePictureBox_search.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.ePictureBox_search.Image = global::EterPharmaPro.Properties.Resources.lupa;
+			this.ePictureBox_search.Location = new System.Drawing.Point(386, 44);
+			this.ePictureBox_search.Name = "ePictureBox_search";
+			this.ePictureBox_search.Size = new System.Drawing.Size(32, 33);
+			this.ePictureBox_search.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+			this.ePictureBox_search.TabIndex = 15;
+			this.ePictureBox_search.TabStop = false;
+			this.ePictureBox_search.ToolTipText = "Buscar Cliente";
+			this.ePictureBox_search.Click += new System.EventHandler(this.BuscaCliente_Click);
+			// 
 			// CreateManipulados
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -614,22 +619,22 @@
 			this.toolStrip_topMenu.ResumeLayout(false);
 			this.toolStrip_topMenu.PerformLayout();
 			this.panel_center.ResumeLayout(false);
-			this.groupBox2.ResumeLayout(false);
-			this.groupBox2.PerformLayout();
-			this.groupBox3.ResumeLayout(false);
-			this.groupBox3.PerformLayout();
-			this.groupBox4.ResumeLayout(false);
-			this.groupBox4.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.ePictureBox_search)).EndInit();
+			this.groupBox7.ResumeLayout(false);
+			this.groupBox7.PerformLayout();
+			this.groupBox8.ResumeLayout(false);
+			this.groupBox8.PerformLayout();
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox6.ResumeLayout(false);
 			this.groupBox6.PerformLayout();
 			this.groupBox5.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView_medicamentos)).EndInit();
-			this.groupBox7.ResumeLayout(false);
-			this.groupBox7.PerformLayout();
-			this.groupBox8.ResumeLayout(false);
-			this.groupBox8.PerformLayout();
+			this.groupBox3.ResumeLayout(false);
+			this.groupBox3.PerformLayout();
+			this.groupBox4.ResumeLayout(false);
+			this.groupBox4.PerformLayout();
+			this.groupBox2.ResumeLayout(false);
+			this.groupBox2.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.ePictureBox_search)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 

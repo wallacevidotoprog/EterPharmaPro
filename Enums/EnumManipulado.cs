@@ -4,10 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EterPharmaPro.Enuns
+namespace EterPharmaPro.Enums
 {
-	public enum QueryUserEnum
+	public enum EnumManipulado
 	{
-		NONE,ID,ID_LOJA
+		NONE,
+		P_80,
+		A4
 	}
+
 }

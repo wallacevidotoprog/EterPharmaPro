@@ -88,9 +88,12 @@
     <Compile Include="Controllers\Manipulacao\ManipuladoController.cs" />
     <Compile Include="DatabaseSQLite\DatabaseTransactionHandler.cs" />
     <Compile Include="DatabaseSQLite\MapDbEter.cs" />
-    <Compile Include="Enuns\FuncaoEnum.cs" />
-    <Compile Include="Enuns\QueryUserEnum.cs" />
-    <Compile Include="Enuns\FormatationEnum.cs" />
+    <Compile Include="Enums\EnumManipulado.cs" />
+    <Compile Include="Enums\FuncaoEnum.cs" />
+    <Compile Include="Enums\QueryClienteEnum.cs" />
+    <Compile Include="Enums\QueryUserEnum.cs" />
+    <Compile Include="Enums\FormatationEnum.cs" />
+    <Compile Include="Enums\TypeDoc.cs" />
     <Compile Include="Interfaces\IEterDb.cs" />
     <Compile Include="Interfaces\IEterDbCliente.cs" />
     <Compile Include="Interfaces\IEterDbControlados.cs" />
@@ -116,16 +119,29 @@
     <Compile Include="DatabaseSQLite\SQLiteTransactionManager.cs" />
     <Compile Include="Models\AddressHttpModel.cs" />
     <Compile Include="Models\DbModels\ClienteModel.cs" />
-    <Compile Include="Models\DbModels\DadosAtendimentoModel.cs" />
-    <Compile Include="Models\DbModels\ManipulacaoModel.cs" />
+    <Compile Include="Models\DadosAtendimentoModel.cs" />
+    <Compile Include="Models\DbModels\EnderecoClienteModel.cs" />
+    <Compile Include="Models\ManipulacaoModel.cs" />
     <Compile Include="Models\DbModels\UserModel.cs" />
+    <Compile Include="Models\ProdutosModel.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\IniFile.cs" />
+    <Compile Include="Services\ManipuladoService.cs" />
     <Compile Include="Utils\eControl\ePictureBox.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Utils\Extencions\ExceptionError.cs" />
     <Compile Include="Utils\Extencions\ExtensionsDefault.cs" />
+    <Compile Include="Utils\Extencions\InputBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Utils\Extencions\InputList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Utils\Extencions\InputListProduto.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Views\Manipulados\CreateManipulados.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -145,6 +161,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="Utils\Extencions\InputListProduto.resx">
+      <DependentUpon>InputListProduto.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\Manipulados\CreateManipulados.resx">
       <DependentUpon>CreateManipulados.cs</DependentUpon>
     </EmbeddedResource>
@@ -186,7 +205,8 @@
     <None Include="Resources\farmaceutico.png" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Services\" />
+    <Folder Include="Services\Prints - Cópia \" />
+    <Folder Include="Services\Prints\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

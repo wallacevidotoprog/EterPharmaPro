@@ -1,3 +1,4 @@
+using EterPharmaPro.Enums;
 using EterPharmaPro.Models.DbModels;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -12,6 +13,6 @@ namespace EterPharmaPro.Interfaces
 
 		Task<bool> DeleteCliente(string id);
 
-		//Task<List<DadosCliente>> GetCliente(string queryID = null, TypeDoc typeDoc = TypeDoc.NONE);
+		Task<List<ClienteModel>> GetCliente(string queryID = null, TypeDoc typeDoc = TypeDoc.NONE);
 	}
 }

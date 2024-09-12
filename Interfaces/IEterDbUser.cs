@@ -1,4 +1,4 @@
-using EterPharmaPro.Enuns;
+using EterPharmaPro.Enums;
 using EterPharmaPro.Models.DbModels;
 using System.Collections.Generic;
 using System.Threading.Tasks;

@@ -1,4 +1,4 @@
-using EterPharmaPro.Enuns;
+using EterPharmaPro.Enums;
 using System;
 
 namespace EterPharmaPro.Models.DbModels
