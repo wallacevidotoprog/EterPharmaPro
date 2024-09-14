@@ -19,36 +19,34 @@ namespace EterPharmaPro.DatabaseSQLite
 			_databaseConnection = databaseConnection;
 		}
 
-		public async Task<long?> CreateUser(UserModel model)
+		public async Task<long?> CreateUser(UserModel model, SQLiteConnection connection, SQLiteTransaction transaction)
 		{
 			try
 			{
-				using (SQLiteConnection connection = new SQLiteConnection(_databaseConnection))
-				{
-					
-					try
-					{
-						
-						string Query = "INSERT INTO USERS (ID_LOJA,NOME,FUNCAO,STATUS) VALUES (@ID, @NOME,@FUNCAO,@STATUS)";
-						using (SQLiteCommand command = new SQLiteCommand(Query, connection))
-						{
-							command.Parameters.AddWithValue("@ID_LOJA", model.ID_LOJA);
-							command.Parameters.AddWithValue("@NOME", model.NOME);
-							command.Parameters.AddWithValue("@FUNCAO", model.FUNCAO);
-							command.Parameters.AddWithValue("@STATUS", model.STATUS);
-							await command.ExecuteNonQueryAsync();
-							command.CommandText = "SELECT last_insert_rowid()";
-							return (long)(await command.ExecuteScalarAsync().ConfigureAwait(continueOnCapturedContext: false));
-						}
 
-					}
-					catch (Exception ex)
+				try
+				{
+
+					string Query = "INSERT INTO USERS (ID_LOJA,NOME,FUNCAO,STATUS) VALUES (@ID, @NOME,@FUNCAO,@STATUS)";
+					using (SQLiteCommand command = new SQLiteCommand(Query, connection, transaction))
 					{
-						ex.ErrorGet();
-						
-						return -1;
+						command.Parameters.AddWithValue("@ID_LOJA", model.ID_LOJA);
+						command.Parameters.AddWithValue("@NOME", model.NOME);
+						command.Parameters.AddWithValue("@FUNCAO", model.FUNCAO);
+						command.Parameters.AddWithValue("@STATUS", model.STATUS);
+						await command.ExecuteNonQueryAsync();
+						command.CommandText = "SELECT last_insert_rowid()";
+						return (long)(await command.ExecuteScalarAsync().ConfigureAwait(continueOnCapturedContext: false));
 					}
+
 				}
+				catch (Exception ex)
+				{
+					ex.ErrorGet();
+
+					return -1;
+				}
+
 			}
 			catch (Exception ex)
 			{
@@ -57,35 +55,32 @@ namespace EterPharmaPro.DatabaseSQLite
 			return -1;
 		}
 
-		public async Task<bool> UpdateUser(UserModel model)
+		public async Task<bool> UpdateUser(UserModel model, SQLiteConnection connection, SQLiteTransaction transaction)
 		{
 			try
 			{
-				using (SQLiteConnection connection = new SQLiteConnection(_databaseConnection))
+				try
 				{
-					
-					try
+
+					string Query = "UPDATE USERS SET NOME = @NOME, FUNCAO = @FUNCAO, STATUS = @STATUS WHERE ID = @ID";
+					using (SQLiteCommand command = new SQLiteCommand(Query, connection, transaction))
 					{
-						
-						string Query = "UPDATE USERS SET NOME = @NOME, FUNCAO = @FUNCAO, STATUS = @STATUS WHERE ID = @ID";
-						using (SQLiteCommand command = new SQLiteCommand(Query, connection))
-						{
-							command.Parameters.AddWithValue("@ID", model.ID);
-							command.Parameters.AddWithValue("@NOME", model.NOME);
-							command.Parameters.AddWithValue("@FUNCAO", model.FUNCAO);
-							command.Parameters.AddWithValue("@STATUS", model.STATUS);
-							await command.ExecuteNonQueryAsync();
-						}
-						
-						return true;
+						command.Parameters.AddWithValue("@ID", model.ID);
+						command.Parameters.AddWithValue("@NOME", model.NOME);
+						command.Parameters.AddWithValue("@FUNCAO", model.FUNCAO);
+						command.Parameters.AddWithValue("@STATUS", model.STATUS);
+						await command.ExecuteNonQueryAsync();
 					}
-					catch (Exception ex)
-					{
-						ex.ErrorGet();
-						
-						return false;
-					}
+
+					return true;
 				}
+				catch (Exception ex)
+				{
+					ex.ErrorGet();
+
+					return false;
+				}
+
 			}
 			catch (Exception ex2)
 			{
@@ -95,46 +90,33 @@ namespace EterPharmaPro.DatabaseSQLite
 			return false;
 		}
 
-		public async Task<bool> DeleteUser(string id)
+		public async Task<bool> DeleteUser(string id, SQLiteConnection connection, SQLiteTransaction transaction)
 		{
 			try
 			{
-				using (SQLiteConnection connection = new SQLiteConnection(_databaseConnection))
+
+				string Query = "DELETE FROM USERS WHERE ID_LOJA = @ID_LOJA";
+				using (SQLiteCommand command = new SQLiteCommand(Query, connection,transaction))
 				{
-					
-					try
-					{
-						
-						string Query = "DELETE FROM USERS WHERE ID_LOJA = @ID_LOJA";
-						using (SQLiteCommand command = new SQLiteCommand(Query, connection))
-						{
-							command.Parameters.AddWithValue("@ID", id);
-							await command.ExecuteNonQueryAsync();
-						}
-						
-						return true;
-					}
-					catch (Exception ex)
-					{
-						ex.ErrorGet();
-						
-						return false;
-					}
+					command.Parameters.AddWithValue("@ID", id);
+					await command.ExecuteNonQueryAsync();
 				}
+
+				return true;
 			}
-			catch (Exception ex2)
+			catch (Exception ex)
 			{
-				Exception ex = ex2;
 				ex.ErrorGet();
+
+				return false;
 			}
-			return false;
 		}
 
-		public async Task<List<UserModel>> GetUser(string query = null,QueryUserEnum queryUser = QueryUserEnum.NONE)
+		public async Task<List<UserModel>> GetUser(string query = null, QueryUserEnum queryUser = QueryUserEnum.NONE)
 		{
 			try
 			{
-				return  await new MapDbEter(_databaseConnection).QueryAsync<UserModel>($"SELECT * FROM USERS {(queryUser == QueryUserEnum.ID ? " WHERE ID = " + query: queryUser == QueryUserEnum.ID_LOJA ? " WHERE ID_LOJA = " + query: string.Empty )}");
+				return await new MapDbEter(_databaseConnection).QueryAsync<UserModel>($"SELECT * FROM USERS {(queryUser == QueryUserEnum.ID ? " WHERE ID = " + query : queryUser == QueryUserEnum.ID_LOJA ? " WHERE ID_LOJA = " + query : string.Empty)}");
 			}
 			catch (Exception ex)
 			{

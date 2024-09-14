@@ -32,15 +32,15 @@
 			this.panel_center = new System.Windows.Forms.Panel();
 			this.toolStrip1 = new System.Windows.Forms.ToolStrip();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
 			this.toolStripButton_manipulacao = new System.Windows.Forms.ToolStripDropDownButton();
 			this.fORMUToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.rELATÓRIOToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
 			this.toolStripButton1 = new System.Windows.Forms.ToolStripDropDownButton();
 			this.gERARVALIDADEDOMÊSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.rELATÓRIOToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripButton_conf = new System.Windows.Forms.ToolStripButton();
+			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
 			this.toolStripDropDownButton_impressos = new System.Windows.Forms.ToolStripButton();
 			this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
 			this.toolStrip1.SuspendLayout();
@@ -77,16 +77,6 @@
 			this.toolStripSeparator1.Name = "toolStripSeparator1";
 			this.toolStripSeparator1.Size = new System.Drawing.Size(6, 93);
 			// 
-			// toolStripSeparator2
-			// 
-			this.toolStripSeparator2.Name = "toolStripSeparator2";
-			this.toolStripSeparator2.Size = new System.Drawing.Size(6, 93);
-			// 
-			// toolStripSeparator3
-			// 
-			this.toolStripSeparator3.Name = "toolStripSeparator3";
-			this.toolStripSeparator3.Size = new System.Drawing.Size(6, 93);
-			// 
 			// toolStripButton_manipulacao
 			// 
 			this.toolStripButton_manipulacao.AutoSize = false;
@@ -109,15 +99,20 @@
 			// fORMUToolStripMenuItem
 			// 
 			this.fORMUToolStripMenuItem.Name = "fORMUToolStripMenuItem";
-			this.fORMUToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.fORMUToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
 			this.fORMUToolStripMenuItem.Text = "FORMULÁRIO";
 			this.fORMUToolStripMenuItem.Click += new System.EventHandler(this.fORMUToolStripMenuItem_Click);
 			// 
 			// rELATÓRIOToolStripMenuItem1
 			// 
 			this.rELATÓRIOToolStripMenuItem1.Name = "rELATÓRIOToolStripMenuItem1";
-			this.rELATÓRIOToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+			this.rELATÓRIOToolStripMenuItem1.Size = new System.Drawing.Size(145, 22);
 			this.rELATÓRIOToolStripMenuItem1.Text = "RELATÓRIO";
+			// 
+			// toolStripSeparator2
+			// 
+			this.toolStripSeparator2.Name = "toolStripSeparator2";
+			this.toolStripSeparator2.Size = new System.Drawing.Size(6, 93);
 			// 
 			// toolStripButton1
 			// 
@@ -142,6 +137,7 @@
 			this.gERARVALIDADEDOMÊSToolStripMenuItem.Name = "gERARVALIDADEDOMÊSToolStripMenuItem";
 			this.gERARVALIDADEDOMÊSToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
 			this.gERARVALIDADEDOMÊSToolStripMenuItem.Text = "GERAR VALIDADE DO MÊS";
+			this.gERARVALIDADEDOMÊSToolStripMenuItem.Click += new System.EventHandler(this.gERARVALIDADEDOMÊSToolStripMenuItem_Click);
 			// 
 			// rELATÓRIOToolStripMenuItem
 			// 
@@ -165,6 +161,11 @@
 			this.toolStripButton_conf.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
 			this.toolStripButton_conf.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
 			this.toolStripButton_conf.ToolTipText = "CONFIGURAÇÕES";
+			// 
+			// toolStripSeparator3
+			// 
+			this.toolStripSeparator3.Name = "toolStripSeparator3";
+			this.toolStripSeparator3.Size = new System.Drawing.Size(6, 93);
 			// 
 			// toolStripDropDownButton_impressos
 			// 

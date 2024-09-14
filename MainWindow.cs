@@ -1,8 +1,10 @@
 ﻿using EterPharmaPro.DatabaseSQLite;
 using EterPharmaPro.Interfaces;
+using EterPharmaPro.Models;
 using EterPharmaPro.Models.DbModels;
 using EterPharmaPro.Utils.Extencions;
 using EterPharmaPro.Views.Manipulados;
+using EterPharmaPro.Views.Validade;
 using System;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -50,11 +52,19 @@ namespace EterPharmaPro
 
 		private async void toolStripButton2_Click(object sender, EventArgs e)
 		{
-			//var t = await eterDb.DbUser.GetUser();
-			//var t1 = await eterDb.DbUser.GetUser("5", QueryUserEnum.ID);
-			//var t2 = await eterDb.DbUser.GetUser("1504", QueryUserEnum.ID_LOJA);
+			var t = await eterDb.DbManipulados.GetManipulacao();
+			var selec = t[1];
+
+			var dc = (DadosClienteManipulacao)selec.DADOSCLIENTE;
+
+			selec.DADOSCLIENTE = (await eterDb.DbCliente.GetCliente(dc.ID_CLIENTE.ToString(), Enums.TypeDoc.ID))[0];
+			((ClienteModel)selec.DADOSCLIENTE).ENDERECO = await eterDb.DbEndereco.GetEndereco(dc.ID_ENDERECO.ToString(),Enums.QueryClienteEnum.ID);
+
+			(new CreateManipulados(eterDb, selec)).Show();
 		}
 
 		private void fORMUToolStripMenuItem_Click(object sender, EventArgs e) => OpenForm(new CreateManipulados(eterDb));
+
+		private void gERARVALIDADEDOMÊSToolStripMenuItem_Click(object sender, EventArgs e) => OpenForm(new CreateValidade());
 	}
 }

@@ -1,4 +1,5 @@
 ﻿using EterPharmaPro.Controllers.Manipulacao;
+using EterPharmaPro.DatabaseSQLite;
 using EterPharmaPro.Enums;
 using EterPharmaPro.Interfaces;
 using EterPharmaPro.Models;
@@ -38,7 +39,13 @@ namespace EterPharmaPro.Views.Manipulados
 			}
 		}
 
-		private void toolStripButton_sair_Click(object sender, EventArgs e) => this.Close();
+		private void toolStripButton_sair_Click(object sender, EventArgs e)
+		{
+			if (MessageBox.Show("Deseja sair o formulário ?", base.Name, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+			{
+				this.Close();
+			}
+		}
 
 		private void CleanAll(object sender, EventArgs e)
 		{
@@ -56,6 +63,7 @@ namespace EterPharmaPro.Views.Manipulados
 			comboBox_pag.SelectedIndex = -1;
 			comboBox_modo.SelectedIndex = -1;
 			textBox_valorT.Text = "0,00";
+
 		}
 
 		private void CreateManipulados_Load(object sender, EventArgs e)
@@ -70,7 +78,7 @@ namespace EterPharmaPro.Views.Manipulados
 			{
 				dateTimePicker_data.Value = (DateTime)manipulados.DADOSATENDIMENTO.DATA;
 				textBox_atn.Text = manipulados?.DADOSATENDIMENTO.ATEN_MANI;
-				comboBox_user.SelectedIndex = ExtensionsDefault.ReturnIndexUserCB(manipulados.DADOSATENDIMENTO?.ATEN_LOJA, comboBox_user);
+				comboBox_user.SelectedIndex = ExtensionsDefault.ReturnIndexUserCB(manipulados.DADOSATENDIMENTO?.ATEN_LOJA.ToString(), comboBox_user);
 				textBox_cpf.Text = ((ClienteModel)manipulados.DADOSCLIENTE)?.CPF.ReturnFormation(FormatationEnum.CPF);
 				textBox_rg.Text = ((ClienteModel)manipulados.DADOSCLIENTE)?.RG.ReturnFormation(FormatationEnum.RG);
 				textBox_nomeC.Text = ((ClienteModel)manipulados.DADOSCLIENTE)?.NOME;
@@ -229,7 +237,7 @@ namespace EterPharmaPro.Views.Manipulados
 					ID = ((!edit) ? null : manipulados.ID),
 					DADOSATENDIMENTO = new DadosAtendimentoModel
 					{
-						ATEN_LOJA = comboBox_user.SelectedValue.ToString(),
+						ATEN_LOJA = Convert.ToInt32(comboBox_user.SelectedValue.ToString()),
 						DATA = dateTimePicker_data.Value,
 						ATEN_MANI = textBox_atn.Text
 					},
@@ -255,6 +263,8 @@ namespace EterPharmaPro.Views.Manipulados
 					MODOENTREGA = comboBox_modo.SelectedIndex,
 					VALORFINAL = Convert.ToDecimal(textBox_valorT.Text)
 				};
+
+
 				if (await manipuladoController.PrintDocManipulado(manipulacaoModel, EnumManipulado.P_80, edit))
 				{
 					if (edit)

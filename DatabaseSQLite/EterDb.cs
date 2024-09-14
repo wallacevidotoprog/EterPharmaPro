@@ -1,3 +1,4 @@
+using EterPharmaPro.Controllers;
 using EterPharmaPro.Interfaces;
 using EterPharmaPro.Utils.Extencions;
 using System;
@@ -9,7 +10,7 @@ namespace EterPharmaPro.DatabaseSQLite
 {
 	public class EterDb : IEterDb
 	{
-		private readonly string _databaseConnection;
+		public readonly string _databaseConnection;
 
 		public bool ServeConnection { get; private set; }
 
@@ -28,6 +29,9 @@ namespace EterPharmaPro.DatabaseSQLite
 		public IEterDbRequisicoesNotas DbRequisicoesNotas { get; set; }
 
 		public IEterDbControlados DbControlados { get; set; }
+		public EterDbController EterDbController { get; set; }
+
+		public string DatabaseConnection => _databaseConnection;
 
 		public EterDb()
 		{
@@ -60,6 +64,8 @@ namespace EterPharmaPro.DatabaseSQLite
 			DbManipuladosMedicamentos = new EterDbManipuladosMedicamentos(_databaseConnection);
 			DbRequisicoesNotas = new EterDbRequisicoesNotas(_databaseConnection);
 			DbControlados = new EterDbControlados(_databaseConnection);
+
+			EterDbController = new EterDbController(this);
 		}
 
 		public async Task<bool> ExecuteTransactionAsync(params Func<Task<bool>>[] databaseOperations)

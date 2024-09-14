@@ -1,3 +1,4 @@
+using EterPharmaPro.Models.DbModels;
 using System;
 
 namespace EterPharmaPro.Models
@@ -25,5 +26,21 @@ namespace EterPharmaPro.Models
 		public DateTime? CREATE { get; set; }
 
 		public DateTime? UPDATE { get; set; }
+
+
+		public void  ConvertDb(ManipulacaoDbModel db)
+		{
+			
+			ID = db.ID;
+			DADOSATENDIMENTO = new DadosAtendimentoModel { ATEN_LOJA = db.ATEN_LOJA, DATA = db.DATA, ATEN_MANI = db.ATEN_MANI };
+			DADOSCLIENTE = new DadosClienteManipulacao { ID_CLIENTE = db.CLIENTE_ID, ID_ENDERECO = db.ENDERECO_ID };
+			OBSGERAL= db.OBSGERAL;
+			SITUCAO= db.SITUCAO;	
+			FORMAPAGAMENTO= db.FORMAPAGAMENTO;
+			MODOENTREGA= db.MODOENTREGA;
+			VALORFINAL= db.VALORFINAL;
+			CREATE = db.CREATE;
+			UPDATE = db.UPDATE;
+		}
 	}
 }

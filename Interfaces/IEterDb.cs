@@ -1,3 +1,4 @@
+using EterPharmaPro.Controllers;
 using EterPharmaPro.DatabaseSQLite;
 using System;
 using System.Threading.Tasks;
@@ -6,6 +7,8 @@ namespace EterPharmaPro.Interfaces
 {
 	public interface IEterDb
 	{
+		string DatabaseConnection { get; }
+		EterDbController EterDbController { get; set; }
 		IEterDbUser DbUser { get; set; }
 
 		IEterDbCliente DbCliente { get; set; }

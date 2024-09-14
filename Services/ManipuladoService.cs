@@ -1,5 +1,10 @@
+using EterPharmaPro.Enums;
 using EterPharmaPro.Interfaces;
 using EterPharmaPro.Models;
+using EterPharmaPro.Models.DbModels;
+using EterPharmaPro.Models.Print;
+using EterPharmaPro.Services.Prints;
+using EterPharmaPro.Utils.Extencions;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -22,101 +27,101 @@ namespace EterPharmaPro.Services
 			printerHelper = new RawPrinterHelper();
 			printerHelper.AddLine(new TextPrintFormaterModel
 			{
-				symbol = Symbol.Space
+				symbol = SymbolPrintEnum.Space
 			});
 			printerHelper.AddLine(new TextPrintFormaterModel
 			{
 				texto = "Formulário de Manipulados".ToUpper(),
-				alignmentText = AlignmentText.Center,
-				fontStyle = FormatText.Title
+				alignmentText = AlignmentTextPrintEnum.Center,
+				fontStyle = FormatTextPrintEnum.Title
 			});
 			printerHelper.AddLine(new TextPrintFormaterModel
 			{
-				symbol = Symbol.Space
+				symbol = SymbolPrintEnum.Space
 			});
 			printerHelper.AddLine(new TextPrintFormaterModel
 			{
 				tilte = "Vendedor(a): ",
-				texto = model.DADOSATENDIMENTO.ATEN_LOJA + " - " + _eterDb.DbUser.GetUser(model.DADOSATENDIMENTO.ATEN_LOJA).Result[0].Nome,
-				alignmentText = AlignmentText.Left,
-				fontStyle = FormatText.Default
+				texto = model.DADOSATENDIMENTO.ATEN_LOJA + " - " + _eterDb.DbUser.GetUser(model.DADOSATENDIMENTO.ATEN_LOJA.ToString()).Result[0].NOME,
+				alignmentText = AlignmentTextPrintEnum.Left,
+				fontStyle = FormatTextPrintEnum.Default
 			});
 			printerHelper.AddLine(new TextPrintFormaterModel
 			{
 				tilte = "Atendente: ",
 				texto = model.DADOSATENDIMENTO.ATEN_MANI,
-				alignmentText = AlignmentText.Left,
-				fontStyle = FormatText.Default
+				alignmentText = AlignmentTextPrintEnum.Left,
+				fontStyle = FormatTextPrintEnum.Default
 			});
 			printerHelper.AddLine(new TextPrintFormaterModel
 			{
 				tilte = "Data do Pedido: ",
-				texto = model.DADOSATENDIMENTO.DATA.ToShortDateString(),
-				alignmentText = AlignmentText.Left,
-				fontStyle = FormatText.Default
+				texto = model.DADOSATENDIMENTO.DATA?.ToShortDateString(),
+				alignmentText = AlignmentTextPrintEnum.Left,
+				fontStyle = FormatTextPrintEnum.Default
 			});
 			printerHelper.AddLine(new TextPrintFormaterModel
 			{
-				symbol = Symbol.Space
+				symbol = SymbolPrintEnum.Space
 			});
 			printerHelper.AddLine(new TextPrintFormaterModel
 			{
 				tilte = "NOME: ",
-				texto = ((DadosCliente)model.DADOSCLIENTE).NOME,
-				alignmentText = AlignmentText.Left,
-				fontStyle = FormatText.Default
+				texto = ((ClienteModel)model.DADOSCLIENTE).NOME,
+				alignmentText = AlignmentTextPrintEnum.Left,
+				fontStyle = FormatTextPrintEnum.Default
 			});
 			printerHelper.AddLine(new TextPrintFormaterModel
 			{
 				tilte = "CPF: ",
-				texto = ((DadosCliente)model.DADOSCLIENTE).CPF.ReturnFormation(Formatation.CPF),
-				alignmentText = AlignmentText.Left,
-				fontStyle = FormatText.Default
+				texto = ((ClienteModel)model.DADOSCLIENTE).CPF.ReturnFormation(FormatationEnum.CPF),
+				alignmentText = AlignmentTextPrintEnum.Left,
+				fontStyle = FormatTextPrintEnum.Default
 			});
 			printerHelper.AddLine(new TextPrintFormaterModel
 			{
 				tilte = "RG: ",
-				texto = ((DadosCliente)model.DADOSCLIENTE).RG.ReturnFormation(Formatation.RG),
-				alignmentText = AlignmentText.Left,
-				fontStyle = FormatText.Default
+				texto = ((ClienteModel)model.DADOSCLIENTE).RG.ReturnFormation(FormatationEnum.RG),
+				alignmentText = AlignmentTextPrintEnum.Left,
+				fontStyle = FormatTextPrintEnum.Default
 			});
 			printerHelper.AddLine(new TextPrintFormaterModel
 			{
 				tilte = "TELEFONE: ",
-				texto = ((DadosCliente)model.DADOSCLIENTE).TELEFONE.ReturnFormation(Formatation.TELEFONE),
-				alignmentText = AlignmentText.Left,
-				fontStyle = FormatText.Default
+				texto = ((ClienteModel)model.DADOSCLIENTE).TELEFONE.ReturnFormation(FormatationEnum.TELEFONE),
+				alignmentText = AlignmentTextPrintEnum.Left,
+				fontStyle = FormatTextPrintEnum.Default
 			});
 			printerHelper.AddLine(new TextPrintFormaterModel
 			{
 				tilte = "ENDEREÇO: ",
-				texto = ((EnderecoCliente)((DadosCliente)model.DADOSCLIENTE).ENDERECO).LOGRADOURO,
-				alignmentText = AlignmentText.Left,
-				fontStyle = FormatText.Default
+				texto = ((EnderecoClienteModel)((ClienteModel)model.DADOSCLIENTE).ENDERECO).ENDERECO,
+				alignmentText = AlignmentTextPrintEnum.Left,
+				fontStyle = FormatTextPrintEnum.Default
 			});
-			if (((EnderecoCliente)((DadosCliente)model.DADOSCLIENTE).ENDERECO).OBS != string.Empty)
+			if (((EnderecoClienteModel)((ClienteModel)model.DADOSCLIENTE).ENDERECO).OBSERVACAO != string.Empty)
 			{
 				printerHelper.AddLine(new TextPrintFormaterModel
 				{
 					tilte = "OBS. DO ENDEREÇO: ",
-					texto = ((EnderecoCliente)((DadosCliente)model.DADOSCLIENTE).ENDERECO).OBS,
-					alignmentText = AlignmentText.Left,
-					fontStyle = FormatText.Default
+					texto = ((EnderecoClienteModel)((ClienteModel)model.DADOSCLIENTE).ENDERECO).OBSERVACAO,
+					alignmentText = AlignmentTextPrintEnum.Left,
+					fontStyle = FormatTextPrintEnum.Default
 				});
 			}
 			printerHelper.AddLine(new TextPrintFormaterModel
 			{
-				symbol = Symbol.Space
+				symbol = SymbolPrintEnum.Space
 			});
 			printerHelper.AddLine(new TextPrintFormaterModel
 			{
 				texto = "MEDICAMENTOS PARA MANIPULAÇÃO".ToUpper(),
-				alignmentText = AlignmentText.Center,
-				fontStyle = FormatText.Title
+				alignmentText = AlignmentTextPrintEnum.Center,
+				fontStyle = FormatTextPrintEnum.Title
 			});
 			printerHelper.AddLine(new TextPrintFormaterModel
 			{
-				symbol = Symbol.Space
+				symbol = SymbolPrintEnum.Space
 			});
 			for (int i = 0; i < ((List<string>)model.MEDICAMENTO).Count; i++)
 			{
@@ -124,77 +129,77 @@ namespace EterPharmaPro.Services
 				{
 					tilte = "■ ",
 					texto = ((List<string>)model.MEDICAMENTO)[i].ToUpper(),
-					alignmentText = AlignmentText.Left,
-					fontStyle = FormatText.Default
+					alignmentText = AlignmentTextPrintEnum.Left,
+					fontStyle = FormatTextPrintEnum.Default
 				});
 			}
 			printerHelper.AddLine(new TextPrintFormaterModel
 			{
-				symbol = Symbol.Space
+				symbol = SymbolPrintEnum.Space
 			});
 			if (model.OBSGERAL != "")
 			{
 				printerHelper.AddLine(new TextPrintFormaterModel
 				{
 					texto = "OBSERVAÇÕES".ToUpper(),
-					alignmentText = AlignmentText.Center,
-					fontStyle = FormatText.Title
+					alignmentText = AlignmentTextPrintEnum.Center,
+					fontStyle = FormatTextPrintEnum.Title
 				});
 				printerHelper.AddLine(new TextPrintFormaterModel
 				{
-					symbol = Symbol.Space
+					symbol = SymbolPrintEnum.Space
 				});
 				printerHelper.AddLine(new TextPrintFormaterModel
 				{
 					texto = model.OBSGERAL.ToUpper(),
-					alignmentText = AlignmentText.Left,
-					fontStyle = FormatText.Default
+					alignmentText = AlignmentTextPrintEnum.Left,
+					fontStyle = FormatTextPrintEnum.Default
 				});
 				printerHelper.AddLine(new TextPrintFormaterModel
 				{
-					symbol = Symbol.Space
+					symbol = SymbolPrintEnum.Space
 				});
 			}
 			printerHelper.AddLine(new TextPrintFormaterModel
 			{
 				texto = "DADOS GERAIS".ToUpper(),
-				alignmentText = AlignmentText.Center,
-				fontStyle = FormatText.Title
+				alignmentText = AlignmentTextPrintEnum.Center,
+				fontStyle = FormatTextPrintEnum.Title
 			});
 			printerHelper.AddLine(new TextPrintFormaterModel
 			{
-				symbol = Symbol.Space
+				symbol = SymbolPrintEnum.Space
 			});
 			printerHelper.AddLine(new TextPrintFormaterModel
 			{
 				tilte = "SITUAÇÃO: ",
-				texto = DGERAL.SITUACAO(model.SITUCAO),
-				alignmentText = AlignmentText.Left,
-				fontStyle = FormatText.Default
+				//texto = DGERAL.SITUACAO(model.SITUCAO),
+				alignmentText = AlignmentTextPrintEnum.Left,
+				fontStyle = FormatTextPrintEnum.Default
 			});
 			printerHelper.AddLine(new TextPrintFormaterModel
 			{
 				tilte = "FORMA DE PAGAMENTO: ",
-				texto = DGERAL.FORMAPAGAMENTO(model.FORMAPAGAMENTO),
-				alignmentText = AlignmentText.Left,
-				fontStyle = FormatText.Default
+				//texto = DGERAL.FORMAPAGAMENTO(model.FORMAPAGAMENTO),
+				alignmentText = AlignmentTextPrintEnum.Left,
+				fontStyle = FormatTextPrintEnum.Default
 			});
 			printerHelper.AddLine(new TextPrintFormaterModel
 			{
 				tilte = "MODO DE ENTREGA: ",
-				texto = DGERAL.MODOENTREGA(model.MODOENTREGA),
-				alignmentText = AlignmentText.Left,
-				fontStyle = FormatText.Default
+				//texto = DGERAL.MODOENTREGA(model.MODOENTREGA),
+				alignmentText = AlignmentTextPrintEnum.Left,
+				fontStyle = FormatTextPrintEnum.Default
 			});
 			printerHelper.AddLine(new TextPrintFormaterModel
 			{
-				symbol = Symbol.Space
+				symbol = SymbolPrintEnum.Space
 			});
 			printerHelper.AddLine(new TextPrintFormaterModel
 			{
 				texto = ("VALOR TOTAL " + string.Format(CultureInfo.CurrentCulture, "{0:C2}", Convert.ToDecimal(model.VALORFINAL))).ToUpper(),
-				alignmentText = AlignmentText.Right,
-				fontStyle = FormatText.Header
+				alignmentText = AlignmentTextPrintEnum.Right,
+				fontStyle = FormatTextPrintEnum.Header
 			});
 			printerHelper.AddLine(new TextPrintFormaterModel());
 			printerHelper.PrintDocument();

@@ -17,117 +17,75 @@ namespace EterPharmaPro.DatabaseSQLite
 			_databaseConnection = databaseConnection;
 		}
 
-		public async Task<long> CreateMedicamento(string model, string id)
+		public async Task<long> CreateMedicamento(string model, string id, SQLiteConnection connection, SQLiteTransaction transaction)
 		{
 			long idE = -1L;
 			try
 			{
-				using (SQLiteConnection connection = new SQLiteConnection(_databaseConnection))
+
+				string Query = "INSERT INTO MEDICAMENTO_MANIPULACAO (MANIPULADOS_ID,NAME_M) VALUES (@MANIPULADOS_ID, @NAME_M)";
+				using (SQLiteCommand command = new SQLiteCommand(Query, connection))
 				{
-					
-					try
-					{
-						
-						string Query = "INSERT INTO MEDICAMENTO_MANIPULACAO (MANIPULADOS_ID,NAME_M) VALUES (@MANIPULADOS_ID, @NAME_M)";
-						using (SQLiteCommand command = new SQLiteCommand(Query, connection))
-						{
-							command.Parameters.AddWithValue("@MANIPULADOS_ID", id);
-							command.Parameters.AddWithValue("@NAME_M", model);
-							await command.ExecuteNonQueryAsync().ConfigureAwait(continueOnCapturedContext: false);
-							command.CommandText = "SELECT last_insert_rowid()";
-							idE = (long)(await command.ExecuteScalarAsync().ConfigureAwait(continueOnCapturedContext: false));
-						}
-						
-						return idE;
-					}
-					catch (Exception ex)
-					{
-						ex.ErrorGet();
-						
-						return idE;
-					}
+					command.Parameters.AddWithValue("@MANIPULADOS_ID", id);
+					command.Parameters.AddWithValue("@NAME_M", model);
+					await command.ExecuteNonQueryAsync().ConfigureAwait(continueOnCapturedContext: false);
+					command.CommandText = "SELECT last_insert_rowid()";
+					idE = (long)(await command.ExecuteScalarAsync().ConfigureAwait(continueOnCapturedContext: false));
 				}
-			IL_03e9:;
+
+				return idE;
 			}
-			catch (Exception ex2)
+			catch (Exception ex)
 			{
-				Exception ex = ex2;
 				ex.ErrorGet();
+
+				return idE;
 			}
-			return idE;
+
 		}
 
-		public async Task<bool> UpdateMedicamento(string model, string id)
+		public async Task<bool> UpdateMedicamento(string model, string id, SQLiteConnection connection, SQLiteTransaction transaction)
 		{
 			try
 			{
-				using (SQLiteConnection connection = new SQLiteConnection(_databaseConnection))
+
+				string Query = "UPDATE MEDICAMENTO_MANIPULACAO SET NAME_M = @NAME_M WHERE MANIPULADOS_ID = @MANIPULADOS_ID";
+				using (SQLiteCommand command = new SQLiteCommand(Query, connection))
 				{
-					
-					try
-					{
-						
-						string Query = "UPDATE MEDICAMENTO_MANIPULACAO SET NAME_M = @NAME_M WHERE MANIPULADOS_ID = @MANIPULADOS_ID";
-						using (SQLiteCommand command = new SQLiteCommand(Query, connection))
-						{
-							command.Parameters.AddWithValue("@MANIPULADOS_ID", id);
-							command.Parameters.AddWithValue("@NAME_M", model);
-							await command.ExecuteNonQueryAsync().ConfigureAwait(continueOnCapturedContext: false);
-						}
-						
-						return true;
-					}
-					catch (Exception ex)
-					{
-						ex.ErrorGet();
-						
-						return false;
-					}
+					command.Parameters.AddWithValue("@MANIPULADOS_ID", id);
+					command.Parameters.AddWithValue("@NAME_M", model);
+					await command.ExecuteNonQueryAsync().ConfigureAwait(continueOnCapturedContext: false);
 				}
-			IL_0328:;
+
+				return true;
 			}
-			catch (Exception ex2)
+			catch (Exception ex)
 			{
-				Exception ex = ex2;
 				ex.ErrorGet();
+
+				return false;
 			}
-			return false;
+
 		}
 
-		public async Task<bool> DeleteMedicamento(string id)
+		public async Task<bool> DeleteMedicamento(string id, SQLiteConnection connection, SQLiteTransaction transaction)
 		{
 			try
 			{
-				using (SQLiteConnection connection = new SQLiteConnection(_databaseConnection))
+				string Query = "DELETE FROM MEDICAMENTO_MANIPULACAO WHERE MANIPULADOS_ID = @MANIPULADOS_ID";
+				using (SQLiteCommand command = new SQLiteCommand(Query, connection, transaction))
 				{
-					
-					try
-					{
-						
-						string Query = "DELETE FROM MEDICAMENTO_MANIPULACAO WHERE MANIPULADOS_ID = @MANIPULADOS_ID";
-						using (SQLiteCommand command = new SQLiteCommand(Query, connection))
-						{
-							command.Parameters.AddWithValue("@MANIPULADOS_ID", id);
-							await command.ExecuteNonQueryAsync().ConfigureAwait(continueOnCapturedContext: false);
-						}
-						
-						return true;
-					}
-					catch (Exception ex)
-					{
-						ex.ErrorGet();
-						
-						return false;
-					}
+					command.Parameters.AddWithValue("@MANIPULADOS_ID", id);
+					await command.ExecuteNonQueryAsync().ConfigureAwait(continueOnCapturedContext: false);
 				}
-			IL_0309:;
+				return true;
 			}
-			catch (Exception ex2)
+			catch (Exception ex)
 			{
-				Exception ex = ex2;
 				ex.ErrorGet();
+
+				return false;
 			}
-			return false;
 		}
 
 		public async Task<List<string>> GetMedicamento(string queryID = null)

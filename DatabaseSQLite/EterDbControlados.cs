@@ -15,46 +15,35 @@ namespace EterPharmaPro.DatabaseSQLite
 			_databaseConnection = databaseConnection;
 		}
 
-		public async Task<long> CreateControlado(string med, int qtd, DateTime val, string lote, string id)
+		public async Task<long> CreateControlado(string med, int qtd, DateTime val, string lote, string id, SQLiteConnection connection, SQLiteTransaction transaction)
 		{
 			long idE = -1L;
+
 			try
 			{
-				using (SQLiteConnection connection = new SQLiteConnection(_databaseConnection))
+
+				string Query = "INSERT INTO MEDICAMENTO_CONTROLADO (CLIENTE_ID,NAME_M,QTD,VALIDADE,LOTE) VALUES (@CLIENTE_ID, @NAME_M,@QTD,@VALIDADE,@LOTE)";
+				using (SQLiteCommand command = new SQLiteCommand(Query, connection,transaction))
 				{
-					
-					try
-					{
-						
-						string Query = "INSERT INTO MEDICAMENTO_CONTROLADO (CLIENTE_ID,NAME_M,QTD,VALIDADE,LOTE) VALUES (@CLIENTE_ID, @NAME_M,@QTD,@VALIDADE,@LOTE)";
-						using (SQLiteCommand command = new SQLiteCommand(Query, connection))
-						{
-							command.Parameters.AddWithValue("@CLIENTE_ID", id);
-							command.Parameters.AddWithValue("@NAME_M", med);
-							command.Parameters.AddWithValue("@QTD", qtd);
-							command.Parameters.AddWithValue("@VALIDADE", val);
-							command.Parameters.AddWithValue("@LOTE", lote);
-							await command.ExecuteNonQueryAsync().ConfigureAwait(continueOnCapturedContext: false);
-							command.CommandText = "SELECT last_insert_rowid()";
-							idE = (long)(await command.ExecuteScalarAsync().ConfigureAwait(continueOnCapturedContext: false));
-						}
-						
-						return idE;
-					}
-					catch (Exception ex)
-					{
-						ex.ErrorGet();
-						
-						return idE;
-					}
+					command.Parameters.AddWithValue("@CLIENTE_ID", id);
+					command.Parameters.AddWithValue("@NAME_M", med);
+					command.Parameters.AddWithValue("@QTD", qtd);
+					command.Parameters.AddWithValue("@VALIDADE", val);
+					command.Parameters.AddWithValue("@LOTE", lote);
+					await command.ExecuteNonQueryAsync().ConfigureAwait(continueOnCapturedContext: false);
+					command.CommandText = "SELECT last_insert_rowid()";
+					idE = (long)(await command.ExecuteScalarAsync().ConfigureAwait(continueOnCapturedContext: false));
 				}
+
+				return idE;
 			}
-			catch (Exception ex2)
+			catch (Exception ex)
 			{
-				Exception ex = ex2;
 				ex.ErrorGet();
+
+				return idE;
 			}
-			return idE;
+
 		}
 	}
 }
