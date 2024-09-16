@@ -87,6 +87,8 @@
   <ItemGroup>
     <Compile Include="Controllers\EterDbController.cs" />
     <Compile Include="Controllers\Manipulacao\ManipuladoController.cs" />
+    <Compile Include="Controllers\Validade\ValidadeController.cs" />
+    <Compile Include="Models\DbModels\BaseDbModal.cs" />
     <Compile Include="DatabaseSQLite\DatabaseTransactionHandler.cs" />
     <Compile Include="DatabaseSQLite\MapDbEter.cs" />
     <Compile Include="Enums\AlignmentTextPrintEnum.cs" />
@@ -123,15 +125,20 @@
     <Compile Include="DatabaseSQLite\SQLiteTransactionManager.cs" />
     <Compile Include="Models\AddressHttpModel.cs" />
     <Compile Include="Models\DadosClienteManipulacao.cs" />
+    <Compile Include="Models\DbModels\CategoriaDbModal.cs" />
     <Compile Include="Models\DbModels\ClienteModel.cs" />
     <Compile Include="Models\DadosAtendimentoModel.cs" />
     <Compile Include="Models\DbModels\EnderecoClienteModel.cs" />
     <Compile Include="Models\DbModels\ManipulacaoDbModel.cs" />
+    <Compile Include="Models\DbModels\ProdutoValidadeDbModal.cs" />
+    <Compile Include="Models\DbModels\ValidadeDbModal.cs" />
     <Compile Include="Models\ManipulacaoModel.cs" />
     <Compile Include="Models\DbModels\UserModel.cs" />
     <Compile Include="Models\ProdutosModel.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\DbProdutos\ActionBinary.cs" />
+    <Compile Include="Services\DbProdutos\DatabaseProdutosDb.cs" />
     <Compile Include="Services\IniFile.cs" />
     <Compile Include="Services\ManipuladoService.cs" />
     <Compile Include="Services\Prints\RawPrinterHelper.cs" />

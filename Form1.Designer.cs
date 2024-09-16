@@ -43,11 +43,16 @@
 			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
 			this.toolStripDropDownButton_impressos = new System.Windows.Forms.ToolStripButton();
 			this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
+			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+			this.toolStripProgressBar_status = new System.Windows.Forms.ToolStripProgressBar();
+			this.panel_center.SuspendLayout();
 			this.toolStrip1.SuspendLayout();
+			this.statusStrip1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// panel_center
 			// 
+			this.panel_center.Controls.Add(this.statusStrip1);
 			this.panel_center.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panel_center.Location = new System.Drawing.Point(0, 93);
 			this.panel_center.Name = "panel_center";
@@ -193,6 +198,22 @@
 			this.toolStripButton2.Text = "toolStripButton2";
 			this.toolStripButton2.Click += new System.EventHandler(this.toolStripButton2_Click);
 			// 
+			// statusStrip1
+			// 
+			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripProgressBar_status});
+			this.statusStrip1.Location = new System.Drawing.Point(0, 335);
+			this.statusStrip1.Name = "statusStrip1";
+			this.statusStrip1.Size = new System.Drawing.Size(800, 22);
+			this.statusStrip1.TabIndex = 0;
+			this.statusStrip1.Text = "statusStrip1";
+			// 
+			// toolStripProgressBar_status
+			// 
+			this.toolStripProgressBar_status.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+			this.toolStripProgressBar_status.Name = "toolStripProgressBar_status";
+			this.toolStripProgressBar_status.Size = new System.Drawing.Size(100, 16);
+			// 
 			// MainWindow
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -205,8 +226,12 @@
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "ETER PHARMA PRO";
 			this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+			this.panel_center.ResumeLayout(false);
+			this.panel_center.PerformLayout();
 			this.toolStrip1.ResumeLayout(false);
 			this.toolStrip1.PerformLayout();
+			this.statusStrip1.ResumeLayout(false);
+			this.statusStrip1.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -228,6 +253,8 @@
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
 		private System.Windows.Forms.ToolStripButton toolStripDropDownButton_impressos;
 		private System.Windows.Forms.ToolStripButton toolStripButton2;
+		private System.Windows.Forms.StatusStrip statusStrip1;
+		private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar_status;
 	}
 }
 

@@ -6,11 +6,8 @@ using System.Threading.Tasks;
 
 namespace EterPharmaPro.Models.DbModels
 {
-	public class EnderecoClienteModel
+	public class EnderecoClienteModel : BaseDbModal
 	{
-		public long ID { get; set; } = -1L;
-
-
 		public object CLIENTE_ID { get; set; } = string.Empty;
 
 
@@ -19,8 +16,5 @@ namespace EterPharmaPro.Models.DbModels
 
 		public string OBSERVACAO { get; set; } = string.Empty;
 
-		public DateTime? CREATE { get; set; }
-
-		public DateTime? UPDATE { get; set; }
 	}
 }

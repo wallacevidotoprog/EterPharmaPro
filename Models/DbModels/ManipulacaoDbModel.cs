@@ -2,10 +2,8 @@
 
 namespace EterPharmaPro.Models.DbModels
 {
-	public class ManipulacaoDbModel
+	public class ManipulacaoDbModel : BaseDbModal
 	{
-		public long? ID { get; set; }
-
 		public int ATEN_LOJA { get; set; } = -1;
 
 		public DateTime? DATA { get; set; }
@@ -26,8 +24,5 @@ namespace EterPharmaPro.Models.DbModels
 
 		public string OBSGERAL { get; set; } = string.Empty;
 
-		public DateTime? CREATE { get; set; }
-
-		public DateTime? UPDATE { get; set; }
 	}
 }

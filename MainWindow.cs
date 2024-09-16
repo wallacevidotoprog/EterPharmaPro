@@ -1,4 +1,5 @@
 ﻿using EterPharmaPro.DatabaseSQLite;
+using EterPharmaPro.DbProdutos.Services;
 using EterPharmaPro.Interfaces;
 using EterPharmaPro.Models;
 using EterPharmaPro.Models.DbModels;
@@ -14,10 +15,12 @@ namespace EterPharmaPro
 	public partial class MainWindow : Form
 	{
 		private readonly IEterDb eterDb;
+		private DatabaseProdutosDb DatabaseProdutosDb;
 		public MainWindow()
 		{
 			InitializeComponent();
 			eterDb = new EterDb();
+			DatabaseProdutosDb = new DatabaseProdutosDb(ref toolStripProgressBar_status);
 		}
 
 		private void OpenForm(Form form)
@@ -65,6 +68,6 @@ namespace EterPharmaPro
 
 		private void fORMUToolStripMenuItem_Click(object sender, EventArgs e) => OpenForm(new CreateManipulados(eterDb));
 
-		private void gERARVALIDADEDOMÊSToolStripMenuItem_Click(object sender, EventArgs e) => OpenForm(new CreateValidade());
+		private void gERARVALIDADEDOMÊSToolStripMenuItem_Click(object sender, EventArgs e) => OpenForm(new CreateValidade(eterDb));
 	}
 }

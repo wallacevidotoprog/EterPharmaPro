@@ -2,9 +2,8 @@
 
 namespace EterPharmaPro.Models.DbModels
 {
-	public class ClienteModel
-	{
-		public long? ID { get; set; }
+	public class ClienteModel : BaseDbModal
+	{		
 
 		public string CPF { get; set; } = string.Empty;
 
@@ -20,9 +19,7 @@ namespace EterPharmaPro.Models.DbModels
 
 		public object ENDERECO { get; set; } = null;
 
-		public DateTime? CREATE { get; set; }
-
-		public DateTime? UPDATE { get; set; }
+		
 
 		public void MergeSE(ClienteModel other)
 		{
