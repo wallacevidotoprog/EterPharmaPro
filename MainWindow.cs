@@ -7,6 +7,7 @@ using EterPharmaPro.Utils.Extencions;
 using EterPharmaPro.Views.Manipulados;
 using EterPharmaPro.Views.Validade;
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -16,13 +17,18 @@ namespace EterPharmaPro
 	{
 		private readonly IEterDb eterDb;
 		private DatabaseProdutosDb DatabaseProdutosDb;
+
+		private CancellationTokenSource cancellationTokenSource;
 		public MainWindow()
 		{
 			InitializeComponent();
 			eterDb = new EterDb();
-			DatabaseProdutosDb = new DatabaseProdutosDb(ref toolStripProgressBar_status);
+			cancellationTokenSource = new CancellationTokenSource();
 		}
-
+		private void MainWindow_Load(object sender, EventArgs e)
+		{
+			DatabaseProdutosDb = new DatabaseProdutosDb(toolStripProgressBar_status, cancellationTokenSource.Token);
+		}
 		private void OpenForm(Form form)
 		{
 			try
@@ -39,7 +45,7 @@ namespace EterPharmaPro
 				panel_center.Controls.Clear();
 				panel_center.Controls.Add(form);
 				form?.Show();
-				toolStrip1.Visible = false;
+				toolStrip_menu.Visible = false;
 			}
 			catch (Exception ex)
 			{
@@ -50,7 +56,7 @@ namespace EterPharmaPro
 
 		private void ChildForm_FormClosed(object sender, FormClosedEventArgs e)
 		{
-			toolStrip1.Visible = true;
+			toolStrip_menu.Visible = true;
 		}
 
 		private async void toolStripButton2_Click(object sender, EventArgs e)
@@ -68,6 +74,14 @@ namespace EterPharmaPro
 
 		private void fORMUToolStripMenuItem_Click(object sender, EventArgs e) => OpenForm(new CreateManipulados(eterDb));
 
-		private void gERARVALIDADEDOMÊSToolStripMenuItem_Click(object sender, EventArgs e) => OpenForm(new CreateValidade(eterDb));
+		private void gERARVALIDADEDOMÊSToolStripMenuItem_Click(object sender, EventArgs e) => OpenForm(new CreateValidade(eterDb, DatabaseProdutosDb));
+
+		private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
+		{
+			if (cancellationTokenSource != null)
+			{
+				cancellationTokenSource.Cancel();
+			}
+		}
 	}
 }

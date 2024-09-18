@@ -1,8 +1,13 @@
 ﻿using EterPharmaPro.Controllers.Validade;
+using EterPharmaPro.DatabaseSQLite;
+using EterPharmaPro.DbProdutos.Services;
 using EterPharmaPro.Interfaces;
+using EterPharmaPro.Models;
 using EterPharmaPro.Utils.Extencions;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace EterPharmaPro.Views.Validade
@@ -12,22 +17,24 @@ namespace EterPharmaPro.Views.Validade
 		private readonly IEterDb eterDb;
 		private readonly ValidadeController validadeController;
 
+		(int user_id, DateTime dataCreate, long vality_id) Autor;
+		(string codigo,string descricao,int quantidade, DateTime dataCreate) tempProduto;
 
 		bool isActionValidade = false;
 
 
-		public CreateValidade(IEterDb _eterDb)
+		public CreateValidade(IEterDb _eterDb, DatabaseProdutosDb _databaseProdutosDb)
 		{
 			InitializeComponent();
 			eterDb = _eterDb;
-			validadeController = new ValidadeController(eterDb);
+			validadeController = new ValidadeController(eterDb, _databaseProdutosDb);
 		}
 
 		private void CreateValidade_Load(object sender, EventArgs e)
 		{
-			comboBox_user.Invoke((Action)delegate
+			comboBox_user.Invoke((Action)async delegate
 			{
-				comboBox_user.CBListUser(eterDb);
+				await comboBox_user.CBListUserAsync(eterDb);
 			});
 		}
 
@@ -58,8 +65,8 @@ namespace EterPharmaPro.Views.Validade
 			groupBox_insert.Visible = state;
 			comboBox_user.Enabled = !state;
 			dateTimePicker_dataD.Enabled = !state;
+			listView1.Items.Clear();
 		}
-
 
 		private void NewDocValidade(bool stats)
 		{
@@ -79,10 +86,67 @@ namespace EterPharmaPro.Views.Validade
 			NewDocValidade(true);
 		}
 
-		private void ePictureBox_create_Click(object sender, EventArgs e)
+		private async void ePictureBox_create_Click(object sender, EventArgs e)
 		{
 			VisibleBodyDoc(true);
 			isActionValidade = true;
+
+			this.Focus();
+
+
+			Autor = (Convert.ToInt32(comboBox_user.SelectedValue), dateTimePicker_dataD.Value, -1);
+
+			Autor = await validadeController.CreateNewDocVality(Autor);
+
+		}
+
+		private async void ePictureBox_addCat_ClickAsync(object sender, EventArgs e) { await validadeController.CreateCategory(Autor.user_id); }
+
+		private async void ePictureBox_removeCat_ClickAsync(object sender, EventArgs e) { await validadeController.DeleteCategory(Autor.user_id); }
+
+		private void textBox_codigo_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.Return)
+			{
+				if (textBox_codigo.Text.Trim().Replace(" ",null) == "")
+				{
+					List<ProdutosModel> tempQuery = validadeController.GetAllProdutos();
+					textBox_codigo.Text = tempQuery == null ? string.Empty: InputListProduto.Show(tempQuery, "Busca de Produtos");
+				}
+				else
+				{
+					GetProduct();
+				}
+			}
+		}
+		private bool GetProduct()
+		{
+			bool tempBool = false;
+			try
+			{
+				ProdutosModel tempProdutos = validadeController.GetProduto(textBox_codigo.Text);
+				
+				if (tempProdutos != null)
+				{
+					tempProduto.codigo = tempProdutos.COD_PRODUTO;
+					tempProduto.descricao = textBox_nproduto.Text = tempProdutos.DESCRICAO_PRODUTO;
+
+
+					tempBool = (textBox_nproduto.ReadOnly = true);
+					numericUpDown_qtd.Focus();
+				}
+				else
+				{
+					MessageBox.Show("Código não encontrado.\nDigite o nome do produto no campo a baixo do código.", "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+					textBox_nproduto.ReadOnly = false;
+					textBox_nproduto.Focus();
+				}
+			}
+			catch (Exception ex)
+			{
+				ex.ErrorGet();
+			}
+			return tempBool;
 		}
 	}
 }

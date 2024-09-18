@@ -69,9 +69,9 @@ namespace EterPharmaPro.Views.Manipulados
 		private void CreateManipulados_Load(object sender, EventArgs e)
 		{
 			CleanAll(null, null);
-			comboBox_user.Invoke((Action)delegate
+			comboBox_user.Invoke((Action)async delegate
 			{
-				comboBox_user.CBListUser(_eterDb);
+				await comboBox_user.CBListUserAsync(_eterDb);
 			});
 
 			if (manipulados != null)

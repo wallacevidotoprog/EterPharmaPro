@@ -41,7 +41,6 @@
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
 			this.groupBox5 = new System.Windows.Forms.GroupBox();
 			this.listView1 = new System.Windows.Forms.ListView();
-			this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader9 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -247,7 +246,6 @@
 			// 
 			this.listView1.Activation = System.Windows.Forms.ItemActivation.OneClick;
 			this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader1,
             this.columnHeader7,
             this.columnHeader8,
             this.columnHeader9,
@@ -261,15 +259,12 @@
 			this.listView1.HideSelection = false;
 			this.listView1.HoverSelection = true;
 			this.listView1.Location = new System.Drawing.Point(3, 16);
+			this.listView1.MultiSelect = false;
 			this.listView1.Name = "listView1";
 			this.listView1.Size = new System.Drawing.Size(1057, 104);
 			this.listView1.TabIndex = 12;
 			this.listView1.UseCompatibleStateImageBehavior = false;
 			this.listView1.View = System.Windows.Forms.View.Details;
-			// 
-			// columnHeader1
-			// 
-			this.columnHeader1.Text = "ID";
 			// 
 			// columnHeader7
 			// 
@@ -452,10 +447,10 @@
 			this.textBox_nproduto.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBox_nproduto.Font = new System.Drawing.Font("Microsoft Tai Le", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.textBox_nproduto.Location = new System.Drawing.Point(0, 184);
+			this.textBox_nproduto.Location = new System.Drawing.Point(6, 184);
 			this.textBox_nproduto.Name = "textBox_nproduto";
 			this.textBox_nproduto.ReadOnly = true;
-			this.textBox_nproduto.Size = new System.Drawing.Size(836, 33);
+			this.textBox_nproduto.Size = new System.Drawing.Size(830, 33);
 			this.textBox_nproduto.TabIndex = 3;
 			// 
 			// textBox_codigo
@@ -468,6 +463,7 @@
 			this.textBox_codigo.Name = "textBox_codigo";
 			this.textBox_codigo.Size = new System.Drawing.Size(830, 33);
 			this.textBox_codigo.TabIndex = 0;
+			this.textBox_codigo.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox_codigo_KeyDown);
 			// 
 			// dateTimePicker_dataD
 			// 
@@ -660,6 +656,7 @@
 			this.ePictureBox_removeCat.TabIndex = 24;
 			this.ePictureBox_removeCat.TabStop = false;
 			this.ePictureBox_removeCat.ToolTipText = "Deletar categoria Selecionada";
+			this.ePictureBox_removeCat.Click += new System.EventHandler(this.ePictureBox_removeCat_ClickAsync);
 			// 
 			// ePictureBox_addCat
 			// 
@@ -672,6 +669,7 @@
 			this.ePictureBox_addCat.TabIndex = 23;
 			this.ePictureBox_addCat.TabStop = false;
 			this.ePictureBox_addCat.ToolTipText = "Adicionar uma categoria";
+			this.ePictureBox_addCat.Click += new System.EventHandler(this.ePictureBox_addCat_ClickAsync);
 			// 
 			// ePictureBox_seach
 			// 
@@ -740,7 +738,6 @@
 		private System.Windows.Forms.GroupBox groupBox3;
 		private System.Windows.Forms.GroupBox groupBox5;
 		private System.Windows.Forms.ListView listView1;
-		private System.Windows.Forms.ColumnHeader columnHeader1;
 		private System.Windows.Forms.ColumnHeader columnHeader7;
 		private System.Windows.Forms.ColumnHeader columnHeader8;
 		private System.Windows.Forms.ColumnHeader columnHeader9;

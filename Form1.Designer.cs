@@ -29,8 +29,7 @@
 		private void InitializeComponent()
 		{
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
-			this.panel_center = new System.Windows.Forms.Panel();
-			this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+			this.toolStrip_menu = new System.Windows.Forms.ToolStrip();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.toolStripButton_manipulacao = new System.Windows.Forms.ToolStripDropDownButton();
 			this.fORMUToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -43,25 +42,16 @@
 			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
 			this.toolStripDropDownButton_impressos = new System.Windows.Forms.ToolStripButton();
 			this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
-			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+			this.statusStrip_notify = new System.Windows.Forms.StatusStrip();
 			this.toolStripProgressBar_status = new System.Windows.Forms.ToolStripProgressBar();
-			this.panel_center.SuspendLayout();
-			this.toolStrip1.SuspendLayout();
-			this.statusStrip1.SuspendLayout();
+			this.panel_center = new System.Windows.Forms.Panel();
+			this.toolStrip_menu.SuspendLayout();
+			this.statusStrip_notify.SuspendLayout();
 			this.SuspendLayout();
 			// 
-			// panel_center
+			// toolStrip_menu
 			// 
-			this.panel_center.Controls.Add(this.statusStrip1);
-			this.panel_center.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panel_center.Location = new System.Drawing.Point(0, 93);
-			this.panel_center.Name = "panel_center";
-			this.panel_center.Size = new System.Drawing.Size(800, 357);
-			this.panel_center.TabIndex = 4;
-			// 
-			// toolStrip1
-			// 
-			this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+			this.toolStrip_menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripSeparator1,
             this.toolStripButton_manipulacao,
             this.toolStripSeparator2,
@@ -70,12 +60,12 @@
             this.toolStripSeparator3,
             this.toolStripDropDownButton_impressos,
             this.toolStripButton2});
-			this.toolStrip1.Location = new System.Drawing.Point(0, 0);
-			this.toolStrip1.Name = "toolStrip1";
-			this.toolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-			this.toolStrip1.Size = new System.Drawing.Size(800, 93);
-			this.toolStrip1.TabIndex = 3;
-			this.toolStrip1.Text = "toolStrip1";
+			this.toolStrip_menu.Location = new System.Drawing.Point(0, 0);
+			this.toolStrip_menu.Name = "toolStrip_menu";
+			this.toolStrip_menu.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
+			this.toolStrip_menu.Size = new System.Drawing.Size(947, 93);
+			this.toolStrip_menu.TabIndex = 3;
+			this.toolStrip_menu.Text = "toolStrip1";
 			// 
 			// toolStripSeparator1
 			// 
@@ -198,15 +188,15 @@
 			this.toolStripButton2.Text = "toolStripButton2";
 			this.toolStripButton2.Click += new System.EventHandler(this.toolStripButton2_Click);
 			// 
-			// statusStrip1
+			// statusStrip_notify
 			// 
-			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+			this.statusStrip_notify.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripProgressBar_status});
-			this.statusStrip1.Location = new System.Drawing.Point(0, 335);
-			this.statusStrip1.Name = "statusStrip1";
-			this.statusStrip1.Size = new System.Drawing.Size(800, 22);
-			this.statusStrip1.TabIndex = 0;
-			this.statusStrip1.Text = "statusStrip1";
+			this.statusStrip_notify.Location = new System.Drawing.Point(0, 533);
+			this.statusStrip_notify.Name = "statusStrip_notify";
+			this.statusStrip_notify.Size = new System.Drawing.Size(947, 22);
+			this.statusStrip_notify.TabIndex = 5;
+			this.statusStrip_notify.Text = "statusStrip1";
 			// 
 			// toolStripProgressBar_status
 			// 
@@ -214,33 +204,40 @@
 			this.toolStripProgressBar_status.Name = "toolStripProgressBar_status";
 			this.toolStripProgressBar_status.Size = new System.Drawing.Size(100, 16);
 			// 
+			// panel_center
+			// 
+			this.panel_center.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panel_center.Location = new System.Drawing.Point(0, 93);
+			this.panel_center.Name = "panel_center";
+			this.panel_center.Size = new System.Drawing.Size(947, 440);
+			this.panel_center.TabIndex = 6;
+			// 
 			// MainWindow
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(800, 450);
+			this.ClientSize = new System.Drawing.Size(947, 555);
 			this.Controls.Add(this.panel_center);
-			this.Controls.Add(this.toolStrip1);
+			this.Controls.Add(this.statusStrip_notify);
+			this.Controls.Add(this.toolStrip_menu);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Name = "MainWindow";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "ETER PHARMA PRO";
 			this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
-			this.panel_center.ResumeLayout(false);
-			this.panel_center.PerformLayout();
-			this.toolStrip1.ResumeLayout(false);
-			this.toolStrip1.PerformLayout();
-			this.statusStrip1.ResumeLayout(false);
-			this.statusStrip1.PerformLayout();
+			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainWindow_FormClosing);
+			this.Load += new System.EventHandler(this.MainWindow_Load);
+			this.toolStrip_menu.ResumeLayout(false);
+			this.toolStrip_menu.PerformLayout();
+			this.statusStrip_notify.ResumeLayout(false);
+			this.statusStrip_notify.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
 		}
 
 		#endregion
-
-		private System.Windows.Forms.Panel panel_center;
-		private System.Windows.Forms.ToolStrip toolStrip1;
+		private System.Windows.Forms.ToolStrip toolStrip_menu;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
 		private System.Windows.Forms.ToolStripDropDownButton toolStripButton_manipulacao;
 		private System.Windows.Forms.ToolStripMenuItem fORMUToolStripMenuItem;
@@ -253,8 +250,9 @@
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
 		private System.Windows.Forms.ToolStripButton toolStripDropDownButton_impressos;
 		private System.Windows.Forms.ToolStripButton toolStripButton2;
-		private System.Windows.Forms.StatusStrip statusStrip1;
+		private System.Windows.Forms.StatusStrip statusStrip_notify;
 		private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar_status;
+		private System.Windows.Forms.Panel panel_center;
 	}
 }
 

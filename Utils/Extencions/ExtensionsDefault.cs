@@ -24,6 +24,7 @@ namespace EterPharmaPro.Utils.Extencions
 			return Regex.Replace(value, "[^0-9]", string.Empty);
 		}
 
+
 		public static string ReturnFormation(this string value, FormatationEnum format)
 		{
 			try
@@ -84,24 +85,44 @@ namespace EterPharmaPro.Utils.Extencions
 			return -1;
 		}
 
-		public static ComboBox CBListUser(this ComboBox cb, IEterDb eterDb)
+		public static async Task<ComboBox> CBListUserAsync(this ComboBox cb, IEterDb eterDb, bool isStatusAll = false)
 		{
+			List<UserModel> list = await eterDb.DbUser.GetUser();
+
 			Dictionary<string, string> users = new Dictionary<string, string>();
-			List<UserModel> list = eterDb.DbUser.GetUser().Result;
-			for (int i = 0; i < list.Count; i++)
+
+			foreach (var user in list)
 			{
-				if (list[i].STATUS)
+				if (user.STATUS && !isStatusAll)
 				{
-					users.Add(list[i].ID.ToString(), list[i].ID_LOJA.ToString() + " - " + list[i].NOME);
+					string key = user.ID.ToString();
+					if (!users.ContainsKey(key))
+					{
+						string value = $"{user.ID_LOJA} - {user.NOME}";
+						users.Add(key, value);
+					}
 				}
+				else if (isStatusAll)
+				{
+					string key = user.ID.ToString();
+					if (!users.ContainsKey(key))
+					{
+						string value = $"{user.ID_LOJA} - {user.NOME}";
+						users.Add(key, value);
+					}
+				}
+
 			}
+
 			BindingSource bindingSource = new BindingSource
 			{
 				DataSource = users
 			};
+
 			cb.DataSource = bindingSource;
 			cb.DisplayMember = "Value";
 			cb.ValueMember = "Key";
+
 			return cb;
 		}
 

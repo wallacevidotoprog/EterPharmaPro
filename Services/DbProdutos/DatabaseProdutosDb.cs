@@ -2,6 +2,7 @@ using EterPharmaPro.Models;
 using EterPharmaPro.Services.DbProdutos;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -17,24 +18,30 @@ namespace EterPharmaPro.DbProdutos.Services
 
 		//public List<PriceProdutoModel> priceProdutoModels;
 
-		public bool Await { get; private set; }
+		private bool Await;
 
 		public event DatabaseProdutosLoadedEventHandler DatabaseProdutosLoaded;
 
-		public DatabaseProdutosDb(ref ToolStripProgressBar progressBar)
+		public DatabaseProdutosDb(ToolStripProgressBar progressBar, CancellationToken cancellationToken)
 		{
 			Await = false;
 			_progressBar = progressBar;
-			Init();
+			Init(cancellationToken);
 		}
 
-		private async void Init()
+		private async void Init(CancellationToken cancellationToken)
 		{
 			Await = true;
 			//Task.Run(() => priceProdutoModels = ReadDb.ReadProdutosPrice());
-			await Task.Run(() => produtos = ActionBinary.ReadProdutos(ref _progressBar));
+			produtos = await ActionBinary.ReadProdutosAsync(_progressBar, cancellationToken);
 			Await = false;
 			OnDatabaseLoaded();
+		}
+
+		public bool CheckingLoad()
+		{
+			if (Await) { MessageBox.Show("Aguarde o carregamento total de todos os PRODUTOS.\n Mais informações no todapé da aplicação.");}
+			return !Await;
 		}
 
 		protected virtual void OnDatabaseLoaded()
