@@ -1,0 +1,72 @@
+﻿using EterPharmaPro.Interfaces;
+using EterPharmaPro.Models.DbModels;
+using EterPharmaPro.Utils.Extencions;
+using System;
+using System.Collections.Generic;
+using System.Data.SQLite;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace EterPharmaPro.DatabaseSQLite
+{
+	public class EterDbProdutoValidade : IEterDbProdutoValidade
+	{
+		private readonly string _databaseConnection;
+
+		public EterDbProdutoValidade(string databaseConnection)
+		{
+			_databaseConnection = databaseConnection;
+		}
+
+		public async Task<long> CreateProdutoVality(ProdutoValidadeDbModal model, SQLiteConnection connection, SQLiteTransaction transaction)
+		{
+			try
+			{
+
+				string Query = "INSERT INTO PRODUTOS_VALIDADE (VALIDADE_ID,PRODUTO_CODIGO,PRODUTO_DESCRICAO,QUANTIDADE,CATEGORIA_ID) VALUES (@VALIDADE_ID, @PRODUTO_CODIGO,@PRODUTO_DESCRICAO, @QUANTIDADE,@CATEGORIA_ID)";
+				using (SQLiteCommand command = new SQLiteCommand(Query, connection, transaction))
+				{
+					command.Parameters.AddWithValue("@VALIDADE_ID", model.VALIDADE_ID);
+					command.Parameters.AddWithValue("@PRODUTO_CODIGO", model.PRODUTO_CODIGO);
+					command.Parameters.AddWithValue("@PRODUTO_DESCRICAO", model.PRODUTO_DESCRICAO);
+					command.Parameters.AddWithValue("@QUANTIDADE", model.QUANTIDADE);
+					command.Parameters.AddWithValue("@CATEGORIA_ID", model.CATEGORIA_ID);
+					await command.ExecuteNonQueryAsync();
+					command.CommandText = "SELECT last_insert_rowid()";
+					return (long)(await command.ExecuteScalarAsync().ConfigureAwait(continueOnCapturedContext: false));
+				}
+
+			}
+			catch (Exception ex)
+			{
+				ex.ErrorGet();
+
+				return -1;
+			}
+		}
+
+		public Task<bool> DeleteProdutoVality(string id, SQLiteConnection connection, SQLiteTransaction transaction)
+		{
+			throw new NotImplementedException();
+		}
+
+		public async Task<List<ProdutoValidadeDbModal>> GetProdutoVality(string queryID = null)
+		{
+			try
+			{
+				return await new MapDbEter(_databaseConnection).QueryAsync<ProdutoValidadeDbModal>($"SELECT * FROM PRODUTOS_VALIDADE {(queryID != null ? " WHERE ID = " + queryID : string.Empty)}");
+			}
+			catch (Exception ex)
+			{
+				ex.ErrorGet();
+			}
+			return null;
+		}
+
+		public Task<bool> UpdateProdutoVality(ProdutoValidadeDbModal modele, SQLiteConnection connection, SQLiteTransaction transaction)
+		{
+			throw new NotImplementedException();
+		}
+	}
+}

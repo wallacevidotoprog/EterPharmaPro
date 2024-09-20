@@ -3,6 +3,7 @@ using EterPharmaPro.DatabaseSQLite;
 using EterPharmaPro.DbProdutos.Services;
 using EterPharmaPro.Interfaces;
 using EterPharmaPro.Models;
+using EterPharmaPro.Properties;
 using EterPharmaPro.Utils.Extencions;
 using System;
 using System.Collections.Generic;
@@ -17,10 +18,10 @@ namespace EterPharmaPro.Views.Validade
 		private readonly IEterDb eterDb;
 		private readonly ValidadeController validadeController;
 
-		(int user_id, DateTime dataCreate, long vality_id) Autor;
-		(string codigo,string descricao,int quantidade, DateTime dataCreate) tempProduto;
+		private SetValityModel setValityModel;
 
 		bool isActionValidade = false;
+		bool isEditProduto = false;
 
 
 		public CreateValidade(IEterDb _eterDb, DatabaseProdutosDb _databaseProdutosDb)
@@ -93,30 +94,29 @@ namespace EterPharmaPro.Views.Validade
 
 			this.Focus();
 
+			setValityModel = new SetValityModel();
+			setValityModel.user_id = Convert.ToInt32(comboBox_user.SelectedValue);
+			setValityModel.dataCreate = dateTimePicker_dataD.Value;
 
-			Autor = (Convert.ToInt32(comboBox_user.SelectedValue), dateTimePicker_dataD.Value, -1);
+			setValityModel.vality_id = await validadeController.CreateNewDocVality(setValityModel);
 
-			Autor = await validadeController.CreateNewDocVality(Autor);
-
+			await comboBox_categoria.CBListCategoryAsync(await validadeController.GetCategoryUser(setValityModel.user_id));
 		}
 
-		private async void ePictureBox_addCat_ClickAsync(object sender, EventArgs e) { await validadeController.CreateCategory(Autor.user_id); }
+		private async void ePictureBox_addCat_ClickAsync(object sender, EventArgs e) { await validadeController.CreateCategory(setValityModel.user_id); }
 
-		private async void ePictureBox_removeCat_ClickAsync(object sender, EventArgs e) { await validadeController.DeleteCategory(Autor.user_id); }
+		private async void ePictureBox_removeCat_ClickAsync(object sender, EventArgs e) { await validadeController.DeleteCategory(setValityModel.user_id); }
 
 		private void textBox_codigo_KeyDown(object sender, KeyEventArgs e)
 		{
 			if (e.KeyCode == Keys.Return)
 			{
-				if (textBox_codigo.Text.Trim().Replace(" ",null) == "")
+				if (textBox_codigo.Text.Trim().Replace(" ", null) == "")
 				{
 					List<ProdutosModel> tempQuery = validadeController.GetAllProdutos();
-					textBox_codigo.Text = tempQuery == null ? string.Empty: InputListProduto.Show(tempQuery, "Busca de Produtos");
+					textBox_codigo.Text = tempQuery == null ? string.Empty : InputListProduto.Show(tempQuery, "Busca de Produtos");
 				}
-				else
-				{
-					GetProduct();
-				}
+				GetProduct();
 			}
 		}
 		private bool GetProduct()
@@ -125,12 +125,10 @@ namespace EterPharmaPro.Views.Validade
 			try
 			{
 				ProdutosModel tempProdutos = validadeController.GetProduto(textBox_codigo.Text);
-				
+
 				if (tempProdutos != null)
 				{
-					tempProduto.codigo = tempProdutos.COD_PRODUTO;
-					tempProduto.descricao = textBox_nproduto.Text = tempProdutos.DESCRICAO_PRODUTO;
-
+					textBox_nproduto.Text = tempProdutos.DESCRICAO_PRODUTO;
 
 					tempBool = (textBox_nproduto.ReadOnly = true);
 					numericUpDown_qtd.Focus();
@@ -147,6 +145,119 @@ namespace EterPharmaPro.Views.Validade
 				ex.ErrorGet();
 			}
 			return tempBool;
+		}
+
+		private async void ePictureBox_sava_up_Click(object sender, EventArgs e)
+		{
+			this.Focus();
+
+			try
+			{
+				if (setValityModel.produto == null)
+				{
+					setValityModel.produto = new ProdutoSetValityModel();
+				}
+
+				setValityModel.produto.codigo = Convert.ToInt32(textBox_codigo.Text);
+				setValityModel.produto.descricao = textBox_nproduto.Text;
+				setValityModel.produto.quantidade = (int)numericUpDown_qtd.Value;
+				setValityModel.produto.dateVality = dateTimePicker_data.Value;
+				setValityModel.produto.category_id = Convert.ToInt32(comboBox_categoria.SelectedValue);
+
+				bool isSetClear = false;
+
+				if (!isEditProduto)
+				{
+					(bool result, long id) = await validadeController.CreateProdutoVality(setValityModel.produto);
+					if (result)
+					{
+						setValityModel.produto.id = id;
+					}
+
+					isSetClear = result;
+				}
+				else if (isEditProduto)
+				{
+					isSetClear = await validadeController.UpdateProdutoVality(setValityModel.produto);
+				}
+
+
+				if (isSetClear)
+				{
+					setValityModel.produto = null;
+					textBox_codigo.Clear();
+					textBox_nproduto.Clear();
+					textBox_nproduto.ReadOnly = true;
+					numericUpDown_qtd.Value = 1;
+					dateTimePicker_data.Value = DateTime.Today;
+				}
+
+
+			}
+			catch (Exception ex)
+			{
+				ex.ErrorGet();
+			}
+		}
+
+		private void toolStripButton_clear_Click(object sender, EventArgs e)
+		{
+			setValityModel.produto = null;
+			textBox_codigo.Clear();
+			textBox_nproduto.Clear();
+			textBox_nproduto.ReadOnly = true;
+			numericUpDown_qtd.Value = 1;
+			dateTimePicker_data.Value = DateTime.Today;
+		}
+
+		private void eDITARToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				if (listView1.SelectedItems.Count > 0)
+				{
+					int selectedItem =  int.Parse(listView1.SelectedItems[0].SubItems[0].Text);
+					isEditProduto = true;
+					setValityModel.produto = new ProdutoSetValityModel();
+					//pictureBox_addItem.Image = Resources.atualizar_ficheiro;
+
+					setValityModel.produto.id = Convert.ToUInt32(listView1.SelectedItems[0].SubItems[0].Text);
+					textBox_codigo.Text = setValityModel.produto.codigo = listView1.SelectedItems[0].SubItems[0].Text;
+					textBox_nproduto.Text = setValityModel.produto.codigo = listView1.SelectedItems[0].SubItems[0].Text;
+					numericUpDown_qtd.Value = setValityModel.produto.codigo = listView1.SelectedItems[0].SubItems[0].Text;
+					dateTimePicker_data.Value = setValityModel.produto.codigo = listView1.SelectedItems[0].SubItems[0].Text;
+					comboBox_categoria.SelectedIndex = vsetValityModel.produto.codigo = listView1.SelectedItems[0].SubItems[0].Text;
+				}
+			}
+			catch (Exception ex)
+			{
+				ex.ErrorGet();
+			}
+		}
+
+		private void eXCLUIRToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				if (listView1.SelectedItems.Count <= 0)
+				{
+					return;
+				}
+				int temp = int.Parse(listView1.SelectedItems[0]?.SubItems[0].Text);
+				if (MessageBox.Show("Deseja excluir esse item ?\n" + listView1.SelectedItems[0]?.SubItems[3].Text, "Excluir Item", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK && temp >= 0)
+				{
+					validade.PRODUTOS.RemoveAt(temp);
+					for (int i = 0; i < validade.PRODUTOS.Count; i++)
+					{
+						validade.PRODUTOS[i].ID = i;
+					}
+					RefrashGrid();
+				}
+			}
+			catch (Exception ex)
+			{
+				ex.ErrorGet();
+			}
 		}
 	}
 }

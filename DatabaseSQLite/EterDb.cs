@@ -29,6 +29,13 @@ namespace EterPharmaPro.DatabaseSQLite
 		public IEterDbRequisicoesNotas DbRequisicoesNotas { get; set; }
 
 		public IEterDbControlados DbControlados { get; set; }
+
+		public IEterDbValidade DbValidade { get; set; }
+
+		public IEterDbProdutoValidade DbProdutoValidade { get; set; }
+
+		public IEterDbCategoria DbCategoria { get; set; }
+
 		public EterDbController EterDbController { get; set; }
 
 		public string DatabaseConnection => _databaseConnection;
@@ -64,6 +71,9 @@ namespace EterPharmaPro.DatabaseSQLite
 			DbManipuladosMedicamentos = new EterDbManipuladosMedicamentos(_databaseConnection);
 			DbRequisicoesNotas = new EterDbRequisicoesNotas(_databaseConnection);
 			DbControlados = new EterDbControlados(_databaseConnection);
+			DbValidade = new EterDbValidade(_databaseConnection);
+			DbProdutoValidade = new EterDbProdutoValidade(_databaseConnection);
+			DbCategoria = new EterDbCategoria(_databaseConnection);
 
 			EterDbController = new EterDbController(this);
 		}

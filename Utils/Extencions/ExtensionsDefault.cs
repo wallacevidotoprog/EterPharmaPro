@@ -3,6 +3,7 @@ using EterPharmaPro.Interfaces;
 using EterPharmaPro.Models;
 using EterPharmaPro.Models.DbModels;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -126,6 +127,34 @@ namespace EterPharmaPro.Utils.Extencions
 			return cb;
 		}
 
+		public static async Task<ComboBox> CBListCategoryAsync(this ComboBox cb, List<CategoriaDbModal> categoriaDbModal)
+		{
+			Dictionary<string, string> cat = new Dictionary<string, string>();
+
+			cat.Add(1.ToString(), "Sem Categoria");
+			
+
+			for (int i = 0; i < categoriaDbModal.Count; i++)
+            {
+				string key = categoriaDbModal[i].ID.ToString();
+				if (!cat.ContainsKey(key))
+				{
+					cat.Add(key, categoriaDbModal[i].NAME);
+				}
+			}
+
+			BindingSource bindingSource = new BindingSource
+			{
+				DataSource = cat
+			};
+
+			cb.DataSource = bindingSource;
+			cb.DisplayMember = "Value";
+			cb.ValueMember = "Key";
+
+			return cb;
+		}
+
 		public static async Task<AddressHttpModel> BuscaCepAsync(string cep)
 		{
 			HttpClient client = new HttpClient();
@@ -146,6 +175,9 @@ namespace EterPharmaPro.Utils.Extencions
 		{
 			return DateTime.Parse($"01/{DateTime.Now.Month}/{DateTime.Now.Year}");
 		}
+
+
+		public static long ToDatetimeUnix(this DateTime? dateTime) => ((DateTimeOffset)dateTime).ToUnixTimeSeconds();
 
 		//public static TypeDoc TypeDocs(this string type)
 		//{

@@ -23,6 +23,12 @@ namespace EterPharmaPro.Interfaces
 
 		IEterDbControlados DbControlados { get; set; }
 
+		IEterDbValidade DbValidade { get; set; }
+
+		IEterDbProdutoValidade DbProdutoValidade { get; set; }
+
+		IEterDbCategoria DbCategoria { get; set; }
+
 		Task<bool> ExecuteTransactionAsync(params Func<Task<bool>>[] databaseOperations);
 	}
 }

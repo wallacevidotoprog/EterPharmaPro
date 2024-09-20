@@ -10,7 +10,8 @@ namespace EterPharmaPro.Models.DbModels
 	{
         public int VALIDADE_ID { get; set; }
         public int PRODUTO_CODIGO { get; set; }
-        public int QUANTIDADE { get; set; }
+		public string PRODUTO_DESCRICAO { get; set; }
+		public int QUANTIDADE { get; set; }
         public int CATEGORIA_ID { get; set; }
     }
 }
