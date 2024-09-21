@@ -8,18 +8,19 @@ namespace EterPharmaPro.Models
 {
 	public class SetValityModel
 	{
-		public int user_id { get; set; }
+		public long? user_id { get; set; }
+		public int user_idLoja { get; set; }
 
 		public DateTime dataCreate { get; set; }
 
-		public long vality_id { get; set; }
+		public long? vality_id { get; set; }
 
 		public ProdutoSetValityModel produto { get; set; }
 
 	}
 	public class ProdutoSetValityModel
 	{
-		public long id { get; set; }
+		public long? id { get; set; }
 		public int codigo { get; set; }
 
 		public string descricao { get; set; }

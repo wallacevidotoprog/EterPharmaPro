@@ -6,7 +6,7 @@ namespace EterPharmaPro.Interfaces
 {
 	public interface IEterDbManipuladosMedicamentos
 	{
-		Task<long> CreateMedicamento(string model, string id, SQLiteConnection connection, SQLiteTransaction transaction);
+		Task<long?> CreateMedicamento(string model, string id, SQLiteConnection connection, SQLiteTransaction transaction);
 
 		Task<bool> UpdateMedicamento(string model, string id, SQLiteConnection connection, SQLiteTransaction transaction);
 

@@ -8,7 +8,7 @@ namespace EterPharmaPro.Interfaces
 {
 	public interface IEterDbCliente
 	{
-		Task<long> CreateCliente(ClienteModel model, SQLiteConnection connection, SQLiteTransaction transaction);
+		Task<long?> CreateCliente(ClienteModel model, SQLiteConnection connection, SQLiteTransaction transaction);
 
 		Task<bool> UpdateCliente(ClienteModel modele, SQLiteConnection connection, SQLiteTransaction transaction);
 

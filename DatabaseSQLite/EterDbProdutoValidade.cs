@@ -19,18 +19,19 @@ namespace EterPharmaPro.DatabaseSQLite
 			_databaseConnection = databaseConnection;
 		}
 
-		public async Task<long> CreateProdutoVality(ProdutoValidadeDbModal model, SQLiteConnection connection, SQLiteTransaction transaction)
+		public async Task<long?> CreateProdutoVality(ProdutoValidadeDbModal model, SQLiteConnection connection, SQLiteTransaction transaction)
 		{
 			try
 			{
 
-				string Query = "INSERT INTO PRODUTOS_VALIDADE (VALIDADE_ID,PRODUTO_CODIGO,PRODUTO_DESCRICAO,QUANTIDADE,CATEGORIA_ID) VALUES (@VALIDADE_ID, @PRODUTO_CODIGO,@PRODUTO_DESCRICAO, @QUANTIDADE,@CATEGORIA_ID)";
+				string Query = "INSERT INTO PRODUTOS_VALIDADE (VALIDADE_ID,PRODUTO_CODIGO,PRODUTO_DESCRICAO,QUANTIDADE,DATA_VALIDADE,CATEGORIA_ID) VALUES (@VALIDADE_ID, @PRODUTO_CODIGO,@PRODUTO_DESCRICAO, @QUANTIDADE,@DATA_VALIDADE,@CATEGORIA_ID)";
 				using (SQLiteCommand command = new SQLiteCommand(Query, connection, transaction))
 				{
 					command.Parameters.AddWithValue("@VALIDADE_ID", model.VALIDADE_ID);
 					command.Parameters.AddWithValue("@PRODUTO_CODIGO", model.PRODUTO_CODIGO);
 					command.Parameters.AddWithValue("@PRODUTO_DESCRICAO", model.PRODUTO_DESCRICAO);
 					command.Parameters.AddWithValue("@QUANTIDADE", model.QUANTIDADE);
+					command.Parameters.AddWithValue("@DATA_VALIDADE", model.DATA_VALIDADE.ToDatetimeUnix());
 					command.Parameters.AddWithValue("@CATEGORIA_ID", model.CATEGORIA_ID);
 					await command.ExecuteNonQueryAsync();
 					command.CommandText = "SELECT last_insert_rowid()";
@@ -46,9 +47,26 @@ namespace EterPharmaPro.DatabaseSQLite
 			}
 		}
 
-		public Task<bool> DeleteProdutoVality(string id, SQLiteConnection connection, SQLiteTransaction transaction)
+		public async Task<bool> DeleteProdutoVality(string id, SQLiteConnection connection, SQLiteTransaction transaction)
 		{
-			throw new NotImplementedException();
+			try
+			{
+
+				string Query = "DELETE FROM PRODUTOS_VALIDADE WHERE ID = @ID";
+				using (SQLiteCommand command = new SQLiteCommand(Query, connection, transaction))
+				{
+					command.Parameters.AddWithValue("@ID", id);
+					await command.ExecuteNonQueryAsync();
+				}
+
+				return true;
+			}
+			catch (Exception ex)
+			{
+				ex.ErrorGet();
+
+				return false;
+			}
 		}
 
 		public async Task<List<ProdutoValidadeDbModal>> GetProdutoVality(string queryID = null)

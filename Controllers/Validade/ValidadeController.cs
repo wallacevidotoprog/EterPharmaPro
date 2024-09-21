@@ -29,7 +29,7 @@ namespace EterPharmaPro.Controllers.Validade
 
 		}
 
-		public async Task<long> CreateNewDocVality(SetValityModel model)
+		public async Task<long?> CreateNewDocVality(SetValityModel model)
 		{
 			using (var connection = new SQLiteConnection(eterDb.DatabaseConnection))
 			{
@@ -38,7 +38,7 @@ namespace EterPharmaPro.Controllers.Validade
 				{
 					try
 					{
-						long tempIdV = await eterDb.DbValidade.CreateVality(new ValidadeDbModal { USER_ID = model.user_id, DATE = model.dataCreate }, connection, transaction);
+						long? tempIdV = await eterDb.DbValidade.CreateVality(new ValidadeDbModal { USER_ID = model.user_id, DATE = model.dataCreate }, connection, transaction);
 
 						transaction.Commit();
 						return tempIdV;
@@ -53,14 +53,52 @@ namespace EterPharmaPro.Controllers.Validade
 			}
 		}
 
-		public async Task CreateCategory(int user_id)
+		public async Task<bool> CreateCategory(long? user_id, string cat_name)
 		{
-			throw new NotImplementedException();
+			using (var connection = new SQLiteConnection(eterDb.DatabaseConnection))
+			{
+				await connection.OpenAsync().ConfigureAwait(false);
+				using (var transaction = connection.BeginTransaction())
+				{
+					try
+					{
+						long? tempIdV = await eterDb.DbCategoria.CreateCategory(new CategoriaDbModal { USER_ID = user_id, NAME = cat_name }, connection, transaction);
+
+						transaction.Commit();
+						return true;
+					}
+					catch (Exception ex)
+					{
+						transaction.Rollback();
+						ex.ErrorGet();
+						return false;
+					}
+				}
+			}
 		}
 
-		public async Task DeleteCategory(int user_id)
+		public async Task<bool> DeleteCategory(int cat_id)
 		{
-			throw new NotImplementedException();
+			using (var connection = new SQLiteConnection(eterDb.DatabaseConnection))
+			{
+				await connection.OpenAsync().ConfigureAwait(false);
+				using (var transaction = connection.BeginTransaction())
+				{
+					try
+					{
+						bool tempIdV = await eterDb.DbCategoria.DeleteCategory(cat_id.ToString(), connection, transaction);
+
+						transaction.Commit();
+						return tempIdV;
+					}
+					catch (Exception ex)
+					{
+						transaction.Rollback();
+						ex.ErrorGet();
+						return false;
+					}
+				}
+			}
 		}
 
 		public  List<ProdutosModel> GetAllProdutos()
@@ -83,19 +121,120 @@ namespace EterPharmaPro.Controllers.Validade
 			return ((text.Trim().Length >= 7) ? databaseProdutosDb.produtos.Find((ProdutosModel x) => x.EAN.Contains(text.Trim())) : databaseProdutosDb.produtos.Find((ProdutosModel x) => x.COD_PRODUTO.Contains(text.Trim().Replace(" ", null).PadLeft(6, '0'))));
 		}
 
-		public async Task<(bool,long)> CreateProdutoVality(ProdutoSetValityModel produtoSetValityModel)
+		public async Task<(bool,long?)> CreateProdutoVality(SetValityModel setValityModel)
 		{
-			throw new NotImplementedException();
+			using (var connection = new SQLiteConnection(eterDb.DatabaseConnection))
+			{
+				await connection.OpenAsync().ConfigureAwait(false);
+				using (var transaction = connection.BeginTransaction())
+				{
+					try
+					{
+						long? tempIdV = await eterDb.DbProdutoValidade.CreateProdutoVality(new ProdutoValidadeDbModal {
+							PRODUTO_CODIGO = setValityModel.produto.codigo,
+							PRODUTO_DESCRICAO = setValityModel.produto.descricao,
+							QUANTIDADE = setValityModel.produto.quantidade,
+							DATA_VALIDADE = setValityModel.produto.dateVality,
+							CATEGORIA_ID = setValityModel.produto.category_id,
+							VALIDADE_ID = (int)setValityModel.vality_id
+
+						}, connection, transaction);
+
+						transaction.Commit();
+						return (true,tempIdV);
+					}
+					catch (Exception ex)
+					{
+						transaction.Rollback();
+						ex.ErrorGet();
+						return (false,-1);
+					}
+				}
+			}
 		}
 
-		public async Task<List<CategoriaDbModal>> GetCategoryUser(int user_id)
+		public async Task<List<CategoriaDbModal>> GetCategoryUser(long? user_id)
 		{
 			return await eterDb.DbCategoria.GetCategory(user_id.ToString());
 		}
 
-		internal async Task<bool> UpdateProdutoVality(ProdutoSetValityModel produto)
+		public async Task<bool> UpdateProdutoVality(SetValityModel setValityModel)
 		{
-			throw new NotImplementedException();
+			using (var connection = new SQLiteConnection(eterDb.DatabaseConnection))
+			{
+				await connection.OpenAsync().ConfigureAwait(false);
+				using (var transaction = connection.BeginTransaction())
+				{
+					try
+					{
+						bool tempIdV = await eterDb.DbProdutoValidade.UpdateProdutoVality(new ProdutoValidadeDbModal {
+							PRODUTO_CODIGO = setValityModel.produto.codigo,
+							PRODUTO_DESCRICAO = setValityModel.produto.descricao,
+							QUANTIDADE = setValityModel.produto.quantidade,
+							DATA_VALIDADE = setValityModel.produto.dateVality,
+							CATEGORIA_ID = setValityModel.produto.category_id,
+							VALIDADE_ID = (int)setValityModel.vality_id,
+							ID = setValityModel.produto.id
+						}, connection, transaction);
+
+						transaction.Commit();
+						return tempIdV;
+					}
+					catch (Exception ex)
+					{
+						transaction.Rollback();
+						ex.ErrorGet();
+						return false;
+					}
+				}
+			}
+		}
+
+		public async Task<bool> DeleteProduto(int temp)
+		{
+			using (var connection = new SQLiteConnection(eterDb.DatabaseConnection))
+			{
+				await connection.OpenAsync().ConfigureAwait(false);
+				using (var transaction = connection.BeginTransaction())
+				{
+					try
+					{
+						bool tempIdV = await eterDb.DbProdutoValidade.DeleteProdutoVality(temp.ToString(), connection, transaction);
+
+						transaction.Commit();
+						return tempIdV;
+					}
+					catch (Exception ex)
+					{
+						transaction.Rollback();
+						ex.ErrorGet();
+						return false;
+					}
+				}
+			}
+		}
+
+		public async Task<ProdutoValidadeDbModal> GetProdutoDb(string text)
+		{
+			List<ProdutoValidadeDbModal> temp = await eterDb.DbProdutoValidade.GetProdutoVality(text);
+
+			return temp == null ? null : temp.Count > 0 ? temp[0]: null;
+		}
+
+		public async Task<List<(int cat_id, string cat_name)>> GetCategoryList(List<int> list)
+		{
+			List<(int cat_id, string cat_name)> resp = new List<(int cat_id, string cat_name)>();
+
+			List<CategoriaDbModal> allCat = await eterDb.DbCategoria.GetCategory();
+
+			for (int i = 0; i < list.Count; i++)
+			{
+				resp.Add((
+					list[i], (await eterDb.DbCategoria.GetCategory(list[i].ToString()))[0].NAME
+					));
+			}
+
+			return resp;
 		}
 	}
 }

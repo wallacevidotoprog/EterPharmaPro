@@ -30,5 +30,6 @@ namespace EterPharmaPro.Interfaces
 		IEterDbCategoria DbCategoria { get; set; }
 
 		Task<bool> ExecuteTransactionAsync(params Func<Task<bool>>[] databaseOperations);
+		Task<object> ExecuteTransactionAsync(Func<Task<object>> databaseOperations);
 	}
 }

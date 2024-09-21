@@ -19,7 +19,7 @@ namespace EterPharmaPro.DatabaseSQLite
 			_databaseConnection = databaseConnection;
 		}
 
-		public async Task<long> CreateCategory(CategoriaDbModal model, SQLiteConnection connection, SQLiteTransaction transaction)
+		public async Task<long?> CreateCategory(CategoriaDbModal model, SQLiteConnection connection, SQLiteTransaction transaction)
 		{
 			try
 			{
@@ -43,9 +43,26 @@ namespace EterPharmaPro.DatabaseSQLite
 			}
 		}
 
-		public Task<bool> DeleteCategory(string id, SQLiteConnection connection, SQLiteTransaction transaction)
+		public async Task<bool> DeleteCategory(string id, SQLiteConnection connection, SQLiteTransaction transaction)
 		{
-			throw new NotImplementedException();
+			try
+			{
+
+				string Query = "DELETE FROM CATEGORIA_VALIDADE WHERE ID = @ID";
+				using (SQLiteCommand command = new SQLiteCommand(Query, connection, transaction))
+				{
+					command.Parameters.AddWithValue("@ID", id);
+					await command.ExecuteNonQueryAsync();
+				}
+
+				return true;
+			}
+			catch (Exception ex)
+			{
+				ex.ErrorGet();
+
+				return false;
+			}
 		}
 
 		public async Task<List<CategoriaDbModal>> GetCategory(string queryID = null)

@@ -8,7 +8,7 @@ namespace EterPharmaPro.Interfaces
 {
 	public interface IEterDbValidade
 	{
-		Task<long> CreateVality(ValidadeDbModal model, SQLiteConnection connection, SQLiteTransaction transaction);
+		Task<long?> CreateVality(ValidadeDbModal model, SQLiteConnection connection, SQLiteTransaction transaction);
 
 		Task<bool> UpdateVality(ValidadeDbModal modele, SQLiteConnection connection, SQLiteTransaction transaction);
 

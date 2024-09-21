@@ -17,7 +17,7 @@ namespace EterPharmaPro.DatabaseSQLite
 			_databaseConnection = databaseConnection;
 		}
 
-		public async Task<long> CreateMedicamento(string model, string id, SQLiteConnection connection, SQLiteTransaction transaction)
+		public async Task<long?> CreateMedicamento(string model, string id, SQLiteConnection connection, SQLiteTransaction transaction)
 		{
 			long idE = -1L;
 			try

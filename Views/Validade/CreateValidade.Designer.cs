@@ -309,7 +309,7 @@
 			this.eXCLUIRToolStripMenuItem.Name = "eXCLUIRToolStripMenuItem";
 			this.eXCLUIRToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.eXCLUIRToolStripMenuItem.Text = "EXCLUIR";
-			this.eXCLUIRToolStripMenuItem.Click += new System.EventHandler(this.eXCLUIRToolStripMenuItem_Click);
+			this.eXCLUIRToolStripMenuItem.Click += new System.EventHandler(this.eXCLUIRToolStripMenuItem_ClickAsync);
 			// 
 			// groupBox_ne
 			// 

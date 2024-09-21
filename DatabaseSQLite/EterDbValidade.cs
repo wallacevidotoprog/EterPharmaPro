@@ -20,7 +20,7 @@ namespace EterPharmaPro.DatabaseSQLite
 			_databaseConnection = databaseConnection;
 		}
 
-		public async Task<long> CreateVality(ValidadeDbModal model, SQLiteConnection connection, SQLiteTransaction transaction)
+		public async Task<long?> CreateVality(ValidadeDbModal model, SQLiteConnection connection, SQLiteTransaction transaction)
 		{
 			try
 			{
@@ -44,9 +44,26 @@ namespace EterPharmaPro.DatabaseSQLite
 			}
 		}
 
-		public Task<bool> DeleteVality(string id, SQLiteConnection connection, SQLiteTransaction transaction)
+		public async Task<bool> DeleteVality(string id, SQLiteConnection connection, SQLiteTransaction transaction)
 		{
-			throw new NotImplementedException();
+			try
+			{
+
+				string Query = "DELETE FROM VALIDADES WHERE ID = @ID";
+				using (SQLiteCommand command = new SQLiteCommand(Query, connection, transaction))
+				{
+					command.Parameters.AddWithValue("@ID", id);
+					await command.ExecuteNonQueryAsync();
+				}
+
+				return true;
+			}
+			catch (Exception ex)
+			{
+				ex.ErrorGet();
+
+				return false;
+			}
 		}
 
 		public async Task<List<ValidadeDbModal>> GetVality(string queryID = null)

@@ -13,5 +13,7 @@ namespace EterPharmaPro.Models.DbModels
 		public string PRODUTO_DESCRICAO { get; set; }
 		public int QUANTIDADE { get; set; }
         public int CATEGORIA_ID { get; set; }
-    }
+		public DateTime DATA_VALIDADE { get; set; }
+
+	}
 }

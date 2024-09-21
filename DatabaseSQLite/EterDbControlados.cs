@@ -15,7 +15,7 @@ namespace EterPharmaPro.DatabaseSQLite
 			_databaseConnection = databaseConnection;
 		}
 
-		public async Task<long> CreateControlado(string med, int qtd, DateTime val, string lote, string id, SQLiteConnection connection, SQLiteTransaction transaction)
+		public async Task<long?> CreateControlado(string med, int qtd, DateTime val, string lote, string id, SQLiteConnection connection, SQLiteTransaction transaction)
 		{
 			long idE = -1L;
 

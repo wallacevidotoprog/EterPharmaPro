@@ -80,7 +80,7 @@ namespace EterPharmaPro.DatabaseSQLite
 
 		public async Task<bool> ExecuteTransactionAsync(params Func<Task<bool>>[] databaseOperations)
 		{
-			return await _transactionHandler.ExecuteWithTransactionAsync(async () =>
+			return (bool)await _transactionHandler.ExecuteWithTransactionAsync(async () =>
 			{
 				foreach (var operation in databaseOperations)
 				{
@@ -93,6 +93,16 @@ namespace EterPharmaPro.DatabaseSQLite
 				return true;
 			});
 		}
+
+		public async Task<object> ExecuteTransactionAsync(Func<Task<object>> databaseOperations)
+		{
+			return (object)await _transactionHandler.ExecuteWithTransactionAsync(async () =>
+			{
+				return await databaseOperations();				
+			});
+		}
+
+
 		//------ EXEMPLO ------
 		//public async Task<bool> AtualizarDadosComTransacaoAsync(UserModel cliente, UserModel endereco, UserModel usuario)
 		//{

@@ -91,6 +91,7 @@
     <Compile Include="DatabaseSQLite\EterDbCategoria.cs" />
     <Compile Include="DatabaseSQLite\EterDbProdutoValidade.cs" />
     <Compile Include="DatabaseSQLite\EterDbValidade.cs" />
+    <Compile Include="Enums\ListViewActionsEnum.cs" />
     <Compile Include="Interfaces\IEterDbCategoria.cs" />
     <Compile Include="Interfaces\IEterDbProdutoValidade.cs" />
     <Compile Include="Interfaces\IEterDbValidade.cs" />

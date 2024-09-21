@@ -95,7 +95,7 @@ namespace EterPharmaPro.DatabaseSQLite
 			try
 			{
 
-				string Query = "DELETE FROM USERS WHERE ID_LOJA = @ID_LOJA";
+				string Query = "DELETE FROM USERS WHERE ID = @ID";
 				using (SQLiteCommand command = new SQLiteCommand(Query, connection,transaction))
 				{
 					command.Parameters.AddWithValue("@ID", id);

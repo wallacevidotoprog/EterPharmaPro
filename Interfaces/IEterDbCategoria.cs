@@ -7,7 +7,7 @@ namespace EterPharmaPro.Interfaces
 {
 	public interface IEterDbCategoria
 	{
-		Task<long> CreateCategory(CategoriaDbModal model, SQLiteConnection connection, SQLiteTransaction transaction);
+		Task<long?> CreateCategory(CategoriaDbModal model, SQLiteConnection connection, SQLiteTransaction transaction);
 
 		Task<bool> UpdateCategory(CategoriaDbModal modele, SQLiteConnection connection, SQLiteTransaction transaction);
 

@@ -127,16 +127,16 @@ namespace EterPharmaPro.Utils.Extencions
 			return cb;
 		}
 
-		public static async Task<ComboBox> CBListCategoryAsync(this ComboBox cb, List<CategoriaDbModal> categoriaDbModal)
+		public static async Task<ComboBox> CBListCategoryAsync(this ComboBox cb, List<CategoriaDbModal> categoriaDbModal)//melhorar
 		{
-			Dictionary<string, string> cat = new Dictionary<string, string>();
+			Dictionary<long?, string> cat = new Dictionary<long?, string>();
 
-			cat.Add(1.ToString(), "Sem Categoria");
+			cat.Add(1, "SEM CATEGORIA");
 			
 
 			for (int i = 0; i < categoriaDbModal.Count; i++)
             {
-				string key = categoriaDbModal[i].ID.ToString();
+				long? key = categoriaDbModal[i].ID;
 				if (!cat.ContainsKey(key))
 				{
 					cat.Add(key, categoriaDbModal[i].NAME);
@@ -178,6 +178,7 @@ namespace EterPharmaPro.Utils.Extencions
 
 
 		public static long ToDatetimeUnix(this DateTime? dateTime) => ((DateTimeOffset)dateTime).ToUnixTimeSeconds();
+		public static long ToDatetimeUnix(this DateTime dateTime) => ((DateTimeOffset)dateTime).ToUnixTimeSeconds();
 
 		//public static TypeDoc TypeDocs(this string type)
 		//{
