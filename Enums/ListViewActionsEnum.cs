@@ -8,6 +8,6 @@ namespace EterPharmaPro.Enums
 {
 	public enum ListViewActionsEnum
 	{
-		NONE,UPGRADE,ADD,UPDATE,REMOVE
+		NONE,INIT,UPGRADE,ADD,UPDATE,REMOVE
 	}
 }

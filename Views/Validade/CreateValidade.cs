@@ -25,6 +25,7 @@ namespace EterPharmaPro.Views.Validade
 
 		bool isActionValidade = false;
 		bool isEditProduto = false;
+		int indexEditLv = -1;
 
 
 		public CreateValidade(IEterDb _eterDb, DatabaseProdutosDb _databaseProdutosDb)
@@ -92,9 +93,14 @@ namespace EterPharmaPro.Views.Validade
 
 		private async void ePictureBox_create_Click(object sender, EventArgs e)
 		{
+			if (isActionValidade)
+			{
+				toolStripDropDownButton_new_Click(null, null);
+				return;
+			}
 			VisibleBodyDoc(true);
 			isActionValidade = true;
-
+			ePictureBox_sava_up.Image = Resources.arquivo__1_;
 			this.Focus();
 
 			setValityModel = new SetValityModel();
@@ -104,8 +110,8 @@ namespace EterPharmaPro.Views.Validade
 			setValityModel.vality_id = await validadeController.CreateNewDocVality(setValityModel);
 
 			await comboBox_categoria.CBListCategoryAsync(await validadeController.GetCategoryUser(setValityModel.user_id));
-			listView1.Groups.Add(new ListViewGroup(1.ToString(), "SEM CATEGORIA"));
-			RefreshCategoryAsync();
+
+			RefreshCategoryAsync(null, ListViewActionsEnum.INIT);
 		}
 
 		private async void ePictureBox_addCat_ClickAsync(object sender, EventArgs e)
@@ -113,40 +119,63 @@ namespace EterPharmaPro.Views.Validade
 			string result = InputBox.Show("Por favor, insira a categoria:", "Categoria");
 			if (result != "")
 			{
-				await validadeController.CreateCategory(setValityModel.user_id, result);
-				await comboBox_categoria.CBListCategoryAsync(await validadeController.GetCategoryUser(setValityModel.user_id));
-				RefreshCategoryAsync();
+				long? resulAddCat = await validadeController.CreateCategory(setValityModel.user_id, result);
+				if (resulAddCat > -1)
+				{
+					await comboBox_categoria.CBListCategoryAsync(await validadeController.GetCategoryUser(setValityModel.user_id));
+					RefreshCategoryAsync((resulAddCat, result), ListViewActionsEnum.ADD);
+				}
 			}
 
 		}
 
 		private async void ePictureBox_removeCat_ClickAsync(object sender, EventArgs e)
 		{
-			if (await validadeController.DeleteCategory((int)setValityModel.user_id))
+			int tempRemove = Convert.ToInt32(comboBox_categoria.SelectedValue);
+			if (await validadeController.DeleteCategory(tempRemove))
 			{
 				await comboBox_categoria.CBListCategoryAsync(await validadeController.GetCategoryUser(setValityModel.user_id));
-
+				RefreshCategoryAsync((tempRemove, string.Empty), ListViewActionsEnum.REMOVE);
 				//sql => renomear e troca para id 1
-				//viwe => remover e troca para id 1
-
 			}
-
 		}
 
-		private async void RefreshCategoryAsync()
+		private async void RefreshCategoryAsync((long? id, string namec)? cat, ListViewActionsEnum actionsEnum = ListViewActionsEnum.NONE)
 		{
-			var temp = await validadeController.GetCategoryUser(setValityModel.user_id);
-			for (int i = 0; i < temp.Count; i++)
+			var tempCat = await validadeController.GetCategoryUser(setValityModel.user_id);
+			switch (actionsEnum)
 			{
-				var groupAd = listView1.Groups.Cast<ListViewGroup>().Where(x => x.Header == temp[i].NAME).FirstOrDefault();
-				if (groupAd is null)
-				{
-					listView1.Groups.Add(new ListViewGroup(temp[i].ID.ToString(), temp[i].NAME));
-
-				}
-				
+				case ListViewActionsEnum.INIT:
+					listView1.Groups.Add(new ListViewGroup(1.ToString(), "SEM CATEGORIA"));
+					for (int i = 0; i < tempCat.Count; i++)
+					{
+						var groupAd = listView1.Groups.Cast<ListViewGroup>().Where(x => x.Header == tempCat[i].NAME).FirstOrDefault();
+						if (groupAd is null)
+						{
+							listView1.Groups.Add(new ListViewGroup(tempCat[i].ID.ToString(), tempCat[i].NAME));
+						}
+					}
+					break;
+				case ListViewActionsEnum.ADD:
+					listView1.Groups.Add(new ListViewGroup(cat.Value.id.ToString(), cat.Value.namec));
+					break;
+				case ListViewActionsEnum.UPDATE:
+					break;
+				case ListViewActionsEnum.REMOVE:
+					ListViewGroup novoGrupo = listView1.Groups.Cast<ListViewGroup>()
+					 .FirstOrDefault(g => g.Name == 1.ToString());
+					foreach (ListViewItem item in listView1.Items)
+					{
+						if (item.Group.Name == cat.Value.id.ToString())
+						{
+							item.Group = novoGrupo;
+						}
+					}
+					break;
 			}
-			
+
+
+
 		}
 
 		private void textBox_codigo_KeyDown(object sender, KeyEventArgs e)
@@ -220,23 +249,26 @@ namespace EterPharmaPro.Views.Validade
 				}
 				else if (isEditProduto)
 				{
-					isSetClear = await validadeController.UpdateProdutoVality(setValityModel);
+                    
+                    isSetClear = await validadeController.UpdateProdutoVality(setValityModel);
 					isEditProduto = false;
 					if (isSetClear)
 					{
-						ListViewAction(setValityModel.produto, ListViewActionsEnum.UPDATE);
+						ListViewAction((indexEditLv,setValityModel.produto), ListViewActionsEnum.UPDATE);
 					}
 				}
 
 
 				if (isSetClear)
 				{
+					indexEditLv = -1;
 					setValityModel.produto = null;
 					textBox_codigo.Clear();
 					textBox_nproduto.Clear();
 					textBox_nproduto.ReadOnly = true;
 					numericUpDown_qtd.Value = 1;
 					dateTimePicker_data.Value = DateTime.Today;
+					ePictureBox_sava_up.Image = Resources.arquivo__1_;
 				}
 
 
@@ -249,12 +281,13 @@ namespace EterPharmaPro.Views.Validade
 
 		private void toolStripButton_clear_Click(object sender, EventArgs e)
 		{
-			setValityModel.produto = null;
+			setValityModel = null;
 			textBox_codigo.Clear();
 			textBox_nproduto.Clear();
 			textBox_nproduto.ReadOnly = true;
 			numericUpDown_qtd.Value = 1;
 			dateTimePicker_data.Value = DateTime.Today;
+
 		}
 
 		private async void eDITARToolStripMenuItem_Click(object sender, EventArgs e)
@@ -264,16 +297,20 @@ namespace EterPharmaPro.Views.Validade
 				if (listView1.SelectedItems.Count > 0)
 				{
 					ProdutoValidadeDbModal tempProduto = await validadeController.GetProdutoDb(listView1.SelectedItems[0].SubItems[0].Text);
-					if (tempProduto!= null)
+					if (tempProduto != null)
 					{
 						isEditProduto = true;
 						setValityModel.produto = new ProdutoSetValityModel();
+						indexEditLv = Convert.ToInt32(listView1.SelectedItems[0].Index);
 						setValityModel.produto.id = tempProduto.ID;
 						textBox_codigo.Text = (setValityModel.produto.codigo = tempProduto.PRODUTO_CODIGO).ToString().PadLeft(6, '0');
 						textBox_nproduto.Text = setValityModel.produto.descricao = tempProduto.PRODUTO_DESCRICAO;
 						numericUpDown_qtd.Value = setValityModel.produto.quantidade = Convert.ToInt32(tempProduto.QUANTIDADE);
 						dateTimePicker_data.Value = setValityModel.produto.dateVality = Convert.ToDateTime(tempProduto.DATA_VALIDADE);
-						comboBox_categoria.SelectedIndex = setValityModel.produto.category_id = Convert.ToInt32(tempProduto.CATEGORIA_ID);
+						setValityModel.produto.category_id = Convert.ToInt32(tempProduto.CATEGORIA_ID);
+						comboBox_categoria.SelectedIndex = comboBox_categoria.ReturnIndexCategoryCB(setValityModel.produto.category_id);
+
+						ePictureBox_sava_up.Image = Resources.arquivo_update;
 					}
 
 				}
@@ -340,7 +377,8 @@ namespace EterPharmaPro.Views.Validade
 						listView1.Items[tempObjUp.indexUp].SubItems[1].Text = tempObjUp.newUp.codigo.ToString().PadLeft(6, '0');
 						listView1.Items[tempObjUp.indexUp].SubItems[2].Text = tempObjUp.newUp.descricao.ToString();
 						listView1.Items[tempObjUp.indexUp].SubItems[3].Text = tempObjUp.newUp.quantidade.ToString();
-						listView1.Items[tempObjUp.indexUp].SubItems[4].Text = tempObjUp.newUp.dateVality.ToString();
+						listView1.Items[tempObjUp.indexUp].SubItems[4].Text = tempObjUp.newUp.dateVality.ToShortDateString();
+						listView1.Items[tempObjUp.indexUp].Group = listView1.Groups.Cast<ListViewGroup>().Where(x => x.Name == tempObjUp.newUp.category_id.ToString()).FirstOrDefault();
 						break;
 					case ListViewActionsEnum.REMOVE:
 						listView1.Items.Remove((ListViewItem)action);//listView1.Items[0]
@@ -377,6 +415,100 @@ namespace EterPharmaPro.Views.Validade
 				ex.ErrorGet();
 			}
 
+		}
+
+		private async void ePictureBox_seach_Click(object sender, EventArgs e)
+		{
+			var t = await validadeController.GetValityDate(dateTimePicker_dataBusca.Value);
+			if (t != null)
+			{
+				dataGridView_validadeFile.Rows.Clear();
+				for (int i = 0; i < t.Count; i++)
+				{
+					dataGridView_validadeFile.Rows.Add(new string[]
+					{
+						t[i].id.ToString(),
+						t[i].nameUser,
+						t[i].date
+					});
+				}
+			}
+		}
+
+		private async void dataGridView_validadeFile_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+		{
+			int idVality = -1;
+			try
+			{
+				idVality = Convert.ToInt32(dataGridView_validadeFile.Rows[e.RowIndex].Cells[0].Value);
+			}
+			catch (Exception)
+			{
+			}
+
+			if (idVality == -1)
+			{
+				return;
+			}
+			if (isActionValidade)
+			{
+				switch (MessageBox.Show("Há um documento em aberto, deseja fecha-lo ?\nOs dados seram salvos.", "ALERTA", MessageBoxButtons.OKCancel, MessageBoxIcon.Question))
+				{
+					case DialogResult.OK:
+						toolStripButton_save_Click(null, null);
+						break;
+					case DialogResult.Cancel:
+						return;
+						break;
+				}
+			}
+
+			try
+			{
+				var tempEditVality = await validadeController.GetEditVality(idVality);
+
+				if (tempEditVality.v is null)
+				{
+					return;
+				}
+
+				isActionValidade = true;
+				VisibleHeaderDoc(true);
+				VisibleBodyDoc(true);
+
+				setValityModel = new SetValityModel
+				{
+					isEdit = true,
+					dataCreate = tempEditVality.v.DATE ?? DateTime.Now,
+					vality_id = tempEditVality.v.ID,
+					user_id = tempEditVality.v.USER_ID
+				};
+
+				comboBox_user.SelectedIndex = comboBox_user.ReturnIndexUserCB(setValityModel.user_id.ToString());
+				dateTimePicker_dataD.Value = setValityModel.dataCreate;
+
+				if (tempEditVality.p is null)
+				{
+					return;
+				}
+
+				RefreshCategoryAsync(null, ListViewActionsEnum.INIT);
+				ListViewAction(tempEditVality.p, ListViewActionsEnum.UPGRADE);
+				await comboBox_categoria.CBListCategoryAsync(await validadeController.GetCategoryUser(setValityModel.user_id));
+
+			}
+			catch (Exception ex)
+			{
+				ex.ErrorGet();
+			}
+
+		}
+
+		private void toolStripButton_save_Click(object sender, EventArgs e)
+		{
+			isActionValidade = false;
+			toolStripButton_clear_Click(null, null);
+			NewDocValidade(false);
 		}
 	}
 }

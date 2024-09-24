@@ -8,6 +8,8 @@ namespace EterPharmaPro.Models
 {
 	public class SetValityModel
 	{
+		public bool isEdit { get; set; } = false;
+		public long? id { get; set; }
 		public long? user_id { get; set; }
 		public int user_idLoja { get; set; }
 

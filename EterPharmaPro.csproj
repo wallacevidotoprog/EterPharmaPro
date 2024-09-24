@@ -233,6 +233,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="farmacia.ico" />
+    <None Include="Resources\excluirCat.png" />
+    <None Include="Resources\adicionarCat.png" />
+    <None Include="Resources\arquivo update.png" />
     <None Include="Resources\excel.png" />
     <None Include="Resources\salve.png" />
     <None Include="Resources\novo-arquivo %281%29.png" />

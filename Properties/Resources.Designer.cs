@@ -63,6 +63,16 @@ namespace EterPharmaPro.Properties {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap adicionarCat {
+            get {
+                object obj = ResourceManager.GetObject("adicionarCat", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap arquivo__ {
             get {
                 object obj = ResourceManager.GetObject("arquivo_-", resourceCulture);
@@ -76,6 +86,16 @@ namespace EterPharmaPro.Properties {
         internal static System.Drawing.Bitmap arquivo__1_ {
             get {
                 object obj = ResourceManager.GetObject("arquivo (1)", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap arquivo_update {
+            get {
+                object obj = ResourceManager.GetObject("arquivo_update", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -156,6 +176,16 @@ namespace EterPharmaPro.Properties {
         internal static System.Drawing.Bitmap excel {
             get {
                 object obj = ResourceManager.GetObject("excel", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap excluirCat {
+            get {
+                object obj = ResourceManager.GetObject("excluirCat", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

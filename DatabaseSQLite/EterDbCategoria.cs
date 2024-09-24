@@ -78,9 +78,28 @@ namespace EterPharmaPro.DatabaseSQLite
 			return null;
 		}
 
-		public Task<bool> UpdateCategory(CategoriaDbModal modele, SQLiteConnection connection, SQLiteTransaction transaction)
+		public async Task<bool> UpdateCategory(CategoriaDbModal model, SQLiteConnection connection, SQLiteTransaction transaction)
 		{
-			throw new NotImplementedException();
+			try
+			{
+
+				string Query = "UPDATE CATEGORIA_VALIDADE SET NAME = @NAME , USER_ID = @USER_ID   WHERE ID = @ID";
+				using (SQLiteCommand command = new SQLiteCommand(Query, connection, transaction))
+				{
+					command.Parameters.AddWithValue("@ID", model.ID);
+					command.Parameters.AddWithValue("@NAME", model.NAME);
+					command.Parameters.AddWithValue("@USER_ID", model.USER_ID);
+					await command.ExecuteNonQueryAsync().ConfigureAwait(continueOnCapturedContext: false);
+				}
+
+				return true;
+			}
+			catch (Exception ex)
+			{
+				ex.ErrorGet();
+
+				return false;
+			}
 		}
 	}
 }

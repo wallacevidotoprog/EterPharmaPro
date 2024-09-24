@@ -62,7 +62,7 @@ namespace EterPharmaPro.Utils.Extencions
 			return null;
 		}
 
-		public static int ReturnIndexUserCB(string id, ComboBox cb)//modificar
+		public static int ReturnIndexUserCB(this ComboBox cb, string id)
 		{
 			try
 			{
@@ -82,7 +82,29 @@ namespace EterPharmaPro.Utils.Extencions
 			{
 				ex.ErrorGet();
 			}
-			MessageBox.Show("Funcionário não encontrado.");
+			return -1;
+		}
+
+		public static int ReturnIndexCategoryCB(this ComboBox cb, long? id)
+		{
+			try
+			{
+				BindingSource sb = (BindingSource)cb.DataSource;
+				Dictionary<long?, string> tempD = (Dictionary<long?, string>)sb.DataSource;
+				int index = 0;
+				foreach (KeyValuePair<long?, string> item in tempD)
+				{
+					if (item.Key.Equals(id))
+					{
+						return index;
+					}
+					index++;
+				}
+			}
+			catch (Exception ex)
+			{
+				ex.ErrorGet();
+			}
 			return -1;
 		}
 

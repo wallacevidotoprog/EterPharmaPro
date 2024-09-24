@@ -9,7 +9,7 @@ namespace EterPharmaPro.Interfaces
 	{
 		Task<long?> CreateProdutoVality(ProdutoValidadeDbModal model, SQLiteConnection connection, SQLiteTransaction transaction);
 
-		Task<bool> UpdateProdutoVality(ProdutoValidadeDbModal modele, SQLiteConnection connection, SQLiteTransaction transaction);
+		Task<bool> UpdateProdutoVality(ProdutoValidadeDbModal model, SQLiteConnection connection, SQLiteTransaction transaction);
 
 		Task<bool> DeleteProdutoVality(string id, SQLiteConnection connection, SQLiteTransaction transaction);
 

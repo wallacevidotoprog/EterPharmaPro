@@ -60,36 +60,26 @@ namespace EterPharmaPro.DatabaseSQLite
 		{
 			try
 			{
-				try
+
+				string Query = "UPDATE CLIENTES SET CPF = @CPF ,RG = @RG, NOME = @NOME , TELEFONE = @TELEFONE WHERE ID = @ID";
+				using (SQLiteCommand command = new SQLiteCommand(Query, connection, transaction))
 				{
-
-					string Query = "UPDATE CLIENTES SET CPF = @CPF ,RG = @RG, NOME = @NOME , TELEFONE = @TELEFONE WHERE ID = @ID";
-					using (SQLiteCommand command = new SQLiteCommand(Query, connection, transaction))
-					{
-						command.Parameters.AddWithValue("@ID", model.ID);
-						command.Parameters.AddWithValue("@CPF", model.CPF);
-						command.Parameters.AddWithValue("@RG", model.RG);
-						command.Parameters.AddWithValue("@NOME", model.NOME);
-						command.Parameters.AddWithValue("@TELEFONE", model.TELEFONE);
-						await command.ExecuteNonQueryAsync().ConfigureAwait(continueOnCapturedContext: false);
-					}
-
-					return true;
-				}
-				catch (Exception ex)
-				{
-					ex.ErrorGet();
-
-					return false;
+					command.Parameters.AddWithValue("@ID", model.ID);
+					command.Parameters.AddWithValue("@CPF", model.CPF);
+					command.Parameters.AddWithValue("@RG", model.RG);
+					command.Parameters.AddWithValue("@NOME", model.NOME);
+					command.Parameters.AddWithValue("@TELEFONE", model.TELEFONE);
+					await command.ExecuteNonQueryAsync().ConfigureAwait(continueOnCapturedContext: false);
 				}
 
+				return true;
 			}
-			catch (Exception ex2)
+			catch (Exception ex)
 			{
-				Exception ex = ex2;
 				ex.ErrorGet();
+
+				return false;
 			}
-			return false;
 		}
 
 		public async Task<bool> DeleteCliente(string id, SQLiteConnection connection, SQLiteTransaction transaction)

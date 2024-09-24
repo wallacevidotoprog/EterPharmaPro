@@ -82,9 +82,32 @@ namespace EterPharmaPro.DatabaseSQLite
 			return null;
 		}
 
-		public Task<bool> UpdateProdutoVality(ProdutoValidadeDbModal modele, SQLiteConnection connection, SQLiteTransaction transaction)
+		public async Task<bool> UpdateProdutoVality(ProdutoValidadeDbModal model, SQLiteConnection connection, SQLiteTransaction transaction)
 		{
-			throw new NotImplementedException();
+			try
+			{
+
+				string Query = "UPDATE PRODUTOS_VALIDADE SET VALIDADE_ID = @VALIDADE_ID , PRODUTO_CODIGO = @PRODUTO_CODIGO , PRODUTO_DESCRICAO = @PRODUTO_DESCRICAO , QUANTIDADE = @QUANTIDADE , DATA_VALIDADE = @DATA_VALIDADE , CATEGORIA_ID = @CATEGORIA_ID  WHERE ID = @ID";
+				using (SQLiteCommand command = new SQLiteCommand(Query, connection, transaction))
+				{
+					command.Parameters.AddWithValue("@ID", model.ID);
+					command.Parameters.AddWithValue("@VALIDADE_ID", model.VALIDADE_ID);
+					command.Parameters.AddWithValue("@PRODUTO_CODIGO", model.PRODUTO_CODIGO);
+					command.Parameters.AddWithValue("@PRODUTO_DESCRICAO", model.PRODUTO_DESCRICAO);
+					command.Parameters.AddWithValue("@QUANTIDADE", model.QUANTIDADE);
+					command.Parameters.AddWithValue("@DATA_VALIDADE", model.DATA_VALIDADE.ToDatetimeUnix());
+					command.Parameters.AddWithValue("@CATEGORIA_ID", model.CATEGORIA_ID);
+					await command.ExecuteNonQueryAsync().ConfigureAwait(continueOnCapturedContext: false);
+				}
+
+				return true;
+			}
+			catch (Exception ex)
+			{
+				ex.ErrorGet();
+
+				return false;
+			}
 		}
 	}
 }

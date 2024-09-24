@@ -79,9 +79,28 @@ namespace EterPharmaPro.DatabaseSQLite
 			return null;
 		}
 
-		public Task<bool> UpdateVality(ValidadeDbModal modele, SQLiteConnection connection, SQLiteTransaction transaction)
+		public async Task<bool> UpdateVality(ValidadeDbModal model, SQLiteConnection connection, SQLiteTransaction transaction)
 		{
-			throw new NotImplementedException();
+			try
+			{
+
+				string Query = "UPDATE VALIDADES SET USER_ID = @USER_ID , DATE = @DATE   WHERE ID = @ID";
+				using (SQLiteCommand command = new SQLiteCommand(Query, connection, transaction))
+				{
+					command.Parameters.AddWithValue("@ID", model.ID);
+					command.Parameters.AddWithValue("@USER_ID", model.USER_ID);
+					command.Parameters.AddWithValue("@DATE", model.DATE);
+					await command.ExecuteNonQueryAsync().ConfigureAwait(continueOnCapturedContext: false);
+				}
+
+				return true;
+			}
+			catch (Exception ex)
+			{
+				ex.ErrorGet();
+
+				return false;
+			}
 		}
 	}
 }

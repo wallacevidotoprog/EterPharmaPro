@@ -78,7 +78,7 @@ namespace EterPharmaPro.Views.Manipulados
 			{
 				dateTimePicker_data.Value = (DateTime)manipulados.DADOSATENDIMENTO.DATA;
 				textBox_atn.Text = manipulados?.DADOSATENDIMENTO.ATEN_MANI;
-				comboBox_user.SelectedIndex = ExtensionsDefault.ReturnIndexUserCB(manipulados.DADOSATENDIMENTO?.ATEN_LOJA.ToString(), comboBox_user);
+				//comboBox_user.SelectedIndex = ExtensionsDefault.ReturnIndexUserCB(manipulados.DADOSATENDIMENTO?.ATEN_LOJA.ToString(), comboBox_user);
 				textBox_cpf.Text = ((ClienteModel)manipulados.DADOSCLIENTE)?.CPF.ReturnFormation(FormatationEnum.CPF);
 				textBox_rg.Text = ((ClienteModel)manipulados.DADOSCLIENTE)?.RG.ReturnFormation(FormatationEnum.RG);
 				textBox_nomeC.Text = ((ClienteModel)manipulados.DADOSCLIENTE)?.NOME;
