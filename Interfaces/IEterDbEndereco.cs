@@ -13,6 +13,6 @@ namespace EterPharmaPro.Interfaces
 
 		Task<bool> DeleteEndereco(string id, SQLiteConnection connection, SQLiteTransaction transaction);
 
-		Task<List<EnderecoClienteModel>> GetEndereco(string queryID = null, QueryClienteEnum queryCliente = QueryClienteEnum.NONE);
+		Task<List<EnderecoClienteModel>> GetEndereco(QueryWhereModel query);
 	}
 }

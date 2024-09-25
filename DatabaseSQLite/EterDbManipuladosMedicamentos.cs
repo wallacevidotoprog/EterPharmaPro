@@ -1,4 +1,5 @@
 using EterPharmaPro.Interfaces;
+using EterPharmaPro.Models.DbModels;
 using EterPharmaPro.Utils.Extencions;
 using System;
 using System.Collections.Generic;
@@ -88,9 +89,9 @@ namespace EterPharmaPro.DatabaseSQLite
 			}
 		}
 
-		public async Task<List<string>> GetMedicamento(string queryID = null)
+		public async Task<List<string>> GetMedicamento(QueryWhereModel query)
 		{
-			bool allUser = queryID == null;
+			//bool allUser = queryID == null;
 			try
 			{
 				//using SQLiteConnection connection = new SQLiteConnection(_databaseConnection);

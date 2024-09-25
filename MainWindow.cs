@@ -59,19 +59,6 @@ namespace EterPharmaPro
 			toolStrip_menu.Visible = true;
 		}
 
-		private async void toolStripButton2_Click(object sender, EventArgs e)
-		{
-			var t = await eterDb.DbManipulados.GetManipulacao();
-			var selec = t[1];
-
-			var dc = (DadosClienteManipulacao)selec.DADOSCLIENTE;
-
-			selec.DADOSCLIENTE = (await eterDb.DbCliente.GetCliente(dc.ID_CLIENTE.ToString(), Enums.TypeDoc.ID))[0];
-			((ClienteModel)selec.DADOSCLIENTE).ENDERECO = await eterDb.DbEndereco.GetEndereco(dc.ID_ENDERECO.ToString(),Enums.QueryClienteEnum.ID);
-
-			(new CreateManipulados(eterDb, selec)).Show();
-		}
-
 		private void fORMUToolStripMenuItem_Click(object sender, EventArgs e) => OpenForm(new CreateManipulados(eterDb));
 
 		private void gERARVALIDADEDOMÊSToolStripMenuItem_Click(object sender, EventArgs e) => OpenForm(new CreateValidade(eterDb, DatabaseProdutosDb));

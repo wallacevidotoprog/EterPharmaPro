@@ -4,8 +4,6 @@ using EterPharmaPro.Utils.Extencions;
 using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace EterPharmaPro.DatabaseSQLite
@@ -69,11 +67,11 @@ namespace EterPharmaPro.DatabaseSQLite
 			}
 		}
 
-		public async Task<List<ProdutoValidadeDbModal>> GetProdutoVality(string queryID = null)
+		public async Task<List<ProdutoValidadeDbModal>> GetProdutoVality(QueryWhereModel query)
 		{
 			try
 			{
-				return await new MapDbEter(_databaseConnection).QueryAsync<ProdutoValidadeDbModal>($"SELECT * FROM PRODUTOS_VALIDADE {(queryID != null ? " WHERE ID = " + queryID : string.Empty)}");
+				return await new MapDbEter(_databaseConnection).QueryAsync<ProdutoValidadeDbModal>($"SELECT * FROM PRODUTOS_VALIDADE {query.ReturnSQLQuery()}");
 			}
 			catch (Exception ex)
 			{

@@ -1,4 +1,5 @@
 using EterPharmaPro.Models;
+using EterPharmaPro.Models.DbModels;
 using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Threading.Tasks;
@@ -13,6 +14,6 @@ namespace EterPharmaPro.Interfaces
 
 		Task<bool> DeleteManipulacao(string id, SQLiteConnection connection, SQLiteTransaction transaction);
 
-		Task<List<ManipulacaoModel>> GetManipulacao(string queryID = null);
+		Task<List<ManipulacaoModel>> GetManipulacao(QueryWhereModel query);
 	}
 }

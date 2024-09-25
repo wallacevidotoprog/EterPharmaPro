@@ -41,7 +41,6 @@
 			this.toolStripButton_conf = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
 			this.toolStripDropDownButton_impressos = new System.Windows.Forms.ToolStripButton();
-			this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
 			this.statusStrip_notify = new System.Windows.Forms.StatusStrip();
 			this.toolStripProgressBar_status = new System.Windows.Forms.ToolStripProgressBar();
 			this.panel_center = new System.Windows.Forms.Panel();
@@ -58,8 +57,7 @@
             this.toolStripButton1,
             this.toolStripButton_conf,
             this.toolStripSeparator3,
-            this.toolStripDropDownButton_impressos,
-            this.toolStripButton2});
+            this.toolStripDropDownButton_impressos});
 			this.toolStrip_menu.Location = new System.Drawing.Point(0, 0);
 			this.toolStrip_menu.Name = "toolStrip_menu";
 			this.toolStrip_menu.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
@@ -178,16 +176,6 @@
 			this.toolStripDropDownButton_impressos.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
 			this.toolStripDropDownButton_impressos.ToolTipText = "IMPRESSOS";
 			// 
-			// toolStripButton2
-			// 
-			this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
-			this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.toolStripButton2.Name = "toolStripButton2";
-			this.toolStripButton2.Size = new System.Drawing.Size(23, 90);
-			this.toolStripButton2.Text = "toolStripButton2";
-			this.toolStripButton2.Click += new System.EventHandler(this.toolStripButton2_Click);
-			// 
 			// statusStrip_notify
 			// 
 			this.statusStrip_notify.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -249,7 +237,6 @@
 		private System.Windows.Forms.ToolStripButton toolStripButton_conf;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
 		private System.Windows.Forms.ToolStripButton toolStripDropDownButton_impressos;
-		private System.Windows.Forms.ToolStripButton toolStripButton2;
 		private System.Windows.Forms.StatusStrip statusStrip_notify;
 		private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar_status;
 		private System.Windows.Forms.Panel panel_center;

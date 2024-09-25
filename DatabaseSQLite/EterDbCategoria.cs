@@ -65,11 +65,11 @@ namespace EterPharmaPro.DatabaseSQLite
 			}
 		}
 
-		public async Task<List<CategoriaDbModal>> GetCategory(string queryID = null)
+		public async Task<List<CategoriaDbModal>> GetCategory(QueryWhereModel query)
 		{
 			try
 			{
-				return await new MapDbEter(_databaseConnection).QueryAsync<CategoriaDbModal>($"SELECT * FROM CATEGORIA_VALIDADE {(queryID != null ? " WHERE USER_ID = " + queryID : string.Empty)}");
+				return await new MapDbEter(_databaseConnection).QueryAsync<CategoriaDbModal>($"SELECT * FROM CATEGORIA_VALIDADE {query.ReturnSQLQuery()}");
 			}
 			catch (Exception ex)
 			{

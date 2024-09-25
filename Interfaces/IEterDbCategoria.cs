@@ -13,6 +13,6 @@ namespace EterPharmaPro.Interfaces
 
 		Task<bool> DeleteCategory(string id, SQLiteConnection connection, SQLiteTransaction transaction);
 
-		Task<List<CategoriaDbModal>> GetCategory(string queryID = null);
+		Task<List<CategoriaDbModal>> GetCategory(QueryWhereModel query);
 	}
 }

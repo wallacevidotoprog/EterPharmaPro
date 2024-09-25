@@ -14,6 +14,6 @@ namespace EterPharmaPro.Interfaces
 
 		Task<bool> DeleteCliente(string id, SQLiteConnection connection, SQLiteTransaction transaction);
 
-		Task<List<ClienteModel>> GetCliente(string queryID = null, TypeDoc typeDoc = TypeDoc.NONE);
+		Task<List<ClienteModel>> GetCliente(QueryWhereModel query);
 	}
 }

@@ -108,12 +108,12 @@ namespace EterPharmaPro.DatabaseSQLite
 			}
 		}
 
-		public async Task<List<ManipulacaoModel>> GetManipulacao(string query = null)
+		public async Task<List<ManipulacaoModel>> GetManipulacao(QueryWhereModel query)
 		{
 
 			try
 			{
-				List<ManipulacaoDbModel> models = await new MapDbEter(_databaseConnection).QueryAsync<ManipulacaoDbModel>($"SELECT * FROM MANIPULADOS {(query != null ? " WHERE ID = " + query : string.Empty)}");
+				List<ManipulacaoDbModel> models = await new MapDbEter(_databaseConnection).QueryAsync<ManipulacaoDbModel>($"SELECT * FROM MANIPULADOS {query.ReturnSQLQuery()}");
 
 				List<ManipulacaoModel> manipulacaos = new List<ManipulacaoModel>();
 

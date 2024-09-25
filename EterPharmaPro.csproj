@@ -138,6 +138,7 @@
     <Compile Include="Models\DbModels\EnderecoClienteModel.cs" />
     <Compile Include="Models\DbModels\ManipulacaoDbModel.cs" />
     <Compile Include="Models\DbModels\ProdutoValidadeDbModal.cs" />
+    <Compile Include="Models\DbModels\QueryWhereModel.cs" />
     <Compile Include="Models\DbModels\ValidadeDbModal.cs" />
     <Compile Include="Models\ManipulacaoModel.cs" />
     <Compile Include="Models\DbModels\UserModel.cs" />

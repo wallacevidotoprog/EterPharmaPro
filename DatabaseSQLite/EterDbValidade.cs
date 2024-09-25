@@ -66,11 +66,11 @@ namespace EterPharmaPro.DatabaseSQLite
 			}
 		}
 
-		public async Task<List<ValidadeDbModal>> GetVality(string queryID = null)
+		public async Task<List<ValidadeDbModal>> GetVality(QueryWhereModel query)
 		{
 			try
 			{
-				return await new MapDbEter(_databaseConnection).QueryAsync<ValidadeDbModal>($"SELECT * FROM VALIDADES {(queryID != null ? " WHERE ID = " + queryID : string.Empty)}");
+				return await new MapDbEter(_databaseConnection).QueryAsync<ValidadeDbModal>($"SELECT * FROM VALIDADES {query.ReturnSQLQuery()}");
 			}
 			catch (Exception ex)
 			{

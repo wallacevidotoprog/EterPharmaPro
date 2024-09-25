@@ -132,12 +132,15 @@ namespace EterPharmaPro.Views.Validade
 		private async void ePictureBox_removeCat_ClickAsync(object sender, EventArgs e)
 		{
 			int tempRemove = Convert.ToInt32(comboBox_categoria.SelectedValue);
-			if (await validadeController.DeleteCategory(tempRemove))
+			if (MessageBox.Show("Deseja excluir esse categoria ?\n" + comboBox_categoria.Text+"\nAo deletar essa categoria você pode alterar outros formulários que já foram lançados.", "Excluir Item", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
 			{
-				await comboBox_categoria.CBListCategoryAsync(await validadeController.GetCategoryUser(setValityModel.user_id));
-				RefreshCategoryAsync((tempRemove, string.Empty), ListViewActionsEnum.REMOVE);
-				//sql => renomear e troca para id 1
+				if (await validadeController.DeleteCategory(tempRemove))
+				{
+					await comboBox_categoria.CBListCategoryAsync(await validadeController.GetCategoryUser(setValityModel.user_id));
+					RefreshCategoryAsync((tempRemove, string.Empty), ListViewActionsEnum.REMOVE);
+				}
 			}
+			
 		}
 
 		private async void RefreshCategoryAsync((long? id, string namec)? cat, ListViewActionsEnum actionsEnum = ListViewActionsEnum.NONE)
@@ -164,6 +167,10 @@ namespace EterPharmaPro.Views.Validade
 				case ListViewActionsEnum.REMOVE:
 					ListViewGroup novoGrupo = listView1.Groups.Cast<ListViewGroup>()
 					 .FirstOrDefault(g => g.Name == 1.ToString());
+					for (int i = 0; i < listView1.Items.g; i++)
+					{
+
+					}
 					foreach (ListViewItem item in listView1.Items)
 					{
 						if (item.Group.Name == cat.Value.id.ToString())

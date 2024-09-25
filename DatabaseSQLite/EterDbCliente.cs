@@ -104,11 +104,11 @@ namespace EterPharmaPro.DatabaseSQLite
 				return false;
 			}
 		}
-		public async Task<List<ClienteModel>> GetCliente(string query = null, TypeDoc typeDoc = TypeDoc.NONE)
+		public async Task<List<ClienteModel>> GetCliente(QueryWhereModel query)
 		{
 			try
 			{
-				return await new MapDbEter(_databaseConnection).QueryAsync<ClienteModel>($"SELECT * FROM CLIENTES {(typeDoc == TypeDoc.ID ? " WHERE ID = " + query : typeDoc == TypeDoc.CPF ? " WHERE CPF = " + query : typeDoc == TypeDoc.RG ? " WHERE RG = " + query : string.Empty)}");
+				return await new MapDbEter(_databaseConnection).QueryAsync<ClienteModel>($"SELECT * FROM CLIENTES {query.ReturnSQLQuery()}");
 			}
 			catch (Exception ex)
 			{

@@ -13,6 +13,6 @@ namespace EterPharmaPro.Interfaces
 
 		Task<bool> DeleteProdutoVality(string id, SQLiteConnection connection, SQLiteTransaction transaction);
 
-		Task<List<ProdutoValidadeDbModal>> GetProdutoVality(string queryID = null);
+		Task<List<ProdutoValidadeDbModal>> GetProdutoVality(QueryWhereModel query);
 	}
 }

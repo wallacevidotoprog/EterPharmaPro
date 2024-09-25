@@ -27,10 +27,10 @@ namespace EterPharmaPro.Controllers.Manipulacao
 
 		public async Task<List<ClienteModel>> GetCliente(string query = null, TypeDoc typeDoc = TypeDoc.NONE)
 		{
-			List<ClienteModel> dadosCliente = await _eterDb.DbCliente.GetCliente();
+			List<ClienteModel> dadosCliente = await _eterDb.DbCliente.GetCliente(new QueryWhereModel());
 			for (int i = 0; i < dadosCliente.Count; i++)
 			{
-				dadosCliente[i].ENDERECO = await _eterDb.DbEndereco.GetEndereco(dadosCliente[i].ID.ToString());
+				dadosCliente[i].ENDERECO = await _eterDb.DbEndereco.GetEndereco( new QueryWhereModel ().SetWhere("ID", dadosCliente[i].ID));
 			}
 			return dadosCliente;
 		}

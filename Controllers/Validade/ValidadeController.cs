@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace EterPharmaPro.Controllers.Validade
 {
@@ -79,6 +80,8 @@ namespace EterPharmaPro.Controllers.Validade
 
 		public async Task<bool> DeleteCategory(int cat_id)
 		{
+
+			var tempP = await eterDb.DbProdutoValidade.GetProdutoVality(new QueryWhereModel().SetWhere("CATEGORIA_ID", cat_id));
 			using (var connection = new SQLiteConnection(eterDb.DatabaseConnection))
 			{
 				await connection.OpenAsync().ConfigureAwait(false);
@@ -86,6 +89,11 @@ namespace EterPharmaPro.Controllers.Validade
 				{
 					try
 					{
+						for (int i = 0; i < tempP.Count; i++)
+						{
+							tempP[i].CATEGORIA_ID = 1;
+							await eterDb.DbProdutoValidade.UpdateProdutoVality(tempP[i], connection, transaction);
+						}
 						//criar trigger para setar no id da categoria para 1
 						bool tempIdV = await eterDb.DbCategoria.DeleteCategory(cat_id.ToString(), connection, transaction);
 
@@ -157,7 +165,7 @@ namespace EterPharmaPro.Controllers.Validade
 
 		public async Task<List<CategoriaDbModal>> GetCategoryUser(long? user_id)
 		{
-			return await eterDb.DbCategoria.GetCategory(user_id.ToString());
+			return await eterDb.DbCategoria.GetCategory(new QueryWhereModel().SetWhere("USER_ID",user_id));
 		}
 
 		public async Task<bool> UpdateProdutoVality(SetValityModel setValityModel)
@@ -219,7 +227,7 @@ namespace EterPharmaPro.Controllers.Validade
 
 		public async Task<ProdutoValidadeDbModal> GetProdutoDb(string text)
 		{
-			List<ProdutoValidadeDbModal> temp = await eterDb.DbProdutoValidade.GetProdutoVality(text);
+			List<ProdutoValidadeDbModal> temp = await eterDb.DbProdutoValidade.GetProdutoVality(new QueryWhereModel().SetWhere("ID",text));
 
 			return temp == null ? null : temp.Count > 0 ? temp[0] : null;
 		}
@@ -228,12 +236,14 @@ namespace EterPharmaPro.Controllers.Validade
 		{
 			List<(int cat_id, string cat_name)> resp = new List<(int cat_id, string cat_name)>();
 
-			List<CategoriaDbModal> allCat = await eterDb.DbCategoria.GetCategory();
+			List<CategoriaDbModal> allCat = await eterDb.DbCategoria.GetCategory(new QueryWhereModel());
 
 			for (int i = 0; i < list.Count; i++)
 			{
+				CategoriaDbModal cat = allCat.FirstOrDefault(x => x.ID == Convert.ToUInt32(list[i]));
+				cat = cat ?? allCat.FirstOrDefault(x => x.ID == Convert.ToUInt32(1));
 				resp.Add((
-					list[i], allCat.FirstOrDefault(x => x.ID == Convert.ToUInt32(list[i])).NAME
+					list[i], cat?.NAME
 					));
 			}
 
@@ -247,11 +257,11 @@ namespace EterPharmaPro.Controllers.Validade
 			{
 				List<(long? id, string nameUser, string date)> values = new List<(long? id, string nameUser, string date)>();
 
-				List<ValidadeDbModal> tempResult = await eterDb.DbValidade.GetVality();
+				List<ValidadeDbModal> tempResult = await eterDb.DbValidade.GetVality(new QueryWhereModel());
 				tempResult = tempResult.Where(x => x.DATE.Value.Month == dateTime.Month && x.DATE.Value.Year == dateTime.Year).ToList();
 
 				for (int i = 0; i < tempResult.Count; i++)
-				{
+				{//(new QueryWhereModel { WHERE = new ProdutoValidadeDbModal { ID = Convert.ToUInt32(text) }.ID })      (await eterDb.DbUser.GetUser(tempResult[i].USER_ID.ToString(), Enums.QueryUserEnum.ID)).First(x => x.ID == tempResult[i].USER_ID).NOME, tempResult[i].DATE.Value.ToShortDateString()));
 					values.Add((tempResult[i].ID,
 						(await eterDb.DbUser.GetUser(tempResult[i].USER_ID.ToString(), Enums.QueryUserEnum.ID)).First(x => x.ID == tempResult[i].USER_ID).NOME, tempResult[i].DATE.Value.ToShortDateString()));
 				}
@@ -269,11 +279,11 @@ namespace EterPharmaPro.Controllers.Validade
 
 		public async Task<(ValidadeDbModal v, List<ProdutoValidadeDbModal> p)> GetEditVality(int idVality)
 		{
-			ValidadeDbModal tempValidadeDbModal = (await eterDb.DbValidade.GetVality(idVality.ToString())).FirstOrDefault(x => x.ID == idVality);
+			ValidadeDbModal tempValidadeDbModal = (await eterDb.DbValidade.GetVality(new QueryWhereModel().SetWhere("ID", idVality))).FirstOrDefault(x => x.ID == idVality);
 
 			if (tempValidadeDbModal != null)
 			{
-				return (tempValidadeDbModal, (await eterDb.DbProdutoValidade.GetProdutoVality()).Where(x => x.VALIDADE_ID == Convert.ToInt32(tempValidadeDbModal.ID)).ToList());
+				return (tempValidadeDbModal, (await eterDb.DbProdutoValidade.GetProdutoVality(new QueryWhereModel())).Where(x => x.VALIDADE_ID == Convert.ToInt32(tempValidadeDbModal.ID)).ToList());
 			}
 			//List<ProdutoValidadeDbModal> produtoValidadeDbModal = (await eterDb.DbProdutoValidade.GetProdutoVality()).Where(x => x.VALIDADE_ID == Convert.ToInt32(tempValidadeDbModal.ID)).ToList();
 			return (tempValidadeDbModal, null);

@@ -110,11 +110,11 @@ namespace EterPharmaPro.DatabaseSQLite
 			}
 		}
 
-		public async Task<List<EnderecoClienteModel>> GetEndereco(string query = null, QueryClienteEnum queryCliente = QueryClienteEnum.NONE)
+		public async Task<List<EnderecoClienteModel>> GetEndereco(QueryWhereModel query)
 		{
 			try
 			{
-				return await new MapDbEter(_databaseConnection).QueryAsync<EnderecoClienteModel>($"SELECT * FROM ENDERECO_C {(queryCliente == QueryClienteEnum.ID ? " WHERE ID = " + query : queryCliente == QueryClienteEnum.CLIENTE_ID ? " WHERE CLIENTE_ID = " + query : string.Empty)}");
+				return await new MapDbEter(_databaseConnection).QueryAsync<EnderecoClienteModel>($"SELECT * FROM ENDERECO_C {query.ReturnSQLQuery()}");
 			}
 			catch (Exception ex)
 			{
