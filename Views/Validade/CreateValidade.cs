@@ -131,13 +131,18 @@ namespace EterPharmaPro.Views.Validade
 
 		private async void ePictureBox_removeCat_ClickAsync(object sender, EventArgs e)
 		{
+			if (comboBox_categoria.SelectedIndex == 0)
+			{
+				return;
+			}
 			int tempRemove = Convert.ToInt32(comboBox_categoria.SelectedValue);
+			string tempName = comboBox_categoria.Text;
 			if (MessageBox.Show("Deseja excluir esse categoria ?\n" + comboBox_categoria.Text+"\nAo deletar essa categoria você pode alterar outros formulários que já foram lançados.", "Excluir Item", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
 			{
 				if (await validadeController.DeleteCategory(tempRemove))
 				{
 					await comboBox_categoria.CBListCategoryAsync(await validadeController.GetCategoryUser(setValityModel.user_id));
-					RefreshCategoryAsync((tempRemove, string.Empty), ListViewActionsEnum.REMOVE);
+					RefreshCategoryAsync((tempRemove, tempName), ListViewActionsEnum.REMOVE);
 				}
 			}
 			
@@ -167,13 +172,10 @@ namespace EterPharmaPro.Views.Validade
 				case ListViewActionsEnum.REMOVE:
 					ListViewGroup novoGrupo = listView1.Groups.Cast<ListViewGroup>()
 					 .FirstOrDefault(g => g.Name == 1.ToString());
-					for (int i = 0; i < listView1.Items.g; i++)
-					{
-
-					}
+					
 					foreach (ListViewItem item in listView1.Items)
 					{
-						if (item.Group.Name == cat.Value.id.ToString())
+						if (item.Group.Header == cat.Value.namec.ToString())
 						{
 							item.Group = novoGrupo;
 						}
@@ -189,12 +191,17 @@ namespace EterPharmaPro.Views.Validade
 		{
 			if (e.KeyCode == Keys.Return)
 			{
+				bool inLoadProd = false;
 				if (textBox_codigo.Text.Trim().Replace(" ", null) == "")
 				{
-					List<ProdutosModel> tempQuery = validadeController.GetAllProdutos();
-					textBox_codigo.Text = tempQuery == null ? string.Empty : InputListProduto.Show(tempQuery, "Busca de Produtos");
+					List<ProdutosModel> tempQuery = validadeController.GetAllProdutos(out inLoadProd);
+					textBox_codigo.Text = tempQuery == null ? string.Empty : InputListProduto.Show(tempQuery, "Busca de Produtos").ToString().PadLeft(6, '0'); ;
 				}
-				GetProduct();
+				if (!inLoadProd)
+				{
+					GetProduct();
+				}
+				
 			}
 		}
 		private bool GetProduct()
@@ -202,7 +209,12 @@ namespace EterPharmaPro.Views.Validade
 			bool tempBool = false;
 			try
 			{
-				ProdutosModel tempProdutos = validadeController.GetProduto(textBox_codigo.Text);
+				ProdutosModel tempProdutos = validadeController.GetProduto(textBox_codigo.Text, out bool inLoad);
+
+				if (inLoad)
+				{
+					return false;
+				}
 
 				if (tempProdutos != null)
 				{
@@ -516,6 +528,39 @@ namespace EterPharmaPro.Views.Validade
 			isActionValidade = false;
 			toolStripButton_clear_Click(null, null);
 			NewDocValidade(false);
+		}
+
+		private async void toolStripButton_excel_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				if (setValityModel == null)
+				{
+					return;
+				}
+				SaveFileDialog op = new SaveFileDialog();
+				try
+				{
+					op.FileName = string.Format("{0} ({1}-{2}).xlsx", (await eterDb.DbUser.GetUser(new QueryWhereModel().SetWhere("ID", setValityModel.user_id))).FirstOrDefault().NOME, setValityModel.dataCreate.ToString("MMMM"), setValityModel.dataCreate.Year);
+					op.Filter = "Excel Files|*.xlsx";
+					op.Title = "Save an Excel File";
+					if (op.ShowDialog() == DialogResult.OK)
+					{
+						await validadeController.ExportValityXLSX(setValityModel.vality_id,op.FileName);
+					}
+				}
+				finally
+				{
+					if (op != null)
+					{
+						((IDisposable)op).Dispose();
+					}
+				}
+			}
+			catch (Exception ex)
+			{
+				ex.ErrorGet();
+			}
 		}
 	}
 }

@@ -14,6 +14,6 @@ namespace EterPharmaPro.Interfaces
 
 		Task<bool> DeleteUser(string id, SQLiteConnection connection, SQLiteTransaction transaction);
 
-		Task<List<UserModel>> GetUser(string queryID = null, QueryUserEnum queryUser = QueryUserEnum.NONE);
+		Task<List<UserModel>> GetUser(QueryWhereModel query);
 	}
 }

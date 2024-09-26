@@ -110,7 +110,7 @@ namespace EterPharmaPro.Utils.Extencions
 
 		public static async Task<ComboBox> CBListUserAsync(this ComboBox cb, IEterDb eterDb, bool isStatusAll = false)
 		{
-			List<UserModel> list = await eterDb.DbUser.GetUser();
+			List<UserModel> list = await eterDb.DbUser.GetUser(new QueryWhereModel());
 
 			Dictionary<string, string> users = new Dictionary<string, string>();
 

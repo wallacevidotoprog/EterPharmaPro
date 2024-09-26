@@ -63,6 +63,16 @@ namespace EterPharmaPro.Properties {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap addCat {
+            get {
+                object obj = ResourceManager.GetObject("addCat", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap adicionarCat {
             get {
                 object obj = ResourceManager.GetObject("adicionarCat", resourceCulture);
@@ -266,6 +276,26 @@ namespace EterPharmaPro.Properties {
         internal static System.Drawing.Bitmap papel_impresso {
             get {
                 object obj = ResourceManager.GetObject("papel-impresso", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap procurar {
+            get {
+                object obj = ResourceManager.GetObject("procurar", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap removeCat {
+            get {
+                object obj = ResourceManager.GetObject("removeCat", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

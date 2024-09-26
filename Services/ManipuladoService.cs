@@ -8,6 +8,7 @@ using EterPharmaPro.Utils.Extencions;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 
 namespace EterPharmaPro.Services
 {
@@ -22,7 +23,7 @@ namespace EterPharmaPro.Services
 			_eterDb = eterDb;
 		}
 
-		public void PrintDocManipulado80mm(ManipulacaoModel model)
+		public async void PrintDocManipulado80mm(ManipulacaoModel model)
 		{
 			printerHelper = new RawPrinterHelper();
 			printerHelper.AddLine(new TextPrintFormaterModel
@@ -42,7 +43,7 @@ namespace EterPharmaPro.Services
 			printerHelper.AddLine(new TextPrintFormaterModel
 			{
 				tilte = "Vendedor(a): ",
-				texto = model.DADOSATENDIMENTO.ATEN_LOJA + " - " + _eterDb.DbUser.GetUser(model.DADOSATENDIMENTO.ATEN_LOJA.ToString()).Result[0].NOME,
+				texto = model.DADOSATENDIMENTO.ATEN_LOJA + " - " + (await _eterDb.DbUser.GetUser(new QueryWhereModel().SetWhere("ID_LOJA", model.DADOSATENDIMENTO.ATEN_LOJA))).FirstOrDefault().NOME,
 				alignmentText = AlignmentTextPrintEnum.Left,
 				fontStyle = FormatTextPrintEnum.Default
 			});

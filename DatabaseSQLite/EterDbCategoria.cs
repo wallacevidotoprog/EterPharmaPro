@@ -24,11 +24,11 @@ namespace EterPharmaPro.DatabaseSQLite
 			try
 			{
 
-				string Query = "INSERT INTO CATEGORIA_VALIDADE (NAME,USER_ID) VALUES (@NAME, @USER_ID)";
+				string Query = "INSERT INTO CATEGORIA_VALIDADE (NAME,ID_LOJA) VALUES (@NAME, @ID_LOJA)";
 				using (SQLiteCommand command = new SQLiteCommand(Query, connection, transaction))
 				{
 					command.Parameters.AddWithValue("@NAME", model.NAME);
-					command.Parameters.AddWithValue("@USER_ID", model.USER_ID);
+					command.Parameters.AddWithValue("@ID_LOJA", model.ID_LOJA);
 					await command.ExecuteNonQueryAsync();
 					command.CommandText = "SELECT last_insert_rowid()";
 					return (long)(await command.ExecuteScalarAsync().ConfigureAwait(continueOnCapturedContext: false));
@@ -88,7 +88,7 @@ namespace EterPharmaPro.DatabaseSQLite
 				{
 					command.Parameters.AddWithValue("@ID", model.ID);
 					command.Parameters.AddWithValue("@NAME", model.NAME);
-					command.Parameters.AddWithValue("@USER_ID", model.USER_ID);
+					command.Parameters.AddWithValue("@USER_ID", model.ID_LOJA);
 					await command.ExecuteNonQueryAsync().ConfigureAwait(continueOnCapturedContext: false);
 				}
 

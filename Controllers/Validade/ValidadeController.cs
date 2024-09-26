@@ -10,8 +10,7 @@ using System.Data.SQLite;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
-using static System.Net.Mime.MediaTypeNames;
+using EterPharmaPro.Services.XLSX;
 
 namespace EterPharmaPro.Controllers.Validade
 {
@@ -63,7 +62,7 @@ namespace EterPharmaPro.Controllers.Validade
 				{
 					try
 					{
-						long? tempIdV = await eterDb.DbCategoria.CreateCategory(new CategoriaDbModal { USER_ID = user_id, NAME = cat_name }, connection, transaction);
+						long? tempIdV = await eterDb.DbCategoria.CreateCategory(new CategoriaDbModal { ID_LOJA = user_id, NAME = cat_name }, connection, transaction);
 
 						transaction.Commit();
 						return tempIdV;
@@ -110,23 +109,27 @@ namespace EterPharmaPro.Controllers.Validade
 			}
 		}
 
-		public List<ProdutosModel> GetAllProdutos()
+		public List<ProdutosModel> GetAllProdutos(out bool inLoad)
 		{
 			if (!databaseProdutosDb.CheckingLoad())
 			{
+				inLoad = true;
 				return null;
 			}
+			inLoad = false;
 			return databaseProdutosDb.produtos;
 		}
 
 		private void DatabaseProdutosLoaded(bool complet) => isLoadProd = complet;
 
-		public ProdutosModel GetProduto(string text)
+		public ProdutosModel GetProduto(string text, out bool inLoad)
 		{
 			if (!databaseProdutosDb.CheckingLoad())
 			{
+				inLoad = true;
 				return null;
 			}
+			inLoad = false;
 			return ((text.Trim().Length >= 7) ? databaseProdutosDb.produtos.Find((ProdutosModel x) => x.EAN.Contains(text.Trim())) : databaseProdutosDb.produtos.Find((ProdutosModel x) => x.COD_PRODUTO.Contains(text.Trim().Replace(" ", null).PadLeft(6, '0'))));
 		}
 
@@ -165,7 +168,7 @@ namespace EterPharmaPro.Controllers.Validade
 
 		public async Task<List<CategoriaDbModal>> GetCategoryUser(long? user_id)
 		{
-			return await eterDb.DbCategoria.GetCategory(new QueryWhereModel().SetWhere("USER_ID",user_id));
+			return await eterDb.DbCategoria.GetCategory(new QueryWhereModel().SetWhere("ID_LOJA", user_id));
 		}
 
 		public async Task<bool> UpdateProdutoVality(SetValityModel setValityModel)
@@ -227,7 +230,7 @@ namespace EterPharmaPro.Controllers.Validade
 
 		public async Task<ProdutoValidadeDbModal> GetProdutoDb(string text)
 		{
-			List<ProdutoValidadeDbModal> temp = await eterDb.DbProdutoValidade.GetProdutoVality(new QueryWhereModel().SetWhere("ID",text));
+			List<ProdutoValidadeDbModal> temp = await eterDb.DbProdutoValidade.GetProdutoVality(new QueryWhereModel().SetWhere("ID", text));
 
 			return temp == null ? null : temp.Count > 0 ? temp[0] : null;
 		}
@@ -261,9 +264,9 @@ namespace EterPharmaPro.Controllers.Validade
 				tempResult = tempResult.Where(x => x.DATE.Value.Month == dateTime.Month && x.DATE.Value.Year == dateTime.Year).ToList();
 
 				for (int i = 0; i < tempResult.Count; i++)
-				{//(new QueryWhereModel { WHERE = new ProdutoValidadeDbModal { ID = Convert.ToUInt32(text) }.ID })      (await eterDb.DbUser.GetUser(tempResult[i].USER_ID.ToString(), Enums.QueryUserEnum.ID)).First(x => x.ID == tempResult[i].USER_ID).NOME, tempResult[i].DATE.Value.ToShortDateString()));
+				{
 					values.Add((tempResult[i].ID,
-						(await eterDb.DbUser.GetUser(tempResult[i].USER_ID.ToString(), Enums.QueryUserEnum.ID)).First(x => x.ID == tempResult[i].USER_ID).NOME, tempResult[i].DATE.Value.ToShortDateString()));
+						(await eterDb.DbUser.GetUser(new QueryWhereModel().SetWhere("ID", tempResult[i].USER_ID))).FirstOrDefault().NOME, tempResult[i].DATE.Value.ToShortDateString()));
 				}
 				return values;
 
@@ -289,6 +292,31 @@ namespace EterPharmaPro.Controllers.Validade
 			return (tempValidadeDbModal, null);
 
 
+		}
+
+		public async Task<bool> ExportValityXLSX(long? vality_id, string filePath)
+		{
+			try
+			{
+				ValidadeDbModal tempVT = (await eterDb.DbValidade.GetVality(new QueryWhereModel().SetWhere("ID", vality_id))).FirstOrDefault();
+
+				List<ProdutoValidadeDbModal> tempPV = await eterDb.DbProdutoValidade.GetProdutoVality(new QueryWhereModel().SetWhere("VALIDADE_ID", tempVT.ID));
+
+				List<CategoriaDbModal> categoriaDbModals = new List<CategoriaDbModal>();
+
+				(await GetCategoryList(tempPV.GroupBy(p => p.CATEGORIA_ID).Select(g => g.Key).ToList())).ForEach(item =>
+				{
+					categoriaDbModals.Add(new CategoriaDbModal { ID = item.cat_id, NAME = item.cat_name });
+				});
+
+				return await WriteValityExport.ExportValityExcel(new ValityExportModel { ID_LOJA = tempVT.USER_ID, NAME = (await eterDb.DbUser.GetUser(new QueryWhereModel().SetWhere("ID", tempVT.USER_ID))).FirstOrDefault().NOME, produtoValidadeDbModals = tempPV, categoriasDbModals = categoriaDbModals }, filePath, true);
+
+			}
+			catch (Exception ex)
+			{
+				ex.ErrorGet();
+				return false;
+			}
 		}
 	}
 }

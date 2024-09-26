@@ -25,7 +25,7 @@ namespace EterPharmaPro.DatabaseSQLite
 			try
 			{
 
-				string Query = "INSERT INTO VALIDADES (USER_ID,DATE) VALUES (@USER_ID, @DATE)";
+				string Query = "INSERT INTO VALIDADES (USER_ID ,DATE) VALUES (@USER_ID, @DATE)";
 				using (SQLiteCommand command = new SQLiteCommand(Query, connection, transaction))
 				{
 					command.Parameters.AddWithValue("@USER_ID", model.USER_ID);

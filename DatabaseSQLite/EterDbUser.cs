@@ -112,11 +112,11 @@ namespace EterPharmaPro.DatabaseSQLite
 			}
 		}
 
-		public async Task<List<UserModel>> GetUser(string query = null, QueryUserEnum queryUser = QueryUserEnum.NONE)
+		public async Task<List<UserModel>> GetUser(QueryWhereModel query)
 		{
 			try
 			{
-				return await new MapDbEter(_databaseConnection).QueryAsync<UserModel>($"SELECT * FROM USERS {(queryUser == QueryUserEnum.ID ? " WHERE ID = " + query : queryUser == QueryUserEnum.ID_LOJA ? " WHERE ID_LOJA = " + query : string.Empty)}");
+				return await new MapDbEter(_databaseConnection).QueryAsync<UserModel>($"SELECT * FROM USERS {query.ReturnSQLQuery()}");
 			}
 			catch (Exception ex)
 			{

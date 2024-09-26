@@ -560,7 +560,7 @@
 			// ePictureBox_removeCat
 			// 
 			this.ePictureBox_removeCat.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.ePictureBox_removeCat.Image = global::EterPharmaPro.Properties.Resources.excluirCat;
+			this.ePictureBox_removeCat.Image = global::EterPharmaPro.Properties.Resources.removeCat;
 			this.ePictureBox_removeCat.Location = new System.Drawing.Point(1001, 22);
 			this.ePictureBox_removeCat.Name = "ePictureBox_removeCat";
 			this.ePictureBox_removeCat.Size = new System.Drawing.Size(50, 50);
@@ -573,7 +573,7 @@
 			// ePictureBox_addCat
 			// 
 			this.ePictureBox_addCat.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.ePictureBox_addCat.Image = global::EterPharmaPro.Properties.Resources.adicionarCat;
+			this.ePictureBox_addCat.Image = global::EterPharmaPro.Properties.Resources.addCat;
 			this.ePictureBox_addCat.Location = new System.Drawing.Point(945, 22);
 			this.ePictureBox_addCat.Name = "ePictureBox_addCat";
 			this.ePictureBox_addCat.Size = new System.Drawing.Size(50, 50);
@@ -585,7 +585,7 @@
 			// 
 			// ePictureBox_seach
 			// 
-			this.ePictureBox_seach.Image = global::EterPharmaPro.Properties.Resources.data_especial;
+			this.ePictureBox_seach.Image = global::EterPharmaPro.Properties.Resources.procurar;
 			this.ePictureBox_seach.Location = new System.Drawing.Point(225, 16);
 			this.ePictureBox_seach.Name = "ePictureBox_seach";
 			this.ePictureBox_seach.Size = new System.Drawing.Size(64, 64);
@@ -643,7 +643,7 @@
 			this.toolStripButton_clear.Text = "LIMPAR";
 			this.toolStripButton_clear.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
 			this.toolStripButton_clear.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-			this.toolStripButton_clear.ToolTipText = "IMPRESSOS";
+			this.toolStripButton_clear.ToolTipText = "Limpar Formulário";
 			this.toolStripButton_clear.Click += new System.EventHandler(this.toolStripButton_clear_Click);
 			// 
 			// toolStripButton_save
@@ -678,6 +678,7 @@
 			this.toolStripButton_excel.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
 			this.toolStripButton_excel.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
 			this.toolStripButton_excel.ToolTipText = "Salvar documento em excel";
+			this.toolStripButton_excel.Click += new System.EventHandler(this.toolStripButton_excel_Click);
 			// 
 			// CreateValidade
 			// 
