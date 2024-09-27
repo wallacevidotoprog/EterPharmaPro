@@ -201,6 +201,7 @@ namespace EterPharmaPro.Utils.Extencions
 
 		public static long ToDatetimeUnix(this DateTime? dateTime) => ((DateTimeOffset)dateTime).ToUnixTimeSeconds();
 		public static long ToDatetimeUnix(this DateTime dateTime) => ((DateTimeOffset)dateTime).ToUnixTimeSeconds();
+		public static long ToDatetimeUnix(this string dateTime) => ((DateTimeOffset)Convert.ToDateTime(dateTime)).ToUnixTimeSeconds();
 
 		//public static TypeDoc TypeDocs(this string type)
 		//{

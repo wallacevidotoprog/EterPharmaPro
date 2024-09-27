@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EterPharmaPro.Models.DbModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -30,5 +31,18 @@ namespace EterPharmaPro.Models
 		public int quantidade { get; set; }
 		public DateTime dateVality { get; set; }
 		public int category_id { get; set; }
+
+		public ProdutoSetValityModel ConvertDbModel(ProdutoValidadeDbModal modal,long? id = null)
+		{
+			return new ProdutoSetValityModel
+			{
+				id = id,
+				codigo = modal.PRODUTO_CODIGO,
+				descricao = modal.PRODUTO_DESCRICAO,
+				quantidade = modal.QUANTIDADE,
+				dateVality = modal.DATA_VALIDADE,
+				category_id = modal.CATEGORIA_ID
+			};
+		}
 	}
 }

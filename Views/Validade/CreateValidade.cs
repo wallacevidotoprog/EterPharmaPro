@@ -37,6 +37,7 @@ namespace EterPharmaPro.Views.Validade
 
 		private void CreateValidade_Load(object sender, EventArgs e)
 		{
+			contextMenuStrip_produtos.Enabled = false;
 			comboBox_user.Invoke((Action)async delegate
 			{
 				await comboBox_user.CBListUserAsync(eterDb);
@@ -70,6 +71,7 @@ namespace EterPharmaPro.Views.Validade
 			groupBox_insert.Visible = state;
 			comboBox_user.Enabled = !state;
 			dateTimePicker_dataD.Enabled = !state;
+			contextMenuStrip_produtos.Enabled = state;
 			listView1.Items.Clear();
 		}
 
@@ -103,9 +105,10 @@ namespace EterPharmaPro.Views.Validade
 			ePictureBox_sava_up.Image = Resources.arquivo__1_;
 			this.Focus();
 
+			
 			setValityModel = new SetValityModel();
 			setValityModel.user_id = Convert.ToUInt32(comboBox_user.SelectedValue);
-			setValityModel.dataCreate = dateTimePicker_dataD.Value;
+			setValityModel.dataCreate = Convert.ToDateTime(dateTimePicker_dataD.Value.ToShortDateString());
 
 			setValityModel.vality_id = await validadeController.CreateNewDocVality(setValityModel);
 
@@ -306,6 +309,7 @@ namespace EterPharmaPro.Views.Validade
 			textBox_nproduto.ReadOnly = true;
 			numericUpDown_qtd.Value = 1;
 			dateTimePicker_data.Value = DateTime.Today;
+			contextMenuStrip_produtos.Enabled = false;
 
 		}
 
@@ -374,8 +378,8 @@ namespace EterPharmaPro.Views.Validade
 					case ListViewActionsEnum.ADD:
 						ProdutoSetValityModel tempObjAd = (ProdutoSetValityModel)action;
 
-
-						var groupAd = listView1.Groups.Cast<ListViewGroup>().Where(x => x.Header == comboBox_categoria.Text).FirstOrDefault();//se não tiver add
+						string getcat = await validadeController.GetCategory(tempObjAd.category_id);
+						var groupAd = listView1.Groups.Cast<ListViewGroup>().Where(x => x.Header == getcat).FirstOrDefault();//se não tiver add
 
 						groupAd = groupAd ?? listView1.Groups.Cast<ListViewGroup>().Where(x => x.Header == "SEM CATEGORIA").FirstOrDefault();
 
@@ -388,6 +392,7 @@ namespace EterPharmaPro.Views.Validade
 						item.SubItems.Add(tempObjAd.dateVality.ToString("dd/MM/yyyy"));
 						item.Group = groupAd;
 						listView1.Items.Add(item);
+						listView1.Refresh();
 
 						break;
 					case ListViewActionsEnum.UPDATE:
@@ -561,6 +566,25 @@ namespace EterPharmaPro.Views.Validade
 			{
 				ex.ErrorGet();
 			}
+		}
+
+		private async void iMPORTARPRODUTOSToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			DateTime? dateTimeQuery = InputDate.Show();
+			if (dateTimeQuery is null)
+			{
+				return;
+			}
+
+			var tempImport = await validadeController.ImportProdutos(dateTimeQuery,setValityModel.user_id, setValityModel.vality_id);
+			if (tempImport is null)
+				return;
+
+			for (int i = 0; i < tempImport.Count; i++)
+			{
+				ListViewAction(tempImport[i], ListViewActionsEnum.ADD);
+			}
+			
 		}
 	}
 }

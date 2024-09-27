@@ -1,5 +1,7 @@
-﻿using System;
+﻿using DocumentFormat.OpenXml.Vml;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,13 +11,52 @@ namespace EterPharmaPro.Models.DbModels
 	public class QueryWhereModel
 	{
 		public string WHERE { get; set; } = string.Empty;
-		public string OPERATOR_WHERE { get; set; } = "=";
-		public List<(object objAND, string op)> AND { get; set; } = null;
+		public List<string> QMULTI { get; set; } = null;
 
-		public QueryWhereModel SetWhere(string propName, object setWhere)
+
+		private string[] QueryLike(string opt)
 		{
-			WHERE = $"{propName} {OPERATOR_WHERE} {setWhere.ToString()}";
-			return this;	
+			string[] withLike = new string[] { string.Empty, string.Empty };
+			if (opt.ToUpper().Contains("LIKE"))
+			{
+				var ta = opt.ToUpper().Split(new string[] { "LIKE" }, StringSplitOptions.None);
+				withLike[0] = "'" + ta[0] ?? string.Empty;
+				withLike[1] = "'" + ta[1] ?? string.Empty;
+				
+				opt = "LIKE";
+			}
+			return withLike;
+		}
+		public QueryWhereModel SetWhere(string propName, object setWhere, string opt = " = ")
+		{
+			string[] withLike = new string[] { string.Empty, string.Empty };
+			if (opt.ToUpper().Contains("LIKE"))
+			{
+				withLike = QueryLike(opt);
+				opt = "LIKE";
+			}
+
+			WHERE = $"{propName} {opt} {withLike[0]}{setWhere.ToString()}{withLike[1]}";
+			return this;
+		}
+
+		public QueryWhereModel SetMult(string propName, object setAtrb, string setOpt = " = ")
+		{
+
+			string[] withLike = new string[] { string.Empty, string.Empty };
+			if (setOpt.ToUpper().Contains("LIKE"))
+			{
+				withLike = QueryLike(setOpt);
+				setOpt = "LIKE";
+			}
+			QMULTI = QMULTI ?? new List<string>();
+			QMULTI.Add($"{propName} {setOpt} {withLike[0]}{setAtrb}{withLike[1]}");
+			return this;
+		}
+		public QueryWhereModel SetMult(List<string> qmult)
+		{
+			QMULTI = qmult;
+			return this;
 		}
 		public string ReturnSQLQuery()
 		{
@@ -26,16 +67,12 @@ namespace EterPharmaPro.Models.DbModels
 				return string.Empty;
 			}
 			tempQuery = $" WHERE {WHERE} ";
-			if (AND is null)
+			if (QMULTI is null)
 			{
 				return tempQuery;
 			}
 
-			foreach (var item in AND)
-			{
-				tempQuery += $" AND {nameof(item.objAND)} {item.op} {item.objAND.ToString()}";
-			}
-			return tempQuery;
+			return tempQuery += $" AND {string.Join(" AND ", QMULTI)}";
 		}
 	}
 }

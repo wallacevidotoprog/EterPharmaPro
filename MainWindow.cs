@@ -4,6 +4,7 @@ using EterPharmaPro.Interfaces;
 using EterPharmaPro.Models;
 using EterPharmaPro.Models.DbModels;
 using EterPharmaPro.Utils.Extencions;
+using EterPharmaPro.Views;
 using EterPharmaPro.Views.Manipulados;
 using EterPharmaPro.Views.Validade;
 using System;
@@ -70,5 +71,7 @@ namespace EterPharmaPro
 				cancellationTokenSource.Cancel();
 			}
 		}
+
+		private void toolStripDropDownButton_impressos_Click(object sender, EventArgs e) => OpenForm(new IMPRESSOS(eterDb, DatabaseProdutosDb));
 	}
 }

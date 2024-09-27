@@ -252,7 +252,7 @@ namespace EterPharmaPro.Controllers.Validade
 
 			return resp;
 		}
-
+		public async Task<string> GetCategory(object id) => (await eterDb.DbCategoria.GetCategory(new QueryWhereModel().SetWhere("ID", id))).FirstOrDefault()?.NAME;
 
 		public async Task<List<(long? id, string nameUser, string date)>> GetValityDate(DateTime dateTime)
 		{
@@ -317,6 +317,58 @@ namespace EterPharmaPro.Controllers.Validade
 				ex.ErrorGet();
 				return false;
 			}
+		}
+
+		public async Task<List<ProdutoSetValityModel>> ImportProdutos(DateTime? dateTimeQuery, long? user_id, long? vality_id)
+		{
+			QueryWhereModel queryWhereModel = new QueryWhereModel();
+			queryWhereModel.SetWhere("DATE", dateTimeQuery.Value.ToShortDateString().ToDatetimeUnix(), "%LIKE");
+			queryWhereModel.SetMult("USER_ID", user_id);
+			var t1 = (await eterDb.DbValidade.GetVality(queryWhereModel)).FirstOrDefault();
+			if (t1 is null)
+			{
+				return null;
+			}
+
+			var t2 = await eterDb.DbProdutoValidade.GetProdutoVality(new QueryWhereModel().SetWhere("VALIDADE_ID", t1.ID));
+			if (t2 is null)
+			{
+				return null;
+			}
+
+
+			List<ProdutoSetValityModel> produtoSetValityModel = new List<ProdutoSetValityModel>();
+			using (var connection = new SQLiteConnection(eterDb.DatabaseConnection))
+			{
+				await connection.OpenAsync().ConfigureAwait(false);
+				using (var transaction = connection.BeginTransaction())
+				{
+					try
+					{
+						for (int i = 0; i < t2.Count; i++)
+						{
+							long? tempIdV = await eterDb.DbProdutoValidade.CreateProdutoVality(t2[i], connection, transaction);
+
+							ProdutoSetValityModel item = new ProdutoSetValityModel().ConvertDbModel(t2[i], tempIdV);
+
+
+
+							produtoSetValityModel.Add(item);
+						}
+
+						transaction.Commit();
+						return produtoSetValityModel;
+					}
+					catch (Exception ex)
+					{
+						transaction.Rollback();
+						ex.ErrorGet();
+						return null;
+					}
+				}
+			}
+
+			return null;
 		}
 	}
 }

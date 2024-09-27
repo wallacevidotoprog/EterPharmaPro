@@ -224,11 +224,29 @@
     <Compile Include="Utils\Extencions\InputBox.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Utils\Extencions\InputDate.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Utils\Extencions\InputDate.Designer.cs">
+      <DependentUpon>InputDate.cs</DependentUpon>
+    </Compile>
     <Compile Include="Utils\Extencions\InputList.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Utils\Extencions\InputListProduto.cs">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\IMPRESSOS.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\IMPRESSOS.Designer.cs">
+      <DependentUpon>IMPRESSOS.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LoteControlado\CreateLoteControlados.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\LoteControlado\CreateLoteControlados.Designer.cs">
+      <DependentUpon>CreateLoteControlados.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\Manipulados\CreateManipulados.cs">
       <SubType>Form</SubType>
@@ -261,8 +279,17 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="Utils\Extencions\InputDate.resx">
+      <DependentUpon>InputDate.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Utils\Extencions\InputListProduto.resx">
       <DependentUpon>InputListProduto.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\IMPRESSOS.resx">
+      <DependentUpon>IMPRESSOS.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\LoteControlado\CreateLoteControlados.resx">
+      <DependentUpon>CreateLoteControlados.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Manipulados\CreateManipulados.resx">
       <DependentUpon>CreateManipulados.cs</DependentUpon>
@@ -298,6 +325,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="farmacia.ico" />
+    <None Include="Resources\carimboS.png" />
+    <None Include="Resources\inserir.png" />
     <None Include="Resources\addCat.png" />
     <None Include="Resources\removeCat.png" />
     <None Include="Resources\procurar.png" />
