@@ -28,14 +28,14 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.components = new System.ComponentModel.Container();
 			this.toolStrip_topMenu = new System.Windows.Forms.ToolStrip();
-			this.toolStripButton_exit = new System.Windows.Forms.ToolStripButton();
-			this.toolStripDropDownButton_new = new System.Windows.Forms.ToolStripButton();
+			this.toolStripButton_print = new System.Windows.Forms.ToolStripButton();
+			this.toolStripDropDownButton_clear = new System.Windows.Forms.ToolStripButton();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.textBox_cel = new System.Windows.Forms.TextBox();
 			this.textBox_end = new System.Windows.Forms.TextBox();
 			this.label3 = new System.Windows.Forms.Label();
-			this.textBox_rg = new System.Windows.Forms.TextBox();
 			this.textBox_nome = new System.Windows.Forms.TextBox();
 			this.label1 = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
@@ -46,21 +46,26 @@
 			this.label8 = new System.Windows.Forms.Label();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
 			this.listView1 = new System.Windows.Forms.ListView();
+			this.cod = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader9 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader10 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.contextMenuStrip_produtos = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.eXCLUIRToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.textBox_lote = new System.Windows.Forms.TextBox();
 			this.label9 = new System.Windows.Forms.Label();
 			this.label7 = new System.Windows.Forms.Label();
 			this.textBox_medicamento = new System.Windows.Forms.TextBox();
 			this.label5 = new System.Windows.Forms.Label();
 			this.ePictureBox1 = new EterPharmaPro.Utils.eControl.ePictureBox();
+			this.textBox_rg = new EterPharmaPro.Utils.eControl.eTextBoxWithButton();
 			this.toolStrip_topMenu.SuspendLayout();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDown_qtd)).BeginInit();
 			this.groupBox3.SuspendLayout();
+			this.contextMenuStrip_produtos.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.ePictureBox1)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -70,8 +75,8 @@
 			this.toolStrip_topMenu.Dock = System.Windows.Forms.DockStyle.Right;
 			this.toolStrip_topMenu.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
 			this.toolStrip_topMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButton_exit,
-            this.toolStripDropDownButton_new});
+            this.toolStripButton_print,
+            this.toolStripDropDownButton_clear});
 			this.toolStrip_topMenu.Location = new System.Drawing.Point(834, 0);
 			this.toolStrip_topMenu.Name = "toolStrip_topMenu";
 			this.toolStrip_topMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
@@ -79,45 +84,47 @@
 			this.toolStrip_topMenu.TabIndex = 7;
 			this.toolStrip_topMenu.Text = "toolStrip1";
 			// 
-			// toolStripButton_exit
+			// toolStripButton_print
 			// 
-			this.toolStripButton_exit.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-			this.toolStripButton_exit.AutoSize = false;
-			this.toolStripButton_exit.Font = new System.Drawing.Font("Segoe UI", 7F);
-			this.toolStripButton_exit.Image = global::EterPharmaPro.Properties.Resources.download__1_;
-			this.toolStripButton_exit.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-			this.toolStripButton_exit.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-			this.toolStripButton_exit.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.toolStripButton_exit.Name = "toolStripButton_exit";
-			this.toolStripButton_exit.Size = new System.Drawing.Size(90, 90);
-			this.toolStripButton_exit.Tag = "IMPRIMIR";
-			this.toolStripButton_exit.Text = "IMPRIMIR";
-			this.toolStripButton_exit.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-			this.toolStripButton_exit.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-			this.toolStripButton_exit.ToolTipText = "SAIR";
+			this.toolStripButton_print.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+			this.toolStripButton_print.AutoSize = false;
+			this.toolStripButton_print.Font = new System.Drawing.Font("Segoe UI", 7F);
+			this.toolStripButton_print.Image = global::EterPharmaPro.Properties.Resources.download__1_;
+			this.toolStripButton_print.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+			this.toolStripButton_print.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.toolStripButton_print.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.toolStripButton_print.Name = "toolStripButton_print";
+			this.toolStripButton_print.Size = new System.Drawing.Size(90, 90);
+			this.toolStripButton_print.Tag = "IMPRIMIR";
+			this.toolStripButton_print.Text = "IMPRIMIR";
+			this.toolStripButton_print.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+			this.toolStripButton_print.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+			this.toolStripButton_print.ToolTipText = "SAIR";
+			this.toolStripButton_print.Click += new System.EventHandler(this.toolStripButton_print_Click);
 			// 
-			// toolStripDropDownButton_new
+			// toolStripDropDownButton_clear
 			// 
-			this.toolStripDropDownButton_new.AutoSize = false;
-			this.toolStripDropDownButton_new.Font = new System.Drawing.Font("Segoe UI", 8F);
-			this.toolStripDropDownButton_new.Image = global::EterPharmaPro.Properties.Resources.limpar_limpo__1_;
-			this.toolStripDropDownButton_new.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-			this.toolStripDropDownButton_new.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-			this.toolStripDropDownButton_new.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.toolStripDropDownButton_new.Name = "toolStripDropDownButton_new";
-			this.toolStripDropDownButton_new.Size = new System.Drawing.Size(90, 90);
-			this.toolStripDropDownButton_new.Tag = "";
-			this.toolStripDropDownButton_new.Text = "LIMPAR";
-			this.toolStripDropDownButton_new.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-			this.toolStripDropDownButton_new.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-			this.toolStripDropDownButton_new.ToolTipText = "Limpar Formulário";
+			this.toolStripDropDownButton_clear.AutoSize = false;
+			this.toolStripDropDownButton_clear.Font = new System.Drawing.Font("Segoe UI", 8F);
+			this.toolStripDropDownButton_clear.Image = global::EterPharmaPro.Properties.Resources.limpar_limpo__1_;
+			this.toolStripDropDownButton_clear.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+			this.toolStripDropDownButton_clear.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.toolStripDropDownButton_clear.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.toolStripDropDownButton_clear.Name = "toolStripDropDownButton_clear";
+			this.toolStripDropDownButton_clear.Size = new System.Drawing.Size(90, 90);
+			this.toolStripDropDownButton_clear.Tag = "";
+			this.toolStripDropDownButton_clear.Text = "LIMPAR";
+			this.toolStripDropDownButton_clear.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+			this.toolStripDropDownButton_clear.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+			this.toolStripDropDownButton_clear.ToolTipText = "Limpar Formulário";
+			this.toolStripDropDownButton_clear.Click += new System.EventHandler(this.toolStripDropDownButton_clear_Click);
 			// 
 			// groupBox1
 			// 
+			this.groupBox1.Controls.Add(this.textBox_rg);
 			this.groupBox1.Controls.Add(this.textBox_cel);
 			this.groupBox1.Controls.Add(this.textBox_end);
 			this.groupBox1.Controls.Add(this.label3);
-			this.groupBox1.Controls.Add(this.textBox_rg);
 			this.groupBox1.Controls.Add(this.textBox_nome);
 			this.groupBox1.Controls.Add(this.label1);
 			this.groupBox1.Controls.Add(this.label2);
@@ -139,6 +146,7 @@
 			this.textBox_cel.Name = "textBox_cel";
 			this.textBox_cel.Size = new System.Drawing.Size(624, 33);
 			this.textBox_cel.TabIndex = 3;
+			this.textBox_cel.Validated += new System.EventHandler(this.textBox_cel_Validated);
 			// 
 			// textBox_end
 			// 
@@ -150,6 +158,7 @@
 			this.textBox_end.Name = "textBox_end";
 			this.textBox_end.Size = new System.Drawing.Size(624, 80);
 			this.textBox_end.TabIndex = 2;
+			this.textBox_end.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox_end_KeyDownAsync);
 			// 
 			// label3
 			// 
@@ -161,16 +170,6 @@
 			this.label3.TabIndex = 12;
 			this.label3.Text = "RG:";
 			// 
-			// textBox_rg
-			// 
-			this.textBox_rg.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.textBox_rg.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-			this.textBox_rg.Font = new System.Drawing.Font("Microsoft Tai Le", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.textBox_rg.Location = new System.Drawing.Point(192, 13);
-			this.textBox_rg.Name = "textBox_rg";
-			this.textBox_rg.Size = new System.Drawing.Size(624, 33);
-			this.textBox_rg.TabIndex = 1;
-			// 
 			// textBox_nome
 			// 
 			this.textBox_nome.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
@@ -179,7 +178,7 @@
 			this.textBox_nome.Location = new System.Drawing.Point(192, 52);
 			this.textBox_nome.Name = "textBox_nome";
 			this.textBox_nome.Size = new System.Drawing.Size(624, 33);
-			this.textBox_nome.TabIndex = 0;
+			this.textBox_nome.TabIndex = 1;
 			// 
 			// label1
 			// 
@@ -227,7 +226,7 @@
 			this.groupBox2.Location = new System.Drawing.Point(0, 232);
 			this.groupBox2.Name = "groupBox2";
 			this.groupBox2.Size = new System.Drawing.Size(834, 451);
-			this.groupBox2.TabIndex = 9;
+			this.groupBox2.TabIndex = 0;
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "DADOS DO MEDICAMENTO";
 			// 
@@ -277,10 +276,12 @@
 			// 
 			this.listView1.Activation = System.Windows.Forms.ItemActivation.OneClick;
 			this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.cod,
             this.columnHeader7,
             this.columnHeader8,
             this.columnHeader9,
             this.columnHeader10});
+			this.listView1.ContextMenuStrip = this.contextMenuStrip_produtos;
 			this.listView1.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.listView1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.listView1.FullRowSelect = true;
@@ -293,6 +294,11 @@
 			this.listView1.TabIndex = 13;
 			this.listView1.UseCompatibleStateImageBehavior = false;
 			this.listView1.View = System.Windows.Forms.View.Details;
+			// 
+			// cod
+			// 
+			this.cod.Text = "CÓDIGO";
+			this.cod.Width = 95;
 			// 
 			// columnHeader7
 			// 
@@ -314,6 +320,21 @@
 			this.columnHeader10.Text = "LOTE";
 			this.columnHeader10.Width = 240;
 			// 
+			// contextMenuStrip_produtos
+			// 
+			this.contextMenuStrip_produtos.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.eXCLUIRToolStripMenuItem});
+			this.contextMenuStrip_produtos.Name = "contextMenuStrip1";
+			this.contextMenuStrip_produtos.Size = new System.Drawing.Size(120, 26);
+			// 
+			// eXCLUIRToolStripMenuItem
+			// 
+			this.eXCLUIRToolStripMenuItem.Image = global::EterPharmaPro.Properties.Resources.arquivo__;
+			this.eXCLUIRToolStripMenuItem.Name = "eXCLUIRToolStripMenuItem";
+			this.eXCLUIRToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
+			this.eXCLUIRToolStripMenuItem.Text = "EXCLUIR";
+			this.eXCLUIRToolStripMenuItem.Click += new System.EventHandler(this.eXCLUIRToolStripMenuItem_Click);
+			// 
 			// textBox_lote
 			// 
 			this.textBox_lote.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -323,7 +344,7 @@
 			this.textBox_lote.Location = new System.Drawing.Point(192, 97);
 			this.textBox_lote.Name = "textBox_lote";
 			this.textBox_lote.Size = new System.Drawing.Size(509, 33);
-			this.textBox_lote.TabIndex = 3;
+			this.textBox_lote.TabIndex = 2;
 			// 
 			// label9
 			// 
@@ -355,6 +376,7 @@
 			this.textBox_medicamento.Name = "textBox_medicamento";
 			this.textBox_medicamento.Size = new System.Drawing.Size(509, 33);
 			this.textBox_medicamento.TabIndex = 0;
+			this.textBox_medicamento.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox_medicamento_KeyDown);
 			// 
 			// label5
 			// 
@@ -376,6 +398,21 @@
 			this.ePictureBox1.TabIndex = 21;
 			this.ePictureBox1.TabStop = false;
 			this.ePictureBox1.ToolTipText = null;
+			this.ePictureBox1.Click += new System.EventHandler(this.ePictureBox1_Click);
+			// 
+			// textBox_rg
+			// 
+			this.textBox_rg.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.textBox_rg.ButtonText = "CLIENTE EXISTENTE";
+			this.textBox_rg.ButtonVisible = false;
+			this.textBox_rg.Font = new System.Drawing.Font("Microsoft Tai Le", 15F);
+			this.textBox_rg.Location = new System.Drawing.Point(192, 12);
+			this.textBox_rg.Name = "textBox_rg";
+			this.textBox_rg.Size = new System.Drawing.Size(624, 34);
+			this.textBox_rg.TabIndex = 0;
+			this.textBox_rg.ButtonClick += new System.EventHandler(this.textBox_rg_ButtonClick);
+			this.textBox_rg.TexBoxValidated += new System.EventHandler(this.textBox_rg_TexBoxValidated);
 			// 
 			// CreateLoteControlados
 			// 
@@ -387,7 +424,6 @@
 			this.Controls.Add(this.toolStrip_topMenu);
 			this.Name = "CreateLoteControlados";
 			this.Text = "CreateLoteControlados";
-			this.Load += new System.EventHandler(this.CreateLoteControlados_Load);
 			this.toolStrip_topMenu.ResumeLayout(false);
 			this.toolStrip_topMenu.PerformLayout();
 			this.groupBox1.ResumeLayout(false);
@@ -396,6 +432,7 @@
 			this.groupBox2.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDown_qtd)).EndInit();
 			this.groupBox3.ResumeLayout(false);
+			this.contextMenuStrip_produtos.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.ePictureBox1)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
@@ -405,13 +442,12 @@
 		#endregion
 
 		private System.Windows.Forms.ToolStrip toolStrip_topMenu;
-		private System.Windows.Forms.ToolStripButton toolStripButton_exit;
-		private System.Windows.Forms.ToolStripButton toolStripDropDownButton_new;
+		private System.Windows.Forms.ToolStripButton toolStripButton_print;
+		private System.Windows.Forms.ToolStripButton toolStripDropDownButton_clear;
 		private System.Windows.Forms.GroupBox groupBox1;
 		private System.Windows.Forms.TextBox textBox_cel;
 		private System.Windows.Forms.TextBox textBox_end;
 		private System.Windows.Forms.Label label3;
-		private System.Windows.Forms.TextBox textBox_rg;
 		private System.Windows.Forms.TextBox textBox_nome;
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.Label label2;
@@ -432,5 +468,9 @@
 		private System.Windows.Forms.TextBox textBox_medicamento;
 		private System.Windows.Forms.Label label5;
 		private Utils.eControl.ePictureBox ePictureBox1;
+		private System.Windows.Forms.ContextMenuStrip contextMenuStrip_produtos;
+		private System.Windows.Forms.ToolStripMenuItem eXCLUIRToolStripMenuItem;
+		private System.Windows.Forms.ColumnHeader cod;
+		private Utils.eControl.eTextBoxWithButton textBox_rg;
 	}
 }

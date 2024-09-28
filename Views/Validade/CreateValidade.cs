@@ -115,6 +115,7 @@ namespace EterPharmaPro.Views.Validade
 			await comboBox_categoria.CBListCategoryAsync(await validadeController.GetCategoryUser(setValityModel.user_id));
 
 			RefreshCategoryAsync(null, ListViewActionsEnum.INIT);
+			ePictureBox_seach_Click(null, null);
 		}
 
 		private async void ePictureBox_addCat_ClickAsync(object sender, EventArgs e)

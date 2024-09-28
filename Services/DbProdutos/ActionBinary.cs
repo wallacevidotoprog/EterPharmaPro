@@ -14,10 +14,11 @@ namespace EterPharmaPro.Services.DbProdutos
 	{
 		private static BACKUP _backup;
 		#region PRODUTOS
-		public static async Task<List<ProdutosModel>> ReadProdutosAsync(ToolStripProgressBar progressBar, CancellationToken cancellationToken)
+		
+		public static Task<List<ProdutosModel>> ReadProdutosAsync(ToolStripProgressBar progressBar, CancellationToken cancellationToken)
 		{
 			List<ProdutosModel> list = new List<ProdutosModel>();
-			string filePath = Directory.GetCurrentDirectory() + "\\DADOS\\produtos.eter";
+			string filePath = Path.Combine(Directory.GetCurrentDirectory(), "DADOS", "produtos.eter");
 
 			try
 			{
@@ -28,6 +29,7 @@ namespace EterPharmaPro.Services.DbProdutos
 						using (BinaryReader reader = new BinaryReader(stream, Encoding.UTF8, leaveOpen: false))
 						{
 							int lines = reader.ReadInt32();
+							int updateFrequency = Math.Max(1, lines / 100); 
 
 							if (progressBar != null)
 							{
@@ -41,6 +43,7 @@ namespace EterPharmaPro.Services.DbProdutos
 								{
 									return list;
 								}
+
 								list.Add(new ProdutosModel
 								{
 									EAN = reader.ReadString(),
@@ -51,9 +54,9 @@ namespace EterPharmaPro.Services.DbProdutos
 									GRUPO = reader.ReadString()
 								});
 
-								if (progressBar != null)
+								if (progressBar != null && (i + 1) % updateFrequency == 0)
 								{
-									await Task.Run(() => progressBar.ProgressBar.Invoke((Action)(() => progressBar.Increment(1))));
+									progressBar.ProgressBar.Invoke((Action)(() => progressBar.Value = i + 1));
 								}
 							}
 						}
@@ -78,14 +81,10 @@ namespace EterPharmaPro.Services.DbProdutos
 			}
 			finally
 			{
-				if (!cancellationToken.IsCancellationRequested)
+				if (!cancellationToken.IsCancellationRequested && progressBar != null)
 				{
-					if (progressBar != null)
-					{
-						progressBar.ProgressBar.Invoke((Action)(() => progressBar.Value = 0));
-					}
+					progressBar.ProgressBar.Invoke((Action)(() => progressBar.Value = 0));
 				}
-
 			}
 
 			return list;

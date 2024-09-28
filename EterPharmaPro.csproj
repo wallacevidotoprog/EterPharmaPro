@@ -61,6 +61,8 @@
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="SixLabors.Fonts, Version=1.0.0.0, Culture=neutral, PublicKeyToken=d998eea7b14cab13, processorArchitecture=MSIL">
       <HintPath>packages\SixLabors.Fonts.1.0.0\lib\netstandard2.0\SixLabors.Fonts.dll</HintPath>
     </Reference>
@@ -133,6 +135,7 @@
       <Private>True</Private>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -147,6 +150,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\CarimboLoteValidade\CreateLoteControladosController.cs" />
     <Compile Include="Controllers\EterDbController.cs" />
     <Compile Include="Controllers\Manipulacao\ManipuladoController.cs" />
     <Compile Include="Controllers\Validade\ValidadeController.cs" />
@@ -157,6 +161,7 @@
     <Compile Include="Interfaces\IEterDbCategoria.cs" />
     <Compile Include="Interfaces\IEterDbProdutoValidade.cs" />
     <Compile Include="Interfaces\IEterDbValidade.cs" />
+    <Compile Include="Models\ControladoLoteModel.cs" />
     <Compile Include="Models\DbModels\BaseDbModal.cs" />
     <Compile Include="DatabaseSQLite\DatabaseTransactionHandler.cs" />
     <Compile Include="DatabaseSQLite\MapDbEter.cs" />
@@ -218,6 +223,12 @@
     <Compile Include="Services\XLSX\WriteValityExport.cs" />
     <Compile Include="Utils\eControl\ePictureBox.cs">
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Utils\eControl\eTextBoxWithButton.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Utils\eControl\PopUpMsg.xaml.cs">
+      <DependentUpon>PopUpMsg.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utils\Extencions\ExceptionError.cs" />
     <Compile Include="Utils\Extencions\ExtensionsDefault.cs" />
@@ -351,7 +362,12 @@
     <None Include="Resources\expirado.png" />
     <None Include="Resources\farmaceutico.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Page Include="Utils\eControl\PopUpMsg.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

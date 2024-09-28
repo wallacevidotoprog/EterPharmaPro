@@ -67,6 +67,7 @@ namespace EterPharmaPro.Models.DbModels
 				return string.Empty;
 			}
 			tempQuery = $" WHERE {WHERE} ";
+
 			if (QMULTI is null)
 			{
 				return tempQuery;
