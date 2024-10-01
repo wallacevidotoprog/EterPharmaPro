@@ -99,7 +99,7 @@
 			this.toolStripButton_print.Text = "IMPRIMIR";
 			this.toolStripButton_print.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
 			this.toolStripButton_print.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-			this.toolStripButton_print.ToolTipText = "SAIR";
+			this.toolStripButton_print.ToolTipText = "IMPRIMIR";
 			this.toolStripButton_print.Click += new System.EventHandler(this.toolStripButton_print_Click);
 			// 
 			// toolStripDropDownButton_clear
@@ -424,6 +424,7 @@
 			this.Controls.Add(this.toolStrip_topMenu);
 			this.Name = "CreateLoteControlados";
 			this.Text = "CreateLoteControlados";
+			this.Load += new System.EventHandler(this.CreateLoteControlados_Load);
 			this.toolStrip_topMenu.ResumeLayout(false);
 			this.toolStrip_topMenu.PerformLayout();
 			this.groupBox1.ResumeLayout(false);

@@ -122,68 +122,23 @@ namespace EterPharmaPro.Views.Manipulados
 			ClienteModel tempSelect = null;
 			try
 			{
-				temp = ((textBox_cpf.Text != "") ? manipuladoController.GetCliente(textBox_cpf.Text.ReturnInt(), TypeDoc.CPF).Result :
-					(((textBox_rg.Text != "")) ? manipuladoController.GetCliente(textBox_rg.Text.ReturnInt(), TypeDoc.RG).Result :
-					manipuladoController.GetCliente().Result));
+				temp = ((textBox_cpf.Text != "") ? await manipuladoController.GetCliente(textBox_cpf.Text.ReturnInt(), TypeDoc.CPF) :
+					(((textBox_rg.Text != "")) ? await manipuladoController.GetCliente(textBox_rg.Text.ReturnInt(), TypeDoc.RG) :
+					 await manipuladoController.GetCliente()));
 
 				if (temp.Count <= 0)
 				{
 					return;
 				}
-				object[] tempEnd;
-				int retList;
-				if (temp.Count > 1)
-				{
-					tempEnd = new object[temp.Count];
-					for (int i = 0; i < tempEnd.Length; i++)
-					{
-						tempEnd[i] = new object[2]
-						{
-							i,
-							"CLIENTE: " + temp[i].NOME + $" | TOTAL DE ENDEREÇOS: {(((List<EnderecoClienteModel>)temp[i].ENDERECO != null) ? ((List<EnderecoClienteModel>)temp[i].ENDERECO).Count : 0)}"
-						};
-					}
-					retList = InputList.Show(tempEnd, "Clientes");
-					if (retList == -1)
-					{
-						return;
-					}
-					tempSelect = temp[retList];
-				}
-				else
-				{
-					tempSelect = temp[0];
-				}
-
-				textBox_cpf.Text = tempSelect.CPF.ReturnFormation(FormatationEnum.CPF);
-				textBox_rg.Text = tempSelect.RG.ReturnFormation(FormatationEnum.RG);
-				textBox_nomeC.Text = tempSelect.NOME;
-				textBox5_tel.Text = tempSelect.TELEFONE.ReturnFormation(FormatationEnum.TELEFONE);
-				if (((List<EnderecoClienteModel>)tempSelect.ENDERECO).Count == 0)
-				{
-					return;
-				}
-				if (((List<EnderecoClienteModel>)tempSelect.ENDERECO).Count == 1)
-				{
-					textBox_log.Text = ((List<EnderecoClienteModel>)tempSelect.ENDERECO)[0].ENDERECO;
-					textBox_obsEnd.Text = ((List<EnderecoClienteModel>)tempSelect.ENDERECO)[0].OBSERVACAO;
-					return;
-				}
-				tempEnd = new object[((List<EnderecoClienteModel>)tempSelect.ENDERECO).Count];
-				for (int i = 0; i < tempEnd.Length; i++)
-				{
-					tempEnd[i] = new object[2]
-					{
-					i,
-					((List<EnderecoClienteModel>)tempSelect.ENDERECO)[i].ENDERECO
-					};
-				}
-				retList = InputList.Show(tempEnd, "Enderecos Cliente");
-				if (retList != -1)
-				{
-					textBox_log.Text = ((List<EnderecoClienteModel>)tempSelect.ENDERECO)[retList].ENDERECO;
-					textBox_obsEnd.Text = ((List<EnderecoClienteModel>)tempSelect.ENDERECO)[retList].OBSERVACAO;
-				}
+				tempSelect = temp.GetClienteArray();
+				
+				textBox_cpf.Text = tempSelect?.CPF.ReturnFormation(FormatationEnum.CPF);
+				textBox_rg.Text = tempSelect?.RG.ReturnFormation(FormatationEnum.RG);
+				textBox_nomeC.Text = tempSelect?.NOME;
+				textBox5_tel.Text = tempSelect?.TELEFONE.ReturnFormation(FormatationEnum.TELEFONE);
+				textBox_log.Text = ((EnderecoClienteModel)tempSelect?.ENDERECO).ENDERECO;
+				textBox_obsEnd.Text = ((EnderecoClienteModel)tempSelect?.ENDERECO).OBSERVACAO;
+				
 			}
 			catch (Exception ex)
 			{

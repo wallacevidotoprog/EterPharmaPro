@@ -247,6 +247,7 @@
     <Compile Include="Utils\Extencions\InputListProduto.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Utils\ValidatorFields.cs" />
     <Compile Include="Views\IMPRESSOS.cs">
       <SubType>Form</SubType>
     </Compile>

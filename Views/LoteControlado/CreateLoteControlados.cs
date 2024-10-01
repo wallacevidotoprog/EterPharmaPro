@@ -1,40 +1,37 @@
 ﻿using EterPharmaPro.Controllers.CarimboLoteValidade;
-using EterPharmaPro.Controllers.Validade;
 using EterPharmaPro.DbProdutos.Services;
 using EterPharmaPro.Enums;
 using EterPharmaPro.Interfaces;
 using EterPharmaPro.Models;
 using EterPharmaPro.Models.DbModels;
-using EterPharmaPro.Utils.eControl;
+using EterPharmaPro.Utils;
 using EterPharmaPro.Utils.Extencions;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.ToolTip;
 
 namespace EterPharmaPro.Views.LoteControlado
 {
 	public partial class CreateLoteControlados : Form
 	{
 		private readonly CreateLoteControladosController controladosController;
-		private ControladoLoteModel controladoLoteModel;
 		private List<MedicamentosControladoLoteModel> medicamentosControladoLoteModel;
 		private ProdutosModel tempProdutosModel;
 		private ClienteModel ClienteModel;
-		private ToolTip toolTip;
+		private bool isClienteSelected = false;
+		private ValidatorFields validatorFields;
 
+		private void CreateLoteControlados_Load(object sender, EventArgs e)
+		{
+			validatorFields = new ValidatorFields();
+			validatorFields.SetListControl(new List<Control> { textBox_rg.ReturnTexBox(), textBox_nome, textBox_end, textBox_cel });
+
+		}
 		public CreateLoteControlados(IEterDb eterDb, DatabaseProdutosDb databaseProdutosDb)
 		{
 			controladosController = new CreateLoteControladosController(eterDb, databaseProdutosDb);
 			InitializeComponent();
 			numericUpDown_qtd.Value = 1m;
-			toolTip = new ToolTip();
 
 
 		}
@@ -71,8 +68,8 @@ namespace EterPharmaPro.Views.LoteControlado
 					}
 					tempProdutosModel = controladosController.GetProduto(textBox_medicamento.Text.Trim());
 					textBox_medicamento.Clear();
-					
-					textBox_medicamento.Text = (tempProdutosModel is null)? string.Empty: tempProdutosModel.DESCRICAO_PRODUTO;
+
+					textBox_medicamento.Text = (tempProdutosModel is null) ? string.Empty : tempProdutosModel.DESCRICAO_PRODUTO;
 					textBox_lote.Focus();
 
 				}
@@ -114,14 +111,46 @@ namespace EterPharmaPro.Views.LoteControlado
 			dateTimePicker_validade.Value = DateTime.Today;
 			textBox_lote.Clear();
 			listView1.Items.Clear();
-			controladoLoteModel = null;
+			//controladoLoteModel = null;
 			medicamentosControladoLoteModel = null;
 			textBox_rg.ButtonVisible = true;
 		}
 
-		private void toolStripButton_print_Click(object sender, EventArgs e)
+		private async void toolStripButton_print_Click(object sender, EventArgs e)
 		{
+			if (validatorFields.ValidateFields())
+			{
 
+				if (medicamentosControladoLoteModel is null) {
+					listView1.StartVFD();
+					return;
+				}
+				if (ClienteModel is null)
+				{
+					ClienteModel = new ClienteModel
+					{
+						RG = textBox_rg.Text.ReturnInt(),
+						NOME = textBox_nome.Text,
+						TELEFONE = textBox_cel.Text.ReturnInt(),
+						ENDERECO = new EnderecoClienteModel
+						{
+							ENDERECO = textBox_end.Text
+						}
+					};
+				}
+				if (ClienteModel.ENDERECO is null || ((EnderecoClienteModel)ClienteModel.ENDERECO).ENDERECO.Trim().Replace(" ", null) != textBox_end.Text.Trim().Replace(" ", null))
+				{
+					ClienteModel.ENDERECO = new EnderecoClienteModel
+					{
+						ENDERECO = textBox_end.Text
+					};
+				}
+
+				if (await controladosController.FinishAsync(ClienteModel, medicamentosControladoLoteModel))
+				{
+
+				};
+			}
 		}
 
 		private void eXCLUIRToolStripMenuItem_Click(object sender, EventArgs e)
@@ -186,31 +215,12 @@ namespace EterPharmaPro.Views.LoteControlado
 					return;
 				}
 
-				List<EnderecoClienteModel> enderecoClienteModels = ClienteModel.ENDERECO as List<EnderecoClienteModel>;
 
-				if (enderecoClienteModels.Count == 0)
-				{
-					return;
-				}
-				if (enderecoClienteModels.Count == 1)
-				{
-					textBox_end.Text = enderecoClienteModels[0].ENDERECO;
-					return;
-				}
-				var tempEnd = new object[enderecoClienteModels.Count];
-				for (int i = 0; i < tempEnd.Length; i++)
-				{
-					tempEnd[i] = new object[2]
-					{
-					i,
-					enderecoClienteModels[i].ENDERECO
-					};
-				}
-				var retList = InputList.Show(tempEnd, "Enderecos Cliente");
-				if (retList != -1)
-				{
-					textBox_end.Text = enderecoClienteModels[retList].ENDERECO;
-				}
+				textBox_end.Text = ((List<EnderecoClienteModel>)ClienteModel.ENDERECO).GetEnderecoArray(out int indexSelect);
+
+				ClienteModel.ENDERECO = indexSelect != -1 ? ((List<EnderecoClienteModel>)ClienteModel?.ENDERECO)[indexSelect] : null;
+
+				isClienteSelected = true;
 			}
 		}
 
@@ -222,5 +232,7 @@ namespace EterPharmaPro.Views.LoteControlado
 		}
 
 		private void textBox_cel_Validated(object sender, EventArgs e) => textBox_cel.Text = textBox_cel.Text.ReturnFormation(FormatationEnum.TELEFONE);
+
+
 	}
 }

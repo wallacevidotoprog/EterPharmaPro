@@ -154,10 +154,10 @@ namespace EterPharmaPro.Utils.Extencions
 			Dictionary<long?, string> cat = new Dictionary<long?, string>();
 
 			cat.Add(1, "SEM CATEGORIA");
-			
+
 
 			for (int i = 0; i < categoriaDbModal.Count; i++)
-            {
+			{
 				long? key = categoriaDbModal[i].ID;
 				if (!cat.ContainsKey(key))
 				{
@@ -203,6 +203,133 @@ namespace EterPharmaPro.Utils.Extencions
 		public static long ToDatetimeUnix(this DateTime dateTime) => ((DateTimeOffset)dateTime).ToUnixTimeSeconds();
 		public static long ToDatetimeUnix(this string dateTime) => ((DateTimeOffset)Convert.ToDateTime(dateTime)).ToUnixTimeSeconds();
 
+		public static string GetEnderecoArray(this List<EnderecoClienteModel> enderecoClienteModels,out int indexSelect)
+		{
+			try
+			{
+				if (enderecoClienteModels.Count == 0)
+				{
+					indexSelect= - 1;
+					return string.Empty;
+				}
+				if (enderecoClienteModels.Count == 1)
+				{
+					indexSelect = 0;
+					return enderecoClienteModels[0].ENDERECO;
+					
+				}
+				var tempEnd = new object[enderecoClienteModels.Count];
+				for (int i = 0; i < tempEnd.Length; i++)
+				{
+					tempEnd[i] = new object[2]
+					{
+					i,
+					enderecoClienteModels[i].ENDERECO
+					};
+				}
+				var retList = InputList.Show(tempEnd, "Enderecos Cliente");
+				if (retList != -1)
+				{
+					indexSelect = retList;
+					return enderecoClienteModels[retList].ENDERECO;
+				}
+			}
+			catch (Exception ex)
+			{
+				ex.ErrorGet();
+			}
+			indexSelect = -1;
+			return string.Empty;
+
+		}
+
+		public static EnderecoClienteModel GetEnderecoModel(this List<EnderecoClienteModel> enderecoClienteModels)
+		{
+			try
+			{
+				if (enderecoClienteModels.Count == 0)
+				{
+					return null;
+				}
+				if (enderecoClienteModels.Count == 1)
+				{
+					return enderecoClienteModels[0];
+
+				}
+				var tempEnd = new object[enderecoClienteModels.Count];
+				for (int i = 0; i < tempEnd.Length; i++)
+				{
+					tempEnd[i] = new object[2]
+					{
+					i,
+					enderecoClienteModels[i].ENDERECO
+					};
+				}
+				var retList = InputList.Show(tempEnd, "Enderecos Cliente");
+				if (retList != -1)
+				{
+					return enderecoClienteModels[retList];
+				}
+			}
+			catch (Exception ex)
+			{
+				ex.ErrorGet();
+			}
+			return null;
+
+		}
+		public static ClienteModel GetClienteArray(this List<ClienteModel> clienteModels)
+		{
+			try
+			{
+				object[] tempEnd;
+				int retList;
+				if (clienteModels.Count > 1)
+				{
+					tempEnd = new object[clienteModels.Count];
+					for (int i = 0; i < tempEnd.Length; i++)
+					{
+						tempEnd[i] = new object[2]
+						{
+							i,
+							"CLIENTE: " + clienteModels[i].NOME + $" | TOTAL DE ENDEREÇOS: {(((List<EnderecoClienteModel>)clienteModels[i].ENDERECO != null) ? ((List<EnderecoClienteModel>)clienteModels[i].ENDERECO).Count : 0)}"
+						};
+					}
+					retList = InputList.Show(tempEnd, "Clientes");
+					if (retList == -1)
+					{
+						return null;
+					}
+					ClienteModel tempSelect = clienteModels[retList];
+					tempSelect.ENDERECO = ((List<EnderecoClienteModel>)tempSelect.ENDERECO).GetEnderecoModel();
+					return tempSelect;
+
+				}
+				else
+				{
+					ClienteModel tempSelect = clienteModels[0];
+					tempSelect.ENDERECO = ((List<EnderecoClienteModel>)tempSelect.ENDERECO).GetEnderecoModel();
+					return tempSelect;
+				}
+			}
+			catch (Exception ex)
+			{
+				ex.ErrorGet();
+			}
+			return null;
+		}
+
+		public static void StartVFD(this Control control)
+		{
+
+			ToolTip validationToolTip = new ToolTip
+			{
+				IsBalloon = true,
+				ToolTipIcon = ToolTipIcon.Warning,
+				ToolTipTitle = "Campo Obrigatório"
+			};
+			validationToolTip.Show("Este campo é obrigatório", control, 0, -40, 3000);
+		}
 		//public static TypeDoc TypeDocs(this string type)
 		//{
 		//	int t = type.Length;

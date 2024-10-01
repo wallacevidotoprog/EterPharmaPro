@@ -15,7 +15,7 @@ namespace EterPharmaPro.Services.DbProdutos
 		private static BACKUP _backup;
 		#region PRODUTOS
 		
-		public static Task<List<ProdutosModel>> ReadProdutosAsync(ToolStripProgressBar progressBar, CancellationToken cancellationToken)
+		public static async Task<List<ProdutosModel>> ReadProdutosAsync(ToolStripProgressBar progressBar, CancellationToken cancellationToken)
 		{
 			List<ProdutosModel> list = new List<ProdutosModel>();
 			string filePath = Path.Combine(Directory.GetCurrentDirectory(), "DADOS", "produtos.eter");
@@ -41,7 +41,7 @@ namespace EterPharmaPro.Services.DbProdutos
 							{
 								if (cancellationToken.IsCancellationRequested)
 								{
-									return list;
+									return null;
 								}
 
 								list.Add(new ProdutosModel
@@ -61,6 +61,7 @@ namespace EterPharmaPro.Services.DbProdutos
 							}
 						}
 					}
+					return list;
 				}
 				else
 				{
@@ -87,7 +88,7 @@ namespace EterPharmaPro.Services.DbProdutos
 				}
 			}
 
-			return list;
+			return null;
 		}
 
 		public static async Task<bool> WriteProdutosAsync(List<ProdutosModel> produtos, ToolStripProgressBar progressBar, CancellationToken cancellationToken)

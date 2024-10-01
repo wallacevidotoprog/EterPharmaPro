@@ -47,6 +47,8 @@ namespace EterPharmaPro.Utils.eControl
 		{
 			textBox.Clear();
 		}
+		public TextBox ReturnTexBox()=>textBox;
+		
 
 
 		// Propriedade para o texto do TextBox
