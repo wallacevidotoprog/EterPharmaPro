@@ -345,6 +345,7 @@
 			// 
 			// ePictureBox_create
 			// 
+			this.ePictureBox_create.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.ePictureBox_create.Image = global::EterPharmaPro.Properties.Resources.novo_arquivo__1_;
 			this.ePictureBox_create.Location = new System.Drawing.Point(990, 16);
 			this.ePictureBox_create.Name = "ePictureBox_create";

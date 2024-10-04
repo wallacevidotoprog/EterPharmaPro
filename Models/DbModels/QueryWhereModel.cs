@@ -27,9 +27,17 @@ namespace EterPharmaPro.Models.DbModels
 			}
 			return withLike;
 		}
+		private string[] CheckedAtr(string atr)
+		{
+			if (atr.Split(new char[] {' '},StringSplitOptions.RemoveEmptyEntries).Length >= 2)
+			{
+				return new string[] { "'", "'" };
+			}
+			return new string[] { string.Empty,string.Empty };
+		}
 		public QueryWhereModel SetWhere(string propName, object setWhere, string opt = " = ")
 		{
-			string[] withLike = new string[] { string.Empty, string.Empty };
+			string[] withLike = CheckedAtr(setWhere.ToString());
 			if (opt.ToUpper().Contains("LIKE"))
 			{
 				withLike = QueryLike(opt);
@@ -43,12 +51,13 @@ namespace EterPharmaPro.Models.DbModels
 		public QueryWhereModel SetMult(string propName, object setAtrb, string setOpt = " = ")
 		{
 
-			string[] withLike = new string[] { string.Empty, string.Empty };
+			string[] withLike = CheckedAtr(setAtrb.ToString());
 			if (setOpt.ToUpper().Contains("LIKE"))
 			{
 				withLike = QueryLike(setOpt);
 				setOpt = "LIKE";
 			}
+
 			QMULTI = QMULTI ?? new List<string>();
 			QMULTI.Add($"{propName} {setOpt} {withLike[0]}{setAtrb}{withLike[1]}");
 			return this;

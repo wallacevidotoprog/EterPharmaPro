@@ -20,12 +20,14 @@ namespace EterPharmaPro.Views.LoteControlado
 		private ClienteModel ClienteModel;
 		private bool isClienteSelected = false;
 		private ValidatorFields validatorFields;
+		private ValidatorFields validatorFieldsLot;
 
 		private void CreateLoteControlados_Load(object sender, EventArgs e)
 		{
 			validatorFields = new ValidatorFields();
+			validatorFieldsLot = new ValidatorFields();
 			validatorFields.SetListControl(new List<Control> { textBox_rg.ReturnTexBox(), textBox_nome, textBox_end, textBox_cel });
-
+			validatorFieldsLot.SetListControl(new List<Control> { textBox_medicamento, textBox_lote });
 		}
 		public CreateLoteControlados(IEterDb eterDb, DatabaseProdutosDb databaseProdutosDb)
 		{
@@ -82,19 +84,23 @@ namespace EterPharmaPro.Views.LoteControlado
 
 		private void ePictureBox1_Click(object sender, EventArgs e)
 		{
-			medicamentosControladoLoteModel = medicamentosControladoLoteModel ?? new List<MedicamentosControladoLoteModel>();
-			var med = new MedicamentosControladoLoteModel
+			if (validatorFieldsLot.ValidateFields())
 			{
-				CODIGO_MED = (tempProdutosModel is null) ? string.Empty : tempProdutosModel.COD_PRODUTO,
-				NOME_MED = textBox_medicamento.Text.ToUpper(),
-				QUANTIDADE = (int)numericUpDown_qtd.Value,
-				DATA_VALIDADE = dateTimePicker_validade.Value,
-				LOTE = textBox_lote.Text.ToUpper()
-			};
-			medicamentosControladoLoteModel.Add(med);
-			RefreshListViwe(med, ListViewActionsEnum.ADD);
-			tempProdutosModel = null;
-			ClearInserMedicamento();
+				medicamentosControladoLoteModel = medicamentosControladoLoteModel ?? new List<MedicamentosControladoLoteModel>();
+				var med = new MedicamentosControladoLoteModel
+				{
+					CODIGO_MED = (tempProdutosModel is null) ? string.Empty : tempProdutosModel.COD_PRODUTO,
+					NOME_MED = textBox_medicamento.Text.ToUpper(),
+					QUANTIDADE = (int)numericUpDown_qtd.Value,
+					DATA_VALIDADE = dateTimePicker_validade.Value,
+					LOTE = textBox_lote.Text.ToUpper()
+				};
+				medicamentosControladoLoteModel.Add(med);
+				RefreshListViwe(med, ListViewActionsEnum.ADD);
+				tempProdutosModel = null;
+				ClearInserMedicamento();
+			}
+				
 
 
 
@@ -118,7 +124,7 @@ namespace EterPharmaPro.Views.LoteControlado
 
 		private async void toolStripButton_print_Click(object sender, EventArgs e)
 		{
-			if (validatorFields.ValidateFields())
+			if (validatorFields.ValidateFields() )
 			{
 
 				if (medicamentosControladoLoteModel is null) {
@@ -148,7 +154,10 @@ namespace EterPharmaPro.Views.LoteControlado
 
 				if (await controladosController.FinishAsync(ClienteModel, medicamentosControladoLoteModel))
 				{
-
+					if (MessageBox.Show("TUDO OK!!\nDeseja limpar o formulário ?", "LOTE VALIDADE", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+					{
+						toolStripDropDownButton_clear_Click(null, null);
+					}
 				};
 			}
 		}
@@ -208,7 +217,7 @@ namespace EterPharmaPro.Views.LoteControlado
 			if (!(ClienteModel is null))
 			{
 				textBox_nome.Text = ClienteModel.NOME;
-				textBox_cel.Text = ClienteModel.TELEFONE;
+				textBox_cel.Text = ClienteModel.TELEFONE.ReturnFormation(FormatationEnum.TELEFONE);
 
 				if (ClienteModel.ENDERECO is null)
 				{

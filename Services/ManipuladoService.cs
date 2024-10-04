@@ -40,17 +40,19 @@ namespace EterPharmaPro.Services
 			{
 				symbol = SymbolPrintEnum.Space
 			});
+
+			UserModel userModel = (await _eterDb.DbUser.GetUser(new QueryWhereModel().SetWhere("ID", model.DADOSATENDIMENTO.ATEN_LOJA))).FirstOrDefault();
 			printerHelper.AddLine(new TextPrintFormaterModel
 			{
 				tilte = "Vendedor(a): ",
-				texto = model.DADOSATENDIMENTO.ATEN_LOJA + " - " + (await _eterDb.DbUser.GetUser(new QueryWhereModel().SetWhere("ID_LOJA", model.DADOSATENDIMENTO.ATEN_LOJA))).FirstOrDefault().NOME,
+				texto = userModel.ID_LOJA + " - " + userModel.NOME,
 				alignmentText = AlignmentTextPrintEnum.Left,
 				fontStyle = FormatTextPrintEnum.Default
 			});
 			printerHelper.AddLine(new TextPrintFormaterModel
 			{
 				tilte = "Atendente: ",
-				texto = model.DADOSATENDIMENTO.ATEN_MANI,
+				texto = model.DADOSATENDIMENTO.ATEN_MANI == string.Empty?"NÃO INFORMADO": model.DADOSATENDIMENTO.ATEN_MANI,
 				alignmentText = AlignmentTextPrintEnum.Left,
 				fontStyle = FormatTextPrintEnum.Default
 			});

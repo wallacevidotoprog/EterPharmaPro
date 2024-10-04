@@ -183,6 +183,7 @@
 			this.toolStripButton_conf.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
 			this.toolStripButton_conf.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
 			this.toolStripButton_conf.ToolTipText = "CONFIGURAÇÕES";
+			this.toolStripButton_conf.Click += new System.EventHandler(this.toolStripButton_conf_Click);
 			// 
 			// toolStripDropDownButton_impressos
 			// 

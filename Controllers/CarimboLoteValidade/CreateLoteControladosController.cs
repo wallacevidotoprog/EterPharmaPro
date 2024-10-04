@@ -1,5 +1,6 @@
 ﻿using DocumentFormat.OpenXml.Drawing.Charts;
 using DocumentFormat.OpenXml.EMMA;
+using DocumentFormat.OpenXml.Office2010.Excel;
 using EterPharmaPro.DatabaseSQLite;
 using EterPharmaPro.DbProdutos.Services;
 using EterPharmaPro.Enums;
@@ -82,6 +83,8 @@ namespace EterPharmaPro.Controllers.CarimboLoteValidade
 			}
 			try
 			{
+				(long? IDC, long? IDE) = await eterDb.EterDbController.RegisterCliente(clienteModel);
+
 				using (var connection = new SQLiteConnection(eterDb.DatabaseConnection))
 				{
 					await connection.OpenAsync().ConfigureAwait(false);
@@ -89,50 +92,31 @@ namespace EterPharmaPro.Controllers.CarimboLoteValidade
 					{
 						try
 						{
-							var temC = await eterDb.EterDbController.ExistCliente(clienteModel);
-
-							if (temC is null)
+							for (int i = 0; i < medicamentosControladoLoteModel.Count; i++)
 							{
-								clienteModel.ID = await eterDb.DbCliente.CreateCliente(clienteModel, connection, transaction);
+								await eterDb.DbControlados.CreateControlado(medicamentosControladoLoteModel[i].CODIGO_MED, medicamentosControladoLoteModel[i].QUANTIDADE, medicamentosControladoLoteModel[i].DATA_VALIDADE, medicamentosControladoLoteModel[i].LOTE,clienteModel.ID.ToString(), connection, transaction);
 
 							}
-							else
-							{
-
-								await eterDb.DbCliente.UpdateCliente(clienteModel, connection, transaction);
-							}
-
-							if (((EnderecoClienteModel)clienteModel.ENDERECO).ID is null)
-							{
-								((EnderecoClienteModel)clienteModel.ENDERECO).CLIENTE_ID = clienteModel.ID;
-								((EnderecoClienteModel)clienteModel.ENDERECO).ID = await eterDb.DbEndereco.CreateEndereco((EnderecoClienteModel)clienteModel.ENDERECO, connection, transaction);
-							}
-							else
-							{
-								await eterDb.DbEndereco.UpdateEndereco((EnderecoClienteModel)clienteModel.ENDERECO, connection, transaction);
-							}
-
-
 
 							transaction.Commit();
-							
-							return true;
 						}
 						catch (Exception ex)
 						{
 							transaction.Rollback();
 							ex.ErrorGet();
-							return false;
 						}
-
 					}
 				}
+
+
 			}
 			catch (Exception ex)
 			{
 				ex.ErrorGet();
 				return false;
 			}
+
+			return false;
 		}
 
 		private void PrintDoc(ClienteModel clienteModel, List<MedicamentosControladoLoteModel> medicamentosControladoLoteModel)

@@ -29,6 +29,9 @@
 		private void InitializeComponent()
 		{
 			this.toolStrip_topMenu = new System.Windows.Forms.ToolStrip();
+			this.toolStripButton_exit = new System.Windows.Forms.ToolStripButton();
+			this.toolStripDropDownButton_print = new System.Windows.Forms.ToolStripButton();
+			this.toolStripButton_clear = new System.Windows.Forms.ToolStripButton();
 			this.panel_center = new System.Windows.Forms.Panel();
 			this.groupBox7 = new System.Windows.Forms.GroupBox();
 			this.groupBox8 = new System.Windows.Forms.GroupBox();
@@ -46,6 +49,7 @@
 			this.dataGridView_medicamentos = new System.Windows.Forms.DataGridView();
 			this.DADOS = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
+			this.ePictureBox_search = new EterPharmaPro.Utils.eControl.ePictureBox();
 			this.groupBox4 = new System.Windows.Forms.GroupBox();
 			this.textBox_obsEnd = new System.Windows.Forms.TextBox();
 			this.label10 = new System.Windows.Forms.Label();
@@ -66,10 +70,6 @@
 			this.label2 = new System.Windows.Forms.Label();
 			this.label1 = new System.Windows.Forms.Label();
 			this.dateTimePicker_data = new System.Windows.Forms.DateTimePicker();
-			this.ePictureBox_search = new EterPharmaPro.Utils.eControl.ePictureBox();
-			this.toolStripButton_exit = new System.Windows.Forms.ToolStripButton();
-			this.toolStripDropDownButton_print = new System.Windows.Forms.ToolStripButton();
-			this.toolStripButton_clear = new System.Windows.Forms.ToolStripButton();
 			this.toolStrip_topMenu.SuspendLayout();
 			this.panel_center.SuspendLayout();
 			this.groupBox7.SuspendLayout();
@@ -79,9 +79,9 @@
 			this.groupBox5.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView_medicamentos)).BeginInit();
 			this.groupBox3.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.ePictureBox_search)).BeginInit();
 			this.groupBox4.SuspendLayout();
 			this.groupBox2.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.ePictureBox_search)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// toolStrip_topMenu
@@ -97,6 +97,58 @@
 			this.toolStrip_topMenu.Size = new System.Drawing.Size(1100, 93);
 			this.toolStrip_topMenu.TabIndex = 4;
 			this.toolStrip_topMenu.Text = "toolStrip1";
+			// 
+			// toolStripButton_exit
+			// 
+			this.toolStripButton_exit.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+			this.toolStripButton_exit.AutoSize = false;
+			this.toolStripButton_exit.Font = new System.Drawing.Font("Segoe UI", 7F);
+			this.toolStripButton_exit.Image = global::EterPharmaPro.Properties.Resources.sair__1_;
+			this.toolStripButton_exit.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+			this.toolStripButton_exit.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.toolStripButton_exit.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.toolStripButton_exit.Name = "toolStripButton_exit";
+			this.toolStripButton_exit.Size = new System.Drawing.Size(90, 90);
+			this.toolStripButton_exit.Tag = "SAIR";
+			this.toolStripButton_exit.Text = "SAIR";
+			this.toolStripButton_exit.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+			this.toolStripButton_exit.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+			this.toolStripButton_exit.ToolTipText = "SAIR";
+			this.toolStripButton_exit.Click += new System.EventHandler(this.toolStripButton_sair_Click);
+			// 
+			// toolStripDropDownButton_print
+			// 
+			this.toolStripDropDownButton_print.AutoSize = false;
+			this.toolStripDropDownButton_print.Font = new System.Drawing.Font("Segoe UI", 8F);
+			this.toolStripDropDownButton_print.Image = global::EterPharmaPro.Properties.Resources.download__1_;
+			this.toolStripDropDownButton_print.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+			this.toolStripDropDownButton_print.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.toolStripDropDownButton_print.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.toolStripDropDownButton_print.Name = "toolStripDropDownButton_print";
+			this.toolStripDropDownButton_print.Size = new System.Drawing.Size(90, 90);
+			this.toolStripDropDownButton_print.Tag = "";
+			this.toolStripDropDownButton_print.Text = "IMPRIMIR";
+			this.toolStripDropDownButton_print.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+			this.toolStripDropDownButton_print.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+			this.toolStripDropDownButton_print.ToolTipText = "IMPRIMIR";
+			this.toolStripDropDownButton_print.Click += new System.EventHandler(this.SavePrint);
+			// 
+			// toolStripButton_clear
+			// 
+			this.toolStripButton_clear.AutoSize = false;
+			this.toolStripButton_clear.Font = new System.Drawing.Font("Segoe UI", 8F);
+			this.toolStripButton_clear.Image = global::EterPharmaPro.Properties.Resources.limpar_limpo__1_;
+			this.toolStripButton_clear.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+			this.toolStripButton_clear.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.toolStripButton_clear.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.toolStripButton_clear.Name = "toolStripButton_clear";
+			this.toolStripButton_clear.Size = new System.Drawing.Size(90, 90);
+			this.toolStripButton_clear.Tag = "";
+			this.toolStripButton_clear.Text = "LIMPAR";
+			this.toolStripButton_clear.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+			this.toolStripButton_clear.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+			this.toolStripButton_clear.ToolTipText = "Limpar formulário";
+			this.toolStripButton_clear.Click += new System.EventHandler(this.CleanAll);
 			// 
 			// panel_center
 			// 
@@ -316,9 +368,22 @@
 			this.groupBox3.Location = new System.Drawing.Point(0, 100);
 			this.groupBox3.Name = "groupBox3";
 			this.groupBox3.Size = new System.Drawing.Size(1100, 243);
-			this.groupBox3.TabIndex = 2;
+			this.groupBox3.TabIndex = 0;
 			this.groupBox3.TabStop = false;
 			this.groupBox3.Text = "DADOS DO CLIENTE";
+			// 
+			// ePictureBox_search
+			// 
+			this.ePictureBox_search.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.ePictureBox_search.Image = global::EterPharmaPro.Properties.Resources.lupa;
+			this.ePictureBox_search.Location = new System.Drawing.Point(386, 44);
+			this.ePictureBox_search.Name = "ePictureBox_search";
+			this.ePictureBox_search.Size = new System.Drawing.Size(32, 33);
+			this.ePictureBox_search.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+			this.ePictureBox_search.TabIndex = 15;
+			this.ePictureBox_search.TabStop = false;
+			this.ePictureBox_search.ToolTipText = "Buscar Cliente";
+			this.ePictureBox_search.Click += new System.EventHandler(this.BuscaCliente_Click);
 			// 
 			// groupBox4
 			// 
@@ -541,71 +606,6 @@
 			this.dateTimePicker_data.Size = new System.Drawing.Size(499, 33);
 			this.dateTimePicker_data.TabIndex = 1;
 			// 
-			// ePictureBox_search
-			// 
-			this.ePictureBox_search.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.ePictureBox_search.Image = global::EterPharmaPro.Properties.Resources.lupa;
-			this.ePictureBox_search.Location = new System.Drawing.Point(386, 44);
-			this.ePictureBox_search.Name = "ePictureBox_search";
-			this.ePictureBox_search.Size = new System.Drawing.Size(32, 33);
-			this.ePictureBox_search.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-			this.ePictureBox_search.TabIndex = 15;
-			this.ePictureBox_search.TabStop = false;
-			this.ePictureBox_search.ToolTipText = "Buscar Cliente";
-			this.ePictureBox_search.Click += new System.EventHandler(this.BuscaCliente_Click);
-			// 
-			// toolStripButton_exit
-			// 
-			this.toolStripButton_exit.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-			this.toolStripButton_exit.AutoSize = false;
-			this.toolStripButton_exit.Font = new System.Drawing.Font("Segoe UI", 7F);
-			this.toolStripButton_exit.Image = global::EterPharmaPro.Properties.Resources.sair__1_;
-			this.toolStripButton_exit.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-			this.toolStripButton_exit.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-			this.toolStripButton_exit.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.toolStripButton_exit.Name = "toolStripButton_exit";
-			this.toolStripButton_exit.Size = new System.Drawing.Size(90, 90);
-			this.toolStripButton_exit.Tag = "SAIR";
-			this.toolStripButton_exit.Text = "SAIR";
-			this.toolStripButton_exit.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-			this.toolStripButton_exit.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-			this.toolStripButton_exit.ToolTipText = "SAIR";
-			this.toolStripButton_exit.Click += new System.EventHandler(this.toolStripButton_sair_Click);
-			// 
-			// toolStripDropDownButton_print
-			// 
-			this.toolStripDropDownButton_print.AutoSize = false;
-			this.toolStripDropDownButton_print.Font = new System.Drawing.Font("Segoe UI", 8F);
-			this.toolStripDropDownButton_print.Image = global::EterPharmaPro.Properties.Resources.download__1_;
-			this.toolStripDropDownButton_print.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-			this.toolStripDropDownButton_print.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-			this.toolStripDropDownButton_print.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.toolStripDropDownButton_print.Name = "toolStripDropDownButton_print";
-			this.toolStripDropDownButton_print.Size = new System.Drawing.Size(90, 90);
-			this.toolStripDropDownButton_print.Tag = "";
-			this.toolStripDropDownButton_print.Text = "IMPRIMIR";
-			this.toolStripDropDownButton_print.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-			this.toolStripDropDownButton_print.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-			this.toolStripDropDownButton_print.ToolTipText = "IMPRIMIR";
-			this.toolStripDropDownButton_print.Click += new System.EventHandler(this.SavePrint);
-			// 
-			// toolStripButton_clear
-			// 
-			this.toolStripButton_clear.AutoSize = false;
-			this.toolStripButton_clear.Font = new System.Drawing.Font("Segoe UI", 8F);
-			this.toolStripButton_clear.Image = global::EterPharmaPro.Properties.Resources.limpar_limpo__1_;
-			this.toolStripButton_clear.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-			this.toolStripButton_clear.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-			this.toolStripButton_clear.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.toolStripButton_clear.Name = "toolStripButton_clear";
-			this.toolStripButton_clear.Size = new System.Drawing.Size(90, 90);
-			this.toolStripButton_clear.Tag = "";
-			this.toolStripButton_clear.Text = "LIMPAR";
-			this.toolStripButton_clear.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-			this.toolStripButton_clear.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-			this.toolStripButton_clear.ToolTipText = "Limpar formulário";
-			this.toolStripButton_clear.Click += new System.EventHandler(this.CleanAll);
-			// 
 			// CreateManipulados
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -633,11 +633,11 @@
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView_medicamentos)).EndInit();
 			this.groupBox3.ResumeLayout(false);
 			this.groupBox3.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.ePictureBox_search)).EndInit();
 			this.groupBox4.ResumeLayout(false);
 			this.groupBox4.PerformLayout();
 			this.groupBox2.ResumeLayout(false);
 			this.groupBox2.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.ePictureBox_search)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 

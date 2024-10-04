@@ -330,6 +330,15 @@ namespace EterPharmaPro.Utils.Extencions
 			};
 			validationToolTip.Show("Este campo é obrigatório", control, 0, -40, 3000);
 		}
+
+		public static string PadRight(string text, int totalWidth)
+		{
+			if (text.Length >= totalWidth)
+			{
+				return text.Substring(0, totalWidth);
+			}
+			return text.PadRight(totalWidth);
+		}
 		//public static TypeDoc TypeDocs(this string type)
 		//{
 		//	int t = type.Length;

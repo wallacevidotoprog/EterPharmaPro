@@ -1,4 +1,5 @@
-﻿using EterPharmaPro.Enums;
+﻿using DocumentFormat.OpenXml.Office2010.Excel;
+using EterPharmaPro.Enums;
 using EterPharmaPro.Interfaces;
 using EterPharmaPro.Models;
 using EterPharmaPro.Models.DbModels;
@@ -15,14 +16,14 @@ namespace EterPharmaPro.Controllers.Manipulacao
 {
 	public class ManipuladoController
 	{
-		private readonly IEterDb _eterDb;
+		private readonly IEterDb eterDb;
 
 		private ManipuladoService manipuladoService;
 
 		public ManipuladoController(IEterDb eterDb)
 		{
-			_eterDb = eterDb;
-			manipuladoService = new ManipuladoService(_eterDb);
+			this.eterDb = eterDb;
+			manipuladoService = new ManipuladoService(this.eterDb);
 		}
 
 		public async Task<List<ClienteModel>> GetCliente(string query = null, TypeDoc typeDoc = TypeDoc.NONE)
@@ -31,20 +32,20 @@ namespace EterPharmaPro.Controllers.Manipulacao
 			switch (typeDoc)
 			{
 				case TypeDoc.CPF:
-					dadosCliente = await _eterDb.DbCliente.GetCliente(new QueryWhereModel().SetWhere("CPF",query));
-					break;				
+					dadosCliente = await eterDb.DbCliente.GetCliente(new QueryWhereModel().SetWhere("CPF", query));
+					break;
 				case TypeDoc.RG:
-					dadosCliente = await _eterDb.DbCliente.GetCliente(new QueryWhereModel().SetWhere("RG", query));
+					dadosCliente = await eterDb.DbCliente.GetCliente(new QueryWhereModel().SetWhere("RG", query));
 					break;
 				default:
-					dadosCliente = await _eterDb.DbCliente.GetCliente(new QueryWhereModel());
+					dadosCliente = await eterDb.DbCliente.GetCliente(new QueryWhereModel());
 					break;
 			}
 
 
 			for (int i = 0; i < dadosCliente.Count; i++)
 			{
-				dadosCliente[i].ENDERECO = await _eterDb.DbEndereco.GetEndereco( new QueryWhereModel ().SetWhere("CLIENTE_ID", dadosCliente[i].ID));
+				dadosCliente[i].ENDERECO = await eterDb.DbEndereco.GetEndereco(new QueryWhereModel().SetWhere("CLIENTE_ID", dadosCliente[i].ID));
 			}
 			return dadosCliente;
 		}
@@ -70,67 +71,37 @@ namespace EterPharmaPro.Controllers.Manipulacao
 
 			try
 			{
-				ClienteModel dadosCliente = (ClienteModel)model.DADOSCLIENTE;
-				EnderecoClienteModel enderecoCliente = (EnderecoClienteModel)dadosCliente.ENDERECO;
 
-				model.DADOSCLIENTE = new DadosClienteManipulacao();
+				(long? IDC, long? IDE) = await eterDb.EterDbController.RegisterCliente((ClienteModel)model.DADOSCLIENTE);
 
-				using (var connection = new SQLiteConnection(_eterDb.DatabaseConnection))
+				model.DADOSCLIENTE = new DadosClienteManipulacao { ID_CLIENTE = IDC, ID_ENDERECO = IDE };
+
+				using (var connection = new SQLiteConnection(eterDb.DatabaseConnection))
 				{
 					await connection.OpenAsync().ConfigureAwait(false);
 					using (var transaction = connection.BeginTransaction())
 					{
 						try
 						{
-							ClienteModel tempCliente = await _eterDb.EterDbController.ExistCliente(dadosCliente, edit);
-
-							if (tempCliente != null)
-							{
-								((DadosClienteManipulacao)model.DADOSCLIENTE).ID_CLIENTE = tempCliente.ID;
-								dadosCliente.ID = tempCliente.ID;
-								await _eterDb.DbCliente.UpdateCliente(dadosCliente, connection, transaction);
-
-								var (exist, tempEnderecos) = await _eterDb.EterDbController.ExistAdressCliente(enderecoCliente);
-
-								if (!exist)
-								{
-									enderecoCliente.CLIENTE_ID = tempCliente.ID;
-									((DadosClienteManipulacao)model.DADOSCLIENTE).ID_ENDERECO = await _eterDb.DbEndereco.CreateEndereco(enderecoCliente, connection, transaction);
-								}
-								else
-								{
-									enderecoCliente.OBSERVACAO += " - " + tempEnderecos.OBSERVACAO.Replace(enderecoCliente.OBSERVACAO,string.Empty);
-									enderecoCliente.ID = tempEnderecos.ID;
-									enderecoCliente.CLIENTE_ID = tempCliente.ID;
-
-									((DadosClienteManipulacao)model.DADOSCLIENTE).ID_ENDERECO = enderecoCliente.ID;
-									await _eterDb.DbEndereco.UpdateEndereco(enderecoCliente, connection, transaction);
-								}
-							}
-							else
-							{
-								((DadosClienteManipulacao)model.DADOSCLIENTE).ID_CLIENTE = await _eterDb.DbCliente.CreateCliente(dadosCliente, connection, transaction);
-								enderecoCliente.CLIENTE_ID = ((DadosClienteManipulacao)model.DADOSCLIENTE).ID_CLIENTE;
-								((DadosClienteManipulacao)model.DADOSCLIENTE).ID_ENDERECO = await _eterDb.DbEndereco.CreateEndereco(enderecoCliente, connection, transaction);
-							}
+							
 
 							if (edit)
 							{
-								await _eterDb.DbManipuladosMedicamentos.DeleteMedicamento(model.ID.ToString(), connection, transaction);
-								await _eterDb.DbManipulados.UpdateManipulacao(model, connection, transaction);
+								await eterDb.DbManipuladosMedicamentos.DeleteMedicamento(model.ID.ToString(), connection, transaction);
+								await eterDb.DbManipulados.UpdateManipulacao(model, connection, transaction);
 
 								foreach (var medicamento in (List<string>)model.MEDICAMENTO)
 								{
-									await _eterDb.DbManipuladosMedicamentos.CreateMedicamento(medicamento, model.ID.ToString(), connection, transaction);
+									await eterDb.DbManipuladosMedicamentos.CreateMedicamento(medicamento, model.ID.ToString(), connection, transaction);
 								}
 							}
 							else
 							{
-								long? tempCM = await _eterDb.DbManipulados.CreateManipulacao(model, connection, transaction);
+								long? tempCM = await eterDb.DbManipulados.CreateManipulacao(model, connection, transaction);
 
 								foreach (var medicamento in (List<string>)model.MEDICAMENTO)
 								{
-									await _eterDb.DbManipuladosMedicamentos.CreateMedicamento(medicamento, tempCM.ToString(), connection, transaction);
+									await eterDb.DbManipuladosMedicamentos.CreateMedicamento(medicamento, tempCM.ToString(), connection, transaction);
 								}
 							}
 
@@ -148,12 +119,13 @@ namespace EterPharmaPro.Controllers.Manipulacao
 			}
 			catch (Exception ex)
 			{
+				ex.ErrorGet();
 				return false;
 			}
 
 		}
-		
-		
+
+
 
 		//public async Task<object> GetCliente(string id)
 		//{

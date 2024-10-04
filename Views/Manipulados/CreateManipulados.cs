@@ -226,7 +226,7 @@ namespace EterPharmaPro.Views.Manipulados
 					{
 						Close();
 					}
-					else if (MessageBox.Show("TUDO OK!!\nDeseja limpar o formulário ?", base.Name, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+					if (MessageBox.Show("TUDO OK!!\nDeseja limpar o formulário ?", "MANIPULAÇÂO", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
 					{
 						CleanAll(null, null);
 					}

@@ -250,8 +250,14 @@ namespace EterPharmaPro.Views.Validade
 
 				setValityModel.produto = setValityModel.produto ?? new ProdutoSetValityModel();
 
-				setValityModel.produto.codigo = Convert.ToInt32(textBox_codigo.Text);
-				setValityModel.produto.descricao = textBox_nproduto.Text;
+				ProdutosModel tempProdutos = validadeController.GetProduto(textBox_codigo.Text, out bool inLoad);
+				if (inLoad)
+				{
+					return;
+				}
+
+				setValityModel.produto.codigo = tempProdutos is null? Convert.ToInt32(textBox_codigo.Text): Convert.ToInt32(tempProdutos.COD_PRODUTO);
+				setValityModel.produto.descricao = tempProdutos is null ? textBox_nproduto.Text: tempProdutos.DESCRICAO_PRODUTO;
 				setValityModel.produto.quantidade = (int)numericUpDown_qtd.Value;
 				setValityModel.produto.dateVality = dateTimePicker_data.Value;
 				setValityModel.produto.category_id = Convert.ToInt32(comboBox_categoria.SelectedValue);
