@@ -166,6 +166,7 @@
 			this.rELATÓRIOToolStripMenuItem.Name = "rELATÓRIOToolStripMenuItem";
 			this.rELATÓRIOToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
 			this.rELATÓRIOToolStripMenuItem.Text = "RELATÓRIO";
+			this.rELATÓRIOToolStripMenuItem.Click += new System.EventHandler(this.rELATÓRIOToolStripMenuItem_Click);
 			// 
 			// toolStripButton_conf
 			// 

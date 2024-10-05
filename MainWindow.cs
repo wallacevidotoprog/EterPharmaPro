@@ -79,5 +79,7 @@ namespace EterPharmaPro
 		{
 			
 		}
+
+		private void rELATÓRIOToolStripMenuItem_Click(object sender, EventArgs e) => OpenForm(new ReportValidades(eterDb,DatabaseProdutosDb));
 	}
 }

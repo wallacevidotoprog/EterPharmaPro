@@ -157,10 +157,12 @@
     <Compile Include="DatabaseSQLite\EterDbCategoria.cs" />
     <Compile Include="DatabaseSQLite\EterDbProdutoValidade.cs" />
     <Compile Include="DatabaseSQLite\EterDbValidade.cs" />
+    <Compile Include="DatabaseSQLite\EterProps.cs" />
     <Compile Include="Enums\ListViewActionsEnum.cs" />
     <Compile Include="Interfaces\IEterDbCategoria.cs" />
     <Compile Include="Interfaces\IEterDbProdutoValidade.cs" />
     <Compile Include="Interfaces\IEterDbValidade.cs" />
+    <Compile Include="Interfaces\IEterProps.cs" />
     <Compile Include="Models\ControladoLoteModel.cs" />
     <Compile Include="Models\DbModels\BaseDbModal.cs" />
     <Compile Include="DatabaseSQLite\DatabaseTransactionHandler.cs" />
@@ -203,6 +205,7 @@
     <Compile Include="Models\DbModels\ClienteModel.cs" />
     <Compile Include="Models\DadosAtendimentoModel.cs" />
     <Compile Include="Models\DbModels\EnderecoClienteModel.cs" />
+    <Compile Include="Models\DbModels\FuncaoDbModel.cs" />
     <Compile Include="Models\DbModels\ManipulacaoDbModel.cs" />
     <Compile Include="Models\DbModels\ProdutoValidadeDbModal.cs" />
     <Compile Include="Models\DbModels\QueryWhereModel.cs" />
@@ -268,11 +271,11 @@
     <Compile Include="Views\Manipulados\CreateManipulados.Designer.cs">
       <DependentUpon>CreateManipulados.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\Manipulados\ReportMenipulados.cs">
+    <Compile Include="Views\Validade\ReportValidades.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\Manipulados\ReportMenipulados.Designer.cs">
-      <DependentUpon>ReportMenipulados.cs</DependentUpon>
+    <Compile Include="Views\Validade\ReportValidades.Designer.cs">
+      <DependentUpon>ReportValidades.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\Validade\CreateValidade.cs">
       <SubType>Form</SubType>
@@ -308,6 +311,9 @@
     <EmbeddedResource Include="Views\Manipulados\CreateManipulados.resx">
       <DependentUpon>CreateManipulados.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\Validade\ReportValidades.resx">
+      <DependentUpon>ReportValidades.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\Validade\CreateValidade.resx">
       <DependentUpon>CreateValidade.cs</DependentUpon>
     </EmbeddedResource>
@@ -339,6 +345,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="farmacia.ico" />
+    <None Include="Resources\exportar.png" />
     <None Include="Resources\carimboS.png" />
     <None Include="Resources\inserir.png" />
     <None Include="Resources\addCat.png" />

@@ -38,6 +38,7 @@ namespace EterPharmaPro.Views.Validade
 		private void CreateValidade_Load(object sender, EventArgs e)
 		{
 			contextMenuStrip_produtos.Enabled = false;
+			dateTimePicker_dataBusca.Value = DateTime.Now.DateTimeDay();
 			comboBox_user.Invoke((Action)async delegate
 			{
 				await comboBox_user.CBListUserAsync(eterDb);

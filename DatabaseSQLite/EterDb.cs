@@ -36,6 +36,9 @@ namespace EterPharmaPro.DatabaseSQLite
 
 		public IEterDbCategoria DbCategoria { get; set; }
 
+		public IEterProps DbProps { get; set; }
+
+
 		public EterDbController EterDbController { get; set; }
 
 		public string DatabaseConnection => _databaseConnection;
@@ -74,7 +77,7 @@ namespace EterPharmaPro.DatabaseSQLite
 			DbValidade = new EterDbValidade(_databaseConnection);
 			DbProdutoValidade = new EterDbProdutoValidade(_databaseConnection);
 			DbCategoria = new EterDbCategoria(_databaseConnection);
-
+			DbProps = new EterProps(_databaseConnection);
 			EterDbController = new EterDbController(this);
 		}
 

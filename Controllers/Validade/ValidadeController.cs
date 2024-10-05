@@ -280,7 +280,7 @@ namespace EterPharmaPro.Controllers.Validade
 
 		}
 
-		public async Task<(ValidadeDbModal v, List<ProdutoValidadeDbModal> p)> GetEditVality(int idVality)
+		public async Task<(ValidadeDbModal v, List<ProdutoValidadeDbModal> p)> GetEditVality(long idVality)
 		{
 			ValidadeDbModal tempValidadeDbModal = (await eterDb.DbValidade.GetVality(new QueryWhereModel().SetWhere("ID", idVality))).FirstOrDefault(x => x.ID == idVality);
 
@@ -288,7 +288,6 @@ namespace EterPharmaPro.Controllers.Validade
 			{
 				return (tempValidadeDbModal, (await eterDb.DbProdutoValidade.GetProdutoVality(new QueryWhereModel())).Where(x => x.VALIDADE_ID == Convert.ToInt32(tempValidadeDbModal.ID)).ToList());
 			}
-			//List<ProdutoValidadeDbModal> produtoValidadeDbModal = (await eterDb.DbProdutoValidade.GetProdutoVality()).Where(x => x.VALIDADE_ID == Convert.ToInt32(tempValidadeDbModal.ID)).ToList();
 			return (tempValidadeDbModal, null);
 
 
@@ -311,6 +310,18 @@ namespace EterPharmaPro.Controllers.Validade
 
 				return await WriteValityExport.ExportValityExcel(new ValityExportModel { ID_LOJA = tempVT.USER_ID, NAME = (await eterDb.DbUser.GetUser(new QueryWhereModel().SetWhere("ID", tempVT.USER_ID))).FirstOrDefault().NOME, produtoValidadeDbModals = tempPV, categoriasDbModals = categoriaDbModals }, filePath, true);
 
+			}
+			catch (Exception ex)
+			{
+				ex.ErrorGet();
+				return false;
+			}
+		}
+		public async Task<bool> ExportValityXLSX(List<ProdutoValidadeDbModal> produtoValidadeDbModals,string filePath)
+		{
+			try
+			{
+				return await WriteValityExport.ExportValityExcel(produtoValidadeDbModals, filePath);
 			}
 			catch (Exception ex)
 			{
@@ -369,6 +380,11 @@ namespace EterPharmaPro.Controllers.Validade
 			}
 
 			return null;
+		}
+
+		public async Task<UserModel> GetUser(long? uSER_ID)
+		{
+			return (await eterDb.DbUser.GetUser(new QueryWhereModel().SetWhere("ID",uSER_ID))).First();
 		}
 	}
 }

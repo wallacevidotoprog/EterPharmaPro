@@ -193,7 +193,7 @@ namespace EterPharmaPro.Utils.Extencions
 			return null;
 		}
 
-		public static DateTime DateTimeDay()
+		public static DateTime DateTimeDay(this DateTime dateTime)
 		{
 			return DateTime.Parse($"01/{DateTime.Now.Month}/{DateTime.Now.Year}");
 		}
