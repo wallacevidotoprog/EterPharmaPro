@@ -63,6 +63,16 @@ namespace EterPharmaPro.Properties {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap acesso {
+            get {
+                object obj = ResourceManager.GetObject("acesso", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap addCat {
             get {
                 object obj = ResourceManager.GetObject("addCat", resourceCulture);
@@ -356,6 +366,16 @@ namespace EterPharmaPro.Properties {
         internal static System.Drawing.Bitmap salve {
             get {
                 object obj = ResourceManager.GetObject("salve", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap seta_direita {
+            get {
+                object obj = ResourceManager.GetObject("seta-direita", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

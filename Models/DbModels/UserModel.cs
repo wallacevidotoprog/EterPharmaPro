@@ -9,6 +9,8 @@ namespace EterPharmaPro.Models.DbModels
 
 		public string NOME { get; set; } = string.Empty;
 
+		public string PASS { get; set; } = string.Empty;
+
 		public string FUNCAO { get; set; } = string.Empty;
 
 		public bool STATUS { get; set; } = true;

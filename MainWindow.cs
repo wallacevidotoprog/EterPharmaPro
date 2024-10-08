@@ -3,6 +3,7 @@ using EterPharmaPro.DbProdutos.Services;
 using EterPharmaPro.Interfaces;
 using EterPharmaPro.Models;
 using EterPharmaPro.Models.DbModels;
+using EterPharmaPro.Services.XLSX;
 using EterPharmaPro.Temps;
 using EterPharmaPro.Utils.Extencions;
 using EterPharmaPro.Views;
@@ -30,6 +31,21 @@ namespace EterPharmaPro
 		private void MainWindow_Load(object sender, EventArgs e)
 		{
 			DatabaseProdutosDb = new DatabaseProdutosDb(toolStripProgressBar_status, cancellationTokenSource.Token);
+			SetLogin();
+		}
+
+		private void SetLogin()
+		{
+			AcesUser acesUser = new AcesUser(eterDb);
+			acesUser.ShowDialog();
+			if (!acesUser.loginSucced)
+			{
+				SetLogin();
+			}
+			else
+			{
+				toolStripStatusLabel_user.Text = $" {eterDb.UserModelAcess.ID_LOJA} - {eterDb.UserModelAcess.NOME} - {eterDb.UserModelAcess.FUNCAO}";
+			}
 		}
 		private void OpenForm(Form form)
 		{
@@ -75,11 +91,30 @@ namespace EterPharmaPro
 
 		private void toolStripDropDownButton_impressos_Click(object sender, EventArgs e) => OpenForm(new IMPRESSOS(eterDb, DatabaseProdutosDb));
 
-		private void toolStripButton_conf_Click(object sender, EventArgs e)
+		private async void toolStripButton_conf_Click(object sender, EventArgs e)
 		{
-			
+			var read = new ReadProdutoXLSX();
+
+			//read.ProgressUpdated += (progress) =>
+			//{
+			//	if (bar_teste.ProgressBar.InvokeRequired)
+			//	{
+			//		bar_teste.ProgressBar.Invoke(new Action(() => {
+			//			bar_teste.Value = progress.Progress;
+			//			bar_teste.Maximum = progress.Max;
+			//		}));
+			//	}
+			//	else
+			//	{
+			//		bar_teste.Value = progress.Progress;
+			//		bar_teste.Maximum = progress.Max;
+			//	}
+				
+			//};
+
+			var ts = await read.ReadAllProdutos(@"C:\Users\walla\OneDrive\Área de Trabalho\Documento de WALLACE.xlsx");
 		}
 
-		private void rELATÓRIOToolStripMenuItem_Click(object sender, EventArgs e) => OpenForm(new ReportValidades(eterDb,DatabaseProdutosDb));
+		private void rELATÓRIOToolStripMenuItem_Click(object sender, EventArgs e) => OpenForm(new ReportValidades(eterDb, DatabaseProdutosDb));
 	}
 }

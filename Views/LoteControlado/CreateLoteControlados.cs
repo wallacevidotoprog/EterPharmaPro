@@ -111,6 +111,7 @@ namespace EterPharmaPro.Views.LoteControlado
 			textBox_nome.Clear();
 			textBox_end.Clear();
 			textBox_rg.Clear();
+			textBox_rg.ButtonVisible = false;
 			textBox_cel.Clear();
 			textBox_medicamento.Clear();
 			numericUpDown_qtd.Value = 1m;

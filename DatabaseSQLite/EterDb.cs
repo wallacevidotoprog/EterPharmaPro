@@ -1,9 +1,12 @@
+using DocumentFormat.OpenXml.Spreadsheet;
 using EterPharmaPro.Controllers;
 using EterPharmaPro.Interfaces;
+using EterPharmaPro.Models.DbModels;
 using EterPharmaPro.Utils.Extencions;
 using System;
 using System.Data.SQLite;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace EterPharmaPro.DatabaseSQLite
@@ -15,6 +18,8 @@ namespace EterPharmaPro.DatabaseSQLite
 		public bool ServeConnection { get; private set; }
 
 		public DatabaseTransactionHandler _transactionHandler;
+
+		public UserModel UserModelAcess { get; set; }
 
 		public IEterDbUser DbUser { get; set; }
 
@@ -66,7 +71,7 @@ namespace EterPharmaPro.DatabaseSQLite
 
 		private void SetDb()
 		{
-			
+
 			DbUser = new EterDbUser(_databaseConnection);
 			DbCliente = new EterDbCliente(_databaseConnection);
 			DbEndereco = new EterDbEndereco(_databaseConnection);
@@ -101,8 +106,48 @@ namespace EterPharmaPro.DatabaseSQLite
 		{
 			return (object)await _transactionHandler.ExecuteWithTransactionAsync(async () =>
 			{
-				return await databaseOperations();				
+				return await databaseOperations();
 			});
+		}
+
+		public async Task<(bool acPass, bool acOk)> Login(string user, string pass = null)
+		{
+
+			try
+			{
+				UserModel userModel = (await DbUser.GetUser(new QueryWhereModel().SetWhere("ID", user))).FirstOrDefault();
+				if (userModel == null)
+				{ return (false, false); }
+
+
+				userModel.FUNCAO = (await DbProps.GetFuncao(new QueryWhereModel().SetWhere("ID", userModel.FUNCAO))).FirstOrDefault()?.NOME;
+
+				if (userModel.PASS == string.Empty)
+				{
+
+					UserModelAcess = userModel;
+					return (false, true);
+				}
+				else if (userModel.PASS != string.Empty && pass == null)
+				{
+					return (true, false);
+				}
+				else
+				{
+					if (userModel.PASS == pass)
+					{
+						UserModelAcess = userModel;
+						return (false, true);
+					}
+				}
+				return (false, false);
+
+			}
+			catch (Exception ex)
+			{
+				ex.ErrorGet();
+				return (false, false);
+			}
 		}
 
 

@@ -212,6 +212,7 @@
     <Compile Include="Models\DbModels\ValidadeDbModal.cs" />
     <Compile Include="Models\ManipulacaoModel.cs" />
     <Compile Include="Models\DbModels\UserModel.cs" />
+    <Compile Include="Models\ProgressStatsModel.cs" />
     <Compile Include="Models\SetValityModel.cs" />
     <Compile Include="Models\ProdutosModel.cs" />
     <Compile Include="Models\ValityExportModel.cs" />
@@ -223,6 +224,7 @@
     <Compile Include="Services\ManipuladoService.cs" />
     <Compile Include="Services\Prints\RawPrinterHelper.cs" />
     <Compile Include="Models\Print\TextPrintFormaterModel.cs" />
+    <Compile Include="Services\XLSX\ReadProdutoXLSX.cs" />
     <Compile Include="Services\XLSX\WriteValityExport.cs" />
     <Compile Include="Temps\ImportValidadeXMLold.cs" />
     <Compile Include="Utils\eControl\ePictureBox.cs">
@@ -253,6 +255,12 @@
     </Compile>
     <Compile Include="Utils\Log\LogSistem.cs" />
     <Compile Include="Utils\ValidatorFields.cs" />
+    <Compile Include="Views\AcesUser.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\AcesUser.Designer.cs">
+      <DependentUpon>AcesUser.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\IMPRESSOS.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -302,6 +310,9 @@
     <EmbeddedResource Include="Utils\Extencions\InputListProduto.resx">
       <DependentUpon>InputListProduto.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\AcesUser.resx">
+      <DependentUpon>AcesUser.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\IMPRESSOS.resx">
       <DependentUpon>IMPRESSOS.cs</DependentUpon>
     </EmbeddedResource>
@@ -345,6 +356,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="farmacia.ico" />
+    <None Include="Resources\acesso.png" />
+    <None Include="Resources\seta-direita.png" />
     <None Include="Resources\exportar.png" />
     <None Include="Resources\carimboS.png" />
     <None Include="Resources\inserir.png" />

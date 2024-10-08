@@ -1,5 +1,6 @@
 using EterPharmaPro.Controllers;
 using EterPharmaPro.DatabaseSQLite;
+using EterPharmaPro.Models.DbModels;
 using System;
 using System.Threading.Tasks;
 
@@ -9,6 +10,8 @@ namespace EterPharmaPro.Interfaces
 	{
 		string DatabaseConnection { get; }
 		EterDbController EterDbController { get; set; }
+
+		UserModel UserModelAcess { get; set; }
 		IEterDbUser DbUser { get; set; }
 
 		IEterDbCliente DbCliente { get; set; }
@@ -31,5 +34,6 @@ namespace EterPharmaPro.Interfaces
 
 		Task<bool> ExecuteTransactionAsync(params Func<Task<bool>>[] databaseOperations);
 		Task<object> ExecuteTransactionAsync(Func<Task<object>> databaseOperations);
+		Task<(bool acPass, bool acOk)> Login(string user, string pass = null);
 	}
 }

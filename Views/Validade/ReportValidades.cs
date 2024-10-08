@@ -1,19 +1,13 @@
-﻿using EterPharmaPro.Controllers.Manipulacao;
-using EterPharmaPro.Controllers.Validade;
+﻿using EterPharmaPro.Controllers.Validade;
 using EterPharmaPro.DbProdutos.Services;
 using EterPharmaPro.Interfaces;
-using EterPharmaPro.Models;
 using EterPharmaPro.Models.DbModels;
-using EterPharmaPro.Services.DbProdutos;
-using EterPharmaPro.Temps;
 using EterPharmaPro.Utils.Extencions;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -37,7 +31,7 @@ namespace EterPharmaPro.Views.Validade
 			DateTime timenew = dateTimePicker_ate.Value.AddMonths(4);
 			dateTimePicker_ate.Value = timenew;
 		}
-		private void toolStripButton_exit_Click(object sender, EventArgs e)=>this.Close();
+		private void toolStripButton_exit_Click(object sender, EventArgs e) => this.Close();
 
 		private async void ePictureBox_busca_ClickAsync(object sender, EventArgs e)
 		{
@@ -72,13 +66,13 @@ namespace EterPharmaPro.Views.Validade
 		{
 			List<long> imports = new List<long>();
 
-            for (int i = 0; i < dataGridView_validadeFile.Rows.Count; i++)
-            {
+			for (int i = 0; i < dataGridView_validadeFile.Rows.Count; i++)
+			{
 				if ((bool)dataGridView_validadeFile.Rows[i].Cells[3].Value)
 				{
 					imports.Add(Convert.ToUInt32(dataGridView_validadeFile.Rows[i].Cells[0].Value));
 				}
-            }
+			}
 			await ListViewImportsAsync(imports);
 
 		}
@@ -116,9 +110,9 @@ namespace EterPharmaPro.Views.Validade
 			{
 				ex.ErrorGet();
 			}
-			
 
-			dateTimePicker_de_ValueChanged(null,null);
+
+			dateTimePicker_de_ValueChanged(null, null);
 
 		}
 
@@ -146,7 +140,7 @@ namespace EterPharmaPro.Views.Validade
 		private bool BetweenDate(object value)
 		{
 			DateTime dateItem = DateTime.Now;
-			if (value.GetType()== typeof(ListViewItem))
+			if (value.GetType() == typeof(ListViewItem))
 			{
 				dateItem = Convert.ToDateTime(((ListViewItem)value).SubItems[4].Text);
 			}
@@ -154,7 +148,7 @@ namespace EterPharmaPro.Views.Validade
 			{
 				dateItem = Convert.ToDateTime(value.ToString());
 			}
-			 
+
 
 			int fromMonth = dateTimePicker_de.Value.Month;
 			int fromYear = dateTimePicker_de.Value.Year;
@@ -171,7 +165,7 @@ namespace EterPharmaPro.Views.Validade
 			}
 
 			return false;
-			
+
 		}
 
 		private async void toolStripButton_excel_Click(object sender, EventArgs e)
@@ -216,16 +210,12 @@ namespace EterPharmaPro.Views.Validade
 			}
 		}
 
-		private void ePictureBox_export_Click(object sender, EventArgs e)
-		{
-
-		}
 
 		private void toolStripButton_clear_Click(object sender, EventArgs e)
 		{
 			listView_produtos.Items.Clear();
 			listView_produtos.Groups.Clear();
-			produtoValidadeDbs =null;
+			produtoValidadeDbs = null;
 			dataGridView_validadeFile.Rows.Clear();
 			dateTimePicker_dataBusca.Value = DateTime.Now.DateTimeDay();
 			dateTimePicker_de.Value = DateTime.Now.DateTimeDay();
