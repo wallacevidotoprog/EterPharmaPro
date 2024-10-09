@@ -13,7 +13,7 @@ namespace EterPharmaPro.Views.Manipulados
 {
 	public partial class CreateManipulados : Form
 	{
-		private readonly IEterDb _eterDb;
+		private readonly IEterDb eterDb;
 
 		private ManipulacaoModel manipulados;
 
@@ -22,14 +22,14 @@ namespace EterPharmaPro.Views.Manipulados
 		private readonly ManipuladoController manipuladoController;
 		public CreateManipulados(IEterDb eterDb)
 		{
-			_eterDb = eterDb;
+			this.eterDb = eterDb;
 			manipuladoController = new ManipuladoController(eterDb);
 			InitializeComponent();
 		}
 
 		public CreateManipulados(IEterDb eterDb, ManipulacaoModel model)
 		{
-			_eterDb = eterDb;
+			this.eterDb = eterDb;
 			InitializeComponent();
 			manipuladoController = new ManipuladoController(eterDb);
 			if (model != null)
@@ -71,7 +71,8 @@ namespace EterPharmaPro.Views.Manipulados
 			CleanAll(null, null);
 			comboBox_user.Invoke((Action)async delegate
 			{
-				await comboBox_user.CBListUserAsync(_eterDb);
+				await comboBox_user.CBListUserAsync(eterDb);
+				comboBox_user.SelectedIndex = comboBox_user.ReturnIndexUserCB(eterDb.UserModelAcess.ID);
 			});
 
 			if (manipulados != null)

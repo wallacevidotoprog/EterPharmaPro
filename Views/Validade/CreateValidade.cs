@@ -57,6 +57,7 @@ namespace EterPharmaPro.Views.Validade
 		{
 			groupBox_ne.Visible = state;
 			comboBox_user.Enabled = state;
+
 			dateTimePicker_dataD.Enabled = state;
 			dateTimePicker_dataD.Value = DateTime.Today;
 
@@ -92,6 +93,7 @@ namespace EterPharmaPro.Views.Validade
 				}
 			}
 			NewDocValidade(true);
+			comboBox_user.SelectedIndex = comboBox_user.ReturnIndexUserCB(eterDb.UserModelAcess.ID);
 		}
 
 		private async void ePictureBox_create_Click(object sender, EventArgs e)

@@ -94,7 +94,7 @@ namespace EterPharmaPro.Controllers.CarimboLoteValidade
 						{
 							for (int i = 0; i < medicamentosControladoLoteModel.Count; i++)
 							{
-								await eterDb.DbControlados.CreateControlado(medicamentosControladoLoteModel[i].CODIGO_MED, medicamentosControladoLoteModel[i].QUANTIDADE, medicamentosControladoLoteModel[i].DATA_VALIDADE, medicamentosControladoLoteModel[i].LOTE,clienteModel.ID.ToString(), connection, transaction);
+								await eterDb.DbControlados.CreateControlado(medicamentosControladoLoteModel[i].CODIGO_MED, medicamentosControladoLoteModel[i].QUANTIDADE, medicamentosControladoLoteModel[i].DATA_VALIDADE, medicamentosControladoLoteModel[i].LOTE, IDC.ToString(), connection, transaction);
 
 							}
 

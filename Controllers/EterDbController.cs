@@ -7,6 +7,7 @@ using EterPharmaPro.Utils.Extencions;
 using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace EterPharmaPro.Controllers
@@ -23,8 +24,10 @@ namespace EterPharmaPro.Controllers
 		public async Task<(bool exist, EnderecoClienteModel end)> ExistAdressCliente(EnderecoClienteModel enderecoCliente)
 		{
 			List<EnderecoClienteModel> tempA = await eterDb.DbEndereco.GetEndereco(
-				new QueryWhereModel().SetWhere(nameof(enderecoCliente.CLIENTE_ID), enderecoCliente.CLIENTE_ID)
+				new QueryWhereModel().SetWhere("CLIENTE_ID", enderecoCliente.CLIENTE_ID)
 				);
+
+			
 			for (int i = 0; i < tempA.Count; i++)
 			{
 				if (tempA[i].ENDERECO.ToUpper().Trim().Replace(" ", null) == enderecoCliente.ENDERECO.ToUpper().Trim().Replace(" ", null))
@@ -74,6 +77,7 @@ namespace EterPharmaPro.Controllers
 
 								if (!exist)
 								{
+									enderecoCliente.CLIENTE_ID = tempCliente.ID;
 									ide = await eterDb.DbEndereco.CreateEndereco(enderecoCliente, connection, transaction);
 								}
 								else

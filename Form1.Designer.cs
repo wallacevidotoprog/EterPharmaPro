@@ -44,7 +44,6 @@
 			this.rELATÓRIOToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripButton_conf = new System.Windows.Forms.ToolStripButton();
 			this.toolStripDropDownButton_impressos = new System.Windows.Forms.ToolStripButton();
-			this.toolStripStatusLabel_user = new System.Windows.Forms.ToolStripStatusLabel();
 			this.toolStrip_menu.SuspendLayout();
 			this.statusStrip_notify.SuspendLayout();
 			this.SuspendLayout();
@@ -84,11 +83,10 @@
 			// statusStrip_notify
 			// 
 			this.statusStrip_notify.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripProgressBar_status,
-            this.toolStripStatusLabel_user});
-			this.statusStrip_notify.Location = new System.Drawing.Point(0, 531);
+            this.toolStripProgressBar_status});
+			this.statusStrip_notify.Location = new System.Drawing.Point(0, 533);
 			this.statusStrip_notify.Name = "statusStrip_notify";
-			this.statusStrip_notify.Size = new System.Drawing.Size(947, 24);
+			this.statusStrip_notify.Size = new System.Drawing.Size(947, 22);
 			this.statusStrip_notify.TabIndex = 5;
 			this.statusStrip_notify.Text = "statusStrip1";
 			// 
@@ -103,7 +101,7 @@
 			this.panel_center.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panel_center.Location = new System.Drawing.Point(0, 93);
 			this.panel_center.Name = "panel_center";
-			this.panel_center.Size = new System.Drawing.Size(947, 438);
+			this.panel_center.Size = new System.Drawing.Size(947, 440);
 			this.panel_center.TabIndex = 6;
 			// 
 			// toolStripButton_manipulacao
@@ -207,14 +205,6 @@
 			this.toolStripDropDownButton_impressos.ToolTipText = "IMPRESSOS";
 			this.toolStripDropDownButton_impressos.Click += new System.EventHandler(this.toolStripDropDownButton_impressos_Click);
 			// 
-			// toolStripStatusLabel_user
-			// 
-			this.toolStripStatusLabel_user.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
-			this.toolStripStatusLabel_user.Name = "toolStripStatusLabel_user";
-			this.toolStripStatusLabel_user.RightToLeft = System.Windows.Forms.RightToLeft.No;
-			this.toolStripStatusLabel_user.Size = new System.Drawing.Size(60, 19);
-			this.toolStripStatusLabel_user.Text = "USUÁRIO";
-			// 
 			// MainWindow
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -255,7 +245,6 @@
 		private System.Windows.Forms.StatusStrip statusStrip_notify;
 		private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar_status;
 		private System.Windows.Forms.Panel panel_center;
-		private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel_user;
 	}
 }
 

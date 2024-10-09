@@ -62,7 +62,7 @@ namespace EterPharmaPro.Utils.Extencions
 			return null;
 		}
 
-		public static int ReturnIndexUserCB(this ComboBox cb, string id)
+		public static int ReturnIndexUserCB(this ComboBox cb, object id)
 		{
 			try
 			{
@@ -71,7 +71,7 @@ namespace EterPharmaPro.Utils.Extencions
 				int index = 0;
 				foreach (KeyValuePair<string, string> item in tempD)
 				{
-					if (item.Key.Equals(id))
+					if (item.Key.Equals(id.ToString()))
 					{
 						return index;
 					}
@@ -116,21 +116,20 @@ namespace EterPharmaPro.Utils.Extencions
 
 			foreach (var user in list)
 			{
+				string key = user.ID.ToString();
+
+				string value = $"{user.ID_LOJA.ToString().PadLeft(4, '0')} - {user.NOME}";
 				if (user.STATUS && !isStatusAll)
 				{
-					string key = user.ID.ToString();
 					if (!users.ContainsKey(key))
 					{
-						string value = $"{user.ID_LOJA} - {user.NOME}";
 						users.Add(key, value);
 					}
 				}
 				else if (isStatusAll)
 				{
-					string key = user.ID.ToString();
 					if (!users.ContainsKey(key))
 					{
-						string value = $"{user.ID_LOJA} - {user.NOME}";
 						users.Add(key, value);
 					}
 				}
@@ -145,7 +144,7 @@ namespace EterPharmaPro.Utils.Extencions
 			cb.DataSource = bindingSource;
 			cb.DisplayMember = "Value";
 			cb.ValueMember = "Key";
-
+			cb.SelectedValue = 1;
 			return cb;
 		}
 
@@ -203,20 +202,20 @@ namespace EterPharmaPro.Utils.Extencions
 		public static long ToDatetimeUnix(this DateTime dateTime) => ((DateTimeOffset)dateTime).ToUnixTimeSeconds();
 		public static long ToDatetimeUnix(this string dateTime) => ((DateTimeOffset)Convert.ToDateTime(dateTime)).ToUnixTimeSeconds();
 
-		public static string GetEnderecoArray(this List<EnderecoClienteModel> enderecoClienteModels,out int indexSelect)
+		public static string GetEnderecoArray(this List<EnderecoClienteModel> enderecoClienteModels, out int indexSelect)
 		{
 			try
 			{
 				if (enderecoClienteModels.Count == 0)
 				{
-					indexSelect= - 1;
+					indexSelect = -1;
 					return string.Empty;
 				}
 				if (enderecoClienteModels.Count == 1)
 				{
 					indexSelect = 0;
 					return enderecoClienteModels[0].ENDERECO;
-					
+
 				}
 				var tempEnd = new object[enderecoClienteModels.Count];
 				for (int i = 0; i < tempEnd.Length; i++)

@@ -120,7 +120,7 @@ namespace EterPharmaPro.Views.LoteControlado
 			listView1.Items.Clear();
 			//controladoLoteModel = null;
 			medicamentosControladoLoteModel = null;
-			textBox_rg.ButtonVisible = true;
+			//textBox_rg.ButtonVisible = true;
 		}
 
 		private async void toolStripButton_print_Click(object sender, EventArgs e)

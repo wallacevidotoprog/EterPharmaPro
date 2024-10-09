@@ -50,9 +50,10 @@
 			this.comboBox_user.FormattingEnabled = true;
 			this.comboBox_user.Location = new System.Drawing.Point(3, 16);
 			this.comboBox_user.Name = "comboBox_user";
-			this.comboBox_user.Size = new System.Drawing.Size(722, 34);
+			this.comboBox_user.Size = new System.Drawing.Size(328, 34);
 			this.comboBox_user.TabIndex = 1;
 			this.comboBox_user.Text = " ";
+			this.comboBox_user.SelectedIndexChanged += new System.EventHandler(this.comboBox_user_SelectedIndexChanged);
 			this.comboBox_user.KeyDown += new System.Windows.Forms.KeyEventHandler(this.comboBox_user_KeyDown);
 			// 
 			// groupBox1
@@ -63,7 +64,7 @@
 			this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.groupBox1.Location = new System.Drawing.Point(0, 0);
 			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(728, 216);
+			this.groupBox1.Size = new System.Drawing.Size(334, 216);
 			this.groupBox1.TabIndex = 0;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "USUÁRIO";
@@ -74,7 +75,7 @@
 			this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
 			this.panel1.Location = new System.Drawing.Point(3, 107);
 			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size(722, 108);
+			this.panel1.Size = new System.Drawing.Size(328, 108);
 			this.panel1.TabIndex = 3;
 			// 
 			// textBox_pass
@@ -85,7 +86,7 @@
 			this.textBox_pass.Location = new System.Drawing.Point(3, 16);
 			this.textBox_pass.Name = "textBox_pass";
 			this.textBox_pass.PasswordChar = '*';
-			this.textBox_pass.Size = new System.Drawing.Size(716, 33);
+			this.textBox_pass.Size = new System.Drawing.Size(322, 33);
 			this.textBox_pass.TabIndex = 1;
 			this.textBox_pass.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox_pass_KeyDown);
 			// 
@@ -95,7 +96,7 @@
 			this.groupBox_pass.Dock = System.Windows.Forms.DockStyle.Top;
 			this.groupBox_pass.Location = new System.Drawing.Point(3, 50);
 			this.groupBox_pass.Name = "groupBox_pass";
-			this.groupBox_pass.Size = new System.Drawing.Size(722, 57);
+			this.groupBox_pass.Size = new System.Drawing.Size(328, 57);
 			this.groupBox_pass.TabIndex = 2;
 			this.groupBox_pass.TabStop = false;
 			this.groupBox_pass.Text = "SENHA";
@@ -103,8 +104,9 @@
 			// 
 			// ePictureBox_acess
 			// 
+			this.ePictureBox_acess.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.ePictureBox_acess.Image = global::EterPharmaPro.Properties.Resources.acesso;
-			this.ePictureBox_acess.Location = new System.Drawing.Point(305, 3);
+			this.ePictureBox_acess.Location = new System.Drawing.Point(110, 3);
 			this.ePictureBox_acess.Name = "ePictureBox_acess";
 			this.ePictureBox_acess.Size = new System.Drawing.Size(100, 100);
 			this.ePictureBox_acess.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -117,7 +119,7 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(728, 216);
+			this.ClientSize = new System.Drawing.Size(334, 216);
 			this.Controls.Add(this.groupBox1);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -125,8 +127,9 @@
 			this.MinimizeBox = false;
 			this.Name = "AcesUser";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-			this.Text = "AcesUser";
-			this.Load += new System.EventHandler(this.AcesUser_Load);
+			this.Text = "Acesso de Usuário";
+			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.AcesUser_FormClosing);
+			this.Load += new System.EventHandler(this.AcesUser_LoadAsync);
 			this.groupBox1.ResumeLayout(false);
 			this.panel1.ResumeLayout(false);
 			this.groupBox_pass.ResumeLayout(false);

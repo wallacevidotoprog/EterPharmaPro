@@ -44,7 +44,7 @@ namespace EterPharmaPro
 			}
 			else
 			{
-				toolStripStatusLabel_user.Text = $" {eterDb.UserModelAcess.ID_LOJA} - {eterDb.UserModelAcess.NOME} - {eterDb.UserModelAcess.FUNCAO}";
+				this.Text = $"ETER PHARMA PRO [ {eterDb.UserModelAcess.ID_LOJA} - {eterDb.UserModelAcess.NOME} - {eterDb.UserModelAcess.FUNCAO} ]";
 			}
 		}
 		private void OpenForm(Form form)
