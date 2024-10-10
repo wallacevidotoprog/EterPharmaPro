@@ -1,4 +1,5 @@
-﻿using DocumentFormat.OpenXml.Office2010.Excel;
+﻿using DocumentFormat.OpenXml.EMMA;
+using DocumentFormat.OpenXml.Office2010.Excel;
 using EterPharmaPro.Enums;
 using EterPharmaPro.Interfaces;
 using EterPharmaPro.Models;
@@ -18,7 +19,7 @@ namespace EterPharmaPro.Controllers.Manipulacao
 	{
 		private readonly IEterDb eterDb;
 
-		private ManipuladoService manipuladoService;
+		private readonly ManipuladoService manipuladoService;
 
 		public ManipuladoController(IEterDb eterDb)
 		{
@@ -90,7 +91,7 @@ namespace EterPharmaPro.Controllers.Manipulacao
 								await eterDb.DbManipuladosMedicamentos.DeleteMedicamento(model.ID.ToString(), connection, transaction);
 								await eterDb.DbManipulados.UpdateManipulacao(model, connection, transaction);
 
-								foreach (var medicamento in (List<string>)model.MEDICAMENTO)
+								foreach (var medicamento in (List<string>)model.MEDICAMENTOS)
 								{
 									await eterDb.DbManipuladosMedicamentos.CreateMedicamento(medicamento, model.ID.ToString(), connection, transaction);
 								}
@@ -98,8 +99,8 @@ namespace EterPharmaPro.Controllers.Manipulacao
 							else
 							{
 								long? tempCM = await eterDb.DbManipulados.CreateManipulacao(model, connection, transaction);
-
-								foreach (var medicamento in (List<string>)model.MEDICAMENTO)
+								await eterDb.DbManipuladosMedicamentos.DeleteMedicamento(tempCM.ToString(), connection, transaction);
+								foreach (var medicamento in (List<string>)model.MEDICAMENTOS)
 								{
 									await eterDb.DbManipuladosMedicamentos.CreateMedicamento(medicamento, tempCM.ToString(), connection, transaction);
 								}
@@ -125,7 +126,7 @@ namespace EterPharmaPro.Controllers.Manipulacao
 
 		}
 
-		public async Task<List<ManipulacaoModel>> GetManipulacao(object idUser)
+		public async Task<List<ManipulacaoModel>> GetManipulacaoFromUser(object idUser)
 		{
 
 			List<ManipulacaoModel> manipulacaoModels = new List<ManipulacaoModel>();
@@ -142,7 +143,7 @@ namespace EterPharmaPro.Controllers.Manipulacao
 
 					temp.DADOSATENDIMENTO.ATEN_LOJA_NAME = (await eterDb.DbUser.GetUser(new QueryWhereModel().SetWhere("ID", temp.DADOSATENDIMENTO.ATEN_LOJA))).FirstOrDefault().NOME;
 
-					temp.DADOSCLIENTE = (await eterDb.DbCliente.GetCliente(new QueryWhereModel().SetWhere("ID", temp.DADOSATENDIMENTO.ATEN_LOJA))).FirstOrDefault().NOME;
+					temp.DADOSCLIENTE = (await eterDb.DbCliente.GetCliente(new QueryWhereModel().SetWhere("ID", tempM[i].CLIENTE_ID))).FirstOrDefault().NOME;
 					manipulacaoModels.Add(temp);
 				}
 
@@ -152,15 +153,64 @@ namespace EterPharmaPro.Controllers.Manipulacao
 			catch (Exception ex)
 			{
 				ex.ErrorGet();
-				
+
 			}
 			return manipulacaoModels;
 
 
 		}
+		public async Task<ManipulacaoModel> GetManipulacao(object id)
+		{
+
+			try
+			{
+
+				ManipulacaoDbModel tempM = (await eterDb.DbManipulados.GetManipulacao(new QueryWhereModel().SetWhere("ID", id))).FirstOrDefault();
+
+				ManipulacaoModel temp = new ManipulacaoModel().ConvertDb(tempM);
+				DadosClienteManipulacao dadosClienteManipulacao = (DadosClienteManipulacao)temp.DADOSCLIENTE;
+
+				temp.DADOSCLIENTE = (await eterDb.DbCliente.GetCliente(new QueryWhereModel().SetWhere("ID", tempM.CLIENTE_ID))).FirstOrDefault();
+
+				((ClienteModel)temp.DADOSCLIENTE).ENDERECO = (await eterDb.DbEndereco.GetEndereco(new QueryWhereModel().SetWhere("ID", tempM.ENDERECO_ID))).FirstOrDefault();
+
+				temp.MEDICAMENTOS = await eterDb.DbManipuladosMedicamentos.GetMedicamento(new QueryWhereModel().SetWhere("MANIPULADOS_ID", tempM.ID));
 
 
+				return temp;
+			}
+			catch (Exception ex)
+			{
+				ex.ErrorGet();
+
+			}
+			return null;
 
 
+		}
+
+		public async Task<bool> DeleteManipulacao(int temp)
+		{
+			using (var connection = new SQLiteConnection(eterDb.DatabaseConnection))
+			{
+				await connection.OpenAsync().ConfigureAwait(false);
+				using (var transaction = connection.BeginTransaction())
+				{
+					try
+					{
+						await eterDb.DbManipulados.DeleteManipulacao(temp.ToString(), connection, transaction);
+
+						transaction.Commit();
+						return true;
+					}
+					catch (Exception ex)
+					{
+						transaction.Rollback();
+						ex.ErrorGet();
+						return false;
+					}
+				}
+			}
+		}
 	}
 }

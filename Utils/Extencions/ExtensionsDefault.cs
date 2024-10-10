@@ -148,7 +148,7 @@ namespace EterPharmaPro.Utils.Extencions
 			return cb;
 		}
 
-		public static async Task<ComboBox> CBListCategoryAsync(this ComboBox cb, List<CategoriaDbModal> categoriaDbModal)//melhorar
+		public static ComboBox CBListCategory(this ComboBox cb, List<CategoriaDbModal> categoriaDbModal)//melhorar
 		{
 			Dictionary<long?, string> cat = new Dictionary<long?, string>();
 

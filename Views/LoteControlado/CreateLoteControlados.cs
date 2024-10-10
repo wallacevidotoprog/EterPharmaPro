@@ -18,9 +18,9 @@ namespace EterPharmaPro.Views.LoteControlado
 		private List<MedicamentosControladoLoteModel> medicamentosControladoLoteModel;
 		private ProdutosModel tempProdutosModel;
 		private ClienteModel ClienteModel;
-		private bool isClienteSelected = false;
 		private ValidatorFields validatorFields;
 		private ValidatorFields validatorFieldsLot;
+		private bool isClienteSelected;
 
 		private void CreateLoteControlados_Load(object sender, EventArgs e)
 		{
@@ -134,7 +134,7 @@ namespace EterPharmaPro.Views.LoteControlado
 				{
 					ClienteModel = new ClienteModel
 					{
-						RG = textBox_rg.Text.ReturnInt(),
+						RG = textBox_rg.GetText.ReturnInt(),
 						NOME = textBox_nome.Text,
 						TELEFONE = textBox_cel.Text.ReturnInt(),
 						ENDERECO = new EnderecoClienteModel
@@ -234,8 +234,8 @@ namespace EterPharmaPro.Views.LoteControlado
 
 		private async void textBox_rg_TexBoxValidated(object sender, EventArgs e)
 		{
-			textBox_rg.Text = textBox_rg.Text.ReturnFormation(FormatationEnum.RG);
-			ClienteModel = (textBox_rg.Text.Trim().Replace(" ", null) != string.Empty) ? await controladosController.GetCliente(textBox_rg.Text.ReturnInt()) : null;
+			textBox_rg.GetText = textBox_rg.GetText.ReturnFormation(FormatationEnum.RG);
+			ClienteModel = (textBox_rg.GetText.Trim().Replace(" ", null) != string.Empty) ? await controladosController.GetCliente(textBox_rg.GetText.ReturnInt()) : null;
 			textBox_rg.ButtonVisible = (!(ClienteModel is null)) ? true : false;
 		}
 

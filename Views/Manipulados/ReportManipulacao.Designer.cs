@@ -178,6 +178,7 @@
             this.CLIENTE,
             this.VALORFINAL,
             this.OBSGERAL});
+			this.listView1.ContextMenuStrip = this.contextMenuStrip_produtos;
 			this.listView1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.listView1.FullRowSelect = true;
 			this.listView1.HideSelection = false;
@@ -224,7 +225,7 @@
             this.eDITARToolStripMenuItem,
             this.eXCLUIRToolStripMenuItem});
 			this.contextMenuStrip_produtos.Name = "contextMenuStrip1";
-			this.contextMenuStrip_produtos.Size = new System.Drawing.Size(181, 70);
+			this.contextMenuStrip_produtos.Size = new System.Drawing.Size(120, 48);
 			// 
 			// eDITARToolStripMenuItem
 			// 

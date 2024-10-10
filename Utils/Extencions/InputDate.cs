@@ -18,7 +18,7 @@ namespace EterPharmaPro.Utils.Extencions
 			InitializeComponent();
 		}
 
-		public static DateTime? Show()
+		public static new DateTime? Show()
 		{
 			
 			using (InputDate inputDate = new InputDate())

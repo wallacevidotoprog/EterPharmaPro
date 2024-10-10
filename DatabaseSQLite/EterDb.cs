@@ -119,7 +119,7 @@ namespace EterPharmaPro.DatabaseSQLite
 				{ return (false, false); }
 
 
-				userModel.FUNCAO = (await DbProps.GetFuncao(new QueryWhereModel().SetWhere("ID", userModel.FUNCAO))).FirstOrDefault()?.NOME;
+				userModel.FUNCAO_NAME = (await DbProps.GetFuncao(new QueryWhereModel().SetWhere("ID", userModel.FUNCAO))).FirstOrDefault()?.NOME;
 
 				if (userModel.PASS == string.Empty)
 				{

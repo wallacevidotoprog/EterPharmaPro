@@ -12,7 +12,7 @@ namespace EterPharmaPro.Services.XLSX
 {
 	public static class WriteValityExport
 	{
-		public static async Task<bool> ExportValityExcel(ValityExportModel validade, string salveFile, bool inCategory = false)
+		public static async  Task<bool> ExportValityExcel(ValityExportModel validade, string salveFile, bool inCategory = false)
 		{
 			try
 			{

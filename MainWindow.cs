@@ -46,7 +46,7 @@ namespace EterPharmaPro
 			{
 				this.Text = $"ETER PHARMA PRO [ {eterDb.UserModelAcess.ID_LOJA} - {eterDb.UserModelAcess.NOME} - {eterDb.UserModelAcess.FUNCAO} ]";
 
-				toolStripButton_conf.Visible = (eterDb.UserModelAcess.FUNCAO == "DEV")? true : false ;
+				toolStripButton_conf.Visible = (eterDb.UserModelAcess.FUNCAO_NAME == "DEV")? true : false ;
 			}
 		}
 		private void OpenForm(Form form)

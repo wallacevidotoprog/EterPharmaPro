@@ -11,7 +11,8 @@ namespace EterPharmaPro.Models.DbModels
 
 		public string PASS { get; set; } = string.Empty;
 
-		public string FUNCAO { get; set; } = string.Empty;
+		public int FUNCAO { get; set; } 
+		public string FUNCAO_NAME { get; set; } = string.Empty;
 
 		public bool STATUS { get; set; } = true;
 

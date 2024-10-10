@@ -30,8 +30,8 @@ namespace EterPharmaPro.Views.Manipulados
 		public CreateManipulados(IEterDb eterDb, ManipulacaoModel model)
 		{
 			this.eterDb = eterDb;
-			InitializeComponent();
 			manipuladoController = new ManipuladoController(eterDb);
+			InitializeComponent();
 			if (model != null)
 			{
 				edit = true;
@@ -66,30 +66,27 @@ namespace EterPharmaPro.Views.Manipulados
 
 		}
 
-		private void CreateManipulados_Load(object sender, EventArgs e)
+		private async void CreateManipulados_Load(object sender, EventArgs e)
 		{
 			CleanAll(null, null);
-			comboBox_user.Invoke((Action)async delegate
-			{
-				await comboBox_user.CBListUserAsync(eterDb);
-				comboBox_user.SelectedIndex = comboBox_user.ReturnIndexUserCB(eterDb.UserModelAcess.ID);
-			});
+			await comboBox_user.CBListUserAsync(eterDb);
+			comboBox_user.SelectedIndex = comboBox_user.ReturnIndexUserCB(eterDb.UserModelAcess.ID);
 
-			if (manipulados != null)
+			if (manipulados != null && edit)
 			{
 				dateTimePicker_data.Value = (DateTime)manipulados.DADOSATENDIMENTO.DATA;
 				textBox_atn.Text = manipulados?.DADOSATENDIMENTO.ATEN_MANI;
-				//comboBox_user.SelectedIndex = ExtensionsDefault.ReturnIndexUserCB(manipulados.DADOSATENDIMENTO?.ATEN_LOJA.ToString(), comboBox_user);
+				comboBox_user.SelectedIndex = comboBox_user.ReturnIndexUserCB(manipulados.DADOSATENDIMENTO?.ATEN_LOJA.ToString());
 				textBox_cpf.Text = ((ClienteModel)manipulados.DADOSCLIENTE)?.CPF.ReturnFormation(FormatationEnum.CPF);
 				textBox_rg.Text = ((ClienteModel)manipulados.DADOSCLIENTE)?.RG.ReturnFormation(FormatationEnum.RG);
 				textBox_nomeC.Text = ((ClienteModel)manipulados.DADOSCLIENTE)?.NOME;
 				textBox5_tel.Text = ((ClienteModel)manipulados.DADOSCLIENTE)?.TELEFONE.ReturnFormation(FormatationEnum.TELEFONE);
-				textBox_log.Text = ((((List<EnderecoClienteModel>)(((ClienteModel)manipulados.DADOSCLIENTE)?.ENDERECO)).Count <= 0) ? string.Empty : ((List<EnderecoClienteModel>)(((ClienteModel)manipulados.DADOSCLIENTE)?.ENDERECO))[0]?.ENDERECO);
-				textBox_obsEnd.Text = ((((List<EnderecoClienteModel>)(((ClienteModel)manipulados.DADOSCLIENTE)?.ENDERECO)).Count <= 0) ? string.Empty : ((List<EnderecoClienteModel>)((ClienteModel)manipulados.DADOSCLIENTE).ENDERECO)[0]?.OBSERVACAO);
+				textBox_log.Text = ((EnderecoClienteModel)(((ClienteModel)manipulados.DADOSCLIENTE)?.ENDERECO)).ENDERECO;
+				textBox_obsEnd.Text = ((EnderecoClienteModel)(((ClienteModel)manipulados.DADOSCLIENTE)?.ENDERECO)).OBSERVACAO;
 				dataGridView_medicamentos.Rows.Clear();
-				for (int i = 0; i < ((List<string>)manipulados.MEDICAMENTO)?.Count; i++)
+				for (int i = 0; i < ((List<string>)manipulados.MEDICAMENTOS)?.Count; i++)
 				{
-					dataGridView_medicamentos.Rows.Add(((List<string>)manipulados.MEDICAMENTO)[i].ToString());
+					dataGridView_medicamentos.Rows.Add(((List<string>)manipulados.MEDICAMENTOS)[i].ToString());
 				}
 				textBox_obsGeral.Text = manipulados?.OBSGERAL;
 				comboBox_situacao.SelectedIndex = manipulados.SITUCAO;
@@ -181,6 +178,7 @@ namespace EterPharmaPro.Views.Manipulados
 			try
 			{
 				List<string> list = new List<string>();
+				textBox_obsGeral.Focus();
 				for (int i = 0; i < dataGridView_medicamentos.Rows.Count; i++)
 				{
 					if (dataGridView_medicamentos.Rows[i].Cells[0].Value != null && dataGridView_medicamentos.Rows[i].Cells[0].Value.ToString() != "")
@@ -199,20 +197,19 @@ namespace EterPharmaPro.Views.Manipulados
 					},
 					DADOSCLIENTE = new ClienteModel
 					{
-						ID = ((!edit) ? null : ((ClienteModel)manipulados.DADOSCLIENTE).ID),
+						
 						CPF = (textBox_cpf.Text.ReturnInt().StartsWith("0000000") ? string.Empty : textBox_cpf.Text.ReturnInt()),
 						RG = (textBox_rg.Text.ReturnInt().StartsWith("0000000") ? string.Empty : textBox_rg.Text.ReturnInt()),
 						NOME = textBox_nomeC.Text,
 						TELEFONE = textBox5_tel.Text.ReturnInt(),
 						ENDERECO = new EnderecoClienteModel
 						{
-							CLIENTE_ID = ((!edit) ? ((object)(-1)) : ((((List<EnderecoClienteModel>)((ClienteModel)manipulados.DADOSCLIENTE).ENDERECO).Count > 0) ? ((List<EnderecoClienteModel>)((ClienteModel)manipulados.DADOSCLIENTE).ENDERECO)[0].CLIENTE_ID : ((object)(-1)))),
-							ID = ((!edit) ? (-1) : ((((List<EnderecoClienteModel>)((ClienteModel)manipulados.DADOSCLIENTE).ENDERECO).Count > 0) ? ((List<EnderecoClienteModel>)((ClienteModel)manipulados.DADOSCLIENTE).ENDERECO)[0].ID : (-1))),
+							CLIENTE_ID = ((EnderecoClienteModel)((ClienteModel)manipulados.DADOSCLIENTE).ENDERECO).CLIENTE_ID,							
 							ENDERECO = textBox_log.Text,
 							OBSERVACAO = textBox_obsEnd.Text
 						}
 					},
-					MEDICAMENTO = list,
+					MEDICAMENTOS = list,
 					OBSGERAL = textBox_obsGeral.Text,
 					SITUCAO = comboBox_situacao.SelectedIndex,
 					FORMAPAGAMENTO = comboBox_pag.SelectedIndex,

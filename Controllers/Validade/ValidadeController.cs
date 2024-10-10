@@ -379,7 +379,6 @@ namespace EterPharmaPro.Controllers.Validade
 				}
 			}
 
-			return null;
 		}
 
 		public async Task<UserModel> GetUser(long? uSER_ID)

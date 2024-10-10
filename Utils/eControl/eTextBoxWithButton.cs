@@ -55,7 +55,7 @@ namespace EterPharmaPro.Utils.eControl
 		[Browsable(true)]
 		[Category("Custom Properties")]
 		[Description("Texto exibido no TextBox.")]
-		public string Text
+		public string GetText
 		{
 			get { return textBox.Text; }
 			set { textBox.Text = value; }

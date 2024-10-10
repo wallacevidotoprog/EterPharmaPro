@@ -120,9 +120,8 @@ namespace EterPharmaPro.Views
 					this.Size = new System.Drawing.Size(350, 255);
 				}
 			}
-			catch (Exception ex)
+			catch 
 			{
-				//ex.ErrorGet(false);
 			}
 
 

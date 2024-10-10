@@ -14,8 +14,8 @@ namespace EterPharmaPro.Services.DbProdutos
 	{
 		private static BACKUP _backup;
 		#region PRODUTOS
-		
-		public static async Task<List<ProdutosModel>> ReadProdutosAsync(ToolStripProgressBar progressBar, CancellationToken cancellationToken)
+
+		public static List<ProdutosModel> ReadProdutos(ToolStripProgressBar progressBar, CancellationToken cancellationToken)
 		{
 			List<ProdutosModel> list = new List<ProdutosModel>();
 			string filePath = Path.Combine(Directory.GetCurrentDirectory(), "DADOS", "produtos.eter");
@@ -29,7 +29,7 @@ namespace EterPharmaPro.Services.DbProdutos
 						using (BinaryReader reader = new BinaryReader(stream, Encoding.UTF8, leaveOpen: false))
 						{
 							int lines = reader.ReadInt32();
-							int updateFrequency = Math.Max(1, lines / 100); 
+							int updateFrequency = Math.Max(1, lines / 100);
 
 							if (progressBar != null)
 							{

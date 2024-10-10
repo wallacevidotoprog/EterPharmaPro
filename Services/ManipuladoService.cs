@@ -126,12 +126,12 @@ namespace EterPharmaPro.Services
 			{
 				symbol = SymbolPrintEnum.Space
 			});
-			for (int i = 0; i < ((List<string>)model.MEDICAMENTO).Count; i++)
+			for (int i = 0; i < ((List<string>)model.MEDICAMENTOS).Count; i++)
 			{
 				printerHelper.AddLine(new TextPrintFormaterModel
 				{
 					tilte = "■ ",
-					texto = ((List<string>)model.MEDICAMENTO)[i].ToUpper(),
+					texto = ((List<string>)model.MEDICAMENTOS)[i].ToUpper(),
 					alignmentText = AlignmentTextPrintEnum.Left,
 					fontStyle = FormatTextPrintEnum.Default
 				});

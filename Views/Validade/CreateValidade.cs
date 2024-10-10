@@ -115,7 +115,7 @@ namespace EterPharmaPro.Views.Validade
 
 			setValityModel.vality_id = await validadeController.CreateNewDocVality(setValityModel);
 
-			await comboBox_categoria.CBListCategoryAsync(await validadeController.GetCategoryUser(setValityModel.user_id));
+			comboBox_categoria.CBListCategory(await validadeController.GetCategoryUser(setValityModel.user_id));
 
 			RefreshCategoryAsync(null, ListViewActionsEnum.INIT);
 			ePictureBox_seach_Click(null, null);
@@ -129,7 +129,7 @@ namespace EterPharmaPro.Views.Validade
 				long? resulAddCat = await validadeController.CreateCategory(setValityModel.user_id, result);
 				if (resulAddCat > -1)
 				{
-					await comboBox_categoria.CBListCategoryAsync(await validadeController.GetCategoryUser(setValityModel.user_id));
+					comboBox_categoria.CBListCategory(await validadeController.GetCategoryUser(setValityModel.user_id));
 					RefreshCategoryAsync((resulAddCat, result), ListViewActionsEnum.ADD);
 				}
 			}
@@ -148,7 +148,7 @@ namespace EterPharmaPro.Views.Validade
 			{
 				if (await validadeController.DeleteCategory(tempRemove))
 				{
-					await comboBox_categoria.CBListCategoryAsync(await validadeController.GetCategoryUser(setValityModel.user_id));
+					comboBox_categoria.CBListCategory(await validadeController.GetCategoryUser(setValityModel.user_id));
 					RefreshCategoryAsync((tempRemove, tempName), ListViewActionsEnum.REMOVE);
 				}
 			}
@@ -493,7 +493,6 @@ namespace EterPharmaPro.Views.Validade
 						break;
 					case DialogResult.Cancel:
 						return;
-						break;
 				}
 			}
 
@@ -528,7 +527,7 @@ namespace EterPharmaPro.Views.Validade
 
 				RefreshCategoryAsync(null, ListViewActionsEnum.INIT);
 				ListViewAction(tempEditVality.p, ListViewActionsEnum.UPGRADE);
-				await comboBox_categoria.CBListCategoryAsync(await validadeController.GetCategoryUser(setValityModel.user_id));
+				comboBox_categoria.CBListCategory(await validadeController.GetCategoryUser(setValityModel.user_id));
 
 			}
 			catch (Exception ex)

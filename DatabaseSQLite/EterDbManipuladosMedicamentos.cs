@@ -91,37 +91,31 @@ namespace EterPharmaPro.DatabaseSQLite
 
 		public async Task<List<string>> GetMedicamento(QueryWhereModel query)
 		{
-			//bool allUser = queryID == null;
+
 			try
 			{
-				//using SQLiteConnection connection = new SQLiteConnection(_databaseConnection);
-				//await connection.OpenAsync().ConfigureAwait(continueOnCapturedContext: false);
-				//List<string> tempObj = null;
-				//if (allUser)
-				//{
-				//	string Query = "SELECT * FROM MEDICAMENTO_MANIPULACAO";
-				//	using SQLiteCommand command = new SQLiteCommand(Query, connection);
-				//	using DbDataReader reader = await command.ExecuteReaderAsync();
-				//	tempObj = new List<string>();
-				//	while (await reader.ReadAsync())
-				//	{
-				//		tempObj.Add(reader["NAME_M"].ToString());
-				//	}
-				//}
-				//else
-				//{
-				//	string Query = "SELECT * FROM MEDICAMENTO_MANIPULACAO WHERE MANIPULADOS_ID= @MANIPULADOS_ID";
-				//	using SQLiteCommand sQLiteCommand = new SQLiteCommand(Query, connection);
-				//	sQLiteCommand.Parameters.AddWithValue("@MANIPULADOS_ID", queryID);
-				//	using DbDataReader dbDataReader = await sQLiteCommand.ExecuteReaderAsync();
-				//	tempObj = new List<string>();
-				//	while (await dbDataReader.ReadAsync())
-				//	{
-				//		tempObj.Add(dbDataReader["NAME_M"].ToString());
-				//	}
-				//}
-				//connection.Close();
-				//return tempObj;
+				List<string> tempObj;
+				using (SQLiteConnection connection = new SQLiteConnection(_databaseConnection))
+				{
+					await connection.OpenAsync();
+					string Query = $"SELECT * FROM MEDICAMENTO_MANIPULACAO {query.ReturnSQLQuery()}";
+					using (SQLiteCommand sQLiteCommand = new SQLiteCommand(Query, connection))
+					{
+						using (DbDataReader dbDataReader = await sQLiteCommand.ExecuteReaderAsync())
+						{
+							tempObj = new List<string>();
+							while (await dbDataReader.ReadAsync())
+							{
+								tempObj.Add(dbDataReader["NAME_M"].ToString());
+							}
+						}
+					}
+
+
+					connection.Close();
+				};
+
+				return tempObj;
 			}
 			catch (Exception ex)
 			{

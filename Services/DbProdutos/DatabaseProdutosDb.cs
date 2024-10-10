@@ -29,11 +29,11 @@ namespace EterPharmaPro.DbProdutos.Services
 			Init(cancellationToken);
 		}
 
-		private async void Init(CancellationToken cancellationToken)
+		private void Init(CancellationToken cancellationToken)
 		{
 			Await = true;
 			//Task.Run(() => priceProdutoModels = ReadDb.ReadProdutosPrice());
-			produtos = await ActionBinary.ReadProdutosAsync(_progressBar, cancellationToken);
+			produtos = ActionBinary.ReadProdutos(_progressBar, cancellationToken);
 			Await = false;
 			OnDatabaseLoaded();
 		}

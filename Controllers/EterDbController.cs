@@ -113,7 +113,6 @@ namespace EterPharmaPro.Controllers
 				ex.ErrorGet();
 				return (idc, ide);
 			}
-			return (idc, ide);
 		}
 
 

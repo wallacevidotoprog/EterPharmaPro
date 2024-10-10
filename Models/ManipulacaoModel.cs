@@ -10,7 +10,7 @@ namespace EterPharmaPro.Models
 
 		public object DADOSCLIENTE { get; set; } = null;
 
-		public object MEDICAMENTO { get; set; } = null;
+		public object MEDICAMENTOS { get; set; } = null;
 
 		public string OBSGERAL { get; set; } = string.Empty;
 
