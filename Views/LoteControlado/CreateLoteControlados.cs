@@ -46,7 +46,7 @@ namespace EterPharmaPro.Views.LoteControlado
 				if (tempCEP != string.Empty)
 				{
 					AddressHttpModel temResp = await ExtensionsDefault.BuscaCepAsync(tempCEP);
-					textBox_end.Text = ((temResp != null) ? (temResp.logradouro + ", N°: ," + temResp.bairro + ", " + temResp.localidade + "-" + temResp.uf) : string.Empty);
+					textBox_end.Text = ((temResp != null) ? (temResp.logradouro + ", N°: ," + temResp.bairro + ", " + temResp.localidade + "-" + temResp.uf) : "Endereço não encontrado.");
 				}
 			}
 		}
@@ -118,9 +118,7 @@ namespace EterPharmaPro.Views.LoteControlado
 			dateTimePicker_validade.Value = DateTime.Today;
 			textBox_lote.Clear();
 			listView1.Items.Clear();
-			//controladoLoteModel = null;
 			medicamentosControladoLoteModel = null;
-			//textBox_rg.ButtonVisible = true;
 		}
 
 		private async void toolStripButton_print_Click(object sender, EventArgs e)
@@ -243,6 +241,12 @@ namespace EterPharmaPro.Views.LoteControlado
 
 		private void textBox_cel_Validated(object sender, EventArgs e) => textBox_cel.Text = textBox_cel.Text.ReturnFormation(FormatationEnum.TELEFONE);
 
-
+		private void textBox_lote_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.Enter)
+			{
+				ePictureBox1_Click(null, null);
+			}
+		}
 	}
 }

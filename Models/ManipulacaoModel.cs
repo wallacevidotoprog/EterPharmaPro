@@ -3,9 +3,8 @@ using System;
 
 namespace EterPharmaPro.Models
 {
-	public class ManipulacaoModel
+	public class ManipulacaoModel : BaseDbModal
 	{
-		public long? ID { get; set; }
 
 		public DadosAtendimentoModel DADOSATENDIMENTO { get; set; } = null;
 
@@ -23,12 +22,8 @@ namespace EterPharmaPro.Models
 
 		public decimal VALORFINAL { get; set; } = 0;
 
-		public DateTime? CREATE { get; set; }
 
-		public DateTime? UPDATE { get; set; }
-
-
-		public void  ConvertDb(ManipulacaoDbModel db)
+		public ManipulacaoModel ConvertDb(ManipulacaoDbModel db)
 		{
 			
 			ID = db.ID;
@@ -41,6 +36,8 @@ namespace EterPharmaPro.Models
 			VALORFINAL= db.VALORFINAL;
 			CREATE = db.CREATE;
 			UPDATE = db.UPDATE;
+
+			return this;
 		}
 	}
 }

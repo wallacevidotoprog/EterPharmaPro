@@ -108,23 +108,23 @@ namespace EterPharmaPro.DatabaseSQLite
 			}
 		}
 
-		public async Task<List<ManipulacaoModel>> GetManipulacao(QueryWhereModel query)
+		public async Task<List<ManipulacaoDbModel>> GetManipulacao(QueryWhereModel query)
 		{
 
 			try
 			{
-				List<ManipulacaoDbModel> models = await new MapDbEter(_databaseConnection).QueryAsync<ManipulacaoDbModel>($"SELECT * FROM MANIPULADOS {query.ReturnSQLQuery()}");
+				return await new MapDbEter(_databaseConnection).QueryAsync<ManipulacaoDbModel>($"SELECT * FROM MANIPULADOS {query.ReturnSQLQuery()}");
 
-				List<ManipulacaoModel> manipulacaos = new List<ManipulacaoModel>();
+				//List<ManipulacaoModel> manipulacaos = new List<ManipulacaoModel>();
 
-				for (int i = 0; i < models.Count; i++)
-				{
-					ManipulacaoModel m = new ManipulacaoModel();
-					m.ConvertDb(models[i]);
-					manipulacaos.Add(m);
-				}
+				//for (int i = 0; i < models.Count; i++)
+				//{
+				//	ManipulacaoModel m = new ManipulacaoModel();
+				//	m.ConvertDb(models[i]);
+				//	manipulacaos.Add(m);
+				//}
 
-				return manipulacaos;
+				//return manipulacaos;
 
 			}
 			catch (Exception ex)

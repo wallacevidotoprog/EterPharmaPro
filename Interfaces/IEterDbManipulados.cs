@@ -14,6 +14,6 @@ namespace EterPharmaPro.Interfaces
 
 		Task<bool> DeleteManipulacao(string id, SQLiteConnection connection, SQLiteTransaction transaction);
 
-		Task<List<ManipulacaoModel>> GetManipulacao(QueryWhereModel query);
+		Task<List<ManipulacaoDbModel>> GetManipulacao(QueryWhereModel query);
 	}
 }

@@ -83,7 +83,7 @@ namespace EterPharmaPro.Controllers.Manipulacao
 					{
 						try
 						{
-							
+
 
 							if (edit)
 							{
@@ -125,39 +125,42 @@ namespace EterPharmaPro.Controllers.Manipulacao
 
 		}
 
+		public async Task<List<ManipulacaoModel>> GetManipulacao(object idUser)
+		{
+
+			List<ManipulacaoModel> manipulacaoModels = new List<ManipulacaoModel>();
+			try
+			{
+
+				List<ManipulacaoDbModel> tempM = await eterDb.DbManipulados.GetManipulacao(new QueryWhereModel().SetWhere("ATEN_LOJA", idUser));
 
 
-		//public async Task<object> GetCliente(string id)
-		//{
-		//	List<DadosCliente> dadosCliente = await _eterDb.DbCliente.GetCliente(id);
-		//	for (int i = 0; i < dadosCliente.Count; i++)
-		//	{
-		//		DadosCliente dadosCliente2 = dadosCliente[i];
-		//		dadosCliente2.ENDERECO = await _eterDb.DbEndereco.GetEndereco(dadosCliente[i].ID.ToString());
-		//	}
-		//	return dadosCliente;
-		//}
+				for (int i = 0; i < tempM.Count; i++)
+				{
+					ManipulacaoModel temp = new ManipulacaoModel().ConvertDb(tempM[i]);
+					DadosClienteManipulacao dadosClienteManipulacao = (DadosClienteManipulacao)temp.DADOSCLIENTE;
+
+					temp.DADOSATENDIMENTO.ATEN_LOJA_NAME = (await eterDb.DbUser.GetUser(new QueryWhereModel().SetWhere("ID", temp.DADOSATENDIMENTO.ATEN_LOJA))).FirstOrDefault().NOME;
+
+					temp.DADOSCLIENTE = (await eterDb.DbCliente.GetCliente(new QueryWhereModel().SetWhere("ID", temp.DADOSATENDIMENTO.ATEN_LOJA))).FirstOrDefault().NOME;
+					manipulacaoModels.Add(temp);
+				}
 
 
 
-		//public async Task<bool> DeleteManipulacao(string id)
-		//{
-		//	return await _eterDb.DbManipulados.DeleteManipulacao(id);
-		//}
+			}
+			catch (Exception ex)
+			{
+				ex.ErrorGet();
+				
+			}
+			return manipulacaoModels;
 
-		//public async Task<List<ManipulacaoModel>> GetAllManip()
-		//{
-		//	List<ManipulacaoModel> manipulacaoModels = await _eterDb.DbManipulados.GetManipulacao();
-		//	for (int i = 0; i < manipulacaoModels.Count; i++)
-		//	{
-		//		DadosClienteManipulacao dadosCliente = (DadosClienteManipulacao)manipulacaoModels[i].DADOSCLIENTE;
-		//		DadosCliente dt = _eterDb.DbCliente.GetCliente(dadosCliente.ID_CLIENTE.ToString()).Result[0];
-		//		dt.ENDERECO = _eterDb.DbEndereco.GetEndereco(dadosCliente.ID_ENDERECO.ToString(), id: true).Result;
-		//		manipulacaoModels[i].DADOSCLIENTE = dt;
-		//		ManipulacaoModel manipulacaoModel = manipulacaoModels[i];
-		//		manipulacaoModel.MEDICAMENTO = await _eterDb.DbManipuladosMedicamentos.GetMedicamento(manipulacaoModels[i].ID.ToString());
-		//	}
-		//	return manipulacaoModels;
-		//}
+
+		}
+
+
+
+
 	}
 }

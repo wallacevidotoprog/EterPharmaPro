@@ -144,7 +144,7 @@ namespace EterPharmaPro.Utils.Extencions
 			cb.DataSource = bindingSource;
 			cb.DisplayMember = "Value";
 			cb.ValueMember = "Key";
-			cb.SelectedValue = 1;
+			cb.SelectedIndex = 0;
 			return cb;
 		}
 
@@ -172,18 +172,25 @@ namespace EterPharmaPro.Utils.Extencions
 			cb.DataSource = bindingSource;
 			cb.DisplayMember = "Value";
 			cb.ValueMember = "Key";
-
+			cb.SelectedIndex = 0;
 			return cb;
 		}
 
 		public static async Task<AddressHttpModel> BuscaCepAsync(string cep)
 		{
 			HttpClient client = new HttpClient();
+			cep = cep.ReturnInt();
 			try
 			{
 				HttpResponseMessage response = await client.GetAsync("https://viacep.com.br/ws/" + cep + "/json/");
 				response.EnsureSuccessStatusCode();
-				return JsonConvert.DeserializeObject<AddressHttpModel>(await response.Content.ReadAsStringAsync());
+				var temp = await response.Content.ReadAsStringAsync();
+				if (temp.Contains("erro"))
+				{
+					return null;
+				}
+
+				return JsonConvert.DeserializeObject<AddressHttpModel>(temp);
 			}
 			catch (HttpRequestException val)
 			{

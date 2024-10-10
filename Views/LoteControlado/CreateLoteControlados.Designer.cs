@@ -33,6 +33,7 @@
 			this.toolStripButton_print = new System.Windows.Forms.ToolStripButton();
 			this.toolStripDropDownButton_clear = new System.Windows.Forms.ToolStripButton();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.textBox_rg = new EterPharmaPro.Utils.eControl.eTextBoxWithButton();
 			this.textBox_cel = new System.Windows.Forms.TextBox();
 			this.textBox_end = new System.Windows.Forms.TextBox();
 			this.label3 = new System.Windows.Forms.Label();
@@ -41,6 +42,7 @@
 			this.label2 = new System.Windows.Forms.Label();
 			this.label6 = new System.Windows.Forms.Label();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
+			this.ePictureBox1 = new EterPharmaPro.Utils.eControl.ePictureBox();
 			this.numericUpDown_qtd = new System.Windows.Forms.NumericUpDown();
 			this.dateTimePicker_validade = new System.Windows.Forms.DateTimePicker();
 			this.label8 = new System.Windows.Forms.Label();
@@ -58,15 +60,13 @@
 			this.label7 = new System.Windows.Forms.Label();
 			this.textBox_medicamento = new System.Windows.Forms.TextBox();
 			this.label5 = new System.Windows.Forms.Label();
-			this.ePictureBox1 = new EterPharmaPro.Utils.eControl.ePictureBox();
-			this.textBox_rg = new EterPharmaPro.Utils.eControl.eTextBoxWithButton();
 			this.toolStrip_topMenu.SuspendLayout();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.ePictureBox1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDown_qtd)).BeginInit();
 			this.groupBox3.SuspendLayout();
 			this.contextMenuStrip_produtos.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.ePictureBox1)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// toolStrip_topMenu
@@ -136,6 +136,20 @@
 			this.groupBox1.TabIndex = 8;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "DADOS DO CLIENTE";
+			// 
+			// textBox_rg
+			// 
+			this.textBox_rg.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.textBox_rg.ButtonText = "CLIENTE EXISTENTE";
+			this.textBox_rg.ButtonVisible = false;
+			this.textBox_rg.Font = new System.Drawing.Font("Microsoft Tai Le", 15F);
+			this.textBox_rg.Location = new System.Drawing.Point(192, 12);
+			this.textBox_rg.Name = "textBox_rg";
+			this.textBox_rg.Size = new System.Drawing.Size(624, 34);
+			this.textBox_rg.TabIndex = 0;
+			this.textBox_rg.ButtonClick += new System.EventHandler(this.textBox_rg_ButtonClick);
+			this.textBox_rg.TexBoxValidated += new System.EventHandler(this.textBox_rg_TexBoxValidated);
 			// 
 			// textBox_cel
 			// 
@@ -229,6 +243,18 @@
 			this.groupBox2.TabIndex = 0;
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "DADOS DO MEDICAMENTO";
+			// 
+			// ePictureBox1
+			// 
+			this.ePictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.ePictureBox1.Image = global::EterPharmaPro.Properties.Resources.arquivo__1_;
+			this.ePictureBox1.Location = new System.Drawing.Point(748, 65);
+			this.ePictureBox1.Name = "ePictureBox1";
+			this.ePictureBox1.Size = new System.Drawing.Size(65, 65);
+			this.ePictureBox1.TabIndex = 21;
+			this.ePictureBox1.TabStop = false;
+			this.ePictureBox1.ToolTipText = null;
+			this.ePictureBox1.Click += new System.EventHandler(this.ePictureBox1_Click);
 			// 
 			// numericUpDown_qtd
 			// 
@@ -345,6 +371,7 @@
 			this.textBox_lote.Name = "textBox_lote";
 			this.textBox_lote.Size = new System.Drawing.Size(509, 33);
 			this.textBox_lote.TabIndex = 2;
+			this.textBox_lote.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox_lote_KeyDown);
 			// 
 			// label9
 			// 
@@ -388,32 +415,6 @@
 			this.label5.TabIndex = 12;
 			this.label5.Text = "MEDICAMENTO:";
 			// 
-			// ePictureBox1
-			// 
-			this.ePictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.ePictureBox1.Image = global::EterPharmaPro.Properties.Resources.arquivo__1_;
-			this.ePictureBox1.Location = new System.Drawing.Point(748, 65);
-			this.ePictureBox1.Name = "ePictureBox1";
-			this.ePictureBox1.Size = new System.Drawing.Size(65, 65);
-			this.ePictureBox1.TabIndex = 21;
-			this.ePictureBox1.TabStop = false;
-			this.ePictureBox1.ToolTipText = null;
-			this.ePictureBox1.Click += new System.EventHandler(this.ePictureBox1_Click);
-			// 
-			// textBox_rg
-			// 
-			this.textBox_rg.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.textBox_rg.ButtonText = "CLIENTE EXISTENTE";
-			this.textBox_rg.ButtonVisible = false;
-			this.textBox_rg.Font = new System.Drawing.Font("Microsoft Tai Le", 15F);
-			this.textBox_rg.Location = new System.Drawing.Point(192, 12);
-			this.textBox_rg.Name = "textBox_rg";
-			this.textBox_rg.Size = new System.Drawing.Size(624, 34);
-			this.textBox_rg.TabIndex = 0;
-			this.textBox_rg.ButtonClick += new System.EventHandler(this.textBox_rg_ButtonClick);
-			this.textBox_rg.TexBoxValidated += new System.EventHandler(this.textBox_rg_TexBoxValidated);
-			// 
 			// CreateLoteControlados
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -431,10 +432,10 @@
 			this.groupBox1.PerformLayout();
 			this.groupBox2.ResumeLayout(false);
 			this.groupBox2.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.ePictureBox1)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDown_qtd)).EndInit();
 			this.groupBox3.ResumeLayout(false);
 			this.contextMenuStrip_produtos.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.ePictureBox1)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 

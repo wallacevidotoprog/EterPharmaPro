@@ -45,6 +45,8 @@ namespace EterPharmaPro
 			else
 			{
 				this.Text = $"ETER PHARMA PRO [ {eterDb.UserModelAcess.ID_LOJA} - {eterDb.UserModelAcess.NOME} - {eterDb.UserModelAcess.FUNCAO} ]";
+
+				toolStripButton_conf.Visible = (eterDb.UserModelAcess.FUNCAO == "DEV")? true : false ;
 			}
 		}
 		private void OpenForm(Form form)
@@ -116,5 +118,7 @@ namespace EterPharmaPro
 		}
 
 		private void rELATÓRIOToolStripMenuItem_Click(object sender, EventArgs e) => OpenForm(new ReportValidades(eterDb, DatabaseProdutosDb));
+
+		private void rELATÓRIOToolStripMenuItem1_Click(object sender, EventArgs e)=> OpenForm(new ReportManipulacao(eterDb));
 	}
 }

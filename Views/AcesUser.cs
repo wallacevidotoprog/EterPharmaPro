@@ -122,7 +122,7 @@ namespace EterPharmaPro.Views
 			}
 			catch (Exception ex)
 			{
-				ex.ErrorGet(false);
+				//ex.ErrorGet(false);
 			}
 
 
