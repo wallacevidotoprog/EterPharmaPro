@@ -13,6 +13,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ToastNotification;
+using ToastNotification.Enum;
 
 namespace EterPharmaPro
 {
@@ -44,8 +46,8 @@ namespace EterPharmaPro
 			}
 			else
 			{
-				this.Text = $"ETER PHARMA PRO [ {eterDb.UserModelAcess.ID_LOJA} - {eterDb.UserModelAcess.NOME} - {eterDb.UserModelAcess.FUNCAO} ]";
-
+				this.Text = $"ETER PHARMA PRO [ {eterDb.UserModelAcess.ID_LOJA} - {eterDb.UserModelAcess.NOME} - {eterDb.UserModelAcess.FUNCAO_NAME} ]";
+				SendAlertBox.Send($"Bem Vindo {eterDb.UserModelAcess.FUNCAO_NAME} {eterDb.UserModelAcess.NOME}", TypeAlertEnum.Info);
 				toolStripButton_conf.Visible = (eterDb.UserModelAcess.FUNCAO_NAME == "DEV")? true : false ;
 			}
 		}
@@ -120,5 +122,14 @@ namespace EterPharmaPro
 		private void rELATÓRIOToolStripMenuItem_Click(object sender, EventArgs e) => OpenForm(new ReportValidades(eterDb, DatabaseProdutosDb));
 
 		private void rELATÓRIOToolStripMenuItem1_Click(object sender, EventArgs e)=> OpenForm(new ReportManipulacao(eterDb));
+
+		private void toolStripButton2_Click(object sender, EventArgs e)
+		{
+			ToastNotification.SendAlertBox.Send($"Bem Vindo {eterDb.UserModelAcess.FUNCAO_NAME} {eterDb.UserModelAcess.NOME}", ToastNotification.Enum.TypeAlertEnum.Info);
+			ToastNotification.SendAlertBox.Send("apenas um alerta comun",ToastNotification.Enum.TypeAlertEnum.Error);
+			ToastNotification.SendAlertBox.Send("apenas um alerta comun", ToastNotification.Enum.TypeAlertEnum.Warning);
+			ToastNotification.SendAlertBox.Send("apenas um alerta comun", ToastNotification.Enum.TypeAlertEnum.Info);
+			ToastNotification.SendAlertBox.Send("apenas um alerta comun", ToastNotification.Enum.TypeAlertEnum.Success);
+		}
 	}
 }

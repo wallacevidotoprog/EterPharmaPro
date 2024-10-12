@@ -257,6 +257,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Utils\Log\LogSistem.cs" />
+    <Compile Include="Utils\Notification.cs" />
     <Compile Include="Utils\ValidatorFields.cs" />
     <Compile Include="Views\AcesUser.cs">
       <SubType>Form</SubType>
@@ -403,7 +404,12 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\ToastNotification\ToastNotification.csproj">
+      <Project>{648eb6db-c0ab-4e78-9046-a3e69c802de2}</Project>
+      <Name>ToastNotification</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
