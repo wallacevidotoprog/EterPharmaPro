@@ -40,6 +40,9 @@
     <ApplicationIcon>farmacia.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BouncyCastle.Cryptography, Version=2.0.0.0, Culture=neutral, PublicKeyToken=072edcf4a5328938, processorArchitecture=MSIL">
+      <HintPath>packages\BouncyCastle.Cryptography.2.4.0\lib\net461\BouncyCastle.Cryptography.dll</HintPath>
+    </Reference>
     <Reference Include="ClosedXML, Version=0.102.3.0, Culture=neutral, PublicKeyToken=fd1eb21b62ae805b, processorArchitecture=MSIL">
       <HintPath>packages\ClosedXML.0.102.3\lib\netstandard2.0\ClosedXML.dll</HintPath>
     </Reference>
@@ -57,6 +60,9 @@
     </Reference>
     <Reference Include="Irony, Version=1.0.11.0, Culture=neutral, PublicKeyToken=ca48ace7223ead47, processorArchitecture=MSIL">
       <HintPath>packages\Irony.NetCore.1.0.11\lib\net461\Irony.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp, Version=5.5.13.4, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>packages\iTextSharp.5.5.13.4\lib\net461\itextsharp.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -150,8 +156,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\CarimboLoteValidade\CreateLoteControladosController.cs" />
+    <Compile Include="Controllers\Impressos\CreateLoteControladosController.cs" />
     <Compile Include="Controllers\EterDbController.cs" />
+    <Compile Include="Controllers\Impressos\RemanejoController.cs" />
     <Compile Include="Controllers\Manipulacao\ManipuladoController.cs" />
     <Compile Include="Controllers\Validade\ValidadeController.cs" />
     <Compile Include="DatabaseSQLite\EterDbCategoria.cs" />
@@ -213,6 +220,7 @@
     <Compile Include="Models\ManipulacaoModel.cs" />
     <Compile Include="Models\DbModels\UserModel.cs" />
     <Compile Include="Models\ProgressStatsModel.cs" />
+    <Compile Include="Models\RemanejoModel.cs" />
     <Compile Include="Models\SetValityModel.cs" />
     <Compile Include="Models\ProdutosModel.cs" />
     <Compile Include="Models\ValityExportModel.cs" />
@@ -289,6 +297,12 @@
     <Compile Include="Views\Manipulados\ReportManipulacao.Designer.cs">
       <DependentUpon>ReportManipulacao.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\Remanejo\RemanejoPrint.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Remanejo\RemanejoPrint.Designer.cs">
+      <DependentUpon>RemanejoPrint.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\Validade\ReportValidades.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -335,6 +349,9 @@
     <EmbeddedResource Include="Views\Manipulados\ReportManipulacao.resx">
       <DependentUpon>ReportManipulacao.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\Remanejo\RemanejoPrint.resx">
+      <DependentUpon>RemanejoPrint.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\Validade\ReportValidades.resx">
       <DependentUpon>ReportValidades.cs</DependentUpon>
     </EmbeddedResource>
@@ -369,6 +386,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="farmacia.ico" />
+    <None Include="Resources\gerenciamento.png" />
     <None Include="Resources\acesso.png" />
     <None Include="Resources\seta-direita.png" />
     <None Include="Resources\exportar.png" />

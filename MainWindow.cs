@@ -1,4 +1,5 @@
-﻿using EterPharmaPro.DatabaseSQLite;
+﻿using EterPharmaPro.Controllers.Impressos;
+using EterPharmaPro.DatabaseSQLite;
 using EterPharmaPro.DbProdutos.Services;
 using EterPharmaPro.Interfaces;
 using EterPharmaPro.Models;
@@ -33,12 +34,14 @@ namespace EterPharmaPro
 		}
 		private async void MainWindow_Load(object sender, EventArgs e)
 		{
+			
+
 			DatabaseProdutosDb = new DatabaseProdutosDb(toolStripProgressBar_status, cancellationTokenSource.Token);
 			SetLogin();
 			await Task.Run(() => NotifyValite.CheckeVality(eterDb));
 		}
 
-		private async void SetLogin()
+		private void SetLogin()
 		{
 			AcesUser acesUser = new AcesUser(eterDb);
 			acesUser.ShowDialog();

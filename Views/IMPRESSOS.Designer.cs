@@ -33,6 +33,8 @@
 			this.toolStripButton_exit = new System.Windows.Forms.ToolStripButton();
 			this.toolStripDropDownButton_new = new System.Windows.Forms.ToolStripDropDownButton();
 			this.lOTEVALIDAEToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripDropDownButton_gerencial = new System.Windows.Forms.ToolStripDropDownButton();
+			this.toolStripMenuItem_remanejo = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStrip_topMenu.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -41,7 +43,8 @@
 			this.toolStrip_topMenu.BackColor = System.Drawing.Color.WhiteSmoke;
 			this.toolStrip_topMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripButton_exit,
-            this.toolStripDropDownButton_new});
+            this.toolStripDropDownButton_new,
+            this.toolStripDropDownButton_gerencial});
 			this.toolStrip_topMenu.Location = new System.Drawing.Point(0, 0);
 			this.toolStrip_topMenu.Name = "toolStrip_topMenu";
 			this.toolStrip_topMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
@@ -96,9 +99,34 @@
 			// lOTEVALIDAEToolStripMenuItem
 			// 
 			this.lOTEVALIDAEToolStripMenuItem.Name = "lOTEVALIDAEToolStripMenuItem";
-			this.lOTEVALIDAEToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.lOTEVALIDAEToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
 			this.lOTEVALIDAEToolStripMenuItem.Text = "LOTE VALIDAE";
 			this.lOTEVALIDAEToolStripMenuItem.Click += new System.EventHandler(this.lOTEVALIDAEToolStripMenuItem_Click_1);
+			// 
+			// toolStripDropDownButton_gerencial
+			// 
+			this.toolStripDropDownButton_gerencial.AutoSize = false;
+			this.toolStripDropDownButton_gerencial.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem_remanejo});
+			this.toolStripDropDownButton_gerencial.Font = new System.Drawing.Font("Segoe UI", 8F);
+			this.toolStripDropDownButton_gerencial.Image = global::EterPharmaPro.Properties.Resources.gerenciamento;
+			this.toolStripDropDownButton_gerencial.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+			this.toolStripDropDownButton_gerencial.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.toolStripDropDownButton_gerencial.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.toolStripDropDownButton_gerencial.Name = "toolStripDropDownButton_gerencial";
+			this.toolStripDropDownButton_gerencial.Size = new System.Drawing.Size(90, 90);
+			this.toolStripDropDownButton_gerencial.Tag = "";
+			this.toolStripDropDownButton_gerencial.Text = "GERENCIAL";
+			this.toolStripDropDownButton_gerencial.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+			this.toolStripDropDownButton_gerencial.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+			this.toolStripDropDownButton_gerencial.ToolTipText = "GERENCIAL";
+			// 
+			// toolStripMenuItem_remanejo
+			// 
+			this.toolStripMenuItem_remanejo.Name = "toolStripMenuItem_remanejo";
+			this.toolStripMenuItem_remanejo.Size = new System.Drawing.Size(180, 22);
+			this.toolStripMenuItem_remanejo.Text = "REMANEJO";
+			this.toolStripMenuItem_remanejo.Click += new System.EventHandler(this.toolStripMenuItem_remanejo_Click);
 			// 
 			// IMPRESSOS
 			// 
@@ -123,5 +151,7 @@
 		private System.Windows.Forms.Panel panel_center;
 		private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton_new;
 		private System.Windows.Forms.ToolStripMenuItem lOTEVALIDAEToolStripMenuItem;
+		private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton_gerencial;
+		private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_remanejo;
 	}
 }

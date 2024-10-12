@@ -34,7 +34,7 @@ namespace EterPharmaPro.Utils
 			int qtdMesAtt = temLp.Where(x => x.DATA_VALIDADE.Month == DateTime.Today.Month).Count();
 			int qtdMesAtt1 = temLp.Where(x => x.DATA_VALIDADE.Month == DateTime.Today.Month+1).Count();
 
-			System.Windows.Forms.MessageBox.Show($"Alguns produtos estão próximo de vencer:\nTotal de produtos que vencerão esse mês: {qtdMesAtt}\nTotal de produtos que irão vencer no proximo mês: {qtdMesAtt1}" ,"ALERTA",System.Windows.Forms.MessageBoxButtons.OKCancel,System.Windows.Forms.MessageBoxIcon.Information);
+			System.Windows.Forms.MessageBox.Show($"Alguns produtos estão próximos de vencer:\nTotal de produtos que vencerão esse mês: {qtdMesAtt}\nTotal de produtos que irão vencer no próximo mês: {qtdMesAtt1}" ,"ALERTA",System.Windows.Forms.MessageBoxButtons.OKCancel,System.Windows.Forms.MessageBoxIcon.Information);
 
 		}
 		

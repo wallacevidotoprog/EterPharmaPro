@@ -2,6 +2,7 @@
 using EterPharmaPro.Interfaces;
 using EterPharmaPro.Utils.Extencions;
 using EterPharmaPro.Views.LoteControlado;
+using EterPharmaPro.Views.Remanejo;
 using System;
 using System.Windows.Forms;
 
@@ -56,5 +57,7 @@ namespace EterPharmaPro.Views
 
 
 		private void lOTEVALIDAEToolStripMenuItem_Click_1(object sender, EventArgs e) => OpenForm(new CreateLoteControlados(eterDb, databaseProdutosDb));
+
+		private void toolStripMenuItem_remanejo_Click(object sender, EventArgs e) => OpenForm(new RemanejoPrint());
 	}
 }
