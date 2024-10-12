@@ -44,7 +44,6 @@
 			this.statusStrip_notify = new System.Windows.Forms.StatusStrip();
 			this.toolStripProgressBar_status = new System.Windows.Forms.ToolStripProgressBar();
 			this.panel_center = new System.Windows.Forms.Panel();
-			this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
 			this.toolStrip_menu.SuspendLayout();
 			this.statusStrip_notify.SuspendLayout();
 			this.SuspendLayout();
@@ -58,8 +57,7 @@
             this.toolStripButton1,
             this.toolStripButton_conf,
             this.toolStripSeparator3,
-            this.toolStripDropDownButton_impressos,
-            this.toolStripButton2});
+            this.toolStripDropDownButton_impressos});
 			this.toolStrip_menu.Location = new System.Drawing.Point(0, 0);
 			this.toolStrip_menu.Name = "toolStrip_menu";
 			this.toolStrip_menu.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
@@ -209,16 +207,6 @@
 			this.panel_center.Size = new System.Drawing.Size(947, 438);
 			this.panel_center.TabIndex = 6;
 			// 
-			// toolStripButton2
-			// 
-			this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
-			this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.toolStripButton2.Name = "toolStripButton2";
-			this.toolStripButton2.Size = new System.Drawing.Size(23, 90);
-			this.toolStripButton2.Text = "toolStripButton2";
-			this.toolStripButton2.Click += new System.EventHandler(this.toolStripButton2_Click);
-			// 
 			// MainWindow
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -259,7 +247,6 @@
 		private System.Windows.Forms.StatusStrip statusStrip_notify;
 		private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar_status;
 		private System.Windows.Forms.Panel panel_center;
-		private System.Windows.Forms.ToolStripButton toolStripButton2;
 	}
 }
 

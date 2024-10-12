@@ -16,6 +16,8 @@ using System.Data.SQLite;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ToastNotification.Enum;
+using ToastNotification;
 
 namespace EterPharmaPro.Controllers.CarimboLoteValidade
 {
@@ -76,6 +78,7 @@ namespace EterPharmaPro.Controllers.CarimboLoteValidade
 			try
 			{
 				PrintDoc(clienteModel, medicamentosControladoLoteModel);
+				SendAlertBox.Send($"Imprimindo {clienteModel.NOME}", TypeAlertEnum.Info);
 			}
 			catch (Exception ex)
 			{
@@ -99,6 +102,7 @@ namespace EterPharmaPro.Controllers.CarimboLoteValidade
 							}
 
 							transaction.Commit();
+							SendAlertBox.Send($"Dados Salvos", TypeAlertEnum.Success);
 						}
 						catch (Exception ex)
 						{

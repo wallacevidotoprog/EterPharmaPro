@@ -5,6 +5,7 @@ using EterPharmaPro.Models;
 using EterPharmaPro.Models.DbModels;
 using EterPharmaPro.Services.XLSX;
 using EterPharmaPro.Temps;
+using EterPharmaPro.Utils;
 using EterPharmaPro.Utils.Extencions;
 using EterPharmaPro.Views;
 using EterPharmaPro.Views.Manipulados;
@@ -30,13 +31,14 @@ namespace EterPharmaPro
 			eterDb = new EterDb();
 			cancellationTokenSource = new CancellationTokenSource();
 		}
-		private void MainWindow_Load(object sender, EventArgs e)
+		private async void MainWindow_Load(object sender, EventArgs e)
 		{
 			DatabaseProdutosDb = new DatabaseProdutosDb(toolStripProgressBar_status, cancellationTokenSource.Token);
 			SetLogin();
+			await Task.Run(() => NotifyValite.CheckeVality(eterDb));
 		}
 
-		private void SetLogin()
+		private async void SetLogin()
 		{
 			AcesUser acesUser = new AcesUser(eterDb);
 			acesUser.ShowDialog();
@@ -46,8 +48,8 @@ namespace EterPharmaPro
 			}
 			else
 			{
-				this.Text = $"ETER PHARMA PRO [ {eterDb.UserModelAcess.ID_LOJA} - {eterDb.UserModelAcess.NOME} - {eterDb.UserModelAcess.FUNCAO_NAME} ]";
-				SendAlertBox.Send($"Bem Vindo {eterDb.UserModelAcess.FUNCAO_NAME} {eterDb.UserModelAcess.NOME}", TypeAlertEnum.Info);
+				this.Text = $"ETER PHARMA PRO [ {eterDb.UserModelAcess.ID_LOJA.ToString().PadLeft(4,'0')} - {eterDb.UserModelAcess.NOME} - {eterDb.UserModelAcess.FUNCAO_NAME} ]";
+				  SendAlertBox.Send($"Bem Vindo {eterDb.UserModelAcess.FUNCAO_NAME} {eterDb.UserModelAcess.NOME}", TypeAlertEnum.Info);
 				toolStripButton_conf.Visible = (eterDb.UserModelAcess.FUNCAO_NAME == "DEV")? true : false ;
 			}
 		}
@@ -123,13 +125,5 @@ namespace EterPharmaPro
 
 		private void rELATÓRIOToolStripMenuItem1_Click(object sender, EventArgs e)=> OpenForm(new ReportManipulacao(eterDb));
 
-		private void toolStripButton2_Click(object sender, EventArgs e)
-		{
-			ToastNotification.SendAlertBox.Send($"Bem Vindo {eterDb.UserModelAcess.FUNCAO_NAME} {eterDb.UserModelAcess.NOME}", ToastNotification.Enum.TypeAlertEnum.Info);
-			ToastNotification.SendAlertBox.Send("apenas um alerta comun",ToastNotification.Enum.TypeAlertEnum.Error);
-			ToastNotification.SendAlertBox.Send("apenas um alerta comun", ToastNotification.Enum.TypeAlertEnum.Warning);
-			ToastNotification.SendAlertBox.Send("apenas um alerta comun", ToastNotification.Enum.TypeAlertEnum.Info);
-			ToastNotification.SendAlertBox.Send("apenas um alerta comun", ToastNotification.Enum.TypeAlertEnum.Success);
-		}
 	}
 }

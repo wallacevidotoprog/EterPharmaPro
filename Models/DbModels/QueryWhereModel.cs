@@ -71,11 +71,10 @@ namespace EterPharmaPro.Models.DbModels
 		{
 			string tempQuery = string.Empty;
 
-			if (WHERE == string.Empty)
+			if (!string.IsNullOrEmpty(WHERE))
 			{
-				return string.Empty;
+				return $" WHERE {WHERE} ";
 			}
-			tempQuery = $" WHERE {WHERE} ";
 
 			if (QMULTI is null)
 			{

@@ -13,10 +13,10 @@ namespace EterPharmaPro.Utils.Extencions
 		{
 			SetLog(ex);
 			SendAlertBox.Send(ex.Message, TypeAlertEnum.Error);
-			if (popup)
-			{
-				MessageBox.Show($"{ex.Message}\n{ex}\n", new StackTrace(ex, fNeedFileInfo: true).GetFrame(0).GetMethod().DeclaringType.FullName ?? "", MessageBoxButtons.OK, MessageBoxIcon.Hand);
-			}
+			//if (popup)
+			//{
+			//	MessageBox.Show($"{ex.Message}\n{ex}\n", new StackTrace(ex, fNeedFileInfo: true).GetFrame(0).GetMethod().DeclaringType.FullName ?? "", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+			//}
 		}
 		private static void SetLog(Exception ex)
 		{

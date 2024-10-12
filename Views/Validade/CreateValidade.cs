@@ -124,7 +124,7 @@ namespace EterPharmaPro.Views.Validade
 		private async void ePictureBox_addCat_ClickAsync(object sender, EventArgs e)
 		{
 			string result = InputBox.Show("Por favor, insira a categoria:", "Categoria");
-			if (result != "")
+			if (!string.IsNullOrEmpty(result))
 			{
 				long? resulAddCat = await validadeController.CreateCategory(setValityModel.user_id, result);
 				if (resulAddCat > -1)

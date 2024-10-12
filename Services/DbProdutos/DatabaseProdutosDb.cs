@@ -16,7 +16,6 @@ namespace EterPharmaPro.DbProdutos.Services
 
 		public List<ProdutosModel> produtos;
 
-		//public List<PriceProdutoModel> priceProdutoModels;
 
 		private bool Await;
 
@@ -32,7 +31,6 @@ namespace EterPharmaPro.DbProdutos.Services
 		private void Init(CancellationToken cancellationToken)
 		{
 			Await = true;
-			//Task.Run(() => priceProdutoModels = ReadDb.ReadProdutosPrice());
 			produtos = ActionBinary.ReadProdutos(_progressBar, cancellationToken);
 			Await = false;
 			OnDatabaseLoaded();

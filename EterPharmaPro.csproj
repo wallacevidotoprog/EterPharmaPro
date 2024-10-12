@@ -257,7 +257,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Utils\Log\LogSistem.cs" />
-    <Compile Include="Utils\Notification.cs" />
+    <Compile Include="Utils\NotifyValite.cs" />
     <Compile Include="Utils\ValidatorFields.cs" />
     <Compile Include="Views\AcesUser.cs">
       <SubType>Form</SubType>
