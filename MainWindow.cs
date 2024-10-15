@@ -34,7 +34,6 @@ namespace EterPharmaPro
 		}
 		private async void MainWindow_Load(object sender, EventArgs e)
 		{
-			
 
 			DatabaseProdutosDb = new DatabaseProdutosDb(toolStripProgressBar_status, cancellationTokenSource.Token);
 			SetLogin();

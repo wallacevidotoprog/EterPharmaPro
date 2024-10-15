@@ -54,10 +54,6 @@ namespace EterPharmaPro.Views.Validade
 
 		private void dataGridView_validadeFile_CellContentClick(object sender, DataGridViewCellEventArgs e)
 		{
-			var a1 = dataGridView_validadeFile.Rows[e.RowIndex].Cells[0].Value;
-			var a2 = dataGridView_validadeFile.Rows[e.RowIndex].Cells[1].Value;
-			var a3 = dataGridView_validadeFile.Rows[e.RowIndex].Cells[2].Value;
-			var a4 = dataGridView_validadeFile.Rows[e.RowIndex].Cells[3].Value;
 			bool temp = (bool)dataGridView_validadeFile.Rows[e.RowIndex].Cells[3].Value;
 			dataGridView_validadeFile.Rows[e.RowIndex].Cells[3].Value = !temp;
 		}

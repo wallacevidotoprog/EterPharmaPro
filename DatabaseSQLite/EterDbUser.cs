@@ -69,6 +69,7 @@ namespace EterPharmaPro.DatabaseSQLite
 						command.Parameters.AddWithValue("@NOME", model.NOME);
 						command.Parameters.AddWithValue("@FUNCAO", model.FUNCAO);
 						command.Parameters.AddWithValue("@STATUS", model.STATUS);
+						
 						await command.ExecuteNonQueryAsync();
 					}
 

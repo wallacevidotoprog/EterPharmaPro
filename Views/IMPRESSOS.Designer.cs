@@ -28,13 +28,15 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(IMPRESSOS));
 			this.toolStrip_topMenu = new System.Windows.Forms.ToolStrip();
-			this.panel_center = new System.Windows.Forms.Panel();
 			this.toolStripButton_exit = new System.Windows.Forms.ToolStripButton();
 			this.toolStripDropDownButton_new = new System.Windows.Forms.ToolStripDropDownButton();
 			this.lOTEVALIDAEToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripDropDownButton_gerencial = new System.Windows.Forms.ToolStripDropDownButton();
 			this.toolStripMenuItem_remanejo = new System.Windows.Forms.ToolStripMenuItem();
+			this.cONTROLEDEREQNOTAToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.panel_center = new System.Windows.Forms.Panel();
 			this.toolStrip_topMenu.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -51,14 +53,6 @@
 			this.toolStrip_topMenu.Size = new System.Drawing.Size(800, 93);
 			this.toolStrip_topMenu.TabIndex = 6;
 			this.toolStrip_topMenu.Text = "toolStrip1";
-			// 
-			// panel_center
-			// 
-			this.panel_center.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panel_center.Location = new System.Drawing.Point(0, 93);
-			this.panel_center.Name = "panel_center";
-			this.panel_center.Size = new System.Drawing.Size(800, 357);
-			this.panel_center.TabIndex = 7;
 			// 
 			// toolStripButton_exit
 			// 
@@ -98,8 +92,9 @@
 			// 
 			// lOTEVALIDAEToolStripMenuItem
 			// 
+			this.lOTEVALIDAEToolStripMenuItem.Image = global::EterPharmaPro.Properties.Resources.seta_direita;
 			this.lOTEVALIDAEToolStripMenuItem.Name = "lOTEVALIDAEToolStripMenuItem";
-			this.lOTEVALIDAEToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
+			this.lOTEVALIDAEToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.lOTEVALIDAEToolStripMenuItem.Text = "LOTE VALIDAE";
 			this.lOTEVALIDAEToolStripMenuItem.Click += new System.EventHandler(this.lOTEVALIDAEToolStripMenuItem_Click_1);
 			// 
@@ -107,7 +102,8 @@
 			// 
 			this.toolStripDropDownButton_gerencial.AutoSize = false;
 			this.toolStripDropDownButton_gerencial.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItem_remanejo});
+            this.toolStripMenuItem_remanejo,
+            this.cONTROLEDEREQNOTAToolStripMenuItem});
 			this.toolStripDropDownButton_gerencial.Font = new System.Drawing.Font("Segoe UI", 8F);
 			this.toolStripDropDownButton_gerencial.Image = global::EterPharmaPro.Properties.Resources.gerenciamento;
 			this.toolStripDropDownButton_gerencial.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
@@ -123,10 +119,27 @@
 			// 
 			// toolStripMenuItem_remanejo
 			// 
+			this.toolStripMenuItem_remanejo.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMenuItem_remanejo.Image")));
 			this.toolStripMenuItem_remanejo.Name = "toolStripMenuItem_remanejo";
-			this.toolStripMenuItem_remanejo.Size = new System.Drawing.Size(180, 22);
+			this.toolStripMenuItem_remanejo.Size = new System.Drawing.Size(207, 22);
 			this.toolStripMenuItem_remanejo.Text = "REMANEJO";
 			this.toolStripMenuItem_remanejo.Click += new System.EventHandler(this.toolStripMenuItem_remanejo_Click);
+			// 
+			// cONTROLEDEREQNOTAToolStripMenuItem
+			// 
+			this.cONTROLEDEREQNOTAToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("cONTROLEDEREQNOTAToolStripMenuItem.Image")));
+			this.cONTROLEDEREQNOTAToolStripMenuItem.Name = "cONTROLEDEREQNOTAToolStripMenuItem";
+			this.cONTROLEDEREQNOTAToolStripMenuItem.Size = new System.Drawing.Size(207, 22);
+			this.cONTROLEDEREQNOTAToolStripMenuItem.Text = "CONTROLE DE REQ. NOTA";
+			this.cONTROLEDEREQNOTAToolStripMenuItem.Click += new System.EventHandler(this.cONTROLEDEREQNOTAToolStripMenuItem_Click);
+			// 
+			// panel_center
+			// 
+			this.panel_center.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panel_center.Location = new System.Drawing.Point(0, 93);
+			this.panel_center.Name = "panel_center";
+			this.panel_center.Size = new System.Drawing.Size(800, 357);
+			this.panel_center.TabIndex = 7;
 			// 
 			// IMPRESSOS
 			// 
@@ -137,6 +150,7 @@
 			this.Controls.Add(this.toolStrip_topMenu);
 			this.Name = "IMPRESSOS";
 			this.Text = "IMPRESSOS";
+			this.Load += new System.EventHandler(this.IMPRESSOS_Load);
 			this.toolStrip_topMenu.ResumeLayout(false);
 			this.toolStrip_topMenu.PerformLayout();
 			this.ResumeLayout(false);
@@ -153,5 +167,6 @@
 		private System.Windows.Forms.ToolStripMenuItem lOTEVALIDAEToolStripMenuItem;
 		private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton_gerencial;
 		private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_remanejo;
+		private System.Windows.Forms.ToolStripMenuItem cONTROLEDEREQNOTAToolStripMenuItem;
 	}
 }

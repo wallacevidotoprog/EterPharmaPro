@@ -156,6 +156,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\Impressos\ControleReqNotaController.cs" />
     <Compile Include="Controllers\Impressos\CreateLoteControladosController.cs" />
     <Compile Include="Controllers\EterDbController.cs" />
     <Compile Include="Controllers\Impressos\RemanejoController.cs" />
@@ -211,16 +212,19 @@
     <Compile Include="Models\DbModels\CategoriaDbModal.cs" />
     <Compile Include="Models\DbModels\ClienteModel.cs" />
     <Compile Include="Models\DadosAtendimentoModel.cs" />
+    <Compile Include="Models\DbModels\ControlReqNotaDbModal.cs" />
     <Compile Include="Models\DbModels\EnderecoClienteModel.cs" />
     <Compile Include="Models\DbModels\FuncaoDbModel.cs" />
     <Compile Include="Models\DbModels\ManipulacaoDbModel.cs" />
     <Compile Include="Models\DbModels\ProdutoValidadeDbModal.cs" />
     <Compile Include="Models\DbModels\QueryWhereModel.cs" />
+    <Compile Include="Models\DbModels\ReqNotaDbModal.cs" />
     <Compile Include="Models\DbModels\ValidadeDbModal.cs" />
     <Compile Include="Models\ManipulacaoModel.cs" />
     <Compile Include="Models\DbModels\UserModel.cs" />
     <Compile Include="Models\ProgressStatsModel.cs" />
     <Compile Include="Models\RemanejoModel.cs" />
+    <Compile Include="Models\RequisicaoNotasModel.cs" />
     <Compile Include="Models\SetValityModel.cs" />
     <Compile Include="Models\ProdutosModel.cs" />
     <Compile Include="Models\ValityExportModel.cs" />
@@ -272,6 +276,12 @@
     </Compile>
     <Compile Include="Views\AcesUser.Designer.cs">
       <DependentUpon>AcesUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ControleReqNota.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\ControleReqNota.Designer.cs">
+      <DependentUpon>ControleReqNota.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\IMPRESSOS.cs">
       <SubType>Form</SubType>
@@ -337,6 +347,9 @@
     <EmbeddedResource Include="Views\AcesUser.resx">
       <DependentUpon>AcesUser.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\ControleReqNota.resx">
+      <DependentUpon>ControleReqNota.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\IMPRESSOS.resx">
       <DependentUpon>IMPRESSOS.cs</DependentUpon>
     </EmbeddedResource>
@@ -386,6 +399,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="farmacia.ico" />
+    <None Include="Resources\cancelar.png" />
     <None Include="Resources\gerenciamento.png" />
     <None Include="Resources\acesso.png" />
     <None Include="Resources\seta-direita.png" />
@@ -427,6 +441,9 @@
       <Project>{648eb6db-c0ab-4e78-9046-a3e69c802de2}</Project>
       <Name>ToastNotification</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\ReqNota\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

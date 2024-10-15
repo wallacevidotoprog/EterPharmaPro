@@ -59,5 +59,24 @@ namespace EterPharmaPro.Views
 		private void lOTEVALIDAEToolStripMenuItem_Click_1(object sender, EventArgs e) => OpenForm(new CreateLoteControlados(eterDb, databaseProdutosDb));
 
 		private void toolStripMenuItem_remanejo_Click(object sender, EventArgs e) => OpenForm(new RemanejoPrint());
+
+		private void IMPRESSOS_Load(object sender, EventArgs e)
+		{
+			switch (eterDb.UserModelAcess.FUNCAO)
+			{
+				case 1:
+				case 2:
+				case 3:
+				case 4:
+					toolStripDropDownButton_gerencial.Visible = true;
+					break;
+				default:
+					toolStripDropDownButton_gerencial.Visible = false;
+					break;
+			}
+		}
+
+		private void cONTROLEDEREQNOTAToolStripMenuItem_Click(object sender, EventArgs e) => OpenForm(new ControleReqNota(eterDb));
+		
 	}
 }

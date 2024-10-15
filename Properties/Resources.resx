@@ -127,6 +127,9 @@
   <data name="sair (1)" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\sair (1).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="configuracoes-da-web" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\configuracoes-da-web.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="arquivo_update" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\arquivo update.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -151,20 +154,20 @@
   <data name="carimboS" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\carimboS.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="expirado" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\expirado.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="acesso" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\acesso.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="farmaceutico" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\farmaceutico.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="arquivo_v" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\arquivo_v.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="salve" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\salve.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="remover" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\remover.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="gerenciamento" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\gerenciamento.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="lupa" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\lupa.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -196,14 +199,14 @@
   <data name="removeCat" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\removeCat.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="configuracoes-da-web" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\configuracoes-da-web.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="farmaceutico" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\farmaceutico.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="documento_new" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\documento_new.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="expirado" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\expirado.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="salve" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\salve.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="excluirCat" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\excluirCat.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -214,7 +217,7 @@
   <data name="download (1)" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\download (1).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="gerenciamento" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\gerenciamento.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="cancelar" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\cancelar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
