@@ -1,18 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using EterPharmaPro.DatabaseSQLite;
+using System;
 
 namespace EterPharmaPro.Models.DbModels
 {
 	public class ProdutoValidadeDbModal : BaseDbModal
 	{
-        public int VALIDADE_ID { get; set; }
-        public int PRODUTO_CODIGO { get; set; }
-		public string PRODUTO_DESCRICAO { get; set; }
-		public int QUANTIDADE { get; set; }
-        public int CATEGORIA_ID { get; set; }
+		[Ignore(ignoreOnInsert: true, ignoreOnUpdate: true)]
+		public string TABLE_NAME { get; private set; } = "PRODUTOS_VALIDADE";
+		public int VALIDADE_ID { get; set; } = -1;
+		public int PRODUTO_CODIGO { get; set; } = -1;
+		public string PRODUTO_DESCRICAO { get; set; } = string.Empty;
+		public int QUANTIDADE { get; set; } = -1;
+		public int CATEGORIA_ID { get; set; } = 1;
 		public DateTime DATA_VALIDADE { get; set; }
 
 	}

@@ -1,15 +1,13 @@
 ﻿using EterPharmaPro.Controllers.Impressos;
-using EterPharmaPro.DatabaseSQLite;
 using EterPharmaPro.Interfaces;
 using EterPharmaPro.Models;
 using EterPharmaPro.Properties;
 using EterPharmaPro.Utils.Extencions;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace EterPharmaPro.Views
+namespace EterPharmaPro.Views.ReqNota
 {
 	public partial class ControleReqNota : Form
 	{
@@ -124,8 +122,8 @@ namespace EterPharmaPro.Views
 
 		private void dataGridView_resqDb_CellContentClick(object sender, DataGridViewCellEventArgs e)
 		{
-			bool temp = (bool)dataGridView_resqDb.Rows[e.RowIndex].Cells[3].Value;
-			dataGridView_resqDb.Rows[e.RowIndex].Cells[3].Value = !temp;
+			bool temp = (bool)dataGridView_resqDb.Rows[e.RowIndex].Cells[6].Value;
+			dataGridView_resqDb.Rows[e.RowIndex].Cells[6].Value = !temp;
 		}
 
 		private async void ControleReqNota_LoadAsync(object sender, EventArgs e)
@@ -133,6 +131,7 @@ namespace EterPharmaPro.Views
 			await comboBox_user_red.CBListUserAsync(eterDb);
 			comboBox_user_red.SelectedIndex = comboBox_user_red.ReturnIndexUserCB(eterDb.UserModelAcess.ID);
 			await comboBox_vend.CBListUserAsync(eterDb);
+			RefreshDataGrid();
 		}
 
 		private void textBox_req_KeyDown(object sender, KeyEventArgs e)
@@ -140,6 +139,18 @@ namespace EterPharmaPro.Views
 			if (e.KeyCode == Keys.Enter)
 			{
 				ePictureBox_addR_Click(null, null);
+			}
+		}
+
+		private async void RefreshDataGrid(bool queryData=false)
+		{
+			if (queryData)
+			{
+				dataGridView_resqDb.DataSource = await controller.GetByDate(dateTimePicker_dataQ);
+			}
+			else
+			{
+				dataGridView_resqDb.DataSource = await controller.GetByDate(null);
 			}
 		}
 	}

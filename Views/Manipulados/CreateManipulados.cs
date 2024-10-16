@@ -188,7 +188,7 @@ namespace EterPharmaPro.Views.Manipulados
 				}
 				ManipulacaoModel manipulacaoModel = new ManipulacaoModel
 				{
-					ID = ((!edit) ? null : manipulados.ID),
+					ID = edit ? null : manipulados?.ID,
 					DADOSATENDIMENTO = new DadosAtendimentoModel
 					{
 						ATEN_LOJA = Convert.ToInt32(comboBox_user.SelectedValue.ToString()),
@@ -197,14 +197,14 @@ namespace EterPharmaPro.Views.Manipulados
 					},
 					DADOSCLIENTE = new ClienteModel
 					{
-						
-						CPF = (textBox_cpf.Text.ReturnInt().StartsWith("0000000") ? string.Empty : textBox_cpf.Text.ReturnInt()),
-						RG = (textBox_rg.Text.ReturnInt().StartsWith("0000000") ? string.Empty : textBox_rg.Text.ReturnInt()),
+						ID = edit ? null : ((ClienteModel)manipulados?.DADOSCLIENTE)?.ID,
+						CPF = textBox_cpf.Text.ReturnInt(),
+						RG = textBox_rg.Text.ReturnInt(),
 						NOME = textBox_nomeC.Text,
 						TELEFONE = textBox5_tel.Text.ReturnInt(),
 						ENDERECO = new EnderecoClienteModel
 						{
-							CLIENTE_ID = ((EnderecoClienteModel)((ClienteModel)manipulados.DADOSCLIENTE).ENDERECO).CLIENTE_ID,							
+							CLIENTE_ID = edit ? null : ((EnderecoClienteModel)((ClienteModel)manipulados?.DADOSCLIENTE)?.ENDERECO)?.CLIENTE_ID,							
 							ENDERECO = textBox_log.Text,
 							OBSERVACAO = textBox_obsEnd.Text
 						}

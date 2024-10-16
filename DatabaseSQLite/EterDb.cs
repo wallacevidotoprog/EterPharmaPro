@@ -20,6 +20,8 @@ namespace EterPharmaPro.DatabaseSQLite
 
 		public UserModel UserModelAcess { get; set; }
 
+
+		public IActionDbBase ActionDb { get; set; }
 		public IEterDbUser DbUser { get; set; }
 
 		public IEterDbCliente DbCliente { get; set; }
@@ -70,6 +72,7 @@ namespace EterPharmaPro.DatabaseSQLite
 
 		private void SetDb()
 		{
+			ActionDb = new ActionDbBase(_databaseConnection);
 
 			DbUser = new EterDbUser(_databaseConnection);
 			DbCliente = new EterDbCliente(_databaseConnection);

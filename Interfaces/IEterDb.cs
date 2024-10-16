@@ -12,6 +12,8 @@ namespace EterPharmaPro.Interfaces
 		EterDbController EterDbController { get; set; }
 
 		UserModel UserModelAcess { get; set; }
+
+		IActionDbBase ActionDb { get; set; }
 		IEterDbUser DbUser { get; set; }
 
 		IEterDbCliente DbCliente { get; set; }

@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using EterPharmaPro.DatabaseSQLite;
 
 namespace EterPharmaPro.Models.DbModels
 {
-	public class CategoriaDbModal :BaseDbModal
+	public class CategoriaDbModal : BaseDbModal
 	{
-        public string NAME { get; set; }
-        public long? ID_LOJA { get; set; }
-    }
+		[Ignore(ignoreOnInsert: true, ignoreOnUpdate: true)]
+		public string TABLE_NAME { get; private set; } = "CATEGORIA_VALIDADE";
+
+		public string NAME { get; set; } =string.Empty;
+		public long? ID_LOJA { get; set; }
+	}
 }

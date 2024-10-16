@@ -12,6 +12,8 @@ using EterPharmaPro.Views;
 using EterPharmaPro.Views.Manipulados;
 using EterPharmaPro.Views.Validade;
 using System;
+using System.Collections.Generic;
+using System.Data.SQLite;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -34,10 +36,98 @@ namespace EterPharmaPro
 		}
 		private async void MainWindow_Load(object sender, EventArgs e)
 		{
-
+			
 			DatabaseProdutosDb = new DatabaseProdutosDb(toolStripProgressBar_status, cancellationTokenSource.Token);
 			SetLogin();
 			await Task.Run(() => NotifyValite.CheckeVality(eterDb));
+		}
+
+		private async Task testeAsync()
+		{
+			try
+			{
+				//UserModel user = new UserModel
+				//{
+				//	ID_LOJA = 5050,
+				//	FUNCAO = 1,
+				//	NOME = "TESTE"
+				//};
+				//long? id = null;
+				//using (var connection = new SQLiteConnection(eterDb.DatabaseConnection))
+				//{
+				//	await connection.OpenAsync().ConfigureAwait(false);
+				//	using (var transaction = connection.BeginTransaction())
+				//	{
+				//		try
+				//		{
+
+				//			user.ID = await eterDb.ActionDb.INSERT<UserModel>(user, connection, transaction);
+
+
+
+
+				//			transaction.Commit();
+				//		}
+				//		catch (Exception ex)
+				//		{
+				//			transaction.Rollback();
+				//			ex.ErrorGet();
+				//		}
+				//	}
+				//}
+
+				//using (var connection = new SQLiteConnection(eterDb.DatabaseConnection))
+				//{
+				//	await connection.OpenAsync().ConfigureAwait(false);
+				//	using (var transaction = connection.BeginTransaction())
+				//	{
+				//		try
+				//		{
+				//			user.NOME = " TESTE 2";
+				//			bool test = await eterDb.ActionDb.UPDATE<UserModel>(user, connection, transaction);
+
+
+
+
+				//			transaction.Commit();
+				//		}
+				//		catch (Exception ex)
+				//		{
+				//			transaction.Rollback();
+				//			ex.ErrorGet();
+				//		}
+				//	}
+				//}
+
+				//using (var connection = new SQLiteConnection(eterDb.DatabaseConnection))
+				//{
+				//	await connection.OpenAsync().ConfigureAwait(false);
+				//	using (var transaction = connection.BeginTransaction())
+				//	{
+				//		try
+				//		{
+				//			bool test = await eterDb.ActionDb.DELETE<UserModel>(user.ID, connection, transaction);
+
+
+
+
+				//			transaction.Commit();
+				//		}
+				//		catch (Exception ex)
+				//		{
+				//			transaction.Rollback();
+				//			ex.ErrorGet();
+				//		}
+				//	}
+				//}
+
+
+				List<ClienteModel> temp = await eterDb.ActionDb.GETFIELDS<ClienteModel>(new QueryWhereModel());
+			}
+			catch (Exception ex)
+			{
+				ex.ErrorGet();
+			}
 		}
 
 		private void SetLogin()
@@ -50,9 +140,9 @@ namespace EterPharmaPro
 			}
 			else
 			{
-				this.Text = $"ETER PHARMA PRO [ {eterDb.UserModelAcess.ID_LOJA.ToString().PadLeft(4,'0')} - {eterDb.UserModelAcess.NOME} - {eterDb.UserModelAcess.FUNCAO_NAME} ]";
-				  SendAlertBox.Send($"Bem Vindo {eterDb.UserModelAcess.FUNCAO_NAME} {eterDb.UserModelAcess.NOME}", TypeAlertEnum.Info);
-				toolStripButton_conf.Visible = (eterDb.UserModelAcess.FUNCAO_NAME == "DEV")? true : false ;
+				this.Text = $"ETER PHARMA PRO [ {eterDb.UserModelAcess.ID_LOJA.ToString().PadLeft(4, '0')} - {eterDb.UserModelAcess.NOME} - {eterDb.UserModelAcess.FUNCAO_NAME} ]";
+				SendAlertBox.Send($"Bem Vindo {eterDb.UserModelAcess.FUNCAO_NAME} {eterDb.UserModelAcess.NOME}", TypeAlertEnum.Info);
+				toolStripButton_conf.Visible = (eterDb.UserModelAcess.FUNCAO_NAME == "DEV") ? true : false;
 			}
 		}
 		private void OpenForm(Form form)
@@ -117,7 +207,7 @@ namespace EterPharmaPro
 			//		bar_teste.Value = progress.Progress;
 			//		bar_teste.Maximum = progress.Max;
 			//	}
-				
+
 			//};
 
 			var ts = await read.ReadAllProdutos(@"C:\Users\walla\OneDrive\Área de Trabalho\Documento de WALLACE.xlsx");
@@ -125,7 +215,7 @@ namespace EterPharmaPro
 
 		private void rELATÓRIOToolStripMenuItem_Click(object sender, EventArgs e) => OpenForm(new ReportValidades(eterDb, DatabaseProdutosDb));
 
-		private void rELATÓRIOToolStripMenuItem1_Click(object sender, EventArgs e)=> OpenForm(new ReportManipulacao(eterDb));
+		private void rELATÓRIOToolStripMenuItem1_Click(object sender, EventArgs e) => OpenForm(new ReportManipulacao(eterDb));
 
 	}
 }

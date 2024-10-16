@@ -1,4 +1,4 @@
-﻿namespace EterPharmaPro.Views
+﻿namespace EterPharmaPro.Views.ReqNota
 {
 	partial class ControleReqNota
 	{
@@ -38,6 +38,7 @@
 			this.dataGridView_reqs = new System.Windows.Forms.DataGridView();
 			this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
+			this.ePictureBox_addR = new EterPharmaPro.Utils.eControl.ePictureBox();
 			this.textBox_req = new System.Windows.Forms.TextBox();
 			this.label4 = new System.Windows.Forms.Label();
 			this.comboBox_vend = new System.Windows.Forms.ComboBox();
@@ -48,26 +49,25 @@
 			this.dateTimePicker_data = new System.Windows.Forms.DateTimePicker();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.dataGridView_resqDb = new System.Windows.Forms.DataGridView();
-			this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.RED = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.VENDEDOR = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.DATAV = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.DATAE = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.Column1 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
 			this.groupBox4 = new System.Windows.Forms.GroupBox();
 			this.label5 = new System.Windows.Forms.Label();
 			this.dateTimePicker_dataQ = new System.Windows.Forms.DateTimePicker();
-			this.ePictureBox_addR = new EterPharmaPro.Utils.eControl.ePictureBox();
+			this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.REDIGENTE = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.VENDEDOR = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.DATAV = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.DATAE = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.REQS = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.Column1 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
 			this.toolStrip_topMenu.SuspendLayout();
 			this.groupBox_addReq.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView_reqs)).BeginInit();
 			this.groupBox3.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.ePictureBox_addR)).BeginInit();
 			this.groupBox1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView_resqDb)).BeginInit();
 			this.groupBox4.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.ePictureBox_addR)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// toolStrip_topMenu
@@ -220,6 +220,20 @@
 			this.groupBox3.TabIndex = 8;
 			this.groupBox3.TabStop = false;
 			// 
+			// ePictureBox_addR
+			// 
+			this.ePictureBox_addR.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.ePictureBox_addR.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.ePictureBox_addR.Image = global::EterPharmaPro.Properties.Resources.arquivo__1_;
+			this.ePictureBox_addR.Location = new System.Drawing.Point(642, 20);
+			this.ePictureBox_addR.Name = "ePictureBox_addR";
+			this.ePictureBox_addR.Size = new System.Drawing.Size(70, 70);
+			this.ePictureBox_addR.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+			this.ePictureBox_addR.TabIndex = 7;
+			this.ePictureBox_addR.TabStop = false;
+			this.ePictureBox_addR.ToolTipText = "Adicionar";
+			this.ePictureBox_addR.Click += new System.EventHandler(this.ePictureBox_addR_Click);
+			// 
 			// textBox_req
 			// 
 			this.textBox_req.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -330,11 +344,11 @@
 			this.dataGridView_resqDb.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
 			this.dataGridView_resqDb.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ID,
-            this.RED,
+            this.REDIGENTE,
             this.VENDEDOR,
             this.DATAV,
             this.DATAE,
-            this.dataGridViewTextBoxColumn1,
+            this.REQS,
             this.Column1});
 			this.dataGridView_resqDb.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.dataGridView_resqDb.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -349,56 +363,6 @@
 			this.dataGridView_resqDb.Size = new System.Drawing.Size(727, 393);
 			this.dataGridView_resqDb.TabIndex = 12;
 			this.dataGridView_resqDb.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_resqDb_CellContentClick);
-			// 
-			// ID
-			// 
-			this.ID.FillWeight = 50F;
-			this.ID.HeaderText = "ID";
-			this.ID.Name = "ID";
-			this.ID.ReadOnly = true;
-			// 
-			// RED
-			// 
-			this.RED.FillWeight = 85.27919F;
-			this.RED.HeaderText = "REDIVENTE";
-			this.RED.Name = "RED";
-			this.RED.ReadOnly = true;
-			// 
-			// VENDEDOR
-			// 
-			this.VENDEDOR.FillWeight = 85.27919F;
-			this.VENDEDOR.HeaderText = "VENDEDOR(A)";
-			this.VENDEDOR.Name = "VENDEDOR";
-			this.VENDEDOR.ReadOnly = true;
-			// 
-			// DATAV
-			// 
-			this.DATAV.FillWeight = 85.27919F;
-			this.DATAV.HeaderText = "DATA VENDA";
-			this.DATAV.Name = "DATAV";
-			this.DATAV.ReadOnly = true;
-			// 
-			// DATAE
-			// 
-			this.DATAE.FillWeight = 85.27919F;
-			this.DATAE.HeaderText = "DATA ENVIO";
-			this.DATAE.Name = "DATAE";
-			this.DATAE.ReadOnly = true;
-			// 
-			// dataGridViewTextBoxColumn1
-			// 
-			this.dataGridViewTextBoxColumn1.DataPropertyName = "Nome";
-			this.dataGridViewTextBoxColumn1.FillWeight = 170.5584F;
-			this.dataGridViewTextBoxColumn1.HeaderText = "REQUISIÇÕES";
-			this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-			this.dataGridViewTextBoxColumn1.ReadOnly = true;
-			// 
-			// Column1
-			// 
-			this.Column1.FillWeight = 30F;
-			this.Column1.HeaderText = "";
-			this.Column1.Name = "Column1";
-			this.Column1.ReadOnly = true;
 			// 
 			// groupBox4
 			// 
@@ -432,19 +396,61 @@
 			this.dateTimePicker_dataQ.Size = new System.Drawing.Size(533, 33);
 			this.dateTimePicker_dataQ.TabIndex = 7;
 			// 
-			// ePictureBox_addR
+			// ID
 			// 
-			this.ePictureBox_addR.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.ePictureBox_addR.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.ePictureBox_addR.Image = global::EterPharmaPro.Properties.Resources.arquivo__1_;
-			this.ePictureBox_addR.Location = new System.Drawing.Point(642, 20);
-			this.ePictureBox_addR.Name = "ePictureBox_addR";
-			this.ePictureBox_addR.Size = new System.Drawing.Size(70, 70);
-			this.ePictureBox_addR.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-			this.ePictureBox_addR.TabIndex = 7;
-			this.ePictureBox_addR.TabStop = false;
-			this.ePictureBox_addR.ToolTipText = "Adicionar";
-			this.ePictureBox_addR.Click += new System.EventHandler(this.ePictureBox_addR_Click);
+			this.ID.DataPropertyName = "ID";
+			this.ID.FillWeight = 50F;
+			this.ID.HeaderText = "ID";
+			this.ID.Name = "ID";
+			this.ID.ReadOnly = true;
+			// 
+			// REDIGENTE
+			// 
+			this.REDIGENTE.DataPropertyName = "REDIGENTE";
+			this.REDIGENTE.FillWeight = 85.27919F;
+			this.REDIGENTE.HeaderText = "REDIGENTE";
+			this.REDIGENTE.Name = "REDIGENTE";
+			this.REDIGENTE.ReadOnly = true;
+			// 
+			// VENDEDOR
+			// 
+			this.VENDEDOR.DataPropertyName = "VENDEDOR";
+			this.VENDEDOR.FillWeight = 85.27919F;
+			this.VENDEDOR.HeaderText = "VENDEDOR(A)";
+			this.VENDEDOR.Name = "VENDEDOR";
+			this.VENDEDOR.ReadOnly = true;
+			// 
+			// DATAV
+			// 
+			this.DATAV.DataPropertyName = "DATAV";
+			this.DATAV.FillWeight = 85.27919F;
+			this.DATAV.HeaderText = "DATA VENDA";
+			this.DATAV.Name = "DATAV";
+			this.DATAV.ReadOnly = true;
+			// 
+			// DATAE
+			// 
+			this.DATAE.DataPropertyName = "DATAE";
+			this.DATAE.FillWeight = 85.27919F;
+			this.DATAE.HeaderText = "DATA ENVIO";
+			this.DATAE.Name = "DATAE";
+			this.DATAE.ReadOnly = true;
+			// 
+			// REQS
+			// 
+			this.REQS.DataPropertyName = "REQS";
+			this.REQS.FillWeight = 170.5584F;
+			this.REQS.HeaderText = "REQUISIÇÕES";
+			this.REQS.Name = "REQS";
+			this.REQS.ReadOnly = true;
+			// 
+			// Column1
+			// 
+			this.Column1.DataPropertyName = "ACTION";
+			this.Column1.FillWeight = 30F;
+			this.Column1.HeaderText = "";
+			this.Column1.Name = "Column1";
+			this.Column1.ReadOnly = true;
 			// 
 			// ControleReqNota
 			// 
@@ -465,11 +471,11 @@
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView_reqs)).EndInit();
 			this.groupBox3.ResumeLayout(false);
 			this.groupBox3.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.ePictureBox_addR)).EndInit();
 			this.groupBox1.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView_resqDb)).EndInit();
 			this.groupBox4.ResumeLayout(false);
 			this.groupBox4.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.ePictureBox_addR)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -502,11 +508,11 @@
 		private System.Windows.Forms.Label label5;
 		private System.Windows.Forms.DateTimePicker dateTimePicker_dataQ;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ID;
-		private System.Windows.Forms.DataGridViewTextBoxColumn RED;
+		private System.Windows.Forms.DataGridViewTextBoxColumn REDIGENTE;
 		private System.Windows.Forms.DataGridViewTextBoxColumn VENDEDOR;
 		private System.Windows.Forms.DataGridViewTextBoxColumn DATAV;
 		private System.Windows.Forms.DataGridViewTextBoxColumn DATAE;
-		private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+		private System.Windows.Forms.DataGridViewTextBoxColumn REQS;
 		private System.Windows.Forms.DataGridViewCheckBoxColumn Column1;
 	}
 }

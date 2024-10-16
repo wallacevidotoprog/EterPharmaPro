@@ -14,17 +14,11 @@ using System.Windows.Forms;
 namespace EterPharmaPro.Utils.Extencions
 {
 	public static class ExtensionsDefault
-	{
-		//public static string GetNameCategory(this int id, List<ValidadeCategoria> validadeCategorias)
-		//{
-		//	return validadeCategorias.Find((ValidadeCategoria x) => x.ID == id).NOME;
-		//}
-
+	{		
 		public static string ReturnInt(this string value)
 		{
 			return Regex.Replace(value, "[^0-9]", string.Empty);
 		}
-
 
 		public static string ReturnFormation(this string value, FormatationEnum format)
 		{
@@ -110,7 +104,7 @@ namespace EterPharmaPro.Utils.Extencions
 
 		public static async Task<ComboBox> CBListUserAsync(this ComboBox cb, IEterDb eterDb, bool isStatusAll = false)
 		{
-			List<UserModel> list = await eterDb.DbUser.GetUser(new QueryWhereModel());
+			List<UserModel> list = await eterDb.ActionDb.GETFIELDS<UserModel>(new QueryWhereModel());
 
 			Dictionary<string, string> users = new Dictionary<string, string>();
 
@@ -345,10 +339,6 @@ namespace EterPharmaPro.Utils.Extencions
 			}
 			return text.PadRight(totalWidth);
 		}
-		//public static TypeDoc TypeDocs(this string type)
-		//{
-		//	int t = type.Length;
-		//	return (type.Length == 11) ? TypeDoc.CPF : ((type.Length < 5) ? TypeDoc.ID : ((type.Length == 14) ? TypeDoc.CNPJ : ((type.Length > 8 || type.Length < 9) ? TypeDoc.RG : TypeDoc.NONE)));
-		//}
+		
 	}
 }

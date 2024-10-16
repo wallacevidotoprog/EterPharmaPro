@@ -1,12 +1,14 @@
-﻿using System;
+﻿using EterPharmaPro.DatabaseSQLite;
+using System;
 
 namespace EterPharmaPro.Models.DbModels
 {
 	public class ClienteModel : BaseDbModal
-	{		
+	{
+		[Ignore(ignoreOnInsert: true, ignoreOnUpdate: true)]
+		public string TABLE_NAME { get; private set; } = "CLIENTES";
 
 		public string CPF { get; set; } = string.Empty;
-
 
 		public string RG { get; set; } = string.Empty;
 

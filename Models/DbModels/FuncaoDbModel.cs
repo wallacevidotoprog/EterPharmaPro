@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using EterPharmaPro.DatabaseSQLite;
 
 namespace EterPharmaPro.Models.DbModels
 {
-	public class FuncaoDbModel :BaseDbModal
+	public class FuncaoDbModel : BaseDbModal
 	{
-        public string NOME { get; set; }
-    }
+		[Ignore(ignoreOnInsert: true, ignoreOnUpdate: true)]
+		public string TABLE_NAME { get; private set; } = "FUNCAO";
+		public string NOME { get; set; } = string.Empty;
+	}
 }

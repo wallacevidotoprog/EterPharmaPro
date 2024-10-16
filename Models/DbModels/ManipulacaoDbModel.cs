@@ -1,9 +1,12 @@
-﻿using System;
+﻿using EterPharmaPro.DatabaseSQLite;
+using System;
 
 namespace EterPharmaPro.Models.DbModels
 {
 	public class ManipulacaoDbModel : BaseDbModal
 	{
+		[Ignore(ignoreOnInsert: true, ignoreOnUpdate: true)]
+		public string TABLE_NAME { get; private set; } = "MANIPULADOS";
 		public int ATEN_LOJA { get; set; } = -1;
 
 		public DateTime? DATA { get; set; }

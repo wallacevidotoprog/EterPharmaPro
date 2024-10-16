@@ -23,7 +23,7 @@ namespace EterPharmaPro.Views
 
 		public AcesUser(IEterDb eterDb)
 		{
-			userModels = eterDb.DbUser.GetUser(new QueryWhereModel()).Result;
+			userModels = eterDb.ActionDb.GETFIELDS<UserModel>(new QueryWhereModel()).Result;
 			timer = new Timer();
 			timer.Interval = 15;
 			timer.Tick += Timer_Tick;
@@ -71,7 +71,7 @@ namespace EterPharmaPro.Views
 
 		private async void AcesUser_LoadAsync(object sender, EventArgs e)
 		{
-			await comboBox_user.CBListUserAsync(eterDb, true);
+			await comboBox_user.CBListUserAsync(eterDb);
 			comboBox_user.SelectedIndex = 0;
 		}
 

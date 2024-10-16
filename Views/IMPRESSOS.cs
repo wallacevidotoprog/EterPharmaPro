@@ -3,6 +3,7 @@ using EterPharmaPro.Interfaces;
 using EterPharmaPro.Utils.Extencions;
 using EterPharmaPro.Views.LoteControlado;
 using EterPharmaPro.Views.Remanejo;
+using EterPharmaPro.Views.ReqNota;
 using System;
 using System.Windows.Forms;
 

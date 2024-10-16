@@ -162,11 +162,14 @@
     <Compile Include="Controllers\Impressos\RemanejoController.cs" />
     <Compile Include="Controllers\Manipulacao\ManipuladoController.cs" />
     <Compile Include="Controllers\Validade\ValidadeController.cs" />
+    <Compile Include="DatabaseSQLite\ActionDbBase.cs" />
     <Compile Include="DatabaseSQLite\EterDbCategoria.cs" />
     <Compile Include="DatabaseSQLite\EterDbProdutoValidade.cs" />
     <Compile Include="DatabaseSQLite\EterDbValidade.cs" />
     <Compile Include="DatabaseSQLite\EterProps.cs" />
+    <Compile Include="DatabaseSQLite\IgnoreAttribute.cs" />
     <Compile Include="Enums\ListViewActionsEnum.cs" />
+    <Compile Include="Interfaces\IActionDbBase.cs" />
     <Compile Include="Interfaces\IEterDbCategoria.cs" />
     <Compile Include="Interfaces\IEterDbProdutoValidade.cs" />
     <Compile Include="Interfaces\IEterDbValidade.cs" />
@@ -277,10 +280,10 @@
     <Compile Include="Views\AcesUser.Designer.cs">
       <DependentUpon>AcesUser.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\ControleReqNota.cs">
+    <Compile Include="Views\ReqNota\ControleReqNota.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\ControleReqNota.Designer.cs">
+    <Compile Include="Views\ReqNota\ControleReqNota.Designer.cs">
       <DependentUpon>ControleReqNota.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\IMPRESSOS.cs">
@@ -347,7 +350,7 @@
     <EmbeddedResource Include="Views\AcesUser.resx">
       <DependentUpon>AcesUser.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\ControleReqNota.resx">
+    <EmbeddedResource Include="Views\ReqNota\ControleReqNota.resx">
       <DependentUpon>ControleReqNota.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\IMPRESSOS.resx">
@@ -442,9 +445,7 @@
       <Name>ToastNotification</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\ReqNota\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

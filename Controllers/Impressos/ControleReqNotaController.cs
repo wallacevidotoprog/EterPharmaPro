@@ -1,11 +1,16 @@
 ﻿using DocumentFormat.OpenXml.EMMA;
 using EterPharmaPro.Interfaces;
 using EterPharmaPro.Models;
+using EterPharmaPro.Models.DbModels;
 using EterPharmaPro.Utils.Extencions;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SQLite;
+using System.Diagnostics.SymbolStore;
+using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace EterPharmaPro.Controllers.Impressos
 {
@@ -88,6 +93,37 @@ namespace EterPharmaPro.Controllers.Impressos
 				ex.ErrorGet();
 			}
 			return false;
+		}
+
+		public async Task<DataTable> GetByDate(DateTimePicker dateTimePicker_dataQ = null)
+		{
+			DataTable tabela = new DataTable();
+			List<ControlReqNotaDbModal> controleReqNotaControllers = await eterDb.ActionDb.GETFIELDS<ControlReqNotaDbModal>(new QueryWhereModel());
+			List<ReqNotaDbModal> reqNotaDbModal = await eterDb.ActionDb.GETFIELDS<ReqNotaDbModal>(new QueryWhereModel());
+			tabela.Columns.Add("ID");
+			tabela.Columns.Add("REDIGENTE");
+			tabela.Columns.Add("VENDEDOR");
+			tabela.Columns.Add("DATAV");
+			tabela.Columns.Add("DATAE");
+			tabela.Columns.Add("REQS");
+			tabela.Columns.Add("ACTION",typeof(bool));
+
+            for (int i = 0; i < controleReqNotaControllers.Count; i++)
+            {
+				var temp1 = reqNotaDbModal.Where(x => x.CQN_ID == controleReqNotaControllers[i].ID);
+				string temp = string.Join(" | ", temp1.Select(p => p.REQ));
+				tabela.Rows.Add(
+					controleReqNotaControllers[i].ID,
+					controleReqNotaControllers[i].AUTHOR,
+					controleReqNotaControllers[i].VENDEDOR,
+					controleReqNotaControllers[i].DATA_VENDA,
+					controleReqNotaControllers[i].DATA_ENVIO,
+					string.Join(" | ", temp1.Select(p => p.REQ)),
+					false
+					);
+
+			}
+			return tabela;
 		}
 	}
 }
