@@ -97,33 +97,41 @@ namespace EterPharmaPro.Controllers.Impressos
 
 		public async Task<DataTable> GetByDate(DateTimePicker dateTimePicker_dataQ = null)
 		{
-			DataTable tabela = new DataTable();
-			List<ControlReqNotaDbModal> controleReqNotaControllers = await eterDb.ActionDb.GETFIELDS<ControlReqNotaDbModal>(new QueryWhereModel());
-			List<ReqNotaDbModal> reqNotaDbModal = await eterDb.ActionDb.GETFIELDS<ReqNotaDbModal>(new QueryWhereModel());
-			tabela.Columns.Add("ID");
-			tabela.Columns.Add("REDIGENTE");
-			tabela.Columns.Add("VENDEDOR");
-			tabela.Columns.Add("DATAV");
-			tabela.Columns.Add("DATAE");
-			tabela.Columns.Add("REQS");
-			tabela.Columns.Add("ACTION",typeof(bool));
+			try
+			{
+				DataTable tabela = new DataTable();
+				List<ControlReqNotaDbModal> controleReqNotaControllers = await eterDb.ActionDb.GETFIELDS<ControlReqNotaDbModal>(new QueryWhereModel());
+				List<ReqNotaDbModal> reqNotaDbModal = await eterDb.ActionDb.GETFIELDS<ReqNotaDbModal>(new QueryWhereModel());
+				tabela.Columns.Add("ID");
+				tabela.Columns.Add("REDIGENTE");
+				tabela.Columns.Add("VENDEDOR");
+				tabela.Columns.Add("DATAV");
+				tabela.Columns.Add("DATAE");
+				tabela.Columns.Add("REQS");
+				tabela.Columns.Add("ACTION", typeof(bool));
 
-            for (int i = 0; i < controleReqNotaControllers.Count; i++)
-            {
-				var temp1 = reqNotaDbModal.Where(x => x.CQN_ID == controleReqNotaControllers[i].ID);
-				string temp = string.Join(" | ", temp1.Select(p => p.REQ));
-				tabela.Rows.Add(
-					controleReqNotaControllers[i].ID,
-					controleReqNotaControllers[i].AUTHOR,
-					controleReqNotaControllers[i].VENDEDOR,
-					controleReqNotaControllers[i].DATA_VENDA,
-					controleReqNotaControllers[i].DATA_ENVIO,
-					string.Join(" | ", temp1.Select(p => p.REQ)),
-					false
-					);
+				for (int i = 0; i < controleReqNotaControllers.Count; i++)
+				{
+					var temp1 = reqNotaDbModal.Where(x => x.CQN_ID == controleReqNotaControllers[i].ID);
+					string temp = string.Join(" | ", temp1.Select(p => p.REQ));
+					tabela.Rows.Add(
+						controleReqNotaControllers[i].ID,
+						(await eterDb.ActionDb.GETFIELDS<UserModel>(new QueryWhereModel().SetWhere("ID", controleReqNotaControllers[i].AUTHOR))).FirstOrDefault()?.NOME,
+						(await eterDb.ActionDb.GETFIELDS<UserModel>(new QueryWhereModel().SetWhere("ID", controleReqNotaControllers[i].VENDEDOR))).FirstOrDefault()?.NOME,
+						controleReqNotaControllers[i].DATA_VENDA,
+						controleReqNotaControllers[i].DATA_ENVIO,
+						string.Join(" | ", temp1.Select(p => p.REQ)),
+						false
+						); ;
 
+				}
+				return tabela;
 			}
-			return tabela;
+			catch (Exception ex)
+			{
+				ex.ErrorGet();
+			}
+			return null;
 		}
 	}
 }

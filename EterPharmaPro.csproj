@@ -150,6 +150,9 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="ToastNotifications.Messages, Version=2.5.1.0, Culture=neutral, PublicKeyToken=e89d9d7314a7c797, processorArchitecture=MSIL">
+      <HintPath>packages\ToastNotifications.Messages.2.5.1\lib\net40\ToastNotifications.Messages.dll</HintPath>
+    </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="XLParser, Version=1.5.2.0, Culture=neutral, PublicKeyToken=63397e1e46bb91b4, processorArchitecture=MSIL">
       <HintPath>packages\XLParser.1.5.2\lib\net461\XLParser.dll</HintPath>
@@ -440,6 +443,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\OneDrive\Área de Trabalho\ToastNotifications-master\ToastNotifications\ToastNotifications\ToastNotifications.csproj">
+      <Project>{484a5bfa-7405-48b3-bc97-1fd3e7b108f3}</Project>
+      <Name>ToastNotifications</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ToastNotification\ToastNotification.csproj">
       <Project>{648eb6db-c0ab-4e78-9046-a3e69c802de2}</Project>
       <Name>ToastNotification</Name>

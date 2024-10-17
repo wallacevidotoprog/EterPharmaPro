@@ -1,24 +1,21 @@
-﻿using EterPharmaPro.Controllers.Impressos;
-using EterPharmaPro.DatabaseSQLite;
+﻿using EterPharmaPro.DatabaseSQLite;
 using EterPharmaPro.DbProdutos.Services;
 using EterPharmaPro.Interfaces;
-using EterPharmaPro.Models;
 using EterPharmaPro.Models.DbModels;
 using EterPharmaPro.Services.XLSX;
-using EterPharmaPro.Temps;
 using EterPharmaPro.Utils;
 using EterPharmaPro.Utils.Extencions;
 using EterPharmaPro.Views;
 using EterPharmaPro.Views.Manipulados;
 using EterPharmaPro.Views.Validade;
 using System;
-using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ToastNotification;
 using ToastNotification.Enum;
+using ToastNotifications;
 
 namespace EterPharmaPro
 {
@@ -36,9 +33,10 @@ namespace EterPharmaPro
 		}
 		private async void MainWindow_Load(object sender, EventArgs e)
 		{
-			
+			//testeAsync();
 			DatabaseProdutosDb = new DatabaseProdutosDb(toolStripProgressBar_status, cancellationTokenSource.Token);
 			SetLogin();
+			/// await NotifyValite.CheckeVality(eterDb);
 			await Task.Run(() => NotifyValite.CheckeVality(eterDb));
 		}
 
@@ -46,83 +44,84 @@ namespace EterPharmaPro
 		{
 			try
 			{
-				//UserModel user = new UserModel
-				//{
-				//	ID_LOJA = 5050,
-				//	FUNCAO = 1,
-				//	NOME = "TESTE"
-				//};
-				//long? id = null;
-				//using (var connection = new SQLiteConnection(eterDb.DatabaseConnection))
-				//{
-				//	await connection.OpenAsync().ConfigureAwait(false);
-				//	using (var transaction = connection.BeginTransaction())
-				//	{
-				//		try
-				//		{
+				UserModel user = new UserModel
+				{
+					ID_LOJA = 5050,
+					FUNCAO = 1,
+					NOME = "TESTE"
+				};
+				long? id = null;
+				using (var connection = new SQLiteConnection(eterDb.DatabaseConnection))
+				{
+					await connection.OpenAsync().ConfigureAwait(false);
+					using (var transaction = connection.BeginTransaction())
+					{
+						try
+						{
 
-				//			user.ID = await eterDb.ActionDb.INSERT<UserModel>(user, connection, transaction);
-
-
-
-
-				//			transaction.Commit();
-				//		}
-				//		catch (Exception ex)
-				//		{
-				//			transaction.Rollback();
-				//			ex.ErrorGet();
-				//		}
-				//	}
-				//}
-
-				//using (var connection = new SQLiteConnection(eterDb.DatabaseConnection))
-				//{
-				//	await connection.OpenAsync().ConfigureAwait(false);
-				//	using (var transaction = connection.BeginTransaction())
-				//	{
-				//		try
-				//		{
-				//			user.NOME = " TESTE 2";
-				//			bool test = await eterDb.ActionDb.UPDATE<UserModel>(user, connection, transaction);
+							user.ID = await eterDb.ActionDb.INSERT<UserModel>(user, connection, transaction);
 
 
 
 
-				//			transaction.Commit();
-				//		}
-				//		catch (Exception ex)
-				//		{
-				//			transaction.Rollback();
-				//			ex.ErrorGet();
-				//		}
-				//	}
-				//}
+							transaction.Commit();
+						}
+						catch (Exception ex)
+						{
+							transaction.Rollback();
+							ex.ErrorGet();
+						}
+					}
+				}
 
-				//using (var connection = new SQLiteConnection(eterDb.DatabaseConnection))
-				//{
-				//	await connection.OpenAsync().ConfigureAwait(false);
-				//	using (var transaction = connection.BeginTransaction())
-				//	{
-				//		try
-				//		{
-				//			bool test = await eterDb.ActionDb.DELETE<UserModel>(user.ID, connection, transaction);
-
-
-
-
-				//			transaction.Commit();
-				//		}
-				//		catch (Exception ex)
-				//		{
-				//			transaction.Rollback();
-				//			ex.ErrorGet();
-				//		}
-				//	}
-				//}
+				using (var connection = new SQLiteConnection(eterDb.DatabaseConnection))
+				{
+					await connection.OpenAsync().ConfigureAwait(false);
+					using (var transaction = connection.BeginTransaction())
+					{
+						try
+						{
+							user.NOME = " TESTE 2";
+							user.PASS = "1315456";
+							bool test = await eterDb.ActionDb.UPDATE<UserModel>(user, connection, transaction);
 
 
-				List<ClienteModel> temp = await eterDb.ActionDb.GETFIELDS<ClienteModel>(new QueryWhereModel());
+
+
+							transaction.Commit();
+						}
+						catch (Exception ex)
+						{
+							transaction.Rollback();
+							ex.ErrorGet();
+						}
+					}
+				}
+
+				using (var connection = new SQLiteConnection(eterDb.DatabaseConnection))
+				{
+					await connection.OpenAsync().ConfigureAwait(false);
+					using (var transaction = connection.BeginTransaction())
+					{
+						try
+						{
+							bool test = await eterDb.ActionDb.DELETE<UserModel>(user.ID, connection, transaction);
+
+
+
+
+							transaction.Commit();
+						}
+						catch (Exception ex)
+						{
+							transaction.Rollback();
+							ex.ErrorGet();
+						}
+					}
+				}
+
+
+				//List<ClienteModel> temp = await eterDb.ActionDb.GETFIELDS<ClienteModel>(new QueryWhereModel());
 			}
 			catch (Exception ex)
 			{
@@ -141,6 +140,11 @@ namespace EterPharmaPro
 			else
 			{
 				this.Text = $"ETER PHARMA PRO [ {eterDb.UserModelAcess.ID_LOJA.ToString().PadLeft(4, '0')} - {eterDb.UserModelAcess.NOME} - {eterDb.UserModelAcess.FUNCAO_NAME} ]";
+
+
+				//Notifications notifications = new Notifications();
+				//notifications.Show("SUCESS", $"Bem Vindo {eterDb.UserModelAcess.FUNCAO_NAME} {eterDb.UserModelAcess.NOME}", this.Icon.ToBitmap());
+
 				SendAlertBox.Send($"Bem Vindo {eterDb.UserModelAcess.FUNCAO_NAME} {eterDb.UserModelAcess.NOME}", TypeAlertEnum.Info);
 				toolStripButton_conf.Visible = (eterDb.UserModelAcess.FUNCAO_NAME == "DEV") ? true : false;
 			}

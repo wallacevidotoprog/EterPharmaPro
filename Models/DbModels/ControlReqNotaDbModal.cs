@@ -10,7 +10,7 @@ namespace EterPharmaPro.Models.DbModels
 		public long? VENDEDOR { get; set; }
 		public long? AUTHOR { get; set; }
 
-		public DateTime DATA_VENDA { get; set; }
-		public DateTime DATA_ENVIO { get; set; }
+		public DateTime? DATA_VENDA { get; set; }
+		public DateTime? DATA_ENVIO { get; set; }
 	}
 }

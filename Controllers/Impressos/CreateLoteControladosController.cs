@@ -103,6 +103,7 @@ namespace EterPharmaPro.Controllers.CarimboLoteValidade
 
 							transaction.Commit();
 							SendAlertBox.Send($"Dados Salvos", TypeAlertEnum.Success);
+							return true;
 						}
 						catch (Exception ex)
 						{

@@ -18,7 +18,7 @@ namespace EterPharmaPro.Models.DbModels
 
 		public string TELEFONE { get; set; } = string.Empty;
 
-
+		[Ignore(ignoreOnInsert: true, ignoreOnUpdate: true)]
 		public object ENDERECO { get; set; } = null;
 
 		

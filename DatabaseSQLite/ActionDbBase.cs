@@ -40,7 +40,14 @@ namespace EterPharmaPro.DatabaseSQLite
 				{
 					string tableName = GetTableName(model);
 
-					IEnumerable<PropertyInfo> properties = typeof(T).GetProperties().Where(p => p.GetCustomAttribute<IgnoreAttribute>()?.IgnoreOnInsert != true);
+					IEnumerable<PropertyInfo> properties = typeof(T).GetProperties().Where(p => p.GetCustomAttribute<IgnoreAttribute>()?.IgnoreOnInsert != true).Where(p =>
+					{
+						var value = p.GetValue(model);
+						return value != null &&
+							   !(value is string str && string.IsNullOrEmpty(str)) &&
+							   !(value is int num && num == -1);
+					});
+
 					string columnNames = string.Join(", ", properties.Select(p => p.Name));
 					string parameterNames = string.Join(", ", properties.Select(p => $"@{p.Name}"));
 
@@ -84,7 +91,14 @@ namespace EterPharmaPro.DatabaseSQLite
 				{
 					string tableName = GetTableName(model);
 
-					IEnumerable<PropertyInfo> properties = typeof(T).GetProperties().Where(p => p.GetCustomAttribute<IgnoreAttribute>()?.IgnoreOnUpdate != true);
+					IEnumerable<PropertyInfo> properties = typeof(T).GetProperties().Where(p => p.GetCustomAttribute<IgnoreAttribute>()?.IgnoreOnUpdate != true).Where(p =>
+					{
+						var value = p.GetValue(model);
+						return value != null &&
+							   !(value is string str && string.IsNullOrEmpty(str)) &&
+							   !(value is int num && num == -1);
+					});
+
 					string setClauses = string.Join(", ", properties.Select(p => $"{p.Name} = @{p.Name}"));
 					string Query = $"UPDATE {tableName} SET {setClauses} WHERE ID = @ID";
 

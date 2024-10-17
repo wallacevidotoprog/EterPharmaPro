@@ -40,14 +40,25 @@ namespace EterPharmaPro.Controllers
 
 		public async Task<ClienteModel> ExistCliente(ClienteModel dadosCliente, bool exist = false)
 		{
-			if (exist)
+			try
 			{
-				List<ClienteModel> aex = await eterDb.DbCliente.GetCliente(new QueryWhereModel().SetWhere(nameof(dadosCliente.ID), dadosCliente.ID));
-				return (aex.Count > 0) ? aex[0] : null;
+				if (exist)
+				{
+					return (await eterDb.ActionDb.GETFIELDS<ClienteModel>(new QueryWhereModel().SetWhere("ID", dadosCliente.ID))).FirstOrDefault() ;
+				}
+
+				ClienteModel t1 = !string.IsNullOrEmpty(dadosCliente.CPF)  ? (await eterDb.DbCliente.GetCliente(new QueryWhereModel().SetWhere("CPF", dadosCliente.CPF))).FirstOrDefault() : null;
+
+				ClienteModel t2 = !string.IsNullOrEmpty(dadosCliente.RG) ? (await eterDb.DbCliente.GetCliente(new QueryWhereModel().SetWhere("RG", dadosCliente.RG))).FirstOrDefault() : null;
+				
+				return !(t1 is null) ? t1 : !(t2 is null) ? t2  : null;
 			}
-			List<ClienteModel> t1 = dadosCliente.CPF != string.Empty ? await eterDb.DbCliente.GetCliente(new QueryWhereModel().SetWhere(nameof(dadosCliente.CPF), dadosCliente.CPF)) : new List<ClienteModel>();
-			List<ClienteModel> t2 = dadosCliente.RG != string.Empty ? await eterDb.DbCliente.GetCliente(new QueryWhereModel().SetWhere(nameof(dadosCliente.RG), dadosCliente.RG)) : new List<ClienteModel>();
-			return (t1.Count > 0) ? t1[0] : ((t2.Count > 0) ? t2[0] : null);
+			catch (Exception ex)
+			{
+				ex.ErrorGet();
+			}
+			return null;
+			
 		}
 
 		public async Task<(long? idC, long? idE)> RegisterCliente(ClienteModel dadosCliente)
@@ -71,14 +82,14 @@ namespace EterPharmaPro.Controllers
 							{
 
 								enderecoCliente.CLIENTE_ID = idc = dadosCliente.ID = tempCliente.ID;
-								await eterDb.DbCliente.UpdateCliente(dadosCliente, connection, transaction);
+								await eterDb.ActionDb.UPDATE(dadosCliente, connection, transaction);
 
 								var (exist, tempEnderecos) = await ExistAdressCliente(enderecoCliente);
 
 								if (!exist)
 								{
 									enderecoCliente.CLIENTE_ID = tempCliente.ID;
-									ide = await eterDb.DbEndereco.CreateEndereco(enderecoCliente, connection, transaction);
+									ide = await eterDb.ActionDb.INSERT(enderecoCliente, connection, transaction);
 								}
 								else
 								{
@@ -86,14 +97,14 @@ namespace EterPharmaPro.Controllers
 									enderecoCliente.CLIENTE_ID = tempCliente.ID;
 
 									ide = enderecoCliente.ID;
-									await eterDb.DbEndereco.UpdateEndereco(enderecoCliente, connection, transaction);
+									await eterDb.ActionDb.UPDATE(enderecoCliente, connection, transaction);
 								}
 							}
 							else
 							{
-								idc = await eterDb.DbCliente.CreateCliente(dadosCliente, connection, transaction);
+								idc = await eterDb.ActionDb.INSERT(dadosCliente, connection, transaction);
 								enderecoCliente.CLIENTE_ID = idc;
-								ide = await eterDb.DbEndereco.CreateEndereco(enderecoCliente, connection, transaction);
+								ide = await eterDb.ActionDb.INSERT(enderecoCliente, connection, transaction);
 							}							
 
 							transaction.Commit();
