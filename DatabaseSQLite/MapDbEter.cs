@@ -65,7 +65,15 @@ namespace EterPharmaPro.DatabaseSQLite
 
 						if (underlyingType == typeof(DateTime))
 						{
-							value = ConvertUnixTimestampToDateTime(value);
+							if (int.TryParse(value.ToString(), out int result))
+							{
+								value = ConvertUnixTimestampToDateTime(value);
+							}
+							else
+							{
+								value = Convert.ToDateTime(value);
+							}
+							//value = ConvertUnixTimestampToDateTime(value);
 						}
 						else if (underlyingType.IsEnum)
 						{

@@ -2,26 +2,38 @@
 using EterPharmaPro.Interfaces;
 using EterPharmaPro.Models;
 using EterPharmaPro.Properties;
+using EterPharmaPro.Utils.Events;
 using EterPharmaPro.Utils.Extencions;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Windows.Forms;
 
 namespace EterPharmaPro.Views.ReqNota
 {
 	public partial class ControleReqNota : Form
 	{
-		private RequisicaoNotasModel requisicaoNotas;
+		private RequisicaoNotasModel requisicaoNotas = null;
 		private bool isNew = false;
+		private DataTable dataTableView = null;
 
-		private readonly ControleReqNotaController controller;
-		private readonly IEterDb eterDb;
+		private readonly ControleReqNotaController controller = null;
+		private readonly IEterDb eterDb = null;
 		public ControleReqNota(IEterDb eterDb)
 		{
 			this.eterDb = eterDb;
-			controller = new ControleReqNotaController(eterDb);
 			InitializeComponent();
+			controller = new ControleReqNotaController(eterDb);
+			controller.LoadReqs += Controller_LoadReqs;
+			_ = controller.LoadControlReqs();
 			ClearFieldReq();
+		}
+
+		private void Controller_LoadReqs(object sender, ControlReqsViewEventArgs e)
+		{
+
+			dataTableView = e.dataTable;
+			RefreshDataGrid();
 		}
 
 		private void ClearFieldReq()
@@ -131,7 +143,6 @@ namespace EterPharmaPro.Views.ReqNota
 			await comboBox_user_red.CBListUserAsync(eterDb);
 			comboBox_user_red.SelectedIndex = comboBox_user_red.ReturnIndexUserCB(eterDb.UserModelAcess.ID);
 			await comboBox_vend.CBListUserAsync(eterDb);
-			RefreshDataGrid();
 		}
 
 		private void textBox_req_KeyDown(object sender, KeyEventArgs e)
@@ -142,16 +153,36 @@ namespace EterPharmaPro.Views.ReqNota
 			}
 		}
 
-		private async void RefreshDataGrid(bool queryData=false)
+		private async void RefreshDataGrid(bool queryData = false, object sender = null)
 		{
-			if (queryData)
+			if (dataTableView is null)
 			{
-				dataGridView_resqDb.DataSource = await controller.GetByDate(dateTimePicker_dataQ);
+				return;
+			}
+			if (!queryData)
+			{
+				dataGridView_resqDb.DataSource = dataTableView;
 			}
 			else
 			{
-				dataGridView_resqDb.DataSource = await controller.GetByDate(null);
+				DateTime temp = ((DateTimePicker)sender).Value;
+				dataGridView_resqDb.DataSource = await controller.GetByDate(((DateTimePicker)sender));
 			}
+		}
+
+		private void dataGridView_resqDb_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+		{
+
+		}
+
+		private void dateTimePicker_dataEnvio_ValueChanged(object sender, EventArgs e)
+		{
+			RefreshDataGrid(true, sender);
+		}
+
+		private void dateTimePicker_dataVenda_ValueChanged(object sender, EventArgs e)
+		{
+			RefreshDataGrid(true, sender);
 		}
 	}
 }

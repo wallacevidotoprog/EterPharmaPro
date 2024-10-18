@@ -257,6 +257,7 @@
     <Compile Include="Utils\eControl\ToolStripDateTimePicker.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Utils\Events\ControlReqsViewEventArgs.cs" />
     <Compile Include="Utils\Extencions\ExceptionError.cs" />
     <Compile Include="Utils\Extencions\ExtensionsDefault.cs" />
     <Compile Include="Utils\Extencions\InputBox.cs">
