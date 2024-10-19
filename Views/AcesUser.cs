@@ -54,7 +54,7 @@ namespace EterPharmaPro.Views
 		{
 			string pass = groupBox_pass.Visible == true ? textBox_pass.Text : null;
 
-			var temp = await eterDb.Login(comboBox_user.SelectedValue.ToString(), pass);
+			var temp = await eterDb.EterDbController.Login(comboBox_user.SelectedValue.ToString(), pass);
 			if (temp.acPass)
 			{
 				groupBox_pass.Visible = true;

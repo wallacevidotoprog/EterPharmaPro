@@ -1,5 +1,6 @@
 ﻿using DocumentFormat.OpenXml.EMMA;
 using DocumentFormat.OpenXml.Office2010.Excel;
+using EterPharmaPro.DatabaseSQLite;
 using EterPharmaPro.Enums;
 using EterPharmaPro.Interfaces;
 using EterPharmaPro.Models;
@@ -33,20 +34,20 @@ namespace EterPharmaPro.Controllers.Manipulacao
 			switch (typeDoc)
 			{
 				case TypeDoc.CPF:
-					dadosCliente = await eterDb.DbCliente.GetCliente(new QueryWhereModel().SetWhere("CPF", query));
+					dadosCliente = await eterDb.ActionDb.GETFIELDS<ClienteModel>(new QueryWhereModel().SetWhere("CPF", query));
 					break;
 				case TypeDoc.RG:
-					dadosCliente = await eterDb.DbCliente.GetCliente(new QueryWhereModel().SetWhere("RG", query));
+					dadosCliente = await eterDb.ActionDb.GETFIELDS<ClienteModel>(new QueryWhereModel().SetWhere("RG", query));
 					break;
 				default:
-					dadosCliente = await eterDb.DbCliente.GetCliente(new QueryWhereModel());
+					dadosCliente = await eterDb.ActionDb.GETFIELDS<ClienteModel>(new QueryWhereModel());
 					break;
 			}
 
 
 			for (int i = 0; i < dadosCliente.Count; i++)
 			{
-				dadosCliente[i].ENDERECO = await eterDb.DbEndereco.GetEndereco(new QueryWhereModel().SetWhere("CLIENTE_ID", dadosCliente[i].ID));
+				dadosCliente[i].ENDERECO = await eterDb.ActionDb.GETFIELDS<EnderecoClienteModel>(new QueryWhereModel().SetWhere("CLIENTE_ID", dadosCliente[i].ID));
 			}
 			return dadosCliente;
 		}
@@ -88,7 +89,8 @@ namespace EterPharmaPro.Controllers.Manipulacao
 
 							if (edit)
 							{
-								await eterDb.DbManipuladosMedicamentos.DeleteMedicamento(model.ID.ToString(), connection, transaction);
+								await eterDb.ActionDb.DeleteMedicamento(model.ID.ToString(), connection, transaction);
+								await eterDb.ActionDb.DELETE<Medi>(new QuereDeleteModel().SetWhere("ID", model.ID), connection, transaction);
 								await eterDb.DbManipulados.UpdateManipulacao(model, connection, transaction);
 
 								foreach (var medicamento in (List<string>)model.MEDICAMENTOS)

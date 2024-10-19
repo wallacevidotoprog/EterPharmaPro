@@ -16,6 +16,7 @@ namespace EterPharmaPro.Models
 	}
 	public class MedicamentosControladoLoteModel
 	{
+
 		public string CODIGO_MED { get; set; }
 		public string NOME_MED { get; set; }
 

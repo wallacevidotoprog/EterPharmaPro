@@ -11,31 +11,29 @@ namespace EterPharmaPro.Interfaces
 		string DatabaseConnection { get; }
 		EterDbController EterDbController { get; set; }
 
-		UserModel UserModelAcess { get; set; }
-
 		IActionDbBase ActionDb { get; set; }
-		IEterDbUser DbUser { get; set; }
+		//IEterDbUser DbUser { get; set; }
 
-		IEterDbCliente DbCliente { get; set; }
+		//IEterDbCliente DbCliente { get; set; }
 
-		IEterDbEndereco DbEndereco { get; set; }
+		//IEterDbEndereco DbEndereco { get; set; }
 
-		IEterDbManipulados DbManipulados { get; set; }
+		//IEterDbManipulados DbManipulados { get; set; }
 
-		IEterDbManipuladosMedicamentos DbManipuladosMedicamentos { get; set; }
+		//IEterDbManipuladosMedicamentos DbManipuladosMedicamentos { get; set; }
 
-		IEterDbRequisicoesNotas DbRequisicoesNotas { get; set; }
+		//IEterDbRequisicoesNotas DbRequisicoesNotas { get; set; }
 
-		IEterDbControlados DbControlados { get; set; }
+		//IEterDbControlados DbControlados { get; set; }
 
-		IEterDbValidade DbValidade { get; set; }
+		//IEterDbValidade DbValidade { get; set; }
 
-		IEterDbProdutoValidade DbProdutoValidade { get; set; }
+		//IEterDbProdutoValidade DbProdutoValidade { get; set; }
 
-		IEterDbCategoria DbCategoria { get; set; }
+		//IEterDbCategoria DbCategoria { get; set; }
 
 		Task<bool> ExecuteTransactionAsync(params Func<Task<bool>>[] databaseOperations);
 		Task<object> ExecuteTransactionAsync(Func<Task<object>> databaseOperations);
-		Task<(bool acPass, bool acOk)> Login(string user, string pass = null);
+		
 	}
 }

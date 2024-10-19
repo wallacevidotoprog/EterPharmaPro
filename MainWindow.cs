@@ -105,7 +105,7 @@ namespace EterPharmaPro
 					{
 						try
 						{
-							bool test = await eterDb.ActionDb.DELETE<UserModel>(user.ID, connection, transaction);
+							bool test = await eterDb.ActionDb.DELETE<UserModel>(new QuereDeleteModel().SetWhere("ID", user.ID), connection, transaction);
 
 
 
@@ -139,14 +139,14 @@ namespace EterPharmaPro
 			}
 			else
 			{
-				this.Text = $"ETER PHARMA PRO [ {eterDb.UserModelAcess.ID_LOJA.ToString().PadLeft(4, '0')} - {eterDb.UserModelAcess.NOME} - {eterDb.UserModelAcess.FUNCAO_NAME} ]";
+				this.Text = $"ETER PHARMA PRO [ {eterDb.EterDbController.UserModelAcess.ID_LOJA.ToString().PadLeft(4, '0')} - {eterDb.EterDbController.UserModelAcess.NOME} - {eterDb.EterDbController.UserModelAcess.FUNCAO_NAME} ]";
 
 
 				//Notifications notifications = new Notifications();
 				//notifications.Show("SUCESS", $"Bem Vindo {eterDb.UserModelAcess.FUNCAO_NAME} {eterDb.UserModelAcess.NOME}", this.Icon.ToBitmap());
 
-				SendAlertBox.Send($"Bem Vindo {eterDb.UserModelAcess.FUNCAO_NAME} {eterDb.UserModelAcess.NOME}", TypeAlertEnum.Info);
-				toolStripButton_conf.Visible = (eterDb.UserModelAcess.FUNCAO_NAME == "DEV") ? true : false;
+				SendAlertBox.Send($"Bem Vindo {eterDb.EterDbController.UserModelAcess.FUNCAO_NAME} {eterDb.EterDbController.UserModelAcess.NOME}", TypeAlertEnum.Info);
+				toolStripButton_conf.Visible = (eterDb.EterDbController.UserModelAcess.FUNCAO_NAME == "DEV") ? true : false;
 			}
 		}
 		private void OpenForm(Form form)

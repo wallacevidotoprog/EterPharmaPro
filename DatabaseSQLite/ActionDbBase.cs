@@ -130,16 +130,16 @@ namespace EterPharmaPro.DatabaseSQLite
 			return false;
 		}
 
-		public async Task<bool> DELETE<T>(object id, SQLiteConnection connection, SQLiteTransaction transaction)
+		public async Task<bool> DELETE<T1>(QuereDeleteModel query, SQLiteConnection connection, SQLiteTransaction transaction)
 		{
 			try
 			{
-				T model = Activator.CreateInstance<T>();
+				T1 model = Activator.CreateInstance<T1>();
 				string tableName = GetTableName(model);
-				string Query = $"DELETE FROM {tableName} WHERE ID = @ID";
+
+				string Query = $"DELETE FROM {tableName} {query.ReturnSQLQuery()}";
 				using (SQLiteCommand command = new SQLiteCommand(Query, connection, transaction))
 				{
-					command.Parameters.AddWithValue("@ID", id);
 					await command.ExecuteNonQueryAsync();
 				}
 

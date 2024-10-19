@@ -70,7 +70,7 @@ namespace EterPharmaPro.Views.Manipulados
 		{
 			CleanAll(null, null);
 			await comboBox_user.CBListUserAsync(eterDb);
-			comboBox_user.SelectedIndex = comboBox_user.ReturnIndexUserCB(eterDb.UserModelAcess.ID);
+			comboBox_user.SelectedIndex = comboBox_user.ReturnIndexUserCB(eterDb.EterDbController.UserModelAcess.ID);
 
 			if (manipulados != null && edit)
 			{

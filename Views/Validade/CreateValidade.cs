@@ -93,7 +93,7 @@ namespace EterPharmaPro.Views.Validade
 				}
 			}
 			NewDocValidade(true);
-			comboBox_user.SelectedIndex = comboBox_user.ReturnIndexUserCB(eterDb.UserModelAcess.ID);
+			comboBox_user.SelectedIndex = comboBox_user.ReturnIndexUserCB(eterDb.EterDbController.UserModelAcess.ID);
 		}
 
 		private async void ePictureBox_create_Click(object sender, EventArgs e)

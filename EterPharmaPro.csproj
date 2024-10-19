@@ -171,6 +171,7 @@
     <Compile Include="DatabaseSQLite\EterDbValidade.cs" />
     <Compile Include="DatabaseSQLite\EterProps.cs" />
     <Compile Include="DatabaseSQLite\IgnoreAttribute.cs" />
+    <Compile Include="DatabaseSQLite\QuereDeleteModel.cs" />
     <Compile Include="Enums\ListViewActionsEnum.cs" />
     <Compile Include="Interfaces\IActionDbBase.cs" />
     <Compile Include="Interfaces\IEterDbCategoria.cs" />

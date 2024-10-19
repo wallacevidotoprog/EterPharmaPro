@@ -1,4 +1,5 @@
 ﻿using DocumentFormat.OpenXml.EMMA;
+using EterPharmaPro.DatabaseSQLite;
 using EterPharmaPro.Interfaces;
 using EterPharmaPro.Models;
 using EterPharmaPro.Models.DbModels;
@@ -18,13 +19,12 @@ namespace EterPharmaPro.Controllers.Impressos
 	public class ControleReqNotaController
 	{
 		public event EventHandler<ControlReqsViewEventArgs> LoadReqs;
-		private (List<ControlReqNotaDbModal> c, List<ReqNotaDbModal> r) cache_CR =(null,null);
+		private (List<ControlReqNotaDbModal> c, List<ReqNotaDbModal> r) cache_CR = (null, null);
 
 		private readonly IEterDb eterDb;
 		public ControleReqNotaController(IEterDb eterDb)
 		{
 			this.eterDb = eterDb;
-			//_ = LoadControlReqs();
 		}
 
 		public async Task<bool> CreateCREQ(RequisicaoNotasModel requisicaoNotas)
@@ -38,14 +38,14 @@ namespace EterPharmaPro.Controllers.Impressos
 					{
 						try
 						{
-							var temps = requisicaoNotas.Disolve();
-							long? id = await eterDb.DbRequisicoesNotas.CreateControl(temps.control, connection, transaction);
+							var temps = requisicaoNotas.DisolveBySQL();
+							long? id = await eterDb.ActionDb.INSERT(temps.control, connection, transaction);
 
 							temps.reqs.ForEach(req => { req.CQN_ID = id; });
 
 							for (int i = 0; i < temps.reqs.Count; i++)
 							{
-								await eterDb.DbRequisicoesNotas.CreateReqNota(temps.reqs[i], connection, transaction);
+								await eterDb.ActionDb.INSERT(temps.reqs[i], connection, transaction);
 							}
 
 
@@ -72,26 +72,29 @@ namespace EterPharmaPro.Controllers.Impressos
 		{
 			try
 			{
-				//using (var connection = new SQLiteConnection(eterDb.DatabaseConnection))
-				//{
-				//	await connection.OpenAsync().ConfigureAwait(false);
-				//	using (var transaction = connection.BeginTransaction())
-				//	{
-				//		try
-				//		{
+				using (var connection = new SQLiteConnection(eterDb.DatabaseConnection))
+				{
+					await connection.OpenAsync().ConfigureAwait(false);
+					using (var transaction = connection.BeginTransaction())
+					{
+						try
+						{
+							for (int i = 0; i < list.Count; i++)
+							{
+								await eterDb.ActionDb.UPDATE(new ControlReqNotaDbModal { ID = list[i], DATA_ENVIO = DateTime.Today }, connection, transaction);
+							}
 
-
-				//			transaction.Commit();
-				//			return true;
-				//		}
-				//		catch (Exception ex)
-				//		{
-				//			transaction.Rollback();
-				//			ex.ErrorGet();
-				//			return false;
-				//		}
-				//	}
-				//}
+							transaction.Commit();
+							return true;
+						}
+						catch (Exception ex)
+						{
+							transaction.Rollback();
+							ex.ErrorGet();
+							return false;
+						}
+					}
+				}
 			}
 			catch (Exception ex)
 			{
@@ -146,7 +149,7 @@ namespace EterPharmaPro.Controllers.Impressos
 
 			switch (((DateTimePicker)sender).Name)
 			{
-				
+
 				case "dateTimePicker_dataVenda":
 					tempC = cache_CR.c.Where(x => x.DATA_VENDA?.Month == value.Month && x.DATA_VENDA?.Year == value.Year).ToList();
 					break;
@@ -155,7 +158,7 @@ namespace EterPharmaPro.Controllers.Impressos
 					break;
 			}
 			DataTable tabela = Create();
-			
+
 
 			for (int i = 0; i < tempC.Count; i++)
 			{
@@ -189,6 +192,86 @@ namespace EterPharmaPro.Controllers.Impressos
 			tabela.Columns.Add("REQS");
 			tabela.Columns.Add("ACTION", typeof(bool));
 			return tabela;
+		}
+
+		public async Task<RequisicaoNotasModel> GetControlAndReqs(long? value)
+		{
+			try
+			{
+				ControlReqNotaDbModal controleReqNotaControllers = (await eterDb.ActionDb.GETFIELDS<ControlReqNotaDbModal>(new QueryWhereModel().SetWhere("ID", value))).FirstOrDefault();
+				List<ReqNotaDbModal> reqNotaDbModal = await eterDb.ActionDb.GETFIELDS<ReqNotaDbModal>(new QueryWhereModel().SetWhere("CQN_ID", controleReqNotaControllers.ID));
+
+				return new RequisicaoNotasModel().DisolveFromSQL(controleReqNotaControllers, reqNotaDbModal);
+			}
+			catch (Exception ex)
+			{
+				ex.ErrorGet();
+			}
+			return null;
+		}
+
+		internal async Task<bool> UpdateCREQ(RequisicaoNotasModel requisicaoNotas)
+		{
+			try
+			{
+				//using (var connection = new SQLiteConnection(eterDb.DatabaseConnection))
+				//{
+				//	await connection.OpenAsync().ConfigureAwait(false);
+				//	using (var transaction = connection.BeginTransaction())
+				//	{
+				//		try
+				//		{
+				//			await eterDb.ActionDb.DELETE<ReqNotaDbModal>(new QuereDeleteModel().SetWhere("CQN_ID", requisicaoNotas.ID), connection, transaction);
+
+				//			transaction.Commit();
+				//		}
+				//		catch (Exception ex)
+				//		{
+				//			transaction.Rollback();
+				//			ex.ErrorGet();
+				//			return false;
+				//		}
+				//	}
+				//}
+				using (var connection = new SQLiteConnection(eterDb.DatabaseConnection))
+				{
+					await connection.OpenAsync().ConfigureAwait(false);
+					using (var transaction = connection.BeginTransaction())
+					{
+						try
+						{
+
+							var temps = requisicaoNotas.DisolveBySQL();
+
+							await eterDb.ActionDb.UPDATE(temps.control, connection, transaction);
+
+							temps.reqs.ForEach(req => { req.CQN_ID = temps.control.ID; });
+
+							await eterDb.ActionDb.DELETE<ReqNotaDbModal>(new QuereDeleteModel().SetWhere("CQN_ID", requisicaoNotas.ID), connection, transaction);
+
+							for (int i = 0; i < temps.reqs.Count; i++)
+							{
+								await eterDb.ActionDb.INSERT(temps.reqs[i], connection, transaction);
+							}
+
+
+							transaction.Commit();
+							return true;
+						}
+						catch (Exception ex)
+						{
+							transaction.Rollback();
+							ex.ErrorGet();
+							return false;
+						}
+					}
+				}
+			}
+			catch (Exception ex)
+			{
+				ex.ErrorGet();
+			}
+			return false;
 		}
 	}
 }

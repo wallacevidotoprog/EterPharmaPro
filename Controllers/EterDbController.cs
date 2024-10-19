@@ -6,6 +6,7 @@ using EterPharmaPro.Models.DbModels;
 using EterPharmaPro.Utils.Extencions;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.SQLite;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,6 +17,8 @@ namespace EterPharmaPro.Controllers
 	{
 		private readonly IEterDb eterDb;
 
+		public UserModel UserModelAcess { get; private set; }
+
 		public EterDbController(IEterDb eterDb)
 		{
 			this.eterDb = eterDb;
@@ -23,11 +26,11 @@ namespace EterPharmaPro.Controllers
 
 		public async Task<(bool exist, EnderecoClienteModel end)> ExistAdressCliente(EnderecoClienteModel enderecoCliente)
 		{
-			List<EnderecoClienteModel> tempA = await eterDb.DbEndereco.GetEndereco(
+			List<EnderecoClienteModel> tempA = await eterDb.ActionDb.GETFIELDS<EnderecoClienteModel>(
 				new QueryWhereModel().SetWhere("CLIENTE_ID", enderecoCliente.CLIENTE_ID)
 				);
 
-			
+
 			for (int i = 0; i < tempA.Count; i++)
 			{
 				if (tempA[i].ENDERECO.ToUpper().Trim().Replace(" ", null) == enderecoCliente.ENDERECO.ToUpper().Trim().Replace(" ", null))
@@ -44,21 +47,21 @@ namespace EterPharmaPro.Controllers
 			{
 				if (exist)
 				{
-					return (await eterDb.ActionDb.GETFIELDS<ClienteModel>(new QueryWhereModel().SetWhere("ID", dadosCliente.ID))).FirstOrDefault() ;
+					return (await eterDb.ActionDb.GETFIELDS<ClienteModel>(new QueryWhereModel().SetWhere("ID", dadosCliente.ID))).FirstOrDefault();
 				}
 
-				ClienteModel t1 = !string.IsNullOrEmpty(dadosCliente.CPF)  ? (await eterDb.DbCliente.GetCliente(new QueryWhereModel().SetWhere("CPF", dadosCliente.CPF))).FirstOrDefault() : null;
+				ClienteModel t1 = !string.IsNullOrEmpty(dadosCliente.CPF) ? (await eterDb.ActionDb.GETFIELDS<ClienteModel>(new QueryWhereModel().SetWhere("CPF", dadosCliente.CPF))).FirstOrDefault() : null;
 
-				ClienteModel t2 = !string.IsNullOrEmpty(dadosCliente.RG) ? (await eterDb.DbCliente.GetCliente(new QueryWhereModel().SetWhere("RG", dadosCliente.RG))).FirstOrDefault() : null;
-				
-				return !(t1 is null) ? t1 : !(t2 is null) ? t2  : null;
+				ClienteModel t2 = !string.IsNullOrEmpty(dadosCliente.RG) ? (await eterDb.ActionDb.GETFIELDS<ClienteModel>(new QueryWhereModel().SetWhere("RG", dadosCliente.RG))).FirstOrDefault() : null;
+
+				return !(t1 is null) ? t1 : !(t2 is null) ? t2 : null;
 			}
 			catch (Exception ex)
 			{
 				ex.ErrorGet();
 			}
 			return null;
-			
+
 		}
 
 		public async Task<(long? idC, long? idE)> RegisterCliente(ClienteModel dadosCliente)
@@ -105,7 +108,7 @@ namespace EterPharmaPro.Controllers
 								idc = await eterDb.ActionDb.INSERT(dadosCliente, connection, transaction);
 								enderecoCliente.CLIENTE_ID = idc;
 								ide = await eterDb.ActionDb.INSERT(enderecoCliente, connection, transaction);
-							}							
+							}
 
 							transaction.Commit();
 						}
@@ -126,6 +129,45 @@ namespace EterPharmaPro.Controllers
 			}
 		}
 
+		public async Task<(bool acPass, bool acOk)> Login(string user, string pass = null)
+		{
+
+			try
+			{
+				UserModel userModel = (await eterDb.ActionDb.GETFIELDS<UserModel>(new QueryWhereModel().SetWhere("ID", user))).FirstOrDefault();
+				if (userModel == null)
+				{ return (false, false); }
+
+
+				userModel.FUNCAO_NAME = (await eterDb.ActionDb.GETFIELDS<FuncaoDbModel>(new QueryWhereModel().SetWhere("ID", userModel.FUNCAO))).FirstOrDefault()?.NOME;
+
+				if (userModel.PASS == string.Empty)
+				{
+
+					UserModelAcess = userModel;
+					return (false, true);
+				}
+				else if (userModel.PASS != string.Empty && pass == null)
+				{
+					return (true, false);
+				}
+				else
+				{
+					if (userModel.PASS == pass)
+					{
+						UserModelAcess = userModel;
+						return (false, true);
+					}
+				}
+				return (false, false);
+
+			}
+			catch (Exception ex)
+			{
+				ex.ErrorGet();
+				return (false, false);
+			}
+		}
 
 
 	}

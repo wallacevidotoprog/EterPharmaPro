@@ -15,6 +15,7 @@ namespace EterPharmaPro.Views.ReqNota
 	{
 		private RequisicaoNotasModel requisicaoNotas = null;
 		private bool isNew = false;
+		private bool isEdit = false;
 		private DataTable dataTableView = null;
 
 		private readonly ControleReqNotaController controller = null;
@@ -55,36 +56,48 @@ namespace EterPharmaPro.Views.ReqNota
 
 		private void ePictureBox_addR_Click(object sender, System.EventArgs e)
 		{
-			dataGridView_reqs.Rows.Add(new object[] { textBox_req.Text.ToUpper() });
+			dataGridView_reqs.Rows.Add(new object[] { string.Empty, textBox_req.Text.ToUpper() });
 			textBox_req.Clear();
 			textBox_req.Focus();
 
 		}
 
+		private void OpenSaveUp()
+		{
+			toolStripButton_new_save.Image = Resources.salve;
+			toolStripButton_cancel.Visible = true;
+			groupBox_addReq.Visible = true;
+			toolStripButton_send.Visible = false;
+		}
 		private async void toolStripButton_new_save_Click(object sender, System.EventArgs e)
 		{
-			if (!isNew)
+			if (!isNew && !isEdit)
 			{
 				requisicaoNotas = new RequisicaoNotasModel();
 
-				toolStripButton_new_save.Image = Resources.salve;
-				toolStripButton_cancel.Visible = true;
-				groupBox_addReq.Visible = true;
-				toolStripButton_send.Visible = false;
+				OpenSaveUp();
 				ClearFieldReq();
 				isNew = true;
 			}
 			else
 			{
-				requisicaoNotas.REQS = requisicaoNotas.REQS ?? new List<string>();
+				requisicaoNotas.REQS = requisicaoNotas.REQS ?? new List<(long? id, string name)>();
+				requisicaoNotas.REQS.Clear();
 
 				for (int i = 0; i < dataGridView_reqs.Rows.Count; i++)
 				{
-					string sTemp = dataGridView_reqs.Rows[i].Cells[0].Value.ToString();
+					long? sTempId = null;
 
-					if (!string.IsNullOrEmpty(sTemp))
+					if (!string.IsNullOrEmpty(dataGridView_reqs.Rows[i].Cells[0].Value.ToString()))
 					{
-						requisicaoNotas.REQS.Add(sTemp);
+						sTempId = Convert.ToUInt32(dataGridView_reqs.Rows[i].Cells[0].Value.ToString());
+					}
+
+					string sTempReq = dataGridView_reqs.Rows[i].Cells[1].Value.ToString();
+
+					if (!string.IsNullOrEmpty(sTempReq))
+					{
+						requisicaoNotas.REQS.Add((sTempId, sTempReq));
 					}
 
 				}
@@ -93,9 +106,21 @@ namespace EterPharmaPro.Views.ReqNota
 				requisicaoNotas.USERID = Convert.ToInt32(comboBox_vend.SelectedValue);
 				requisicaoNotas.DATA_VENDA = dateTimePicker_data.Value;
 
-				if (await controller.CreateCREQ(requisicaoNotas))
+				if (isEdit)
 				{
-					toolStripButton_cancel_Click(null, null);
+					if (await controller.UpdateCREQ(requisicaoNotas))
+					{
+						toolStripButton_cancel_Click(null, null);
+						_ = controller.LoadControlReqs();
+					}
+				}
+				else
+				{
+					if (await controller.CreateCREQ(requisicaoNotas))
+					{
+						toolStripButton_cancel_Click(null, null);
+						_ = controller.LoadControlReqs();
+					}
 				}
 			}
 
@@ -108,8 +133,10 @@ namespace EterPharmaPro.Views.ReqNota
 			toolStripButton_cancel.Visible = false;
 			groupBox_addReq.Visible = false;
 			toolStripButton_send.Visible = true;
+			dataGridView_reqs.Columns[0].Visible = false;
 			ClearFieldReq();
 			isNew = false;
+			isEdit = false;
 		}
 
 		private async void toolStripButton_send_Click(object sender, EventArgs e)
@@ -117,7 +144,8 @@ namespace EterPharmaPro.Views.ReqNota
 			List<long> list = new List<long>();
 			for (int i = 0; i < dataGridView_resqDb.Rows.Count; i++)
 			{
-				if ((bool)dataGridView_resqDb.Rows[i].Cells[3].Value)
+				//4 - 6
+				if ((bool)dataGridView_resqDb.Rows[i].Cells[6].Value)
 				{
 					list.Add(Convert.ToUInt32(dataGridView_resqDb.Rows[i].Cells[0].Value));
 				}
@@ -127,7 +155,7 @@ namespace EterPharmaPro.Views.ReqNota
 			{
 				if (await controller.SendReq(list))
 				{
-
+					_ = controller.LoadControlReqs();
 				}
 			}
 		}
@@ -141,7 +169,7 @@ namespace EterPharmaPro.Views.ReqNota
 		private async void ControleReqNota_LoadAsync(object sender, EventArgs e)
 		{
 			await comboBox_user_red.CBListUserAsync(eterDb);
-			comboBox_user_red.SelectedIndex = comboBox_user_red.ReturnIndexUserCB(eterDb.UserModelAcess.ID);
+			comboBox_user_red.SelectedIndex = comboBox_user_red.ReturnIndexUserCB(eterDb.EterDbController.UserModelAcess.ID);
 			await comboBox_vend.CBListUserAsync(eterDb);
 		}
 
@@ -170,9 +198,23 @@ namespace EterPharmaPro.Views.ReqNota
 			}
 		}
 
-		private void dataGridView_resqDb_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+		private async void dataGridView_resqDb_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
 		{
+			long? id = Convert.ToUInt32(dataGridView_resqDb.Rows[e.RowIndex].Cells[0].Value);
+			requisicaoNotas = await controller.GetControlAndReqs(id);
 
+			dataGridView_reqs.Columns[0].Visible = true;
+
+			for (int i = 0; i < requisicaoNotas.REQS.Count; i++)
+			{
+				dataGridView_reqs.Rows.Add(new object[] { requisicaoNotas.REQS[i].id, requisicaoNotas.REQS[i].name });
+			}
+
+			comboBox_user_red.SelectedIndex = comboBox_user_red.ReturnIndexUserCB(requisicaoNotas.REG_USERID);
+			comboBox_vend.SelectedIndex = comboBox_vend.ReturnIndexUserCB(requisicaoNotas.USERID);
+			dateTimePicker_data.Value = (DateTime)requisicaoNotas.DATA_VENDA;
+			OpenSaveUp();
+			isEdit = true;
 		}
 
 		private void dateTimePicker_dataEnvio_ValueChanged(object sender, EventArgs e)

@@ -84,7 +84,7 @@ namespace EterPharmaPro.Views.Manipulados
 
 		private async void eXCLUIRToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (eterDb.UserModelAcess.FUNCAO_NAME == "DEV" || eterDb.UserModelAcess.FUNCAO_NAME == "ADMIN" || eterDb.UserModelAcess.FUNCAO_NAME == "GERENTE")
+			if (eterDb.EterDbController.UserModelAcess.FUNCAO_NAME == "DEV" || eterDb.EterDbController.UserModelAcess.FUNCAO_NAME == "ADMIN" || eterDb.EterDbController.UserModelAcess.FUNCAO_NAME == "GERENTE")
 			{
 				try
 				{

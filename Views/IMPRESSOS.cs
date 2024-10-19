@@ -63,7 +63,7 @@ namespace EterPharmaPro.Views
 
 		private void IMPRESSOS_Load(object sender, EventArgs e)
 		{
-			switch (eterDb.UserModelAcess.FUNCAO)
+			switch (eterDb.EterDbController.UserModelAcess.FUNCAO)
 			{
 				case 1:
 				case 2:

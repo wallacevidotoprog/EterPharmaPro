@@ -22,27 +22,27 @@ namespace EterPharmaPro.DatabaseSQLite
 
 
 		public IActionDbBase ActionDb { get; set; }
-		public IEterDbUser DbUser { get; set; }
+		//public IEterDbUser DbUser { get; set; }
 
-		public IEterDbCliente DbCliente { get; set; }
+		//public IEterDbCliente DbCliente { get; set; }
 
-		public IEterDbEndereco DbEndereco { get; set; }
+		//public IEterDbEndereco DbEndereco { get; set; }
 
-		public IEterDbManipulados DbManipulados { get; set; }
+		//public IEterDbManipulados DbManipulados { get; set; }
 
-		public IEterDbManipuladosMedicamentos DbManipuladosMedicamentos { get; set; }
+		//public IEterDbManipuladosMedicamentos DbManipuladosMedicamentos { get; set; }
 
-		public IEterDbRequisicoesNotas DbRequisicoesNotas { get; set; }
+		//public IEterDbRequisicoesNotas DbRequisicoesNotas { get; set; }
 
-		public IEterDbControlados DbControlados { get; set; }
+		//public IEterDbControlados DbControlados { get; set; }
 
-		public IEterDbValidade DbValidade { get; set; }
+		//public IEterDbValidade DbValidade { get; set; }
 
-		public IEterDbProdutoValidade DbProdutoValidade { get; set; }
+		//public IEterDbProdutoValidade DbProdutoValidade { get; set; }
 
-		public IEterDbCategoria DbCategoria { get; set; }
+		//public IEterDbCategoria DbCategoria { get; set; }
 
-		public IEterProps DbProps { get; set; }
+		//public IEterProps DbProps { get; set; }
 
 
 		public EterDbController EterDbController { get; set; }
@@ -74,17 +74,17 @@ namespace EterPharmaPro.DatabaseSQLite
 		{
 			ActionDb = new ActionDbBase(_databaseConnection);
 
-			DbUser = new EterDbUser(_databaseConnection);
-			DbCliente = new EterDbCliente(_databaseConnection);
-			DbEndereco = new EterDbEndereco(_databaseConnection);
-			DbManipulados = new EterDbManipulados(_databaseConnection);
-			DbManipuladosMedicamentos = new EterDbManipuladosMedicamentos(_databaseConnection);
-			DbRequisicoesNotas = new EterDbRequisicoesNotas(_databaseConnection);
-			DbControlados = new EterDbControlados(_databaseConnection);
-			DbValidade = new EterDbValidade(_databaseConnection);
-			DbProdutoValidade = new EterDbProdutoValidade(_databaseConnection);
-			DbCategoria = new EterDbCategoria(_databaseConnection);
-			DbProps = new EterProps(_databaseConnection);
+			//DbUser = new EterDbUser(_databaseConnection);
+			//DbCliente = new EterDbCliente(_databaseConnection);
+			//DbEndereco = new EterDbEndereco(_databaseConnection);
+			//DbManipulados = new EterDbManipulados(_databaseConnection);
+			//DbManipuladosMedicamentos = new EterDbManipuladosMedicamentos(_databaseConnection);
+			//DbRequisicoesNotas = new EterDbRequisicoesNotas(_databaseConnection);
+			//DbControlados = new EterDbControlados(_databaseConnection);
+			//DbValidade = new EterDbValidade(_databaseConnection);
+			//DbProdutoValidade = new EterDbProdutoValidade(_databaseConnection);
+			//DbCategoria = new EterDbCategoria(_databaseConnection);
+			//DbProps = new EterProps(_databaseConnection);
 			EterDbController = new EterDbController(this);
 		}
 
@@ -112,45 +112,7 @@ namespace EterPharmaPro.DatabaseSQLite
 			});
 		}
 
-		public async Task<(bool acPass, bool acOk)> Login(string user, string pass = null)
-		{
-
-			try
-			{
-				UserModel userModel = (await DbUser.GetUser(new QueryWhereModel().SetWhere("ID", user))).FirstOrDefault();
-				if (userModel == null)
-				{ return (false, false); }
-
-
-				userModel.FUNCAO_NAME = (await DbProps.GetFuncao(new QueryWhereModel().SetWhere("ID", userModel.FUNCAO))).FirstOrDefault()?.NOME;
-
-				if (userModel.PASS == string.Empty)
-				{
-
-					UserModelAcess = userModel;
-					return (false, true);
-				}
-				else if (userModel.PASS != string.Empty && pass == null)
-				{
-					return (true, false);
-				}
-				else
-				{
-					if (userModel.PASS == pass)
-					{
-						UserModelAcess = userModel;
-						return (false, true);
-					}
-				}
-				return (false, false);
-
-			}
-			catch (Exception ex)
-			{
-				ex.ErrorGet();
-				return (false, false);
-			}
-		}
+		
 
 
 		//------ EXEMPLO ------
