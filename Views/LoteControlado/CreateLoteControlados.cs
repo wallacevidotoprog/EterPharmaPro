@@ -15,12 +15,12 @@ namespace EterPharmaPro.Views.LoteControlado
 	public partial class CreateLoteControlados : Form
 	{
 		private readonly CreateLoteControladosController controladosController;
-		private List<MedicamentosControladoLoteModel> medicamentosControladoLoteModel;
+		private List<MedicamentosControladoDbModel> medicamentosControladoDbModels;
 		private ProdutosModel tempProdutosModel;
 		private ClienteModel ClienteModel;
 		private ValidatorFields validatorFields;
 		private ValidatorFields validatorFieldsLot;
-		private bool isClienteSelected;
+		private bool isClienteSelected = false;
 
 		private void CreateLoteControlados_Load(object sender, EventArgs e)
 		{
@@ -86,21 +86,22 @@ namespace EterPharmaPro.Views.LoteControlado
 		{
 			if (validatorFieldsLot.ValidateFields())
 			{
-				medicamentosControladoLoteModel = medicamentosControladoLoteModel ?? new List<MedicamentosControladoLoteModel>();
-				var med = new MedicamentosControladoLoteModel
+				medicamentosControladoDbModels = medicamentosControladoDbModels ?? new List<MedicamentosControladoDbModel>();
+
+				MedicamentosControladoDbModel med = new MedicamentosControladoDbModel
 				{
-					CODIGO_MED = (tempProdutosModel is null) ? string.Empty : tempProdutosModel.COD_PRODUTO,
-					NOME_MED = textBox_medicamento.Text.ToUpper(),
-					QUANTIDADE = (int)numericUpDown_qtd.Value,
-					DATA_VALIDADE = dateTimePicker_validade.Value,
+					CODIGO = (tempProdutosModel is null) ? 0 : Convert.ToInt32(tempProdutosModel?.COD_PRODUTO),
+					NAME_M = textBox_medicamento.Text.ToUpper(),
+					QTD = (int)numericUpDown_qtd.Value,
+					VALIDADE = dateTimePicker_validade.Value.ToDatetimeUnix(),
 					LOTE = textBox_lote.Text.ToUpper()
 				};
-				medicamentosControladoLoteModel.Add(med);
+				medicamentosControladoDbModels.Add(med);
 				RefreshListViwe(med, ListViewActionsEnum.ADD);
 				tempProdutosModel = null;
 				ClearInserMedicamento();
 			}
-				
+
 
 
 
@@ -118,15 +119,16 @@ namespace EterPharmaPro.Views.LoteControlado
 			dateTimePicker_validade.Value = DateTime.Today;
 			textBox_lote.Clear();
 			listView1.Items.Clear();
-			medicamentosControladoLoteModel = null;
+			medicamentosControladoDbModels = null;
 		}
 
 		private async void toolStripButton_print_Click(object sender, EventArgs e)
 		{
-			if (validatorFields.ValidateFields() )
+			if (validatorFields.ValidateFields())
 			{
 
-				if (medicamentosControladoLoteModel is null) {
+				if (medicamentosControladoDbModels is null)
+				{
 					listView1.StartVFD();
 					return;
 				}
@@ -137,21 +139,21 @@ namespace EterPharmaPro.Views.LoteControlado
 						RG = textBox_rg.GetText.ReturnInt(),
 						NOME = textBox_nome.Text,
 						TELEFONE = textBox_cel.Text.ReturnInt(),
-						ENDERECO = new EnderecoClienteModel
+						ENDERECO = new EnderecoClienteDbModel
 						{
 							ENDERECO = textBox_end.Text
 						}
 					};
 				}
-				if (ClienteModel.ENDERECO is null || ((EnderecoClienteModel)ClienteModel.ENDERECO).ENDERECO.Trim().Replace(" ", null) != textBox_end.Text.Trim().Replace(" ", null))
+				if (ClienteModel.ENDERECO is null || ((EnderecoClienteDbModel)ClienteModel.ENDERECO).ENDERECO.Trim().Replace(" ", null) != textBox_end.Text.Trim().Replace(" ", null))
 				{
-					ClienteModel.ENDERECO = new EnderecoClienteModel
+					ClienteModel.ENDERECO = new EnderecoClienteDbModel
 					{
 						ENDERECO = textBox_end.Text
 					};
 				}
 
-				if (await controladosController.FinishAsync(ClienteModel, medicamentosControladoLoteModel))
+				if (await controladosController.FinishAsync(ClienteModel, medicamentosControladoDbModels))
 				{
 					if (MessageBox.Show("TUDO OK!!\nDeseja limpar o formulário ?", "LOTE VALIDADE", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
 					{
@@ -170,7 +172,7 @@ namespace EterPharmaPro.Views.LoteControlado
 					int temp = listView1.SelectedItems[0].Index;
 					if (MessageBox.Show("Deseja excluir esse item ?\n" + listView1.SelectedItems[0]?.SubItems[0].Text, "Excluir Item", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK && temp >= 0)
 					{
-						medicamentosControladoLoteModel.RemoveAt(temp);
+						medicamentosControladoDbModels.RemoveAt(temp);
 						RefreshListViwe(temp, ListViewActionsEnum.REMOVE);
 					}
 				}
@@ -186,12 +188,12 @@ namespace EterPharmaPro.Views.LoteControlado
 			switch (listViewActionsEnum)
 			{
 				case ListViewActionsEnum.ADD:
-					MedicamentosControladoLoteModel tempDataAdd = data as MedicamentosControladoLoteModel;
+					MedicamentosControladoDbModel tempDataAdd = data as MedicamentosControladoDbModel;
 
-					ListViewItem item = new ListViewItem(tempDataAdd.CODIGO_MED);
-					item.SubItems.Add(tempDataAdd.NOME_MED);
-					item.SubItems.Add(tempDataAdd.QUANTIDADE.ToString());
-					item.SubItems.Add(tempDataAdd.DATA_VALIDADE.ToShortDateString());
+					ListViewItem item = new ListViewItem(tempDataAdd.CODIGO?.ToString());
+					item.SubItems.Add(tempDataAdd.NAME_M);
+					item.SubItems.Add(tempDataAdd.QTD.ToString());
+					item.SubItems.Add(tempDataAdd.VALIDADE.ToUnixDatetime()?.ToShortDateString());
 					item.SubItems.Add(tempDataAdd.LOTE);
 					listView1.Items.Add(item);
 					break;
@@ -224,9 +226,9 @@ namespace EterPharmaPro.Views.LoteControlado
 				}
 
 
-				textBox_end.Text = ((List<EnderecoClienteModel>)ClienteModel.ENDERECO).GetEnderecoArray(out int indexSelect);
+				textBox_end.Text = ((List<EnderecoClienteDbModel>)ClienteModel.ENDERECO).GetEnderecoArray(out int indexSelect);
 
-				ClienteModel.ENDERECO = indexSelect != -1 ? ((List<EnderecoClienteModel>)ClienteModel?.ENDERECO)[indexSelect] : null;
+				ClienteModel.ENDERECO = indexSelect != -1 ? ((List<EnderecoClienteDbModel>)ClienteModel?.ENDERECO)[indexSelect] : null;
 
 				isClienteSelected = true;
 			}

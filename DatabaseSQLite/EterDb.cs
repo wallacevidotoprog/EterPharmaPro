@@ -5,7 +5,6 @@ using EterPharmaPro.Utils.Extencions;
 using System;
 using System.Data.SQLite;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace EterPharmaPro.DatabaseSQLite
@@ -22,27 +21,7 @@ namespace EterPharmaPro.DatabaseSQLite
 
 
 		public IActionDbBase ActionDb { get; set; }
-		//public IEterDbUser DbUser { get; set; }
 
-		//public IEterDbCliente DbCliente { get; set; }
-
-		//public IEterDbEndereco DbEndereco { get; set; }
-
-		//public IEterDbManipulados DbManipulados { get; set; }
-
-		//public IEterDbManipuladosMedicamentos DbManipuladosMedicamentos { get; set; }
-
-		//public IEterDbRequisicoesNotas DbRequisicoesNotas { get; set; }
-
-		//public IEterDbControlados DbControlados { get; set; }
-
-		//public IEterDbValidade DbValidade { get; set; }
-
-		//public IEterDbProdutoValidade DbProdutoValidade { get; set; }
-
-		//public IEterDbCategoria DbCategoria { get; set; }
-
-		//public IEterProps DbProps { get; set; }
 
 
 		public EterDbController EterDbController { get; set; }
@@ -74,17 +53,6 @@ namespace EterPharmaPro.DatabaseSQLite
 		{
 			ActionDb = new ActionDbBase(_databaseConnection);
 
-			//DbUser = new EterDbUser(_databaseConnection);
-			//DbCliente = new EterDbCliente(_databaseConnection);
-			//DbEndereco = new EterDbEndereco(_databaseConnection);
-			//DbManipulados = new EterDbManipulados(_databaseConnection);
-			//DbManipuladosMedicamentos = new EterDbManipuladosMedicamentos(_databaseConnection);
-			//DbRequisicoesNotas = new EterDbRequisicoesNotas(_databaseConnection);
-			//DbControlados = new EterDbControlados(_databaseConnection);
-			//DbValidade = new EterDbValidade(_databaseConnection);
-			//DbProdutoValidade = new EterDbProdutoValidade(_databaseConnection);
-			//DbCategoria = new EterDbCategoria(_databaseConnection);
-			//DbProps = new EterProps(_databaseConnection);
 			EterDbController = new EterDbController(this);
 		}
 
@@ -112,7 +80,7 @@ namespace EterPharmaPro.DatabaseSQLite
 			});
 		}
 
-		
+
 
 
 		//------ EXEMPLO ------

@@ -29,7 +29,7 @@ namespace EterPharmaPro.DatabaseSQLite
 				using (SQLiteCommand command = new SQLiteCommand(Query, connection, transaction))
 				{
 					command.Parameters.AddWithValue("@USER_ID", model.USER_ID);
-					command.Parameters.AddWithValue("@DATE", model.DATE.ToDatetimeUnix());
+					command.Parameters.AddWithValue("@DATE", model.DATE.ToUnixDatetime().ToDatetimeUnix());
 					await command.ExecuteNonQueryAsync();
 					command.CommandText = "SELECT last_insert_rowid()";
 					return (long)(await command.ExecuteScalarAsync().ConfigureAwait(continueOnCapturedContext: false));

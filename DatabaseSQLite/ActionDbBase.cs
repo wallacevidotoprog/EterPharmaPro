@@ -130,7 +130,7 @@ namespace EterPharmaPro.DatabaseSQLite
 			return false;
 		}
 
-		public async Task<bool> DELETE<T1>(QuereDeleteModel query, SQLiteConnection connection, SQLiteTransaction transaction)
+		public async Task<bool> DELETE<T1>(QueryDeleteModel query, SQLiteConnection connection, SQLiteTransaction transaction)
 		{
 			try
 			{

@@ -247,7 +247,7 @@ namespace EterPharmaPro.Controllers.Impressos
 
 							temps.reqs.ForEach(req => { req.CQN_ID = temps.control.ID; });
 
-							await eterDb.ActionDb.DELETE<ReqNotaDbModal>(new QuereDeleteModel().SetWhere("CQN_ID", requisicaoNotas.ID), connection, transaction);
+							await eterDb.ActionDb.DELETE<ReqNotaDbModal>(new QueryDeleteModel().SetWhere("CQN_ID", requisicaoNotas.ID), connection, transaction);
 
 							for (int i = 0; i < temps.reqs.Count; i++)
 							{

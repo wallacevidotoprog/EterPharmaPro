@@ -18,7 +18,7 @@ namespace EterPharmaPro.DatabaseSQLite
 			_databaseConnection = databaseConnection;
 		}
 
-		public async Task<long?> CreateEndereco(EnderecoClienteModel model, SQLiteConnection connection, SQLiteTransaction transaction)
+		public async Task<long?> CreateEndereco(EnderecoClienteDbModel model, SQLiteConnection connection, SQLiteTransaction transaction)
 		{
 			long id = -1L;
 			try
@@ -53,7 +53,7 @@ namespace EterPharmaPro.DatabaseSQLite
 			return id;
 		}
 
-		public async Task<bool> UpdateEndereco(EnderecoClienteModel model, SQLiteConnection connection, SQLiteTransaction transaction)
+		public async Task<bool> UpdateEndereco(EnderecoClienteDbModel model, SQLiteConnection connection, SQLiteTransaction transaction)
 		{
 			try
 			{
@@ -110,11 +110,11 @@ namespace EterPharmaPro.DatabaseSQLite
 			}
 		}
 
-		public async Task<List<EnderecoClienteModel>> GetEndereco(QueryWhereModel query)
+		public async Task<List<EnderecoClienteDbModel>> GetEndereco(QueryWhereModel query)
 		{
 			try
 			{
-				return await new MapDbEter(_databaseConnection).QueryAsync<EnderecoClienteModel>($"SELECT * FROM ENDERECO_C {query.ReturnSQLQuery()}");
+				return await new MapDbEter(_databaseConnection).QueryAsync<EnderecoClienteDbModel>($"SELECT * FROM ENDERECO_C {query.ReturnSQLQuery()}");
 			}
 			catch (Exception ex)
 			{

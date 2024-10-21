@@ -50,7 +50,7 @@ namespace EterPharmaPro.Services.XLSX
 									worksheet.Cell($"A{line}").Value = tp[x].PRODUTO_CODIGO.ToString().PadLeft(6, '0'); ;
 									worksheet.Cell($"B{line}").Value = tp[x].PRODUTO_DESCRICAO;
 									worksheet.Cell($"C{line}").Value = tp[x].QUANTIDADE;
-									worksheet.Cell($"D{line}").Value = tp[x].DATA_VALIDADE.ToShortDateString();
+									worksheet.Cell($"D{line}").Value = tp[x].DATA_VALIDADE.ToUnixDatetime()?.ToShortDateString();
 									line++;
 								}
 							}
@@ -63,7 +63,7 @@ namespace EterPharmaPro.Services.XLSX
 							worksheet.Cell($"A{line}").Value = validade.produtoValidadeDbModals[i].PRODUTO_CODIGO.ToString().PadLeft(6, '0'); ;
 							worksheet.Cell($"B{line}").Value = validade.produtoValidadeDbModals[i].PRODUTO_DESCRICAO;
 							worksheet.Cell($"C{line}").Value = validade.produtoValidadeDbModals[i].QUANTIDADE;
-							worksheet.Cell($"D{line}").Value = validade.produtoValidadeDbModals[i].DATA_VALIDADE.ToShortDateString();
+							worksheet.Cell($"D{line}").Value = validade.produtoValidadeDbModals[i].DATA_VALIDADE.ToUnixDatetime()?.ToShortDateString();
 							line++;
 						}	
 					}
@@ -107,7 +107,7 @@ namespace EterPharmaPro.Services.XLSX
 						worksheet.Cell($"A{line}").Value = validade[i].PRODUTO_CODIGO.ToString().PadLeft(6, '0'); ;
 						worksheet.Cell($"B{line}").Value = validade[i].PRODUTO_DESCRICAO;
 						worksheet.Cell($"C{line}").Value = validade[i].QUANTIDADE;
-						worksheet.Cell($"D{line}").Value = validade[i].DATA_VALIDADE.ToShortDateString();
+						worksheet.Cell($"D{line}").Value = validade[i].DATA_VALIDADE.ToUnixDatetime()?.ToShortDateString();
 						line++;
 					}
 					line--;

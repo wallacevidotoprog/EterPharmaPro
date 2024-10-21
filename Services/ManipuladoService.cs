@@ -14,13 +14,13 @@ namespace EterPharmaPro.Services
 {
 	public class ManipuladoService
 	{
-		private readonly IEterDb _eterDb;
+		private readonly IEterDb eterDb;
 
 		private static RawPrinterHelper printerHelper;
 
 		public ManipuladoService(IEterDb eterDb)
 		{
-			_eterDb = eterDb;
+			this.eterDb = eterDb;
 		}
 
 		public async void PrintDocManipulado80mm(ManipulacaoModel model)
@@ -41,7 +41,7 @@ namespace EterPharmaPro.Services
 				symbol = SymbolPrintEnum.Space
 			});
 
-			UserModel userModel = (await _eterDb.DbUser.GetUser(new QueryWhereModel().SetWhere("ID", model.DADOSATENDIMENTO.ATEN_LOJA))).FirstOrDefault();
+			UserModel userModel = (await eterDb.ActionDb.GETFIELDS<UserModel>(new QueryWhereModel().SetWhere("ID", model.DADOSATENDIMENTO.ATEN_LOJA))).FirstOrDefault();
 			printerHelper.AddLine(new TextPrintFormaterModel
 			{
 				tilte = "Vendedor(a): ",
@@ -98,16 +98,16 @@ namespace EterPharmaPro.Services
 			printerHelper.AddLine(new TextPrintFormaterModel
 			{
 				tilte = "ENDEREÇO: ",
-				texto = ((EnderecoClienteModel)((ClienteModel)model.DADOSCLIENTE).ENDERECO).ENDERECO,
+				texto = ((EnderecoClienteDbModel)((ClienteModel)model.DADOSCLIENTE).ENDERECO).ENDERECO,
 				alignmentText = AlignmentTextPrintEnum.Left,
 				fontStyle = FormatTextPrintEnum.Default
 			});
-			if (((EnderecoClienteModel)((ClienteModel)model.DADOSCLIENTE).ENDERECO).OBSERVACAO != string.Empty)
+			if (((EnderecoClienteDbModel)((ClienteModel)model.DADOSCLIENTE).ENDERECO).OBSERVACAO != string.Empty)
 			{
 				printerHelper.AddLine(new TextPrintFormaterModel
 				{
 					tilte = "OBS. DO ENDEREÇO: ",
-					texto = ((EnderecoClienteModel)((ClienteModel)model.DADOSCLIENTE).ENDERECO).OBSERVACAO,
+					texto = ((EnderecoClienteDbModel)((ClienteModel)model.DADOSCLIENTE).ENDERECO).OBSERVACAO,
 					alignmentText = AlignmentTextPrintEnum.Left,
 					fontStyle = FormatTextPrintEnum.Default
 				});

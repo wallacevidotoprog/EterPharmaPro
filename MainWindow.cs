@@ -105,7 +105,7 @@ namespace EterPharmaPro
 					{
 						try
 						{
-							bool test = await eterDb.ActionDb.DELETE<UserModel>(new QuereDeleteModel().SetWhere("ID", user.ID), connection, transaction);
+							bool test = await eterDb.ActionDb.DELETE<UserModel>(new QueryDeleteModel().SetWhere("ID", user.ID), connection, transaction);
 
 
 

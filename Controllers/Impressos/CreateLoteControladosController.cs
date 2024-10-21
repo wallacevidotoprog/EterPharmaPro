@@ -61,19 +61,19 @@ namespace EterPharmaPro.Controllers.CarimboLoteValidade
 
 		public async Task<ClienteModel> GetCliente(string value)
 		{
-			ClienteModel tempCliente = (await eterDb.DbCliente.GetCliente(new QueryWhereModel().SetWhere("RG", value))).FirstOrDefault();
+			ClienteModel tempCliente = (await eterDb.ActionDb.GETFIELDS<ClienteModel>(new QueryWhereModel().SetWhere("RG", value))).FirstOrDefault();
 			if (tempCliente is null)
 			{
 				return null;
 			}
-			tempCliente.ENDERECO = await eterDb.DbEndereco.GetEndereco(new QueryWhereModel().SetWhere("CLIENTE_ID", tempCliente.ID));
+			tempCliente.ENDERECO = await eterDb.ActionDb.GETFIELDS<EnderecoClienteDbModel>(new QueryWhereModel().SetWhere("CLIENTE_ID", tempCliente.ID));
 
 			return tempCliente;
 		}
 
 		private void DatabaseProdutosLoaded(bool complet) => inLoadProd = !complet;
 
-		public async Task<bool> FinishAsync(ClienteModel clienteModel, List<MedicamentosControladoLoteModel> medicamentosControladoLoteModel)
+		public async Task<bool> FinishAsync(ClienteModel clienteModel, List<MedicamentosControladoDbModel> medicamentosControladoLoteModel)
 		{
 			try
 			{
@@ -87,6 +87,7 @@ namespace EterPharmaPro.Controllers.CarimboLoteValidade
 			try
 			{
 				(long? IDC, long? IDE) = await eterDb.EterDbController.RegisterCliente(clienteModel);
+				medicamentosControladoLoteModel.ForEach((data)=> data.CLIENTE_ID = IDC);
 
 				using (var connection = new SQLiteConnection(eterDb.DatabaseConnection))
 				{
@@ -97,7 +98,7 @@ namespace EterPharmaPro.Controllers.CarimboLoteValidade
 						{
 							for (int i = 0; i < medicamentosControladoLoteModel.Count; i++)
 							{
-								await eterDb.DbControlados.CreateControlado(medicamentosControladoLoteModel[i].CODIGO_MED, medicamentosControladoLoteModel[i].QUANTIDADE, medicamentosControladoLoteModel[i].DATA_VALIDADE, medicamentosControladoLoteModel[i].LOTE, IDC.ToString(), connection, transaction);
+								await eterDb.ActionDb.INSERT(medicamentosControladoLoteModel[i], connection, transaction);
 
 							}
 
@@ -124,7 +125,7 @@ namespace EterPharmaPro.Controllers.CarimboLoteValidade
 			return false;
 		}
 
-		private void PrintDoc(ClienteModel clienteModel, List<MedicamentosControladoLoteModel> medicamentosControladoLoteModel)
+		private void PrintDoc(ClienteModel clienteModel, List<MedicamentosControladoDbModel> medicamentosControladoLoteModel)
 		{
 			printerHelper = new RawPrinterHelper();
 			printerHelper.AddLine(new TextPrintFormaterModel
@@ -142,7 +143,7 @@ namespace EterPharmaPro.Controllers.CarimboLoteValidade
 			printerHelper.AddLine(new TextPrintFormaterModel
 			{
 				tilte = "Endereço :",
-				texto = ((EnderecoClienteModel)clienteModel.ENDERECO).ENDERECO,
+				texto = ((EnderecoClienteDbModel)clienteModel.ENDERECO).ENDERECO,
 				fontStyle = FormatTextPrintEnum.Default
 			});
 			printerHelper.AddLine(new TextPrintFormaterModel
@@ -160,25 +161,25 @@ namespace EterPharmaPro.Controllers.CarimboLoteValidade
 				printerHelper.AddLine(new TextPrintFormaterModel
 				{
 					tilte = "Código: ",
-					texto = medicamentosControladoLoteModel[i].CODIGO_MED,
+					texto = medicamentosControladoLoteModel[i].CODIGO.ToString(),
 					fontStyle = FormatTextPrintEnum.Default
 				});
 				printerHelper.AddLine(new TextPrintFormaterModel
 				{
 					tilte = "Medicamento: ",
-					texto = medicamentosControladoLoteModel[i].NOME_MED,
+					texto = medicamentosControladoLoteModel[i].NAME_M,
 					fontStyle = FormatTextPrintEnum.Default
 				});
 				printerHelper.AddLine(new TextPrintFormaterModel
 				{
 					tilte = "Quantidade: ",
-					texto = medicamentosControladoLoteModel[i].QUANTIDADE.ToString(),
+					texto = medicamentosControladoLoteModel[i].QTD.ToString(),
 					fontStyle = FormatTextPrintEnum.Default
 				});
 				printerHelper.AddLine(new TextPrintFormaterModel
 				{
 					tilte = "Validade: ",
-					texto = medicamentosControladoLoteModel[i].DATA_VALIDADE.ToShortDateString(),
+					texto = medicamentosControladoLoteModel[i].VALIDADE.ToUnixDatetime()?.ToShortDateString(),
 					fontStyle = FormatTextPrintEnum.Default
 				});
 				printerHelper.AddLine(new TextPrintFormaterModel

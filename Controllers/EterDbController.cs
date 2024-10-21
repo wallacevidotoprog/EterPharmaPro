@@ -24,9 +24,9 @@ namespace EterPharmaPro.Controllers
 			this.eterDb = eterDb;
 		}
 
-		public async Task<(bool exist, EnderecoClienteModel end)> ExistAdressCliente(EnderecoClienteModel enderecoCliente)
+		public async Task<(bool exist, EnderecoClienteDbModel end)> ExistAdressCliente(EnderecoClienteDbModel enderecoCliente)
 		{
-			List<EnderecoClienteModel> tempA = await eterDb.ActionDb.GETFIELDS<EnderecoClienteModel>(
+			List<EnderecoClienteDbModel> tempA = await eterDb.ActionDb.GETFIELDS<EnderecoClienteDbModel>(
 				new QueryWhereModel().SetWhere("CLIENTE_ID", enderecoCliente.CLIENTE_ID)
 				);
 
@@ -70,7 +70,7 @@ namespace EterPharmaPro.Controllers
 			long? ide = null;
 			try
 			{
-				EnderecoClienteModel enderecoCliente = (EnderecoClienteModel)dadosCliente.ENDERECO;
+				EnderecoClienteDbModel enderecoCliente = (EnderecoClienteDbModel)dadosCliente.ENDERECO;
 
 				using (var connection = new SQLiteConnection(eterDb.DatabaseConnection))
 				{

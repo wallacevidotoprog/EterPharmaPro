@@ -8,7 +8,9 @@ namespace EterPharmaPro.Models.DbModels
 		[Ignore(ignoreOnInsert: true, ignoreOnUpdate: true)]
 		public string TABLE_NAME { get; private set; } = "VALIDADES";
 		public long? USER_ID { get; set; }
-		public DateTime? DATE { get; set; }
+		public long? DATE { get; set; }
+
+		
 
 	}
 }

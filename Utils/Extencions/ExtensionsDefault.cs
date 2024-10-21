@@ -202,8 +202,8 @@ namespace EterPharmaPro.Utils.Extencions
 		public static long ToDatetimeUnix(this DateTime? dateTime) => ((DateTimeOffset)dateTime).ToUnixTimeSeconds();
 		public static long ToDatetimeUnix(this DateTime dateTime) => ((DateTimeOffset)dateTime).ToUnixTimeSeconds();
 		public static long ToDatetimeUnix(this string dateTime) => ((DateTimeOffset)Convert.ToDateTime(dateTime)).ToUnixTimeSeconds();
-
-		public static string GetEnderecoArray(this List<EnderecoClienteModel> enderecoClienteModels, out int indexSelect)
+		public static DateTime? ToUnixDatetime(this long? DATE) => DATE.HasValue ? DateTimeOffset.FromUnixTimeSeconds(DATE.Value).DateTime : (DateTime?)null;
+		public static string GetEnderecoArray(this List<EnderecoClienteDbModel> enderecoClienteModels, out int indexSelect)
 		{
 			try
 			{
@@ -243,7 +243,7 @@ namespace EterPharmaPro.Utils.Extencions
 
 		}
 
-		public static EnderecoClienteModel GetEnderecoModel(this List<EnderecoClienteModel> enderecoClienteModels)
+		public static EnderecoClienteDbModel GetEnderecoModel(this List<EnderecoClienteDbModel> enderecoClienteModels)
 		{
 			try
 			{
@@ -292,7 +292,7 @@ namespace EterPharmaPro.Utils.Extencions
 						tempEnd[i] = new object[2]
 						{
 							i,
-							"CLIENTE: " + clienteModels[i].NOME + $" | TOTAL DE ENDEREÇOS: {(((List<EnderecoClienteModel>)clienteModels[i].ENDERECO != null) ? ((List<EnderecoClienteModel>)clienteModels[i].ENDERECO).Count : 0)}"
+							"CLIENTE: " + clienteModels[i].NOME + $" | TOTAL DE ENDEREÇOS: {(((List<EnderecoClienteDbModel>)clienteModels[i].ENDERECO != null) ? ((List<EnderecoClienteDbModel>)clienteModels[i].ENDERECO).Count : 0)}"
 						};
 					}
 					retList = InputList.Show(tempEnd, "Clientes");
@@ -301,14 +301,14 @@ namespace EterPharmaPro.Utils.Extencions
 						return null;
 					}
 					ClienteModel tempSelect = clienteModels[retList];
-					tempSelect.ENDERECO = ((List<EnderecoClienteModel>)tempSelect.ENDERECO).GetEnderecoModel();
+					tempSelect.ENDERECO = ((List<EnderecoClienteDbModel>)tempSelect.ENDERECO).GetEnderecoModel();
 					return tempSelect;
 
 				}
 				else
 				{
 					ClienteModel tempSelect = clienteModels[0];
-					tempSelect.ENDERECO = ((List<EnderecoClienteModel>)tempSelect.ENDERECO).GetEnderecoModel();
+					tempSelect.ENDERECO = ((List<EnderecoClienteDbModel>)tempSelect.ENDERECO).GetEnderecoModel();
 					return tempSelect;
 				}
 			}

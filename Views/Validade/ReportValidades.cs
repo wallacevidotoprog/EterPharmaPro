@@ -96,7 +96,7 @@ namespace EterPharmaPro.Views.Validade
 						item.SubItems.Add(tempEditVality.p[j].PRODUTO_CODIGO.ToString().PadLeft(6, '0'));
 						item.SubItems.Add(tempEditVality.p[j].PRODUTO_DESCRICAO);
 						item.SubItems.Add(tempEditVality.p[j].QUANTIDADE.ToString());
-						item.SubItems.Add(tempEditVality.p[j].DATA_VALIDADE.ToString("dd/MM/yyyy"));
+						item.SubItems.Add(tempEditVality.p[j].DATA_VALIDADE.ToUnixDatetime()?.ToString("dd/MM/yyyy"));
 						item.Group = group;
 						listView_produtos.Items.Add(item);
 					}

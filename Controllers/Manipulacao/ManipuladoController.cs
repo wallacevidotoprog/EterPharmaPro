@@ -47,7 +47,7 @@ namespace EterPharmaPro.Controllers.Manipulacao
 
 			for (int i = 0; i < dadosCliente.Count; i++)
 			{
-				dadosCliente[i].ENDERECO = await eterDb.ActionDb.GETFIELDS<EnderecoClienteModel>(new QueryWhereModel().SetWhere("CLIENTE_ID", dadosCliente[i].ID));
+				dadosCliente[i].ENDERECO = await eterDb.ActionDb.GETFIELDS<EnderecoClienteDbModel>(new QueryWhereModel().SetWhere("CLIENTE_ID", dadosCliente[i].ID));
 			}
 			return dadosCliente;
 		}
@@ -89,22 +89,25 @@ namespace EterPharmaPro.Controllers.Manipulacao
 
 							if (edit)
 							{
-								await eterDb.ActionDb.DeleteMedicamento(model.ID.ToString(), connection, transaction);
-								await eterDb.ActionDb.DELETE<Medi>(new QuereDeleteModel().SetWhere("ID", model.ID), connection, transaction);
-								await eterDb.DbManipulados.UpdateManipulacao(model, connection, transaction);
+								await eterDb.ActionDb.DELETE<MedicamentosManipuladosDbModal>(new QueryDeleteModel().SetWhere("ID", model.ID), connection, transaction);
+								await eterDb.ActionDb.UPDATE(model, connection, transaction);
 
-								foreach (var medicamento in (List<string>)model.MEDICAMENTOS)
+								((List<MedicamentosManipuladosDbModal>)model.MEDICAMENTOS).ForEach(m => m.MANIPULADOS_ID = model.ID);
+
+								foreach (var medicamento in (List<MedicamentosManipuladosDbModal>)model.MEDICAMENTOS)
 								{
-									await eterDb.DbManipuladosMedicamentos.CreateMedicamento(medicamento, model.ID.ToString(), connection, transaction);
+									await eterDb.ActionDb.INSERT(medicamento, connection, transaction);
 								}
 							}
 							else
 							{
-								long? tempCM = await eterDb.DbManipulados.CreateManipulacao(model, connection, transaction);
-								await eterDb.DbManipuladosMedicamentos.DeleteMedicamento(tempCM.ToString(), connection, transaction);
-								foreach (var medicamento in (List<string>)model.MEDICAMENTOS)
+								long? tempCM = await eterDb.ActionDb.INSERT(model, connection, transaction);
+
+								((List<MedicamentosManipuladosDbModal>)model.MEDICAMENTOS).ForEach(m => m.MANIPULADOS_ID = tempCM);
+
+								foreach (var medicamento in (List<MedicamentosManipuladosDbModal>)model.MEDICAMENTOS)
 								{
-									await eterDb.DbManipuladosMedicamentos.CreateMedicamento(medicamento, tempCM.ToString(), connection, transaction);
+									await eterDb.ActionDb.INSERT(medicamento, connection, transaction);
 								}
 							}
 
@@ -135,7 +138,7 @@ namespace EterPharmaPro.Controllers.Manipulacao
 			try
 			{
 
-				List<ManipulacaoDbModel> tempM = await eterDb.DbManipulados.GetManipulacao(new QueryWhereModel().SetWhere("ATEN_LOJA", idUser));
+				List<ManipulacaoDbModel> tempM = await eterDb.ActionDb.GETFIELDS<ManipulacaoDbModel>(new QueryWhereModel().SetWhere("ATEN_LOJA", idUser));
 
 
 				for (int i = 0; i < tempM.Count; i++)
@@ -143,9 +146,9 @@ namespace EterPharmaPro.Controllers.Manipulacao
 					ManipulacaoModel temp = new ManipulacaoModel().ConvertDb(tempM[i]);
 					DadosClienteManipulacao dadosClienteManipulacao = (DadosClienteManipulacao)temp.DADOSCLIENTE;
 
-					temp.DADOSATENDIMENTO.ATEN_LOJA_NAME = (await eterDb.DbUser.GetUser(new QueryWhereModel().SetWhere("ID", temp.DADOSATENDIMENTO.ATEN_LOJA))).FirstOrDefault().NOME;
+					temp.DADOSATENDIMENTO.ATEN_LOJA_NAME = (await eterDb.ActionDb.GETFIELDS<UserModel>(new QueryWhereModel().SetWhere("ID", temp.DADOSATENDIMENTO.ATEN_LOJA))).FirstOrDefault().NOME;
 
-					temp.DADOSCLIENTE = (await eterDb.DbCliente.GetCliente(new QueryWhereModel().SetWhere("ID", tempM[i].CLIENTE_ID))).FirstOrDefault().NOME;
+					temp.DADOSCLIENTE = (await eterDb.ActionDb.GETFIELDS<UserModel>(new QueryWhereModel().SetWhere("ID", tempM[i].CLIENTE_ID))).FirstOrDefault().NOME;
 					manipulacaoModels.Add(temp);
 				}
 
@@ -167,16 +170,16 @@ namespace EterPharmaPro.Controllers.Manipulacao
 			try
 			{
 
-				ManipulacaoDbModel tempM = (await eterDb.DbManipulados.GetManipulacao(new QueryWhereModel().SetWhere("ID", id))).FirstOrDefault();
+				ManipulacaoDbModel tempM = (await eterDb.ActionDb.GETFIELDS<ManipulacaoDbModel>(new QueryWhereModel().SetWhere("ID", id))).FirstOrDefault();
 
 				ManipulacaoModel temp = new ManipulacaoModel().ConvertDb(tempM);
 				DadosClienteManipulacao dadosClienteManipulacao = (DadosClienteManipulacao)temp.DADOSCLIENTE;
 
-				temp.DADOSCLIENTE = (await eterDb.DbCliente.GetCliente(new QueryWhereModel().SetWhere("ID", tempM.CLIENTE_ID))).FirstOrDefault();
+				temp.DADOSCLIENTE = (await eterDb.ActionDb.GETFIELDS<ClienteModel>(new QueryWhereModel().SetWhere("ID", tempM.CLIENTE_ID))).FirstOrDefault();
 
-				((ClienteModel)temp.DADOSCLIENTE).ENDERECO = (await eterDb.DbEndereco.GetEndereco(new QueryWhereModel().SetWhere("ID", tempM.ENDERECO_ID))).FirstOrDefault();
+				((ClienteModel)temp.DADOSCLIENTE).ENDERECO = (await eterDb.ActionDb.GETFIELDS<EnderecoClienteDbModel>(new QueryWhereModel().SetWhere("ID", tempM.ENDERECO_ID))).FirstOrDefault();
 
-				temp.MEDICAMENTOS = await eterDb.DbManipuladosMedicamentos.GetMedicamento(new QueryWhereModel().SetWhere("MANIPULADOS_ID", tempM.ID));
+				temp.MEDICAMENTOS = await eterDb.ActionDb.GETFIELDS<MedicamentosManipuladosDbModal>(new QueryWhereModel().SetWhere("MANIPULADOS_ID", tempM.ID));
 
 
 				return temp;
@@ -200,7 +203,7 @@ namespace EterPharmaPro.Controllers.Manipulacao
 				{
 					try
 					{
-						await eterDb.DbManipulados.DeleteManipulacao(temp.ToString(), connection, transaction);
+						await eterDb.ActionDb.DELETE<ManipulacaoDbModel>(new QueryDeleteModel().SetWhere("ID",temp), connection, transaction);
 
 						transaction.Commit();
 						return true;

@@ -2,7 +2,7 @@
 
 namespace EterPharmaPro.Models.DbModels
 {
-	public class EnderecoClienteModel : BaseDbModal
+	public class EnderecoClienteDbModel : BaseDbModal
 	{
 		[Ignore(ignoreOnInsert: true, ignoreOnUpdate: true)]
 		public string TABLE_NAME { get; private set; } = "ENDERECO_C";

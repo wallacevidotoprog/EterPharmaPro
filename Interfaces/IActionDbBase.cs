@@ -12,7 +12,7 @@ namespace EterPharmaPro.Interfaces
 
 		Task<bool> UPDATE<T>(T model, SQLiteConnection connection, SQLiteTransaction transaction);
 
-		Task<bool> DELETE<T>(QuereDeleteModel query, SQLiteConnection connection, SQLiteTransaction transaction);
+		Task<bool> DELETE<T>(QueryDeleteModel query, SQLiteConnection connection, SQLiteTransaction transaction);
 
 		Task<List<T>> GETFIELDS<T>(QueryWhereModel query) where T : new();
 	}

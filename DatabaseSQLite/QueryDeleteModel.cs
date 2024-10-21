@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace EterPharmaPro.DatabaseSQLite
 {
-	public class QuereDeleteModel
+	public class QueryDeleteModel
 	{
 		private string Where { get; set; }
 
@@ -33,7 +33,7 @@ namespace EterPharmaPro.DatabaseSQLite
 			return withLike;
 		}
 
-		public QuereDeleteModel SetWhere(string propName, object setWhere, string opt = " = ")
+		public QueryDeleteModel SetWhere(string propName, object setWhere, string opt = " = ")
 		{
 			string[] withLike = CheckedAtr(setWhere.ToString());
 			if (opt.ToUpper().Contains("LIKE"))

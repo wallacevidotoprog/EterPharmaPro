@@ -7,12 +7,12 @@ namespace EterPharmaPro.Interfaces
 {
 	public interface IEterDbEndereco
 	{
-		Task<long?> CreateEndereco(EnderecoClienteModel  model, SQLiteConnection connection, SQLiteTransaction transaction);
+		Task<long?> CreateEndereco(EnderecoClienteDbModel  model, SQLiteConnection connection, SQLiteTransaction transaction);
 
-		Task<bool> UpdateEndereco(EnderecoClienteModel model, SQLiteConnection connection, SQLiteTransaction transaction);
+		Task<bool> UpdateEndereco(EnderecoClienteDbModel model, SQLiteConnection connection, SQLiteTransaction transaction);
 
 		Task<bool> DeleteEndereco(string id, SQLiteConnection connection, SQLiteTransaction transaction);
 
-		Task<List<EnderecoClienteModel>> GetEndereco(QueryWhereModel query);
+		Task<List<EnderecoClienteDbModel>> GetEndereco(QueryWhereModel query);
 	}
 }

@@ -29,7 +29,7 @@ namespace EterPharmaPro.DatabaseSQLite
 					command.Parameters.AddWithValue("@PRODUTO_CODIGO", model.PRODUTO_CODIGO);
 					command.Parameters.AddWithValue("@PRODUTO_DESCRICAO", model.PRODUTO_DESCRICAO);
 					command.Parameters.AddWithValue("@QUANTIDADE", model.QUANTIDADE);
-					command.Parameters.AddWithValue("@DATA_VALIDADE", model.DATA_VALIDADE.ToDatetimeUnix());
+					command.Parameters.AddWithValue("@DATA_VALIDADE", model.DATA_VALIDADE);
 					command.Parameters.AddWithValue("@CATEGORIA_ID", model.CATEGORIA_ID);
 					await command.ExecuteNonQueryAsync();
 					command.CommandText = "SELECT last_insert_rowid()";
@@ -93,7 +93,7 @@ namespace EterPharmaPro.DatabaseSQLite
 					command.Parameters.AddWithValue("@PRODUTO_CODIGO", model.PRODUTO_CODIGO);
 					command.Parameters.AddWithValue("@PRODUTO_DESCRICAO", model.PRODUTO_DESCRICAO);
 					command.Parameters.AddWithValue("@QUANTIDADE", model.QUANTIDADE);
-					command.Parameters.AddWithValue("@DATA_VALIDADE", model.DATA_VALIDADE.ToDatetimeUnix());
+					command.Parameters.AddWithValue("@DATA_VALIDADE", model.DATA_VALIDADE);
 					command.Parameters.AddWithValue("@CATEGORIA_ID", model.CATEGORIA_ID);
 					await command.ExecuteNonQueryAsync().ConfigureAwait(continueOnCapturedContext: false);
 				}

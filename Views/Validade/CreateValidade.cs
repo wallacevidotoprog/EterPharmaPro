@@ -89,11 +89,13 @@ namespace EterPharmaPro.Views.Validade
 			{
 				if (MessageBox.Show("Existe um arquivo aberto, deseja fecha-lo ?\n(As alterações serão salvas)", "ALERTA", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) != DialogResult.Cancel)
 				{
-
+					return;
 				}
 			}
+			toolStripButton_clear_Click(null, null);
 			NewDocValidade(true);
 			comboBox_user.SelectedIndex = comboBox_user.ReturnIndexUserCB(eterDb.EterDbController.UserModelAcess.ID);
+
 		}
 
 		private async void ePictureBox_create_Click(object sender, EventArgs e)
@@ -108,7 +110,7 @@ namespace EterPharmaPro.Views.Validade
 			ePictureBox_sava_up.Image = Resources.arquivo__1_;
 			this.Focus();
 
-			
+
 			setValityModel = new SetValityModel();
 			setValityModel.user_id = Convert.ToUInt32(comboBox_user.SelectedValue);
 			setValityModel.dataCreate = Convert.ToDateTime(dateTimePicker_dataD.Value.ToShortDateString());
@@ -144,7 +146,7 @@ namespace EterPharmaPro.Views.Validade
 			}
 			int tempRemove = Convert.ToInt32(comboBox_categoria.SelectedValue);
 			string tempName = comboBox_categoria.Text;
-			if (MessageBox.Show("Deseja excluir esse categoria ?\n" + comboBox_categoria.Text+"\nAo deletar essa categoria você pode alterar outros formulários que já foram lançados.", "Excluir Item", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
+			if (MessageBox.Show("Deseja excluir esse categoria ?\n" + comboBox_categoria.Text + "\nAo deletar essa categoria você pode alterar outros formulários que já foram lançados.", "Excluir Item", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
 			{
 				if (await validadeController.DeleteCategory(tempRemove))
 				{
@@ -152,7 +154,7 @@ namespace EterPharmaPro.Views.Validade
 					RefreshCategoryAsync((tempRemove, tempName), ListViewActionsEnum.REMOVE);
 				}
 			}
-			
+
 		}
 
 		private async void RefreshCategoryAsync((long? id, string namec)? cat, ListViewActionsEnum actionsEnum = ListViewActionsEnum.NONE)
@@ -179,7 +181,7 @@ namespace EterPharmaPro.Views.Validade
 				case ListViewActionsEnum.REMOVE:
 					ListViewGroup novoGrupo = listView1.Groups.Cast<ListViewGroup>()
 					 .FirstOrDefault(g => g.Name == 1.ToString());
-					
+
 					foreach (ListViewItem item in listView1.Items)
 					{
 						if (item.Group.Header == cat.Value.namec.ToString())
@@ -208,7 +210,7 @@ namespace EterPharmaPro.Views.Validade
 				{
 					GetProduct();
 				}
-				
+
 			}
 		}
 		private bool GetProduct()
@@ -259,10 +261,10 @@ namespace EterPharmaPro.Views.Validade
 					return;
 				}
 
-				setValityModel.produto.codigo = tempProdutos is null? Convert.ToInt32(textBox_codigo.Text): Convert.ToInt32(tempProdutos.COD_PRODUTO);
-				setValityModel.produto.descricao = tempProdutos is null ? textBox_nproduto.Text: tempProdutos.DESCRICAO_PRODUTO;
+				setValityModel.produto.codigo = tempProdutos is null ? Convert.ToInt32(textBox_codigo.Text) : Convert.ToInt32(tempProdutos.COD_PRODUTO);
+				setValityModel.produto.descricao = tempProdutos is null ? textBox_nproduto.Text : tempProdutos.DESCRICAO_PRODUTO;
 				setValityModel.produto.quantidade = (int)numericUpDown_qtd.Value;
-				setValityModel.produto.dateVality = dateTimePicker_data.Value;
+				setValityModel.produto.dateVality = dateTimePicker_data.Value.ToDatetimeUnix();
 				setValityModel.produto.category_id = Convert.ToInt32(comboBox_categoria.SelectedValue);
 
 				bool isSetClear = false;
@@ -281,12 +283,12 @@ namespace EterPharmaPro.Views.Validade
 				}
 				else if (isEditProduto)
 				{
-                    
-                    isSetClear = await validadeController.UpdateProdutoVality(setValityModel);
+
+					isSetClear = await validadeController.UpdateProdutoVality(setValityModel);
 					isEditProduto = false;
 					if (isSetClear)
 					{
-						ListViewAction((indexEditLv,setValityModel.produto), ListViewActionsEnum.UPDATE);
+						ListViewAction((indexEditLv, setValityModel.produto), ListViewActionsEnum.UPDATE);
 					}
 				}
 
@@ -313,6 +315,7 @@ namespace EterPharmaPro.Views.Validade
 
 		private void toolStripButton_clear_Click(object sender, EventArgs e)
 		{
+			isActionValidade = false;
 			setValityModel = null;
 			textBox_codigo.Clear();
 			textBox_nproduto.Clear();
@@ -320,6 +323,7 @@ namespace EterPharmaPro.Views.Validade
 			numericUpDown_qtd.Value = 1;
 			dateTimePicker_data.Value = DateTime.Today;
 			contextMenuStrip_produtos.Enabled = false;
+			NewDocValidade(false);
 
 		}
 
@@ -339,7 +343,8 @@ namespace EterPharmaPro.Views.Validade
 						textBox_codigo.Text = (setValityModel.produto.codigo = tempProduto.PRODUTO_CODIGO).ToString().PadLeft(6, '0');
 						textBox_nproduto.Text = setValityModel.produto.descricao = tempProduto.PRODUTO_DESCRICAO;
 						numericUpDown_qtd.Value = setValityModel.produto.quantidade = Convert.ToInt32(tempProduto.QUANTIDADE);
-						dateTimePicker_data.Value = setValityModel.produto.dateVality = Convert.ToDateTime(tempProduto.DATA_VALIDADE);
+						setValityModel.produto.dateVality = tempProduto.DATA_VALIDADE;
+						dateTimePicker_data.Value = Convert.ToDateTime(tempProduto.DATA_VALIDADE.ToUnixDatetime());
 						setValityModel.produto.category_id = Convert.ToInt32(tempProduto.CATEGORIA_ID);
 						comboBox_categoria.SelectedIndex = comboBox_categoria.ReturnIndexCategoryCB(setValityModel.produto.category_id);
 
@@ -399,7 +404,7 @@ namespace EterPharmaPro.Views.Validade
 						item.SubItems.Add(tempObjAd.codigo.ToString().PadLeft(6, '0'));
 						item.SubItems.Add(tempObjAd.descricao);
 						item.SubItems.Add(tempObjAd.quantidade.ToString());
-						item.SubItems.Add(tempObjAd.dateVality.ToString("dd/MM/yyyy"));
+						item.SubItems.Add(tempObjAd.dateVality.ToUnixDatetime()?.ToString("dd/MM/yyyy"));
 						item.Group = groupAd;
 						listView1.Items.Add(item);
 						listView1.Refresh();
@@ -411,7 +416,7 @@ namespace EterPharmaPro.Views.Validade
 						listView1.Items[tempObjUp.indexUp].SubItems[1].Text = tempObjUp.newUp.codigo.ToString().PadLeft(6, '0');
 						listView1.Items[tempObjUp.indexUp].SubItems[2].Text = tempObjUp.newUp.descricao.ToString();
 						listView1.Items[tempObjUp.indexUp].SubItems[3].Text = tempObjUp.newUp.quantidade.ToString();
-						listView1.Items[tempObjUp.indexUp].SubItems[4].Text = tempObjUp.newUp.dateVality.ToShortDateString();
+						listView1.Items[tempObjUp.indexUp].SubItems[4].Text = tempObjUp.newUp.dateVality.ToUnixDatetime()?.ToShortDateString();
 						listView1.Items[tempObjUp.indexUp].Group = listView1.Groups.Cast<ListViewGroup>().Where(x => x.Name == tempObjUp.newUp.category_id.ToString()).FirstOrDefault();
 						break;
 					case ListViewActionsEnum.REMOVE:
@@ -436,7 +441,7 @@ namespace EterPharmaPro.Views.Validade
 								item.SubItems.Add(tp[x].PRODUTO_CODIGO.ToString().PadLeft(6, '0'));
 								item.SubItems.Add(tp[x].PRODUTO_DESCRICAO);
 								item.SubItems.Add(tp[x].QUANTIDADE.ToString());
-								item.SubItems.Add(tp[x].DATA_VALIDADE.ToString("dd/MM/yyyy"));
+								item.SubItems.Add(tp[x].DATA_VALIDADE.ToUnixDatetime()?.ToString("dd/MM/yyyy"));
 								item.Group = groupUp;
 								listView1.Items.Add(item);
 							}
@@ -512,7 +517,7 @@ namespace EterPharmaPro.Views.Validade
 				setValityModel = new SetValityModel
 				{
 					isEdit = true,
-					dataCreate = tempEditVality.v.DATE ?? DateTime.Now,
+					dataCreate = tempEditVality.v.DATE.ToUnixDatetime() ?? DateTime.Now,
 					vality_id = tempEditVality.v.ID,
 					user_id = tempEditVality.v.USER_ID
 				};
@@ -555,12 +560,12 @@ namespace EterPharmaPro.Views.Validade
 				SaveFileDialog op = new SaveFileDialog();
 				try
 				{
-					op.FileName = string.Format("{0} ({1}-{2}).xlsx", (await eterDb.DbUser.GetUser(new QueryWhereModel().SetWhere("ID", setValityModel.user_id))).FirstOrDefault().NOME, setValityModel.dataCreate.ToString("MMMM"), setValityModel.dataCreate.Year);
+					op.FileName = string.Format("{0} ({1}-{2}).xlsx", (await eterDb.ActionDb.GETFIELDS<UserModel>(new QueryWhereModel().SetWhere("ID", setValityModel.user_id))).FirstOrDefault().NOME, setValityModel.dataCreate.ToString("MMMM"), setValityModel.dataCreate.Year);
 					op.Filter = "Excel Files|*.xlsx";
 					op.Title = "Save an Excel File";
 					if (op.ShowDialog() == DialogResult.OK)
 					{
-						await validadeController.ExportValityXLSX(setValityModel.vality_id,op.FileName);
+						await validadeController.ExportValityXLSX(setValityModel.vality_id, op.FileName);
 					}
 				}
 				finally
@@ -585,7 +590,7 @@ namespace EterPharmaPro.Views.Validade
 				return;
 			}
 
-			var tempImport = await validadeController.ImportProdutos(dateTimeQuery,setValityModel.user_id, setValityModel.vality_id);
+			var tempImport = await validadeController.ImportProdutos(dateTimeQuery, setValityModel.user_id, setValityModel.vality_id);
 			if (tempImport is null)
 				return;
 
@@ -593,7 +598,7 @@ namespace EterPharmaPro.Views.Validade
 			{
 				ListViewAction(tempImport[i], ListViewActionsEnum.ADD);
 			}
-			
+
 		}
 	}
 }

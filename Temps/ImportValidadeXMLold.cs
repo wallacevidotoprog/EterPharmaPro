@@ -36,7 +36,7 @@ namespace EterPharmaPro.Temps
 			for (int i = 0; i < validadeModels.Count; i++)
 			{
 				ValidadeModel validadeModel = validadeModels[i];
-				validadeModel.DADOS.IDdb = (await eterDb.DbUser.GetUser(new QueryWhereModel().SetWhere("ID_LOJA", validadeModel.DADOS.ID))).FirstOrDefault().ID;
+				validadeModel.DADOS.IDdb = (await eterDb.ActionDb.GETFIELDS<UserModel>(new QueryWhereModel().SetWhere("ID_LOJA", validadeModel.DADOS.ID))).FirstOrDefault().ID;
 				// S/ CATEGORIA
 
 				// add categoria 
@@ -49,7 +49,7 @@ namespace EterPharmaPro.Temps
 					}
 					else
 					{
-						var tc = (await eterDb.DbCategoria.GetCategory(new QueryWhereModel().SetWhere("NAME", validadeModel.CATEGORIA[c].NOME))).FirstOrDefault();
+						var tc = (await eterDb.ActionDb.GETFIELDS<CategoriaDbModal>(new QueryWhereModel().SetWhere("NAME", validadeModel.CATEGORIA[c].NOME))).FirstOrDefault();
 
 						if (tc is null)
 						{
@@ -60,7 +60,7 @@ namespace EterPharmaPro.Temps
 								{
 									try
 									{
-										validadeModel.CATEGORIA[c].IDdb = await eterDb.DbCategoria.CreateCategory(new CategoriaDbModal { ID_LOJA = validadeModel.DADOS.IDdb, NAME = validadeModel.CATEGORIA[c].NOME }, connection, transaction);
+										validadeModel.CATEGORIA[c].IDdb = await eterDb.ActionDb.INSERT(new CategoriaDbModal { ID_LOJA = validadeModel.DADOS.IDdb, NAME = validadeModel.CATEGORIA[c].NOME }, connection, transaction);
 
 										transaction.Commit();
 									}
@@ -90,7 +90,7 @@ namespace EterPharmaPro.Temps
 					{
 						try
 						{
-							validadeModel.IDdb = await eterDb.DbValidade.CreateVality(new ValidadeDbModal { USER_ID = validadeModel.DADOS.IDdb, DATE = validadeModel.DADOS.DATA }, connection, transaction);
+							validadeModel.IDdb = await eterDb.ActionDb.INSERT(new ValidadeDbModal { USER_ID = validadeModel.DADOS.IDdb, DATE = validadeModel.DADOS.DATA.ToDatetimeUnix() }, connection, transaction);
 
 							transaction.Commit();
 						}
@@ -125,12 +125,12 @@ namespace EterPharmaPro.Temps
 										validadeModel.PRODUTOS[p].COD_PRODUTO = "0";
 									}
 								}
-								long? tempIdV = await eterDb.DbProdutoValidade.CreateProdutoVality(new ProdutoValidadeDbModal
+								long? tempIdV = await eterDb.ActionDb.INSERT(new ProdutoValidadeDbModal
 								{
 									PRODUTO_CODIGO = (int)Convert.ToUInt32(validadeModel.PRODUTOS[p].COD_PRODUTO),
 									PRODUTO_DESCRICAO = validadeModel.PRODUTOS[p].DESCRICAO_PRODUTO,
 									QUANTIDADE = validadeModel.PRODUTOS[p].QTD,
-									DATA_VALIDADE = validadeModel.PRODUTOS[p].DATA,
+									DATA_VALIDADE = validadeModel.PRODUTOS[p].DATA.ToDatetimeUnix(),
 									CATEGORIA_ID = (int)validadeModel.CATEGORIA.Where(x=>x.ID == validadeModel.PRODUTOS[p].CATEGORIA).First().IDdb   ,
 									VALIDADE_ID = (int)validadeModel.IDdb
 
@@ -217,7 +217,7 @@ namespace EterPharmaPro.Temps
 
 		public string NOME;
 
-		public DateTime DATA;
+		public DateTime? DATA;
 	}
 	public class ValidadeProdutos
 	{

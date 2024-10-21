@@ -30,7 +30,7 @@ namespace EterPharmaPro.Models
 		public string descricao { get; set; }
 
 		public int quantidade { get; set; }
-		public DateTime dateVality { get; set; }
+		public long? dateVality { get; set; }
 		public int category_id { get; set; }
 
 		public ProdutoSetValityModel ConvertDbModel(ProdutoValidadeDbModal modal,long? id = null)
