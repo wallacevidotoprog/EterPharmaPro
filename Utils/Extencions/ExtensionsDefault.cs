@@ -339,6 +339,9 @@ namespace EterPharmaPro.Utils.Extencions
 			}
 			return text.PadRight(totalWidth);
 		}
+
 		
-	}
+		}
+
+	
 }

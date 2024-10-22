@@ -6,6 +6,7 @@ using EterPharmaPro.Services.XLSX;
 using EterPharmaPro.Utils;
 using EterPharmaPro.Utils.Extencions;
 using EterPharmaPro.Views;
+using EterPharmaPro.Views.Configuracoes;
 using EterPharmaPro.Views.Manipulados;
 using EterPharmaPro.Views.Validade;
 using System;
@@ -193,29 +194,7 @@ namespace EterPharmaPro
 
 		private void toolStripDropDownButton_impressos_Click(object sender, EventArgs e) => OpenForm(new IMPRESSOS(eterDb, DatabaseProdutosDb));
 
-		private async void toolStripButton_conf_Click(object sender, EventArgs e)
-		{
-			var read = new ReadProdutoXLSX();
-
-			//read.ProgressUpdated += (progress) =>
-			//{
-			//	if (bar_teste.ProgressBar.InvokeRequired)
-			//	{
-			//		bar_teste.ProgressBar.Invoke(new Action(() => {
-			//			bar_teste.Value = progress.Progress;
-			//			bar_teste.Maximum = progress.Max;
-			//		}));
-			//	}
-			//	else
-			//	{
-			//		bar_teste.Value = progress.Progress;
-			//		bar_teste.Maximum = progress.Max;
-			//	}
-
-			//};
-
-			var ts = await read.ReadAllProdutos(@"C:\Users\walla\OneDrive\Área de Trabalho\Documento de WALLACE.xlsx");
-		}
+		private async void toolStripButton_conf_Click(object sender, EventArgs e) => OpenForm(new ConfigsPage(eterDb, DatabaseProdutosDb));
 
 		private void rELATÓRIOToolStripMenuItem_Click(object sender, EventArgs e) => OpenForm(new ReportValidades(eterDb, DatabaseProdutosDb));
 

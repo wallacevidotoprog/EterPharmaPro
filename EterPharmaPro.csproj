@@ -159,6 +159,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\Configs\ConfigsPageController.cs" />
     <Compile Include="Controllers\Impressos\ControleReqNotaController.cs" />
     <Compile Include="Controllers\Impressos\CreateLoteControladosController.cs" />
     <Compile Include="Controllers\EterDbController.cs" />
@@ -173,6 +174,7 @@
     <Compile Include="DatabaseSQLite\IgnoreAttribute.cs" />
     <Compile Include="DatabaseSQLite\QueryDeleteModel.cs" />
     <Compile Include="Enums\ListViewActionsEnum.cs" />
+    <Compile Include="Enums\QueryProdutoEnum.cs" />
     <Compile Include="Interfaces\IActionDbBase.cs" />
     <Compile Include="Interfaces\IEterDbCategoria.cs" />
     <Compile Include="Interfaces\IEterDbProdutoValidade.cs" />
@@ -286,6 +288,18 @@
     <Compile Include="Views\AcesUser.Designer.cs">
       <DependentUpon>AcesUser.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\Configuracoes\ConfigsPage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Configuracoes\ConfigsPage.Designer.cs">
+      <DependentUpon>ConfigsPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Configuracoes\Produtos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Configuracoes\Produtos.Designer.cs">
+      <DependentUpon>Produtos.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\ReqNota\ControleReqNota.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -356,6 +370,12 @@
     <EmbeddedResource Include="Views\AcesUser.resx">
       <DependentUpon>AcesUser.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\Configuracoes\ConfigsPage.resx">
+      <DependentUpon>ConfigsPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Configuracoes\Produtos.resx">
+      <DependentUpon>Produtos.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\ReqNota\ControleReqNota.resx">
       <DependentUpon>ControleReqNota.cs</DependentUpon>
     </EmbeddedResource>
@@ -408,6 +428,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="farmacia.ico" />
+    <None Include="Resources\database-security.png" />
+    <None Include="Resources\user.png" />
+    <None Include="Resources\inventario.png" />
     <None Include="Resources\cancelar.png" />
     <None Include="Resources\gerenciamento.png" />
     <None Include="Resources\acesso.png" />

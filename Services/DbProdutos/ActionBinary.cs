@@ -91,7 +91,7 @@ namespace EterPharmaPro.Services.DbProdutos
 			return null;
 		}
 
-		public static async Task<bool> WriteProdutosAsync(List<ProdutosModel> produtos, ToolStripProgressBar progressBar, CancellationToken cancellationToken)
+		public static bool WriteProdutos(List<ProdutosModel> produtos)
 		{
 			try
 			{
@@ -107,15 +107,10 @@ namespace EterPharmaPro.Services.DbProdutos
 					{
 						writer.Write(produtos.Count);
 
-						progressBar.ProgressBar.Invoke((Action)(() =>
-						{
-							progressBar.Maximum = produtos.Count;
-							progressBar.Value = 0;
-						}));
 
 						for (int i = 0; i < produtos.Count; i++)
 						{
-							cancellationToken.ThrowIfCancellationRequested();
+
 
 							writer.Write(produtos[i].EAN);
 							writer.Write(produtos[i].COD_PRODUTO);
@@ -124,10 +119,7 @@ namespace EterPharmaPro.Services.DbProdutos
 							writer.Write(produtos[i].LABORATORIO);
 							writer.Write(produtos[i].GRUPO);
 
-							if (progressBar != null)
-							{
-								await Task.Run(() => progressBar.ProgressBar.Invoke((Action)(() => progressBar.Increment(1))));
-							}
+
 						}
 					};
 
@@ -138,10 +130,7 @@ namespace EterPharmaPro.Services.DbProdutos
 			{
 				_backup.RestoreBackup();
 				MessageBox.Show("ERRO\n" + ex.Message + "\nBACKUP Restaurado", "WriteProdutos", MessageBoxButtons.OK, MessageBoxIcon.Hand);
-				progressBar.ProgressBar.Invoke((Action)(() =>
-				{
-					progressBar.Value = 0;
-				}));
+
 				return false;
 			}
 		}

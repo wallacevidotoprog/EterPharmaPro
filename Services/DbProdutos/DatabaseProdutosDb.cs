@@ -15,6 +15,7 @@ namespace EterPharmaPro.DbProdutos.Services
 		public ToolStripProgressBar _progressBar;
 
 		public List<ProdutosModel> produtos;
+		CancellationToken cancellationToken;
 
 
 		private bool Await;
@@ -25,6 +26,7 @@ namespace EterPharmaPro.DbProdutos.Services
 		{
 			Await = false;
 			_progressBar = progressBar;
+			this.cancellationToken = cancellationToken;
 			Init(cancellationToken);
 		}
 
@@ -36,6 +38,8 @@ namespace EterPharmaPro.DbProdutos.Services
 			OnDatabaseLoaded();
 		}
 
+		public void Refresh() => Init(cancellationToken);
+
 		public bool CheckingLoad()
 		{
 			if (Await) { MessageBox.Show("Aguarde o carregamento total de todos os PRODUTOS.\n Mais informações no todapé da aplicação.");}
@@ -45,15 +49,6 @@ namespace EterPharmaPro.DbProdutos.Services
 		protected virtual void OnDatabaseLoaded()
 		{
 			this.DatabaseProdutosLoaded?.Invoke(complet: true);
-		}
-		public string ReturnNameProduto(string cod)
-		{
-			string ret = produtos.Find((ProdutosModel x) => x.EAN.Contains(cod.Trim()))?.DESCRICAO_PRODUTO;
-			if (ret == null)
-			{
-				ret = produtos.Find((ProdutosModel x) => x.COD_PRODUTO.Contains(cod.Trim())).DESCRICAO_PRODUTO;
-			}
-			return ret;
 		}
 	}
 }
