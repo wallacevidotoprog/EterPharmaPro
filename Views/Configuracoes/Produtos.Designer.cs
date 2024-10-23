@@ -47,7 +47,6 @@
 			this.ePictureBox_busca = new EterPharmaPro.Utils.eControl.ePictureBox();
 			this.ePictureBox_import = new EterPharmaPro.Utils.eControl.ePictureBox();
 			this.ePictureBox_opFile = new EterPharmaPro.Utils.eControl.ePictureBox();
-			this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
 			this.groupBox4.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView_dados)).BeginInit();
 			this.groupBox2.SuspendLayout();
@@ -57,7 +56,6 @@
 			((System.ComponentModel.ISupportInitialize)(this.ePictureBox_busca)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.ePictureBox_import)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.ePictureBox_opFile)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// groupBox4
@@ -271,6 +269,7 @@
 			// 
 			// ePictureBox_import
 			// 
+			this.ePictureBox_import.Cursor = System.Windows.Forms.Cursors.No;
 			this.ePictureBox_import.Dock = System.Windows.Forms.DockStyle.Left;
 			this.ePictureBox_import.Image = global::EterPharmaPro.Properties.Resources.database_security;
 			this.ePictureBox_import.Location = new System.Drawing.Point(216, 16);
@@ -279,7 +278,7 @@
 			this.ePictureBox_import.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
 			this.ePictureBox_import.TabIndex = 18;
 			this.ePictureBox_import.TabStop = false;
-			this.ePictureBox_import.ToolTipText = null;
+			this.ePictureBox_import.ToolTipText = "Salvar no banco de dados";
 			this.ePictureBox_import.Click += new System.EventHandler(this.ePictureBox_import_Click);
 			// 
 			// ePictureBox_opFile
@@ -294,13 +293,6 @@
 			this.ePictureBox_opFile.TabStop = false;
 			this.ePictureBox_opFile.ToolTipText = "Importar dados do Excel";
 			this.ePictureBox_opFile.Click += new System.EventHandler(this.ePictureBox_opFile_ClickAsync);
-			// 
-			// fileSystemWatcher1
-			// 
-			this.fileSystemWatcher1.EnableRaisingEvents = true;
-			this.fileSystemWatcher1.Path = "C:\\Users\\walla\\OneDrive\\Área de Trabalho";
-			this.fileSystemWatcher1.SynchronizingObject = this;
-			this.fileSystemWatcher1.Changed += new System.IO.FileSystemEventHandler(this.fileSystemWatcher1_Changed);
 			// 
 			// Produtos
 			// 
@@ -322,7 +314,6 @@
 			((System.ComponentModel.ISupportInitialize)(this.ePictureBox_busca)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.ePictureBox_import)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.ePictureBox_opFile)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -348,6 +339,5 @@
 		private Utils.eControl.ePictureBox ePictureBox_busca;
 		private Utils.eControl.ePictureBox ePictureBox_opFile;
 		private Utils.eControl.ePictureBox ePictureBox_import;
-		private System.IO.FileSystemWatcher fileSystemWatcher1;
 	}
 }

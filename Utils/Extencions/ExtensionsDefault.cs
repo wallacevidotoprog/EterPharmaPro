@@ -142,7 +142,7 @@ namespace EterPharmaPro.Utils.Extencions
 			return cb;
 		}
 
-		public static ComboBox CBListCategory(this ComboBox cb, List<CategoriaDbModal> categoriaDbModal)//melhorar
+		public static ComboBox CBListCategory(this ComboBox cb, List<CategoriaDbModal> categoriaDbModal)
 		{
 			Dictionary<long?, string> cat = new Dictionary<long?, string>();
 
@@ -161,6 +161,34 @@ namespace EterPharmaPro.Utils.Extencions
 			BindingSource bindingSource = new BindingSource
 			{
 				DataSource = cat
+			};
+
+			cb.DataSource = bindingSource;
+			cb.DisplayMember = "Value";
+			cb.ValueMember = "Key";
+			cb.SelectedIndex = 0;
+			return cb;
+		}
+
+		public static ComboBox CBListUserFuncao(this ComboBox cb, List<FuncaoDbModel> funcaoDbModels)
+		{
+			Dictionary<long?, string> func = new Dictionary<long?, string>();
+
+			func.Add(1, "PADRÃO");
+
+
+			for (int i = 0; i < funcaoDbModels.Count; i++)
+			{
+				long? key = funcaoDbModels[i].ID;
+				if (!func.ContainsKey(key))
+				{
+					func.Add(key, funcaoDbModels[i].NOME);
+				}
+			}
+
+			BindingSource bindingSource = new BindingSource
+			{
+				DataSource = func
 			};
 
 			cb.DataSource = bindingSource;

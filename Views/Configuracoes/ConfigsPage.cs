@@ -55,6 +55,6 @@ namespace EterPharmaPro.Views.Configuracoes
 
 		}
 
-
+		private void toolStripButton_user_Click(object sender, EventArgs e)=>OpenForm(new User(configController));
 	}
 }

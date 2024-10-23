@@ -1,10 +1,15 @@
 ﻿using DocumentFormat.OpenXml.Office2016.Excel;
+using EterPharmaPro.DatabaseSQLite;
 using EterPharmaPro.DbProdutos.Services;
 using EterPharmaPro.Enums;
 using EterPharmaPro.Interfaces;
 using EterPharmaPro.Models;
+using EterPharmaPro.Models.DbModels;
+using EterPharmaPro.Utils.Extencions;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SQLite;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,12 +18,20 @@ namespace EterPharmaPro.Controllers.Configs
 {
 	public class ConfigsPageController
 	{
+		public event EventHandler ReloadProd;
+
 		private readonly IEterDb eterDb;
 		private readonly DatabaseProdutosDb databaseProdutosDb;
 		public ConfigsPageController(IEterDb eterDb, DatabaseProdutosDb databaseProdutosDb)
 		{
 			this.eterDb = eterDb;
 			this.databaseProdutosDb = databaseProdutosDb;
+			databaseProdutosDb.DatabaseProdutosLoaded += DatabaseProdutosDb_DatabaseProdutosLoaded;
+		}
+
+		private void DatabaseProdutosDb_DatabaseProdutosLoaded(bool complet)
+		{
+			ReloadProd?.Invoke(this, new EventArgs());
 		}
 
 		public List<ProdutosModel> GetAllProdutos() => databaseProdutosDb.produtos;
@@ -54,5 +67,86 @@ namespace EterPharmaPro.Controllers.Configs
 		}
 
 		public void RefreshProd() => databaseProdutosDb.Refresh();
+
+		public async Task<bool> UpdateUser(UserModel userModel)
+		{
+			using (var connection = new SQLiteConnection(eterDb.DatabaseConnection))
+			{
+				await connection.OpenAsync().ConfigureAwait(false);
+				using (var transaction = connection.BeginTransaction())
+				{
+					try
+					{
+						await eterDb.ActionDb.UPDATE(userModel, connection, transaction);
+
+						transaction.Commit();
+						return true;
+					}
+					catch (Exception ex)
+					{
+						transaction.Rollback();
+						ex.ErrorGet();
+						return false;
+					}
+				}
+			}
+		}
+
+		public async Task<bool> CreateUser(UserModel userModel)
+		{
+			using (var connection = new SQLiteConnection(eterDb.DatabaseConnection))
+			{
+				await connection.OpenAsync().ConfigureAwait(false);
+				using (var transaction = connection.BeginTransaction())
+				{
+					try
+					{
+						await eterDb.ActionDb.INSERT(userModel, connection, transaction);
+
+						transaction.Commit();
+						return true;
+					}
+					catch (Exception ex)
+					{
+						transaction.Rollback();
+						ex.ErrorGet();
+						return false;
+					}
+				}
+			}
+		}
+
+		public async Task<List<FuncaoDbModel>> GetAllFuncao()
+		{
+			return await eterDb.ActionDb.GETFIELDS<FuncaoDbModel>(new QueryWhereModel());
+		}
+
+		internal async Task<DataTable> GetAllUser()
+		{
+			DataTable dataTable = Create();
+
+			var tempU = await eterDb.ActionDb.GETFIELDS<UserModel>(new QueryWhereModel());
+			var tempF = await eterDb.ActionDb.GETFIELDS<FuncaoDbModel>(new QueryWhereModel());
+
+			tempU.ForEach((data) => data.FUNCAO_NAME = tempF.FirstOrDefault(x => x.ID == Convert.ToUInt32(data.FUNCAO)).NOME);
+
+			foreach (var item in tempU)
+			{
+				dataTable.Rows.Add(item.ID, item.ID_LOJA, item.NOME, item.FUNCAO_NAME, item.STATUS);
+			}
+
+			return dataTable;
+		}
+
+		private DataTable Create()
+		{
+			DataTable tabela = new DataTable();
+			tabela.Columns.Add("ID");
+			tabela.Columns.Add("ID_LOJA");
+			tabela.Columns.Add("NOME");
+			tabela.Columns.Add("FUNCAO");
+			tabela.Columns.Add("STATS", typeof(bool));
+			return tabela;
+		}
 	}
 }

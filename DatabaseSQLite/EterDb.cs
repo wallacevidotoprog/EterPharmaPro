@@ -92,5 +92,42 @@ namespace EterPharmaPro.DatabaseSQLite
 		//		() => DbUser.UpdateUsuarioAsync(usuario)        
 		//	);
 		//}
+
+		//void tt()
+		//{
+		//	using (var connection = new SQLiteConnection(eterDb.DatabaseConnection))
+		//	{
+		//		await connection.OpenAsync().ConfigureAwait(false);
+		//		using (var transaction = connection.BeginTransaction())
+		//		{
+		//			try
+		//			{
+
+		//				var temps = requisicaoNotas.DisolveBySQL();
+
+		//				await eterDb.ActionDb.UPDATE(temps.control, connection, transaction);
+
+		//				temps.reqs.ForEach(req => { req.CQN_ID = temps.control.ID; });
+
+		//				await eterDb.ActionDb.DELETE<ReqNotaDbModal>(new QueryDeleteModel().SetWhere("CQN_ID", requisicaoNotas.ID), connection, transaction);
+
+		//				for (int i = 0; i < temps.reqs.Count; i++)
+		//				{
+		//					await eterDb.ActionDb.INSERT(temps.reqs[i], connection, transaction);
+		//				}
+
+
+		//				transaction.Commit();
+		//				return true;
+		//			}
+		//			catch (Exception ex)
+		//			{
+		//				transaction.Rollback();
+		//				ex.ErrorGet();
+		//				return false;
+		//			}
+		//		}
+		//	}
+		//}
 	}
 }

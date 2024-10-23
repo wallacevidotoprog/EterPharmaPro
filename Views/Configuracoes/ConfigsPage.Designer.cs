@@ -29,10 +29,10 @@
 		private void InitializeComponent()
 		{
 			this.toolStrip_topMenu = new System.Windows.Forms.ToolStrip();
+			this.panel_center = new System.Windows.Forms.Panel();
 			this.toolStripButton_exit = new System.Windows.Forms.ToolStripButton();
 			this.toolStripDropDownButton_produto = new System.Windows.Forms.ToolStripButton();
 			this.toolStripButton_user = new System.Windows.Forms.ToolStripButton();
-			this.panel_center = new System.Windows.Forms.Panel();
 			this.toolStrip_topMenu.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -49,6 +49,14 @@
 			this.toolStrip_topMenu.Size = new System.Drawing.Size(1220, 93);
 			this.toolStrip_topMenu.TabIndex = 5;
 			this.toolStrip_topMenu.Text = "toolStrip1";
+			// 
+			// panel_center
+			// 
+			this.panel_center.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panel_center.Location = new System.Drawing.Point(0, 93);
+			this.panel_center.Name = "panel_center";
+			this.panel_center.Size = new System.Drawing.Size(1220, 511);
+			this.panel_center.TabIndex = 6;
 			// 
 			// toolStripButton_exit
 			// 
@@ -100,14 +108,7 @@
 			this.toolStripButton_user.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
 			this.toolStripButton_user.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
 			this.toolStripButton_user.ToolTipText = "USUÁRIO";
-			// 
-			// panel_center
-			// 
-			this.panel_center.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panel_center.Location = new System.Drawing.Point(0, 93);
-			this.panel_center.Name = "panel_center";
-			this.panel_center.Size = new System.Drawing.Size(1220, 511);
-			this.panel_center.TabIndex = 6;
+			this.toolStripButton_user.Click += new System.EventHandler(this.toolStripButton_user_Click);
 			// 
 			// ConfigsPage
 			// 

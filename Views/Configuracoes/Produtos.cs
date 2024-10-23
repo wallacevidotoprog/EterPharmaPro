@@ -25,9 +25,16 @@ namespace EterPharmaPro.Views.Configuracoes
 		public Produtos(ConfigsPageController configsPageController)
 		{
 			InitializeComponent();
+			UpdateDb(false);
 			this.configsPageController = configsPageController;
 			dataGridView_dados.DataSource = configsPageController.GetAllProdutos();
 			comboBox_tipo.SelectedIndex = 0;
+			configsPageController.ReloadProd += ConfigsPageController_ReloadProd;
+		}
+
+		private void ConfigsPageController_ReloadProd(object sender, EventArgs e)
+		{
+			dataGridView_dados.DataSource = configsPageController.GetAllProdutos();
 		}
 
 		private void textBox_codigo_KeyDown(object sender, KeyEventArgs e)
@@ -71,7 +78,7 @@ namespace EterPharmaPro.Views.Configuracoes
 					tempProdutos = await readProdutoXLSX.ReadAllProdutos(openFileDialog.FileName);
 
 					textBox_contador.Text = $"TOTAL DE LINHAS LIDAS [{tempProdutos.Count} ]";
-					
+					UpdateDb(true);
 
 				}
 				
@@ -96,9 +103,18 @@ namespace EterPharmaPro.Views.Configuracoes
 			}
 		}
 
-		private void fileSystemWatcher1_Changed(object sender, FileSystemEventArgs e)
+		private void UpdateDb(bool stats)
 		{
-			var temp = e;
+			if (stats)
+			{
+				ePictureBox_import.Cursor = Cursors.Hand;
+			}
+			else
+			{
+				ePictureBox_import.Cursor = Cursors.No;
+			}
+
+
 		}
 	}
 }
