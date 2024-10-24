@@ -35,6 +35,7 @@
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.groupBox_create = new System.Windows.Forms.GroupBox();
 			this.label2 = new System.Windows.Forms.Label();
+			this.eSwitchControl_stats = new EterPharmaPro.Utils.eControl.eSwitchControl();
 			this.label3 = new System.Windows.Forms.Label();
 			this.comboBox_funcao = new System.Windows.Forms.ComboBox();
 			this.textBox_id = new System.Windows.Forms.TextBox();
@@ -45,12 +46,13 @@
 			this.label4 = new System.Windows.Forms.Label();
 			this.dataGridView_user = new System.Windows.Forms.DataGridView();
 			this.dataGridViewCheckBoxImageColumn1 = new EterPharmaPro.Utils.Extencions.DataGridViewCheckBoxImageColumn();
-			this.eSwitchControl_stats = new EterPharmaPro.Utils.eControl.eSwitchControl();
 			this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.ID_LOJA = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.stats = new EterPharmaPro.Utils.Extencions.DataGridViewCheckBoxImageColumn();
+			this.criado = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ATT = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.toolStrip_topMenu.SuspendLayout();
 			this.groupBox_create.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView_user)).BeginInit();
@@ -160,6 +162,25 @@
 			this.label2.TabIndex = 25;
 			this.label2.Text = "STATS:";
 			// 
+			// eSwitchControl_stats
+			// 
+			this.eSwitchControl_stats.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.eSwitchControl_stats.AutoSize = true;
+			this.eSwitchControl_stats.Checked = true;
+			this.eSwitchControl_stats.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.eSwitchControl_stats.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.eSwitchControl_stats.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.eSwitchControl_stats.Location = new System.Drawing.Point(826, 241);
+			this.eSwitchControl_stats.MinimumSize = new System.Drawing.Size(45, 22);
+			this.eSwitchControl_stats.Name = "eSwitchControl_stats";
+			this.eSwitchControl_stats.OffBackColor = System.Drawing.Color.Black;
+			this.eSwitchControl_stats.OffToggleColor = System.Drawing.Color.White;
+			this.eSwitchControl_stats.OnBackColor = System.Drawing.Color.SeaGreen;
+			this.eSwitchControl_stats.OnToggleColor = System.Drawing.Color.White;
+			this.eSwitchControl_stats.Size = new System.Drawing.Size(45, 22);
+			this.eSwitchControl_stats.TabIndex = 24;
+			this.eSwitchControl_stats.UseVisualStyleBackColor = true;
+			// 
 			// label3
 			// 
 			this.label3.AutoSize = true;
@@ -266,7 +287,9 @@
             this.ID_LOJA,
             this.dataGridViewTextBoxColumn2,
             this.dataGridViewTextBoxColumn3,
-            this.stats});
+            this.stats,
+            this.criado,
+            this.ATT});
 			this.dataGridView_user.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.dataGridView_user.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.dataGridView_user.GridColor = System.Drawing.SystemColors.ActiveCaptionText;
@@ -279,6 +302,7 @@
 			this.dataGridView_user.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
 			this.dataGridView_user.Size = new System.Drawing.Size(909, 301);
 			this.dataGridView_user.TabIndex = 26;
+			this.dataGridView_user.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_user_CellDoubleClick);
 			// 
 			// dataGridViewCheckBoxImageColumn1
 			// 
@@ -288,25 +312,6 @@
 			this.dataGridViewCheckBoxImageColumn1.Name = "dataGridViewCheckBoxImageColumn1";
 			this.dataGridViewCheckBoxImageColumn1.Width = 46;
 			// 
-			// eSwitchControl_stats
-			// 
-			this.eSwitchControl_stats.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.eSwitchControl_stats.AutoSize = true;
-			this.eSwitchControl_stats.Checked = true;
-			this.eSwitchControl_stats.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.eSwitchControl_stats.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.eSwitchControl_stats.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.eSwitchControl_stats.Location = new System.Drawing.Point(826, 241);
-			this.eSwitchControl_stats.MinimumSize = new System.Drawing.Size(45, 22);
-			this.eSwitchControl_stats.Name = "eSwitchControl_stats";
-			this.eSwitchControl_stats.OffBackColor = System.Drawing.Color.Black;
-			this.eSwitchControl_stats.OffToggleColor = System.Drawing.Color.White;
-			this.eSwitchControl_stats.OnBackColor = System.Drawing.Color.SeaGreen;
-			this.eSwitchControl_stats.OnToggleColor = System.Drawing.Color.White;
-			this.eSwitchControl_stats.Size = new System.Drawing.Size(45, 22);
-			this.eSwitchControl_stats.TabIndex = 24;
-			this.eSwitchControl_stats.UseVisualStyleBackColor = true;
-			// 
 			// dataGridViewTextBoxColumn1
 			// 
 			this.dataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
@@ -315,6 +320,7 @@
 			this.dataGridViewTextBoxColumn1.HeaderText = "ID";
 			this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
 			this.dataGridViewTextBoxColumn1.ReadOnly = true;
+			this.dataGridViewTextBoxColumn1.Visible = false;
 			this.dataGridViewTextBoxColumn1.Width = 43;
 			// 
 			// ID_LOJA
@@ -344,10 +350,26 @@
 			// stats
 			// 
 			this.stats.DataPropertyName = "STATS";
-			this.stats.FillWeight = 25F;
+			this.stats.FillWeight = 30F;
 			this.stats.HeaderText = "STATS";
 			this.stats.Name = "stats";
 			this.stats.ReadOnly = true;
+			// 
+			// criado
+			// 
+			this.criado.DataPropertyName = "CREATE";
+			this.criado.FillWeight = 50F;
+			this.criado.HeaderText = "CRIAÇÃO";
+			this.criado.Name = "criado";
+			this.criado.ReadOnly = true;
+			// 
+			// ATT
+			// 
+			this.ATT.DataPropertyName = "UPDATE";
+			this.ATT.FillWeight = 50F;
+			this.ATT.HeaderText = "ATUALIZAÇÃO";
+			this.ATT.Name = "ATT";
+			this.ATT.ReadOnly = true;
 			// 
 			// User
 			// 
@@ -389,11 +411,13 @@
 		private Utils.eControl.eSwitchControl eSwitchControl_stats;
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.DataGridView dataGridView_user;
+		private Utils.Extencions.DataGridViewCheckBoxImageColumn dataGridViewCheckBoxImageColumn1;
 		private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ID_LOJA;
 		private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
 		private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
 		private Utils.Extencions.DataGridViewCheckBoxImageColumn stats;
-		private Utils.Extencions.DataGridViewCheckBoxImageColumn dataGridViewCheckBoxImageColumn1;
+		private System.Windows.Forms.DataGridViewTextBoxColumn criado;
+		private System.Windows.Forms.DataGridViewTextBoxColumn ATT;
 	}
 }

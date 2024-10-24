@@ -34,11 +34,10 @@ namespace EterPharmaPro
 		}
 		private async void MainWindow_Load(object sender, EventArgs e)
 		{
-			//testeAsync();
 			DatabaseProdutosDb = new DatabaseProdutosDb(toolStripProgressBar_status, cancellationTokenSource.Token);
 			SetLogin();
-			/// await NotifyValite.CheckeVality(eterDb);
-			await Task.Run(() => NotifyValite.CheckeVality(eterDb));
+			await NotifyValite.CheckeVality(eterDb);		
+			
 		}
 
 		private async Task testeAsync()
@@ -143,10 +142,7 @@ namespace EterPharmaPro
 				this.Text = $"ETER PHARMA PRO [ {eterDb.EterDbController.UserModelAcess.ID_LOJA.ToString().PadLeft(4, '0')} - {eterDb.EterDbController.UserModelAcess.NOME} - {eterDb.EterDbController.UserModelAcess.FUNCAO_NAME} ]";
 
 
-				//Notifications notifications = new Notifications();
-				//notifications.Show("SUCESS", $"Bem Vindo {eterDb.UserModelAcess.FUNCAO_NAME} {eterDb.UserModelAcess.NOME}", this.Icon.ToBitmap());
-
-				SendAlertBox.Send($"Bem Vindo {eterDb.EterDbController.UserModelAcess.FUNCAO_NAME} {eterDb.EterDbController.UserModelAcess.NOME}", TypeAlertEnum.Info);
+				SendAlertBox.SendT($"Bem Vindo {eterDb.EterDbController.UserModelAcess.FUNCAO_NAME} {eterDb.EterDbController.UserModelAcess.NOME}", TypeAlertEnum.Info,this);
 				toolStripButton_conf.Visible = (eterDb.EterDbController.UserModelAcess.FUNCAO_NAME == "DEV") ? true : false;
 			}
 		}

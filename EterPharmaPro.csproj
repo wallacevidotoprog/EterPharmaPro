@@ -249,7 +249,13 @@
     <Compile Include="Services\XLSX\ReadProdutoXLSX.cs" />
     <Compile Include="Services\XLSX\WriteValityExport.cs" />
     <Compile Include="Temps\ImportValidadeXMLold.cs" />
+    <Compile Include="Utils\eControl\eButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Utils\eControl\ePictureBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Utils\eControl\eRadiusComponent.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Utils\eControl\eSwitchControl.cs">

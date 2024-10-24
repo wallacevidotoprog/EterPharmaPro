@@ -102,6 +102,29 @@ namespace EterPharmaPro.Utils.Extencions
 			return -1;
 		}
 
+		public static int ReturnIndexFuncaoCB(this ComboBox cb, long? id)
+		{
+			try
+			{
+				BindingSource sb = (BindingSource)cb.DataSource;
+				Dictionary<long?, string> tempD = (Dictionary<long?, string>)sb.DataSource;
+				int index = 0;
+				foreach (KeyValuePair<long?, string> item in tempD)
+				{
+					if (item.Key.Equals(id))
+					{
+						return index;
+					}
+					index++;
+				}
+			}
+			catch (Exception ex)
+			{
+				ex.ErrorGet();
+			}
+			return -1;
+		}
+
 		public static async Task<ComboBox> CBListUserAsync(this ComboBox cb, IEterDb eterDb, bool isStatusAll = false)
 		{
 			List<UserModel> list = await eterDb.ActionDb.GETFIELDS<UserModel>(new QueryWhereModel());

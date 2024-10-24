@@ -1,16 +1,8 @@
 ﻿using EterPharmaPro.Controllers.Configs;
-using EterPharmaPro.Models;
 using EterPharmaPro.Models.DbModels;
 using EterPharmaPro.Properties;
 using EterPharmaPro.Utils.Extencions;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace EterPharmaPro.Views.Configuracoes
@@ -50,7 +42,7 @@ namespace EterPharmaPro.Views.Configuracoes
 			else
 			{
 				userModel = userModel ?? new UserModel();
-				
+
 				userModel.ID_LOJA = Convert.ToUInt32(textBox_id.Text.ReturnInt());
 				userModel.NOME = textBox_nome.Text.ToUpper();
 				userModel.PASS = string.IsNullOrEmpty(textBox_pass.Text) ? null : textBox_pass.Text;
@@ -62,15 +54,19 @@ namespace EterPharmaPro.Views.Configuracoes
 				{
 					if (await configsPageController.UpdateUser(userModel))
 					{
-						toolStripButton_cancel_Click(null, null);
-						return;
+						isEdit = false;
 					}
 				}
-				if (await configsPageController.CreateUser(userModel))
+				else
 				{
-					toolStripButton_cancel_Click(null, null);
-					return;
+					if (await configsPageController.CreateUser(userModel))
+					{
+						isNew = false;
+					}
 				}
+
+				toolStripButton_cancel_Click(null, null);
+				User_Load(null, null);
 			}
 		}
 
@@ -89,6 +85,23 @@ namespace EterPharmaPro.Views.Configuracoes
 		{
 			comboBox_funcao.CBListUserFuncao(await configsPageController.GetAllFuncao());
 			dataGridView_user.DataSource = await configsPageController.GetAllUser();
+		}
+
+		private async void dataGridView_user_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+		{
+			userModel = await configsPageController.GetUser(dataGridView_user.Rows[e.RowIndex].Cells[0].Value);
+
+			if (userModel is null) { return; }
+
+			textBox_id.Text = userModel.ID_LOJA.ToString();
+			textBox_nome.Text = userModel.NOME;
+			textBox_pass.Text = userModel.PASS;
+			comboBox_funcao.SelectedIndex = comboBox_funcao.ReturnIndexFuncaoCB(userModel.FUNCAO);
+			eSwitchControl_stats.Checked = userModel.STATUS;
+
+			isEdit = true;
+
+			OpenSaveUp();
 		}
 	}
 }

@@ -121,7 +121,7 @@ namespace EterPharmaPro.Controllers.Configs
 			return await eterDb.ActionDb.GETFIELDS<FuncaoDbModel>(new QueryWhereModel());
 		}
 
-		internal async Task<DataTable> GetAllUser()
+		public async Task<DataTable> GetAllUser()
 		{
 			DataTable dataTable = Create();
 
@@ -132,7 +132,7 @@ namespace EterPharmaPro.Controllers.Configs
 
 			foreach (var item in tempU)
 			{
-				dataTable.Rows.Add(item.ID, item.ID_LOJA, item.NOME, item.FUNCAO_NAME, item.STATUS);
+				dataTable.Rows.Add(item.ID , item.ID_LOJA.ToString().PadLeft(4, '0'), item.NOME, item.FUNCAO_NAME, item.STATUS,item.CREATE?.ToShortDateString(),item.UPDATE?.ToShortDateString());
 			}
 
 			return dataTable;
@@ -146,7 +146,14 @@ namespace EterPharmaPro.Controllers.Configs
 			tabela.Columns.Add("NOME");
 			tabela.Columns.Add("FUNCAO");
 			tabela.Columns.Add("STATS", typeof(bool));
+			tabela.Columns.Add("CREATE");
+			tabela.Columns.Add("UPDATE");
 			return tabela;
+		}
+
+		public async Task<UserModel> GetUser(object value)
+		{
+			return (await eterDb.ActionDb.GETFIELDS<UserModel>(new QueryWhereModel().SetWhere("ID",value))).FirstOrDefault();
 		}
 	}
 }

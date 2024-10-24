@@ -1,6 +1,7 @@
 using EterPharmaPro.Models;
 using EterPharmaPro.Services;
 using EterPharmaPro.Services.DbProdutos;
+using EterPharmaPro.Utils.Extencions;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -29,8 +30,16 @@ namespace EterPharmaPro.DbProdutos.Services
 
 		public DatabaseProdutosDb(ToolStripProgressBar progressBar, CancellationToken cancellationToken)
 		{
-			ini = new IniFile("config.ini");
-			InitWatch();
+			try
+			{
+				ini = new IniFile("config.ini");
+				InitWatch();
+			}
+			catch (Exception ex)
+			{
+				ex.ErrorGet();
+			}
+			
 			Await = false;
 			_progressBar = progressBar;
 			this.cancellationToken = cancellationToken;

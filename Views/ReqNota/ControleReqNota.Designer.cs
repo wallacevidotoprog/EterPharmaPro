@@ -36,6 +36,8 @@
 			this.groupBox_addReq = new System.Windows.Forms.GroupBox();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.dataGridView_reqs = new System.Windows.Forms.DataGridView();
+			this._id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
 			this.ePictureBox_addR = new EterPharmaPro.Utils.eControl.ePictureBox();
 			this.textBox_req = new System.Windows.Forms.TextBox();
@@ -60,8 +62,9 @@
 			this.dateTimePicker_dataEnvio = new System.Windows.Forms.DateTimePicker();
 			this.label5 = new System.Windows.Forms.Label();
 			this.dateTimePicker_dataVenda = new System.Windows.Forms.DateTimePicker();
-			this._id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.dataGridViewCheckBoxColumn1 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+			this.button1 = new System.Windows.Forms.Button();
+			this.eRadiusComponent1 = new EterPharmaPro.Utils.eControl.eRadiusComponent();
 			this.toolStrip_topMenu.SuspendLayout();
 			this.groupBox_addReq.SuspendLayout();
 			this.groupBox2.SuspendLayout();
@@ -204,8 +207,25 @@
 			this.dataGridView_reqs.TabIndex = 7;
 			this.dataGridView_reqs.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataGridView_reqs_KeyDown);
 			// 
+			// _id
+			// 
+			this._id.FillWeight = 20F;
+			this._id.HeaderText = "ID";
+			this._id.Name = "_id";
+			this._id.ReadOnly = true;
+			this._id.Visible = false;
+			// 
+			// dataGridViewTextBoxColumn2
+			// 
+			this.dataGridViewTextBoxColumn2.DataPropertyName = "Nome";
+			this.dataGridViewTextBoxColumn2.FillWeight = 200F;
+			this.dataGridViewTextBoxColumn2.HeaderText = "REQUISIÇÃO";
+			this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+			this.dataGridViewTextBoxColumn2.ReadOnly = true;
+			// 
 			// groupBox3
 			// 
+			this.groupBox3.Controls.Add(this.button1);
 			this.groupBox3.Controls.Add(this.ePictureBox_addR);
 			this.groupBox3.Controls.Add(this.textBox_req);
 			this.groupBox3.Controls.Add(this.label4);
@@ -236,10 +256,12 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBox_req.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
 			this.textBox_req.Font = new System.Drawing.Font("Microsoft Tai Le", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.textBox_req.ForeColor = System.Drawing.SystemColors.InfoText;
 			this.textBox_req.Location = new System.Drawing.Point(6, 44);
 			this.textBox_req.Name = "textBox_req";
 			this.textBox_req.Size = new System.Drawing.Size(872, 33);
 			this.textBox_req.TabIndex = 1;
+			this.textBox_req.Text = "ADAS A";
 			this.textBox_req.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox_req_KeyDown);
 			// 
 			// label4
@@ -474,21 +496,30 @@
 			this.dateTimePicker_dataVenda.TabIndex = 7;
 			this.dateTimePicker_dataVenda.ValueChanged += new System.EventHandler(this.dateTimePicker_dataVenda_ValueChanged);
 			// 
-			// _id
+			// dataGridViewCheckBoxColumn1
 			// 
-			this._id.FillWeight = 20F;
-			this._id.HeaderText = "ID";
-			this._id.Name = "_id";
-			this._id.ReadOnly = true;
-			this._id.Visible = false;
+			this.dataGridViewCheckBoxColumn1.DataPropertyName = "ACTION";
+			this.dataGridViewCheckBoxColumn1.FillWeight = 30F;
+			this.dataGridViewCheckBoxColumn1.HeaderText = "";
+			this.dataGridViewCheckBoxColumn1.Name = "dataGridViewCheckBoxColumn1";
+			this.dataGridViewCheckBoxColumn1.ReadOnly = true;
+			this.dataGridViewCheckBoxColumn1.Width = 49;
 			// 
-			// dataGridViewTextBoxColumn2
+			// button1
 			// 
-			this.dataGridViewTextBoxColumn2.DataPropertyName = "Nome";
-			this.dataGridViewTextBoxColumn2.FillWeight = 200F;
-			this.dataGridViewTextBoxColumn2.HeaderText = "REQUISIÇÃO";
-			this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-			this.dataGridViewTextBoxColumn2.ReadOnly = true;
+			this.button1.Location = new System.Drawing.Point(183, 16);
+			this.button1.Name = "button1";
+			this.button1.Size = new System.Drawing.Size(90, 23);
+			this.button1.TabIndex = 8;
+			this.button1.Text = "button1";
+			this.button1.UseVisualStyleBackColor = true;
+			// 
+			// eRadiusComponent1
+			// 
+			this.eRadiusComponent1.BorderColor = System.Drawing.Color.Red;
+			this.eRadiusComponent1.BorderRadius = 66;
+			this.eRadiusComponent1.BorderSize = 0;
+			this.eRadiusComponent1.TargetControl = this.button1;
 			// 
 			// ControleReqNota
 			// 
@@ -555,5 +586,8 @@
 		private System.Windows.Forms.DateTimePicker dateTimePicker_dataEnvio;
 		private System.Windows.Forms.DataGridViewTextBoxColumn _id;
 		private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+		private System.Windows.Forms.DataGridViewCheckBoxColumn dataGridViewCheckBoxColumn1;
+		private System.Windows.Forms.Button button1;
+		private Utils.eControl.eRadiusComponent eRadiusComponent1;
 	}
 }
