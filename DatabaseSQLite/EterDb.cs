@@ -1,4 +1,5 @@
 using EterPharmaPro.Controllers;
+using EterPharmaPro.DatabaseFireBase;
 using EterPharmaPro.Interfaces;
 using EterPharmaPro.Models.DbModels;
 using EterPharmaPro.Utils.Extencions;
@@ -17,12 +18,11 @@ namespace EterPharmaPro.DatabaseSQLite
 
 		public DatabaseTransactionHandler _transactionHandler;
 
+		public FirebaseDb firebaseDb { get; set; }
+
 		public UserModel UserModelAcess { get; set; }
 
-
 		public IActionDbBase ActionDb { get; set; }
-
-
 
 		public EterDbController EterDbController { get; set; }
 
@@ -52,7 +52,8 @@ namespace EterPharmaPro.DatabaseSQLite
 		private void SetDb()
 		{
 			ActionDb = new ActionDbBase(_databaseConnection);
-
+			firebaseDb = new FirebaseDb();
+			//testeFb();
 			EterDbController = new EterDbController(this);
 		}
 
@@ -81,7 +82,17 @@ namespace EterPharmaPro.DatabaseSQLite
 		}
 
 
+		async void testeFb()
+		{
+			;
+			var uer = await ActionDb.GETFIELDS<UserModel>(new QueryWhereModel());
 
+			for (int i = 0; i < uer.Count; i++)
+			{
+				;
+				System.Windows.Forms.MessageBox.Show(await firebaseDb.AddDataAsync("USER", uer[i]));
+			}
+		}
 
 		//------ EXEMPLO ------
 		//public async Task<bool> AtualizarDadosComTransacaoAsync(UserModel cliente, UserModel endereco, UserModel usuario)

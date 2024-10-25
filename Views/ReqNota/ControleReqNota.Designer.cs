@@ -48,7 +48,12 @@
 			this.comboBox_user_red = new System.Windows.Forms.ComboBox();
 			this.label2 = new System.Windows.Forms.Label();
 			this.dateTimePicker_data = new System.Windows.Forms.DateTimePicker();
-			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.dataGridViewCheckBoxColumn1 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+			this.groupBox4 = new System.Windows.Forms.GroupBox();
+			this.label6 = new System.Windows.Forms.Label();
+			this.dateTimePicker_dataEnvio = new System.Windows.Forms.DateTimePicker();
+			this.label5 = new System.Windows.Forms.Label();
+			this.dateTimePicker_dataVenda = new System.Windows.Forms.DateTimePicker();
 			this.dataGridView_resqDb = new System.Windows.Forms.DataGridView();
 			this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.REDIGENTE = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -57,23 +62,16 @@
 			this.DATAE = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.REQS = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.Column1 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-			this.groupBox4 = new System.Windows.Forms.GroupBox();
-			this.label6 = new System.Windows.Forms.Label();
-			this.dateTimePicker_dataEnvio = new System.Windows.Forms.DateTimePicker();
-			this.label5 = new System.Windows.Forms.Label();
-			this.dateTimePicker_dataVenda = new System.Windows.Forms.DateTimePicker();
-			this.dataGridViewCheckBoxColumn1 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-			this.button1 = new System.Windows.Forms.Button();
-			this.eRadiusComponent1 = new EterPharmaPro.Utils.eControl.eRadiusComponent();
+			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.toolStrip_topMenu.SuspendLayout();
 			this.groupBox_addReq.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView_reqs)).BeginInit();
 			this.groupBox3.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.ePictureBox_addR)).BeginInit();
-			this.groupBox1.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.dataGridView_resqDb)).BeginInit();
 			this.groupBox4.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.dataGridView_resqDb)).BeginInit();
+			this.groupBox1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// toolStrip_topMenu
@@ -225,7 +223,6 @@
 			// 
 			// groupBox3
 			// 
-			this.groupBox3.Controls.Add(this.button1);
 			this.groupBox3.Controls.Add(this.ePictureBox_addR);
 			this.groupBox3.Controls.Add(this.textBox_req);
 			this.groupBox3.Controls.Add(this.label4);
@@ -339,16 +336,71 @@
 			this.dateTimePicker_data.Size = new System.Drawing.Size(440, 33);
 			this.dateTimePicker_data.TabIndex = 5;
 			// 
-			// groupBox1
+			// dataGridViewCheckBoxColumn1
 			// 
-			this.groupBox1.Controls.Add(this.dataGridView_resqDb);
-			this.groupBox1.Controls.Add(this.groupBox4);
-			this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.groupBox1.Location = new System.Drawing.Point(0, 364);
-			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(978, 475);
-			this.groupBox1.TabIndex = 10;
-			this.groupBox1.TabStop = false;
+			this.dataGridViewCheckBoxColumn1.DataPropertyName = "ACTION";
+			this.dataGridViewCheckBoxColumn1.FillWeight = 30F;
+			this.dataGridViewCheckBoxColumn1.HeaderText = "";
+			this.dataGridViewCheckBoxColumn1.Name = "dataGridViewCheckBoxColumn1";
+			this.dataGridViewCheckBoxColumn1.ReadOnly = true;
+			this.dataGridViewCheckBoxColumn1.Width = 49;
+			// 
+			// groupBox4
+			// 
+			this.groupBox4.Controls.Add(this.label6);
+			this.groupBox4.Controls.Add(this.dateTimePicker_dataEnvio);
+			this.groupBox4.Controls.Add(this.label5);
+			this.groupBox4.Controls.Add(this.dateTimePicker_dataVenda);
+			this.groupBox4.Dock = System.Windows.Forms.DockStyle.Top;
+			this.groupBox4.Location = new System.Drawing.Point(3, 16);
+			this.groupBox4.Name = "groupBox4";
+			this.groupBox4.Size = new System.Drawing.Size(972, 63);
+			this.groupBox4.TabIndex = 11;
+			this.groupBox4.TabStop = false;
+			// 
+			// label6
+			// 
+			this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.label6.AutoSize = true;
+			this.label6.Font = new System.Drawing.Font("Microsoft Tai Le", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label6.Location = new System.Drawing.Point(516, 23);
+			this.label6.Name = "label6";
+			this.label6.Size = new System.Drawing.Size(266, 25);
+			this.label6.TabIndex = 10;
+			this.label6.Text = "BUSCA POR DATA DE ENVIO:";
+			// 
+			// dateTimePicker_dataEnvio
+			// 
+			this.dateTimePicker_dataEnvio.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.dateTimePicker_dataEnvio.CustomFormat = "MMMM/yyyy";
+			this.dateTimePicker_dataEnvio.Font = new System.Drawing.Font("Microsoft Tai Le", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.dateTimePicker_dataEnvio.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+			this.dateTimePicker_dataEnvio.Location = new System.Drawing.Point(788, 17);
+			this.dateTimePicker_dataEnvio.Name = "dateTimePicker_dataEnvio";
+			this.dateTimePicker_dataEnvio.Size = new System.Drawing.Size(181, 33);
+			this.dateTimePicker_dataEnvio.TabIndex = 9;
+			this.dateTimePicker_dataEnvio.ValueChanged += new System.EventHandler(this.dateTimePicker_dataEnvio_ValueChanged);
+			// 
+			// label5
+			// 
+			this.label5.AutoSize = true;
+			this.label5.Font = new System.Drawing.Font("Microsoft Tai Le", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label5.Location = new System.Drawing.Point(6, 25);
+			this.label5.Name = "label5";
+			this.label5.Size = new System.Drawing.Size(273, 25);
+			this.label5.TabIndex = 8;
+			this.label5.Text = "BUSCA POR DATA DE VENDA:";
+			// 
+			// dateTimePicker_dataVenda
+			// 
+			this.dateTimePicker_dataVenda.CustomFormat = "MMMM/yyyy";
+			this.dateTimePicker_dataVenda.Font = new System.Drawing.Font("Microsoft Tai Le", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.dateTimePicker_dataVenda.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+			this.dateTimePicker_dataVenda.Location = new System.Drawing.Point(285, 19);
+			this.dateTimePicker_dataVenda.Name = "dateTimePicker_dataVenda";
+			this.dateTimePicker_dataVenda.Size = new System.Drawing.Size(181, 33);
+			this.dateTimePicker_dataVenda.TabIndex = 7;
+			this.dateTimePicker_dataVenda.ValueChanged += new System.EventHandler(this.dateTimePicker_dataVenda_ValueChanged);
 			// 
 			// dataGridView_resqDb
 			// 
@@ -439,87 +491,16 @@
 			this.Column1.Name = "Column1";
 			this.Column1.ReadOnly = true;
 			// 
-			// groupBox4
+			// groupBox1
 			// 
-			this.groupBox4.Controls.Add(this.label6);
-			this.groupBox4.Controls.Add(this.dateTimePicker_dataEnvio);
-			this.groupBox4.Controls.Add(this.label5);
-			this.groupBox4.Controls.Add(this.dateTimePicker_dataVenda);
-			this.groupBox4.Dock = System.Windows.Forms.DockStyle.Top;
-			this.groupBox4.Location = new System.Drawing.Point(3, 16);
-			this.groupBox4.Name = "groupBox4";
-			this.groupBox4.Size = new System.Drawing.Size(972, 63);
-			this.groupBox4.TabIndex = 11;
-			this.groupBox4.TabStop = false;
-			// 
-			// label6
-			// 
-			this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.label6.AutoSize = true;
-			this.label6.Font = new System.Drawing.Font("Microsoft Tai Le", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label6.Location = new System.Drawing.Point(516, 23);
-			this.label6.Name = "label6";
-			this.label6.Size = new System.Drawing.Size(266, 25);
-			this.label6.TabIndex = 10;
-			this.label6.Text = "BUSCA POR DATA DE ENVIO:";
-			// 
-			// dateTimePicker_dataEnvio
-			// 
-			this.dateTimePicker_dataEnvio.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.dateTimePicker_dataEnvio.CustomFormat = "MMMM/yyyy";
-			this.dateTimePicker_dataEnvio.Font = new System.Drawing.Font("Microsoft Tai Le", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.dateTimePicker_dataEnvio.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-			this.dateTimePicker_dataEnvio.Location = new System.Drawing.Point(788, 17);
-			this.dateTimePicker_dataEnvio.Name = "dateTimePicker_dataEnvio";
-			this.dateTimePicker_dataEnvio.Size = new System.Drawing.Size(181, 33);
-			this.dateTimePicker_dataEnvio.TabIndex = 9;
-			this.dateTimePicker_dataEnvio.ValueChanged += new System.EventHandler(this.dateTimePicker_dataEnvio_ValueChanged);
-			// 
-			// label5
-			// 
-			this.label5.AutoSize = true;
-			this.label5.Font = new System.Drawing.Font("Microsoft Tai Le", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label5.Location = new System.Drawing.Point(6, 25);
-			this.label5.Name = "label5";
-			this.label5.Size = new System.Drawing.Size(273, 25);
-			this.label5.TabIndex = 8;
-			this.label5.Text = "BUSCA POR DATA DE VENDA:";
-			// 
-			// dateTimePicker_dataVenda
-			// 
-			this.dateTimePicker_dataVenda.CustomFormat = "MMMM/yyyy";
-			this.dateTimePicker_dataVenda.Font = new System.Drawing.Font("Microsoft Tai Le", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.dateTimePicker_dataVenda.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-			this.dateTimePicker_dataVenda.Location = new System.Drawing.Point(285, 19);
-			this.dateTimePicker_dataVenda.Name = "dateTimePicker_dataVenda";
-			this.dateTimePicker_dataVenda.Size = new System.Drawing.Size(181, 33);
-			this.dateTimePicker_dataVenda.TabIndex = 7;
-			this.dateTimePicker_dataVenda.ValueChanged += new System.EventHandler(this.dateTimePicker_dataVenda_ValueChanged);
-			// 
-			// dataGridViewCheckBoxColumn1
-			// 
-			this.dataGridViewCheckBoxColumn1.DataPropertyName = "ACTION";
-			this.dataGridViewCheckBoxColumn1.FillWeight = 30F;
-			this.dataGridViewCheckBoxColumn1.HeaderText = "";
-			this.dataGridViewCheckBoxColumn1.Name = "dataGridViewCheckBoxColumn1";
-			this.dataGridViewCheckBoxColumn1.ReadOnly = true;
-			this.dataGridViewCheckBoxColumn1.Width = 49;
-			// 
-			// button1
-			// 
-			this.button1.Location = new System.Drawing.Point(183, 16);
-			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(90, 23);
-			this.button1.TabIndex = 8;
-			this.button1.Text = "button1";
-			this.button1.UseVisualStyleBackColor = true;
-			// 
-			// eRadiusComponent1
-			// 
-			this.eRadiusComponent1.BorderColor = System.Drawing.Color.Red;
-			this.eRadiusComponent1.BorderRadius = 66;
-			this.eRadiusComponent1.BorderSize = 0;
-			this.eRadiusComponent1.TargetControl = this.button1;
+			this.groupBox1.Controls.Add(this.dataGridView_resqDb);
+			this.groupBox1.Controls.Add(this.groupBox4);
+			this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.groupBox1.Location = new System.Drawing.Point(0, 364);
+			this.groupBox1.Name = "groupBox1";
+			this.groupBox1.Size = new System.Drawing.Size(978, 475);
+			this.groupBox1.TabIndex = 10;
+			this.groupBox1.TabStop = false;
 			// 
 			// ControleReqNota
 			// 
@@ -541,10 +522,10 @@
 			this.groupBox3.ResumeLayout(false);
 			this.groupBox3.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.ePictureBox_addR)).EndInit();
-			this.groupBox1.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.dataGridView_resqDb)).EndInit();
 			this.groupBox4.ResumeLayout(false);
 			this.groupBox4.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.dataGridView_resqDb)).EndInit();
+			this.groupBox1.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -570,11 +551,15 @@
 		private System.Windows.Forms.Label label4;
 		private Utils.eControl.ePictureBox ePictureBox_addR;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-		private System.Windows.Forms.GroupBox groupBox1;
+		private System.Windows.Forms.DataGridViewTextBoxColumn _id;
+		private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+		private System.Windows.Forms.DataGridViewCheckBoxColumn dataGridViewCheckBoxColumn1;
 		private System.Windows.Forms.GroupBox groupBox4;
-		private System.Windows.Forms.DataGridView dataGridView_resqDb;
+		private System.Windows.Forms.Label label6;
+		private System.Windows.Forms.DateTimePicker dateTimePicker_dataEnvio;
 		private System.Windows.Forms.Label label5;
 		private System.Windows.Forms.DateTimePicker dateTimePicker_dataVenda;
+		private System.Windows.Forms.DataGridView dataGridView_resqDb;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ID;
 		private System.Windows.Forms.DataGridViewTextBoxColumn REDIGENTE;
 		private System.Windows.Forms.DataGridViewTextBoxColumn VENDEDOR;
@@ -582,12 +567,6 @@
 		private System.Windows.Forms.DataGridViewTextBoxColumn DATAE;
 		private System.Windows.Forms.DataGridViewTextBoxColumn REQS;
 		private System.Windows.Forms.DataGridViewCheckBoxColumn Column1;
-		private System.Windows.Forms.Label label6;
-		private System.Windows.Forms.DateTimePicker dateTimePicker_dataEnvio;
-		private System.Windows.Forms.DataGridViewTextBoxColumn _id;
-		private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
-		private System.Windows.Forms.DataGridViewCheckBoxColumn dataGridViewCheckBoxColumn1;
-		private System.Windows.Forms.Button button1;
-		private Utils.eControl.eRadiusComponent eRadiusComponent1;
+		private System.Windows.Forms.GroupBox groupBox1;
 	}
 }

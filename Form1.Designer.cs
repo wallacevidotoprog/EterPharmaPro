@@ -31,19 +31,19 @@
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
 			this.toolStrip_menu = new System.Windows.Forms.ToolStrip();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-			this.statusStrip_notify = new System.Windows.Forms.StatusStrip();
-			this.toolStripProgressBar_status = new System.Windows.Forms.ToolStripProgressBar();
-			this.panel_center = new System.Windows.Forms.Panel();
 			this.toolStripButton_manipulacao = new System.Windows.Forms.ToolStripDropDownButton();
 			this.fORMUToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.rELATÓRIOToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
 			this.toolStripButton1 = new System.Windows.Forms.ToolStripDropDownButton();
 			this.gERARVALIDADEDOMÊSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.rELATÓRIOToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripButton_conf = new System.Windows.Forms.ToolStripButton();
+			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
 			this.toolStripDropDownButton_impressos = new System.Windows.Forms.ToolStripButton();
+			this.statusStrip_notify = new System.Windows.Forms.StatusStrip();
+			this.toolStripProgressBar_status = new System.Windows.Forms.ToolStripProgressBar();
+			this.panel_center = new System.Windows.Forms.Panel();
 			this.toolStrip_menu.SuspendLayout();
 			this.statusStrip_notify.SuspendLayout();
 			this.SuspendLayout();
@@ -70,40 +70,6 @@
 			this.toolStripSeparator1.Name = "toolStripSeparator1";
 			this.toolStripSeparator1.Size = new System.Drawing.Size(6, 93);
 			// 
-			// toolStripSeparator2
-			// 
-			this.toolStripSeparator2.Name = "toolStripSeparator2";
-			this.toolStripSeparator2.Size = new System.Drawing.Size(6, 93);
-			// 
-			// toolStripSeparator3
-			// 
-			this.toolStripSeparator3.Name = "toolStripSeparator3";
-			this.toolStripSeparator3.Size = new System.Drawing.Size(6, 93);
-			// 
-			// statusStrip_notify
-			// 
-			this.statusStrip_notify.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripProgressBar_status});
-			this.statusStrip_notify.Location = new System.Drawing.Point(0, 531);
-			this.statusStrip_notify.Name = "statusStrip_notify";
-			this.statusStrip_notify.Size = new System.Drawing.Size(947, 24);
-			this.statusStrip_notify.TabIndex = 5;
-			this.statusStrip_notify.Text = "statusStrip1";
-			// 
-			// toolStripProgressBar_status
-			// 
-			this.toolStripProgressBar_status.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-			this.toolStripProgressBar_status.Name = "toolStripProgressBar_status";
-			this.toolStripProgressBar_status.Size = new System.Drawing.Size(100, 18);
-			// 
-			// panel_center
-			// 
-			this.panel_center.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panel_center.Location = new System.Drawing.Point(0, 93);
-			this.panel_center.Name = "panel_center";
-			this.panel_center.Size = new System.Drawing.Size(947, 438);
-			this.panel_center.TabIndex = 6;
-			// 
 			// toolStripButton_manipulacao
 			// 
 			this.toolStripButton_manipulacao.AutoSize = false;
@@ -127,7 +93,7 @@
 			// 
 			this.fORMUToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("fORMUToolStripMenuItem.Image")));
 			this.fORMUToolStripMenuItem.Name = "fORMUToolStripMenuItem";
-			this.fORMUToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.fORMUToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
 			this.fORMUToolStripMenuItem.Text = "FORMULÁRIO";
 			this.fORMUToolStripMenuItem.Click += new System.EventHandler(this.fORMUToolStripMenuItem_Click);
 			// 
@@ -135,9 +101,14 @@
 			// 
 			this.rELATÓRIOToolStripMenuItem1.Image = ((System.Drawing.Image)(resources.GetObject("rELATÓRIOToolStripMenuItem1.Image")));
 			this.rELATÓRIOToolStripMenuItem1.Name = "rELATÓRIOToolStripMenuItem1";
-			this.rELATÓRIOToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+			this.rELATÓRIOToolStripMenuItem1.Size = new System.Drawing.Size(145, 22);
 			this.rELATÓRIOToolStripMenuItem1.Text = "RELATÓRIO";
 			this.rELATÓRIOToolStripMenuItem1.Click += new System.EventHandler(this.rELATÓRIOToolStripMenuItem1_Click);
+			// 
+			// toolStripSeparator2
+			// 
+			this.toolStripSeparator2.Name = "toolStripSeparator2";
+			this.toolStripSeparator2.Size = new System.Drawing.Size(6, 93);
 			// 
 			// toolStripButton1
 			// 
@@ -192,6 +163,11 @@
 			this.toolStripButton_conf.Visible = false;
 			this.toolStripButton_conf.Click += new System.EventHandler(this.toolStripButton_conf_Click);
 			// 
+			// toolStripSeparator3
+			// 
+			this.toolStripSeparator3.Name = "toolStripSeparator3";
+			this.toolStripSeparator3.Size = new System.Drawing.Size(6, 93);
+			// 
 			// toolStripDropDownButton_impressos
 			// 
 			this.toolStripDropDownButton_impressos.AutoSize = false;
@@ -208,6 +184,30 @@
 			this.toolStripDropDownButton_impressos.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
 			this.toolStripDropDownButton_impressos.ToolTipText = "IMPRESSOS";
 			this.toolStripDropDownButton_impressos.Click += new System.EventHandler(this.toolStripDropDownButton_impressos_Click);
+			// 
+			// statusStrip_notify
+			// 
+			this.statusStrip_notify.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripProgressBar_status});
+			this.statusStrip_notify.Location = new System.Drawing.Point(0, 531);
+			this.statusStrip_notify.Name = "statusStrip_notify";
+			this.statusStrip_notify.Size = new System.Drawing.Size(947, 24);
+			this.statusStrip_notify.TabIndex = 5;
+			this.statusStrip_notify.Text = "statusStrip1";
+			// 
+			// toolStripProgressBar_status
+			// 
+			this.toolStripProgressBar_status.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+			this.toolStripProgressBar_status.Name = "toolStripProgressBar_status";
+			this.toolStripProgressBar_status.Size = new System.Drawing.Size(100, 18);
+			// 
+			// panel_center
+			// 
+			this.panel_center.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panel_center.Location = new System.Drawing.Point(0, 93);
+			this.panel_center.Name = "panel_center";
+			this.panel_center.Size = new System.Drawing.Size(947, 438);
+			this.panel_center.TabIndex = 6;
 			// 
 			// MainWindow
 			// 

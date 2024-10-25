@@ -1,4 +1,5 @@
 using EterPharmaPro.Controllers;
+using EterPharmaPro.DatabaseFireBase;
 using EterPharmaPro.DatabaseSQLite;
 using EterPharmaPro.Models.DbModels;
 using System;
@@ -12,6 +13,8 @@ namespace EterPharmaPro.Interfaces
 		EterDbController EterDbController { get; set; }
 
 		IActionDbBase ActionDb { get; set; }
+
+		FirebaseDb firebaseDb { get; set; }
 		//IEterDbUser DbUser { get; set; }
 
 		//IEterDbCliente DbCliente { get; set; }

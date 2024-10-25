@@ -187,7 +187,9 @@
 			this.ClientSize = new System.Drawing.Size(976, 606);
 			this.Controls.Add(this.groupBox1);
 			this.Controls.Add(this.toolStrip_topMenu);
+			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
 			this.Name = "RemanejoPrint";
+			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "RemanejoPrint";
 			this.toolStrip_topMenu.ResumeLayout(false);
 			this.toolStrip_topMenu.PerformLayout();

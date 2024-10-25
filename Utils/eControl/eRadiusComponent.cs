@@ -1,4 +1,5 @@
 ﻿using DocumentFormat.OpenXml.Drawing.Charts;
+using SixLabors.Fonts;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -7,19 +8,19 @@ using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Forms;
 
 namespace EterPharmaPro.Utils.eControl
 {
 	public class eRadiusComponent : Component
 	{
-		private Control _targetControl;
+		private Form _targetControl;
 		//Fields
 		private int borderSize = 0;
 		private int borderRadius = 0;
 		private Color borderColor = Color.Black;
 
-		//Properties
 		[Category("Custom")]
 		public int BorderSize
 		{
@@ -63,38 +64,27 @@ namespace EterPharmaPro.Utils.eControl
 			}
 		}
 
-		
 
+        public eRadiusComponent()
+        {
+			if (!(_targetControl is null))
+			{
+			}
+        }
 
-		[Browsable(true)]
+        [Browsable(true)]
 		[Category("Behavior")]
 		[Description("The target control in the same form.")]
-		public Control TargetControl
+		public Form TargetControl
 		{
 			get => _targetControl;
 			set
 			{
 				_targetControl = value;
-				OnTargetControlChanged();
-			}
-		}
-
-		protected virtual void OnTargetControlChanged()
-		{
-			if (_targetControl != null)
-			{
-				UpdateRadiusCode();
-			}
-		}
-
-		private void UpdateRadiusCode()
-		{
-
-			if (_targetControl is TextBox textBox)
-			{
 				_targetControl.Paint += _targetControl_Paint;
-				_targetControl.HandleCreated += _targetControl_HandleCreated;
+				//_targetControl.HandleCreated += _targetControl_HandleCreated;
 				_targetControl.Resize += _targetControl_Resize;
+				
 			}
 		}
 
@@ -124,7 +114,7 @@ namespace EterPharmaPro.Utils.eControl
 			{
 				using (GraphicsPath pathSurface = GetFigurePath(rectSurface, borderRadius))
 				using (GraphicsPath pathBorder = GetFigurePath(rectBorder, borderRadius - borderSize))
-				using (Pen penSurface = new Pen(_targetControl.Parent.BackColor, smoothSize))
+				using (Pen penSurface = new Pen(/*_targetControl.Parent.BackColor*/Color.AliceBlue, smoothSize))
 				using (Pen penBorder = new Pen(borderColor, borderSize))
 				{
 					pevent.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
@@ -172,6 +162,7 @@ namespace EterPharmaPro.Utils.eControl
 
 		private void Container_BackColorChanged(object sender, EventArgs e)
 		{
+			_targetControl.CreateControl();
 			_targetControl.Invalidate();
 		}
 	}

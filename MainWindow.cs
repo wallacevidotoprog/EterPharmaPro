@@ -8,6 +8,7 @@ using EterPharmaPro.Utils.Extencions;
 using EterPharmaPro.Views;
 using EterPharmaPro.Views.Configuracoes;
 using EterPharmaPro.Views.Manipulados;
+using EterPharmaPro.Views.Remanejo;
 using EterPharmaPro.Views.Validade;
 using System;
 using System.Data.SQLite;
@@ -28,6 +29,7 @@ namespace EterPharmaPro
 		private CancellationTokenSource cancellationTokenSource;
 		public MainWindow()
 		{
+			//(new RemanejoPrint()).ShowDialog();
 			InitializeComponent();
 			eterDb = new EterDb();
 			cancellationTokenSource = new CancellationTokenSource();
