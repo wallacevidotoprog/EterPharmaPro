@@ -304,7 +304,7 @@ namespace EterPharmaPro.Views.Validade
 					dateTimePicker_data.Value = DateTime.Today;
 					ePictureBox_sava_up.Image = Resources.arquivo__1_;
 				}
-
+				textBox_codigo.Focus();
 
 			}
 			catch (Exception ex)

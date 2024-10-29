@@ -84,14 +84,16 @@ namespace EterPharmaPro.DatabaseSQLite
 
 		async void testeFb()
 		{
-			;
-			var uer = await ActionDb.GETFIELDS<UserModel>(new QueryWhereModel());
 
-			for (int i = 0; i < uer.Count; i++)
-			{
-				;
-				System.Windows.Forms.MessageBox.Show(await firebaseDb.AddDataAsync("USER", uer[i]));
-			}
+			//var uer = await ActionDb.GETFIELDS<UserModel>(new QueryWhereModel());
+
+			//for (int i = 0; i < uer.Count; i++)
+			//{
+
+			//	await firebaseDb.AddDataAsync(uer[i]);
+			//}
+
+			var temp = await firebaseDb.GetDataAsync<UserModel>();
 		}
 
 		//------ EXEMPLO ------

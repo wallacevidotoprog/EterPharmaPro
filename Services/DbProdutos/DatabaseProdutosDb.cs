@@ -86,5 +86,15 @@ namespace EterPharmaPro.DbProdutos.Services
 		{
 			this.DatabaseProdutosLoaded?.Invoke(complet: true);
 		}
+
+		public string ReturnNameProduto(string cod)
+		{
+			string ret = produtos.Find((ProdutosModel x) => x.EAN.Contains(cod.Trim()))?.DESCRICAO_PRODUTO;
+			if (ret == null)
+			{
+				ret = produtos.Find((ProdutosModel x) => x.COD_PRODUTO.Contains(cod.Trim())).DESCRICAO_PRODUTO;
+			}
+			return ret;
+		}
 	}
 }

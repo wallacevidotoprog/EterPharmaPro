@@ -26,6 +26,7 @@ namespace EterPharmaPro
 		private readonly IEterDb eterDb;
 		private DatabaseProdutosDb DatabaseProdutosDb;
 
+
 		private CancellationTokenSource cancellationTokenSource;
 		public MainWindow()
 		{
@@ -135,18 +136,30 @@ namespace EterPharmaPro
 		{
 			AcesUser acesUser = new AcesUser(eterDb);
 			acesUser.ShowDialog();
-			if (!acesUser.loginSucced)
+
+			if (acesUser.exit)
 			{
-				SetLogin();
+				this.Close();
 			}
 			else
 			{
-				this.Text = $"ETER PHARMA PRO [ {eterDb.EterDbController.UserModelAcess.ID_LOJA.ToString().PadLeft(4, '0')} - {eterDb.EterDbController.UserModelAcess.NOME} - {eterDb.EterDbController.UserModelAcess.FUNCAO_NAME} ]";
+				if (!acesUser.loginSucced)
+				{
+					SetLogin();
+				}
+				else
+				{
+					this.Text = $"ETER PHARMA PRO [ {eterDb.EterDbController.UserModelAcess.ID_LOJA.ToString().PadLeft(4, '0')} - {eterDb.EterDbController.UserModelAcess.NOME} - {eterDb.EterDbController.UserModelAcess.FUNCAO_NAME} ]";
 
+					//Task.Run(() => { new Notifications().Show("VB", $"Bem Vindo {eterDb.EterDbController.UserModelAcess.FUNCAO_NAME} {eterDb.EterDbController.UserModelAcess.NOME} "); });
+					
 
-				SendAlertBox.SendT($"Bem Vindo {eterDb.EterDbController.UserModelAcess.FUNCAO_NAME} {eterDb.EterDbController.UserModelAcess.NOME}", TypeAlertEnum.Info,this);
-				toolStripButton_conf.Visible = (eterDb.EterDbController.UserModelAcess.FUNCAO_NAME == "DEV") ? true : false;
+					SendAlertBox.SendT($"Bem Vindo {eterDb.EterDbController.UserModelAcess.FUNCAO_NAME} {eterDb.EterDbController.UserModelAcess.NOME}", TypeAlertEnum.Info, this);
+					toolStripButton_conf.Visible = (eterDb.EterDbController.UserModelAcess.FUNCAO_NAME == "DEV") ? true : false;
+				}
 			}
+
+			
 		}
 		private void OpenForm(Form form)
 		{
@@ -192,11 +205,12 @@ namespace EterPharmaPro
 
 		private void toolStripDropDownButton_impressos_Click(object sender, EventArgs e) => OpenForm(new IMPRESSOS(eterDb, DatabaseProdutosDb));
 
-		private async void toolStripButton_conf_Click(object sender, EventArgs e) => OpenForm(new ConfigsPage(eterDb, DatabaseProdutosDb));
+		private void toolStripButton_conf_Click(object sender, EventArgs e) => OpenForm(new ConfigsPage(eterDb, DatabaseProdutosDb));
 
 		private void rELATÓRIOToolStripMenuItem_Click(object sender, EventArgs e) => OpenForm(new ReportValidades(eterDb, DatabaseProdutosDb));
 
 		private void rELATÓRIOToolStripMenuItem1_Click(object sender, EventArgs e) => OpenForm(new ReportManipulacao(eterDb));
 
+		private void tAGToolStripMenuItem_Click(object sender, EventArgs e) => OpenForm(new TagViewer(eterDb, DatabaseProdutosDb));
 	}
 }

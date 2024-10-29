@@ -283,6 +283,7 @@
     <Compile Include="DatabaseSQLite\QueryDeleteModel.cs" />
     <Compile Include="Enums\ListViewActionsEnum.cs" />
     <Compile Include="Enums\QueryProdutoEnum.cs" />
+    <Compile Include="Enums\SizeTableTagEnum.cs" />
     <Compile Include="Interfaces\IActionDbBase.cs" />
     <Compile Include="Interfaces\IEterDbCategoria.cs" />
     <Compile Include="Interfaces\IEterDbProdutoValidade.cs" />
@@ -340,11 +341,13 @@
     <Compile Include="Models\DbModels\ValidadeDbModal.cs" />
     <Compile Include="Models\ManipulacaoModel.cs" />
     <Compile Include="Models\DbModels\UserModel.cs" />
+    <Compile Include="Models\Tag\PrintTagPriceModel.cs" />
     <Compile Include="Models\ProgressStatsModel.cs" />
     <Compile Include="Models\RemanejoModel.cs" />
     <Compile Include="Models\RequisicaoNotasModel.cs" />
     <Compile Include="Models\SetValityModel.cs" />
     <Compile Include="Models\ProdutosModel.cs" />
+    <Compile Include="Models\Tag\TableTagValidityModal.cs" />
     <Compile Include="Models\ValityExportModel.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -354,6 +357,7 @@
     <Compile Include="Services\ManipuladoService.cs" />
     <Compile Include="Services\Prints\RawPrinterHelper.cs" />
     <Compile Include="Models\Print\TextPrintFormaterModel.cs" />
+    <Compile Include="Services\PrintTagValityService.cs" />
     <Compile Include="Services\XLSX\ReadProdutoXLSX.cs" />
     <Compile Include="Services\XLSX\WriteValityExport.cs" />
     <Compile Include="Temps\ImportValidadeXMLold.cs" />
@@ -417,6 +421,12 @@
     </Compile>
     <Compile Include="Views\Configuracoes\Produtos.Designer.cs">
       <DependentUpon>Produtos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TagViewer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\TagViewer.Designer.cs">
+      <DependentUpon>TagViewer.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\Configuracoes\User.cs">
       <SubType>Form</SubType>
@@ -499,6 +509,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Configuracoes\Produtos.resx">
       <DependentUpon>Produtos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\TagViewer.resx">
+      <DependentUpon>TagViewer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Configuracoes\User.resx">
       <DependentUpon>User.cs</DependentUpon>

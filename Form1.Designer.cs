@@ -44,6 +44,7 @@
 			this.statusStrip_notify = new System.Windows.Forms.StatusStrip();
 			this.toolStripProgressBar_status = new System.Windows.Forms.ToolStripProgressBar();
 			this.panel_center = new System.Windows.Forms.Panel();
+			this.tAGToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStrip_menu.SuspendLayout();
 			this.statusStrip_notify.SuspendLayout();
 			this.SuspendLayout();
@@ -115,7 +116,8 @@
 			this.toolStripButton1.AutoSize = false;
 			this.toolStripButton1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.gERARVALIDADEDOMÊSToolStripMenuItem,
-            this.rELATÓRIOToolStripMenuItem});
+            this.rELATÓRIOToolStripMenuItem,
+            this.tAGToolStripMenuItem});
 			this.toolStripButton1.Image = global::EterPharmaPro.Properties.Resources.expirado;
 			this.toolStripButton1.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
 			this.toolStripButton1.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
@@ -209,6 +211,14 @@
 			this.panel_center.Size = new System.Drawing.Size(947, 438);
 			this.panel_center.TabIndex = 6;
 			// 
+			// tAGToolStripMenuItem
+			// 
+			this.tAGToolStripMenuItem.Image = global::EterPharmaPro.Properties.Resources.seta_direita;
+			this.tAGToolStripMenuItem.Name = "tAGToolStripMenuItem";
+			this.tAGToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
+			this.tAGToolStripMenuItem.Text = "TAG";
+			this.tAGToolStripMenuItem.Click += new System.EventHandler(this.tAGToolStripMenuItem_Click);
+			// 
 			// MainWindow
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -249,6 +259,7 @@
 		private System.Windows.Forms.StatusStrip statusStrip_notify;
 		private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar_status;
 		private System.Windows.Forms.Panel panel_center;
+		private System.Windows.Forms.ToolStripMenuItem tAGToolStripMenuItem;
 	}
 }
 

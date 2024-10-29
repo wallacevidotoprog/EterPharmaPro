@@ -3,6 +3,9 @@ using EterPharmaPro.Models.DbModels;
 using EterPharmaPro.Utils.Extencions;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -19,6 +22,8 @@ namespace EterPharmaPro.Views
 		private int targetY;
 		private const int animationStep = 20;
 		private bool pClose = false;
+		public bool exit = false;
+
 
 
 		public AcesUser(IEterDb eterDb)
@@ -30,7 +35,7 @@ namespace EterPharmaPro.Views
 
 			this.eterDb = eterDb;
 			InitializeComponent();
-			this.Size = new System.Drawing.Size(350, 200);
+			this.Size = new System.Drawing.Size(350, 162);
 		}
 
 		private void Timer_Tick(object sender, EventArgs e)
@@ -59,7 +64,7 @@ namespace EterPharmaPro.Views
 			{
 				groupBox_pass.Visible = true;
 				textBox_pass.Focus();
-				this.Size = new System.Drawing.Size(350, 255);
+				this.Size = new System.Drawing.Size(350, 224);
 				return;
 			}
 			if (temp.acOk)
@@ -111,13 +116,13 @@ namespace EterPharmaPro.Views
 				if (temp == null) { return; }
 				if (temp.PASS == string.Empty)
 				{
-					this.Size = new System.Drawing.Size(350, 200);
+					this.Size = new System.Drawing.Size(350, 162);
 					groupBox_pass.Visible = false;
 				}
 				else
 				{
 					groupBox_pass.Visible = true;
-					this.Size = new System.Drawing.Size(350, 255);
+					this.Size = new System.Drawing.Size(350, 224);
 				}
 			}
 			catch 
@@ -125,6 +130,12 @@ namespace EterPharmaPro.Views
 			}
 
 
+		}
+
+		private void ePictureBox_close_Click(object sender, EventArgs e)
+		{
+			exit = true;
+			this.Close();
 		}
 	}
 }

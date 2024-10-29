@@ -50,7 +50,7 @@ namespace EterPharmaPro.Controllers.Configs
 					temp = databaseProdutosDb.produtos.Where(p => p.EAN == (string)query).ToList();
 					break;
 				case QueryProdutoEnum.COD_INTERNO:
-					temp = databaseProdutosDb.produtos.Where(p => p.COD_PRODUTO == (string)query).ToList();
+					temp = databaseProdutosDb.produtos.Where(p => p.COD_PRODUTO == (string)query.ToString().PadLeft(6,'0')).ToList();
 					break;
 				case QueryProdutoEnum.DESCRICAO:
 					temp = databaseProdutosDb.produtos.Where(p => p.DESCRICAO_PRODUTO.Contains((string)query)).ToList();
@@ -154,6 +154,14 @@ namespace EterPharmaPro.Controllers.Configs
 		public async Task<UserModel> GetUser(object value)
 		{
 			return (await eterDb.ActionDb.GETFIELDS<UserModel>(new QueryWhereModel().SetWhere("ID",value))).FirstOrDefault();
+		}
+
+		public ProdutosModel GetProdutoCC(object tempCod)
+		{
+			QueryProdutoEnum queryProdutoEnum = tempCod.ToString().Length <= 7 ? QueryProdutoEnum.COD_INTERNO : (tempCod.ToString().Length > 7 && tempCod.ToString().Length <= 13) ? QueryProdutoEnum.EAN : QueryProdutoEnum.NONE;
+
+
+			return GetProdutos(tempCod.ToString(), queryProdutoEnum).FirstOrDefault();
 		}
 	}
 }

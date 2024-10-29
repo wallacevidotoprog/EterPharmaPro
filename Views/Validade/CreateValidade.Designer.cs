@@ -374,7 +374,7 @@
 			this.groupBox_insert.Location = new System.Drawing.Point(3, 89);
 			this.groupBox_insert.Name = "groupBox_insert";
 			this.groupBox_insert.Size = new System.Drawing.Size(1057, 223);
-			this.groupBox_insert.TabIndex = 0;
+			this.groupBox_insert.TabIndex = 2;
 			this.groupBox_insert.TabStop = false;
 			this.groupBox_insert.Visible = false;
 			// 
@@ -427,7 +427,7 @@
 			this.comboBox_categoria.Location = new System.Drawing.Point(11, 39);
 			this.comboBox_categoria.Name = "comboBox_categoria";
 			this.comboBox_categoria.Size = new System.Drawing.Size(928, 33);
-			this.comboBox_categoria.TabIndex = 22;
+			this.comboBox_categoria.TabIndex = 0;
 			// 
 			// numericUpDown_qtd
 			// 
@@ -436,7 +436,7 @@
 			this.numericUpDown_qtd.Location = new System.Drawing.Point(842, 119);
 			this.numericUpDown_qtd.Name = "numericUpDown_qtd";
 			this.numericUpDown_qtd.Size = new System.Drawing.Size(139, 33);
-			this.numericUpDown_qtd.TabIndex = 1;
+			this.numericUpDown_qtd.TabIndex = 2;
 			this.numericUpDown_qtd.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.numericUpDown_qtd.Value = new decimal(new int[] {
             1,
@@ -453,7 +453,7 @@
 			this.dateTimePicker_data.Location = new System.Drawing.Point(842, 184);
 			this.dateTimePicker_data.Name = "dateTimePicker_data";
 			this.dateTimePicker_data.Size = new System.Drawing.Size(139, 33);
-			this.dateTimePicker_data.TabIndex = 2;
+			this.dateTimePicker_data.TabIndex = 3;
 			// 
 			// label5
 			// 
@@ -527,7 +527,7 @@
 			this.textBox_codigo.Location = new System.Drawing.Point(6, 119);
 			this.textBox_codigo.Name = "textBox_codigo";
 			this.textBox_codigo.Size = new System.Drawing.Size(830, 33);
-			this.textBox_codigo.TabIndex = 0;
+			this.textBox_codigo.TabIndex = 1;
 			this.textBox_codigo.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox_codigo_KeyDown);
 			// 
 			// dateTimePicker_dataD
@@ -538,7 +538,7 @@
 			this.dateTimePicker_dataD.Location = new System.Drawing.Point(274, 47);
 			this.dateTimePicker_dataD.Name = "dateTimePicker_dataD";
 			this.dateTimePicker_dataD.Size = new System.Drawing.Size(710, 33);
-			this.dateTimePicker_dataD.TabIndex = 2;
+			this.dateTimePicker_dataD.TabIndex = 1;
 			// 
 			// comboBox_user
 			// 
@@ -549,7 +549,7 @@
 			this.comboBox_user.Location = new System.Drawing.Point(11, 47);
 			this.comboBox_user.Name = "comboBox_user";
 			this.comboBox_user.Size = new System.Drawing.Size(257, 33);
-			this.comboBox_user.TabIndex = 1;
+			this.comboBox_user.TabIndex = 0;
 			// 
 			// label2
 			// 

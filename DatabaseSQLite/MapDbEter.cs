@@ -73,7 +73,6 @@ namespace EterPharmaPro.DatabaseSQLite
 							{
 								value = Convert.ToDateTime(value);
 							}
-							//value = ConvertUnixTimestampToDateTime(value);
 						}
 						else if (underlyingType.IsEnum)
 						{
