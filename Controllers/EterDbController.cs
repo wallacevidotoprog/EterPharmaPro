@@ -41,18 +41,18 @@ namespace EterPharmaPro.Controllers
 			return (exist: false, end: null);
 		}
 
-		public async Task<ClienteModel> ExistCliente(ClienteModel dadosCliente, bool exist = false)
+		public async Task<ClienteDbModel> ExistCliente(ClienteDbModel dadosCliente, bool exist = false)
 		{
 			try
 			{
 				if (exist)
 				{
-					return (await eterDb.ActionDb.GETFIELDS<ClienteModel>(new QueryWhereModel().SetWhere("ID", dadosCliente.ID))).FirstOrDefault();
+					return (await eterDb.ActionDb.GETFIELDS<ClienteDbModel>(new QueryWhereModel().SetWhere("ID", dadosCliente.ID))).FirstOrDefault();
 				}
 
-				ClienteModel t1 = !string.IsNullOrEmpty(dadosCliente.CPF) ? (await eterDb.ActionDb.GETFIELDS<ClienteModel>(new QueryWhereModel().SetWhere("CPF", dadosCliente.CPF))).FirstOrDefault() : null;
+				ClienteDbModel t1 = !string.IsNullOrEmpty(dadosCliente.CPF) ? (await eterDb.ActionDb.GETFIELDS<ClienteDbModel>(new QueryWhereModel().SetWhere("CPF", dadosCliente.CPF))).FirstOrDefault() : null;
 
-				ClienteModel t2 = !string.IsNullOrEmpty(dadosCliente.RG) ? (await eterDb.ActionDb.GETFIELDS<ClienteModel>(new QueryWhereModel().SetWhere("RG", dadosCliente.RG))).FirstOrDefault() : null;
+				ClienteDbModel t2 = !string.IsNullOrEmpty(dadosCliente.RG) ? (await eterDb.ActionDb.GETFIELDS<ClienteDbModel>(new QueryWhereModel().SetWhere("RG", dadosCliente.RG))).FirstOrDefault() : null;
 
 				return !(t1 is null) ? t1 : !(t2 is null) ? t2 : null;
 			}
@@ -64,7 +64,7 @@ namespace EterPharmaPro.Controllers
 
 		}
 
-		public async Task<(long? idC, long? idE)> RegisterCliente(ClienteModel dadosCliente)
+		public async Task<(long? idC, long? idE)> RegisterCliente(ClienteDbModel dadosCliente)
 		{
 			long? idc = null;
 			long? ide = null;
@@ -79,7 +79,7 @@ namespace EterPharmaPro.Controllers
 					{
 						try
 						{
-							ClienteModel tempCliente = await ExistCliente(dadosCliente);
+							ClienteDbModel tempCliente = await ExistCliente(dadosCliente);
 
 							if (tempCliente != null)
 							{

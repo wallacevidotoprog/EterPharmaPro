@@ -70,44 +70,44 @@ namespace EterPharmaPro.Services
 			printerHelper.AddLine(new TextPrintFormaterModel
 			{
 				tilte = "NOME: ",
-				texto = ((ClienteModel)model.DADOSCLIENTE).NOME,
+				texto = ((ClienteDbModel)model.DADOSCLIENTE).NOME,
 				alignmentText = AlignmentTextPrintEnum.Left,
 				fontStyle = FormatTextPrintEnum.Default
 			});
 			printerHelper.AddLine(new TextPrintFormaterModel
 			{
 				tilte = "CPF: ",
-				texto = ((ClienteModel)model.DADOSCLIENTE).CPF.ReturnFormation(FormatationEnum.CPF),
+				texto = ((ClienteDbModel)model.DADOSCLIENTE).CPF.ReturnFormation(FormatationEnum.CPF),
 				alignmentText = AlignmentTextPrintEnum.Left,
 				fontStyle = FormatTextPrintEnum.Default
 			});
 			printerHelper.AddLine(new TextPrintFormaterModel
 			{
 				tilte = "RG: ",
-				texto = ((ClienteModel)model.DADOSCLIENTE).RG.ReturnFormation(FormatationEnum.RG),
+				texto = ((ClienteDbModel)model.DADOSCLIENTE).RG.ReturnFormation(FormatationEnum.RG),
 				alignmentText = AlignmentTextPrintEnum.Left,
 				fontStyle = FormatTextPrintEnum.Default
 			});
 			printerHelper.AddLine(new TextPrintFormaterModel
 			{
 				tilte = "TELEFONE: ",
-				texto = ((ClienteModel)model.DADOSCLIENTE).TELEFONE.ReturnFormation(FormatationEnum.TELEFONE),
+				texto = ((ClienteDbModel)model.DADOSCLIENTE).TELEFONE.ReturnFormation(FormatationEnum.TELEFONE),
 				alignmentText = AlignmentTextPrintEnum.Left,
 				fontStyle = FormatTextPrintEnum.Default
 			});
 			printerHelper.AddLine(new TextPrintFormaterModel
 			{
 				tilte = "ENDEREÇO: ",
-				texto = ((EnderecoClienteDbModel)((ClienteModel)model.DADOSCLIENTE).ENDERECO).ENDERECO,
+				texto = ((EnderecoClienteDbModel)((ClienteDbModel)model.DADOSCLIENTE).ENDERECO).ENDERECO,
 				alignmentText = AlignmentTextPrintEnum.Left,
 				fontStyle = FormatTextPrintEnum.Default
 			});
-			if (((EnderecoClienteDbModel)((ClienteModel)model.DADOSCLIENTE).ENDERECO).OBSERVACAO != string.Empty)
+			if (((EnderecoClienteDbModel)((ClienteDbModel)model.DADOSCLIENTE).ENDERECO).OBSERVACAO != string.Empty)
 			{
 				printerHelper.AddLine(new TextPrintFormaterModel
 				{
 					tilte = "OBS. DO ENDEREÇO: ",
-					texto = ((EnderecoClienteDbModel)((ClienteModel)model.DADOSCLIENTE).ENDERECO).OBSERVACAO,
+					texto = ((EnderecoClienteDbModel)((ClienteDbModel)model.DADOSCLIENTE).ENDERECO).OBSERVACAO,
 					alignmentText = AlignmentTextPrintEnum.Left,
 					fontStyle = FormatTextPrintEnum.Default
 				});

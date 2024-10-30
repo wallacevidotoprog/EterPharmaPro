@@ -3,7 +3,7 @@ using System;
 
 namespace EterPharmaPro.Models.DbModels
 {
-	public class ClienteModel : BaseDbModal
+	public class ClienteDbModel : BaseDbModal
 	{
 		[Ignore(ignoreOnInsert: true, ignoreOnUpdate: true)]
 		public string TABLE_NAME { get; private set; } = "CLIENTES";
@@ -23,7 +23,7 @@ namespace EterPharmaPro.Models.DbModels
 
 		
 
-		public void MergeSE(ClienteModel other)
+		public void MergeSE(ClienteDbModel other)
 		{
 			if (other != null)
 			{

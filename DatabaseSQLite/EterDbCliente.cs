@@ -19,7 +19,7 @@ namespace EterPharmaPro.DatabaseSQLite
 			_databaseConnection = databaseConnection;
 		}
 
-		public async Task<long?> CreateCliente(ClienteModel model, SQLiteConnection connection, SQLiteTransaction transaction)
+		public async Task<long?> CreateCliente(ClienteDbModel model, SQLiteConnection connection, SQLiteTransaction transaction)
 		{
 			long id = -1L;
 			try
@@ -56,7 +56,7 @@ namespace EterPharmaPro.DatabaseSQLite
 			return id;
 		}
 
-		public async Task<bool> UpdateCliente(ClienteModel model, SQLiteConnection connection, SQLiteTransaction transaction)
+		public async Task<bool> UpdateCliente(ClienteDbModel model, SQLiteConnection connection, SQLiteTransaction transaction)
 		{
 			try
 			{
@@ -104,11 +104,11 @@ namespace EterPharmaPro.DatabaseSQLite
 				return false;
 			}
 		}
-		public async Task<List<ClienteModel>> GetCliente(QueryWhereModel query)
+		public async Task<List<ClienteDbModel>> GetCliente(QueryWhereModel query)
 		{
 			try
 			{
-				return await new MapDbEter(_databaseConnection).QueryAsync<ClienteModel>($"SELECT * FROM CLIENTES {query.ReturnSQLQuery()}");
+				return await new MapDbEter(_databaseConnection).QueryAsync<ClienteDbModel>($"SELECT * FROM CLIENTES {query.ReturnSQLQuery()}");
 			}
 			catch (Exception ex)
 			{

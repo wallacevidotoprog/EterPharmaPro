@@ -59,9 +59,9 @@ namespace EterPharmaPro.Controllers.CarimboLoteValidade
 				databaseProdutosDb.produtos.FirstOrDefault((ProdutosModel x) => x.COD_PRODUTO.Contains(cod_produt.Trim().Replace(" ", null).PadLeft(6, '0')));
 		}
 
-		public async Task<ClienteModel> GetCliente(string value)
+		public async Task<ClienteDbModel> GetCliente(string value)
 		{
-			ClienteModel tempCliente = (await eterDb.ActionDb.GETFIELDS<ClienteModel>(new QueryWhereModel().SetWhere("RG", value))).FirstOrDefault();
+			ClienteDbModel tempCliente = (await eterDb.ActionDb.GETFIELDS<ClienteDbModel>(new QueryWhereModel().SetWhere("RG", value))).FirstOrDefault();
 			if (tempCliente is null)
 			{
 				return null;
@@ -73,7 +73,7 @@ namespace EterPharmaPro.Controllers.CarimboLoteValidade
 
 		private void DatabaseProdutosLoaded(bool complet) => inLoadProd = !complet;
 
-		public async Task<bool> FinishAsync(ClienteModel clienteModel, List<MedicamentosControladoDbModel> medicamentosControladoLoteModel)
+		public async Task<bool> FinishAsync(ClienteDbModel clienteModel, List<MedicamentosControladoDbModel> medicamentosControladoLoteModel)
 		{
 			try
 			{
@@ -125,7 +125,7 @@ namespace EterPharmaPro.Controllers.CarimboLoteValidade
 			return false;
 		}
 
-		private void PrintDoc(ClienteModel clienteModel, List<MedicamentosControladoDbModel> medicamentosControladoLoteModel)
+		private void PrintDoc(ClienteDbModel clienteModel, List<MedicamentosControladoDbModel> medicamentosControladoLoteModel)
 		{
 			printerHelper = new RawPrinterHelper();
 			printerHelper.AddLine(new TextPrintFormaterModel

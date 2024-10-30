@@ -77,12 +77,12 @@ namespace EterPharmaPro.Views.Manipulados
 				dateTimePicker_data.Value = (DateTime)manipulados.DADOSATENDIMENTO.DATA;
 				textBox_atn.Text = manipulados?.DADOSATENDIMENTO.ATEN_MANI;
 				comboBox_user.SelectedIndex = comboBox_user.ReturnIndexUserCB(manipulados.DADOSATENDIMENTO?.ATEN_LOJA.ToString());
-				textBox_cpf.Text = ((ClienteModel)manipulados.DADOSCLIENTE)?.CPF.ReturnFormation(FormatationEnum.CPF);
-				textBox_rg.Text = ((ClienteModel)manipulados.DADOSCLIENTE)?.RG.ReturnFormation(FormatationEnum.RG);
-				textBox_nomeC.Text = ((ClienteModel)manipulados.DADOSCLIENTE)?.NOME;
-				textBox5_tel.Text = ((ClienteModel)manipulados.DADOSCLIENTE)?.TELEFONE.ReturnFormation(FormatationEnum.TELEFONE);
-				textBox_log.Text = ((EnderecoClienteDbModel)(((ClienteModel)manipulados.DADOSCLIENTE)?.ENDERECO)).ENDERECO;
-				textBox_obsEnd.Text = ((EnderecoClienteDbModel)(((ClienteModel)manipulados.DADOSCLIENTE)?.ENDERECO)).OBSERVACAO;
+				textBox_cpf.Text = ((ClienteDbModel)manipulados.DADOSCLIENTE)?.CPF.ReturnFormation(FormatationEnum.CPF);
+				textBox_rg.Text = ((ClienteDbModel)manipulados.DADOSCLIENTE)?.RG.ReturnFormation(FormatationEnum.RG);
+				textBox_nomeC.Text = ((ClienteDbModel)manipulados.DADOSCLIENTE)?.NOME;
+				textBox5_tel.Text = ((ClienteDbModel)manipulados.DADOSCLIENTE)?.TELEFONE.ReturnFormation(FormatationEnum.TELEFONE);
+				textBox_log.Text = ((EnderecoClienteDbModel)(((ClienteDbModel)manipulados.DADOSCLIENTE)?.ENDERECO)).ENDERECO;
+				textBox_obsEnd.Text = ((EnderecoClienteDbModel)(((ClienteDbModel)manipulados.DADOSCLIENTE)?.ENDERECO)).OBSERVACAO;
 				dataGridView_medicamentos.Rows.Clear();
 				for (int i = 0; i < ((List<string>)manipulados.MEDICAMENTOS)?.Count; i++)
 				{
@@ -116,8 +116,8 @@ namespace EterPharmaPro.Views.Manipulados
 
 		private async void BuscaCliente_Click(object sender, EventArgs e)
 		{
-			List<ClienteModel> temp = null;
-			ClienteModel tempSelect = null;
+			List<ClienteDbModel> temp = null;
+			ClienteDbModel tempSelect = null;
 			try
 			{
 				temp = ((textBox_cpf.Text != "") ? await manipuladoController.GetCliente(textBox_cpf.Text.ReturnInt(), TypeDoc.CPF) :
@@ -195,16 +195,16 @@ namespace EterPharmaPro.Views.Manipulados
 						DATA = dateTimePicker_data.Value,
 						ATEN_MANI = textBox_atn.Text
 					},
-					DADOSCLIENTE = new ClienteModel
+					DADOSCLIENTE = new ClienteDbModel
 					{
-						ID = edit ? null : ((ClienteModel)manipulados?.DADOSCLIENTE)?.ID,
+						ID = edit ? null : ((ClienteDbModel)manipulados?.DADOSCLIENTE)?.ID,
 						CPF = textBox_cpf.Text.ReturnInt(),
 						RG = textBox_rg.Text.ReturnInt(),
 						NOME = textBox_nomeC.Text,
 						TELEFONE = textBox5_tel.Text.ReturnInt(),
 						ENDERECO = new EnderecoClienteDbModel
 						{
-							CLIENTE_ID = edit ? null : ((EnderecoClienteDbModel)((ClienteModel)manipulados?.DADOSCLIENTE)?.ENDERECO)?.CLIENTE_ID,							
+							CLIENTE_ID = edit ? null : ((EnderecoClienteDbModel)((ClienteDbModel)manipulados?.DADOSCLIENTE)?.ENDERECO)?.CLIENTE_ID,							
 							ENDERECO = textBox_log.Text,
 							OBSERVACAO = textBox_obsEnd.Text
 						}

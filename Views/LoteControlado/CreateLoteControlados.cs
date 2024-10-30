@@ -17,7 +17,7 @@ namespace EterPharmaPro.Views.LoteControlado
 		private readonly CreateLoteControladosController controladosController;
 		private List<MedicamentosControladoDbModel> medicamentosControladoDbModels;
 		private ProdutosModel tempProdutosModel;
-		private ClienteModel ClienteModel;
+		private ClienteDbModel ClienteModel;
 		private ValidatorFields validatorFields;
 		private ValidatorFields validatorFieldsLot;
 		private bool isClienteSelected = false;
@@ -134,7 +134,7 @@ namespace EterPharmaPro.Views.LoteControlado
 				}
 				if (ClienteModel is null)
 				{
-					ClienteModel = new ClienteModel
+					ClienteModel = new ClienteDbModel
 					{
 						RG = textBox_rg.GetText.ReturnInt(),
 						NOME = textBox_nome.Text,

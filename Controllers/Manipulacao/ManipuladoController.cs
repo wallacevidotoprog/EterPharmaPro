@@ -28,19 +28,19 @@ namespace EterPharmaPro.Controllers.Manipulacao
 			manipuladoService = new ManipuladoService(this.eterDb);
 		}
 
-		public async Task<List<ClienteModel>> GetCliente(string query = null, TypeDoc typeDoc = TypeDoc.NONE)
+		public async Task<List<ClienteDbModel>> GetCliente(string query = null, TypeDoc typeDoc = TypeDoc.NONE)
 		{
-			List<ClienteModel> dadosCliente;
+			List<ClienteDbModel> dadosCliente;
 			switch (typeDoc)
 			{
 				case TypeDoc.CPF:
-					dadosCliente = await eterDb.ActionDb.GETFIELDS<ClienteModel>(new QueryWhereModel().SetWhere("CPF", query));
+					dadosCliente = await eterDb.ActionDb.GETFIELDS<ClienteDbModel>(new QueryWhereModel().SetWhere("CPF", query));
 					break;
 				case TypeDoc.RG:
-					dadosCliente = await eterDb.ActionDb.GETFIELDS<ClienteModel>(new QueryWhereModel().SetWhere("RG", query));
+					dadosCliente = await eterDb.ActionDb.GETFIELDS<ClienteDbModel>(new QueryWhereModel().SetWhere("RG", query));
 					break;
 				default:
-					dadosCliente = await eterDb.ActionDb.GETFIELDS<ClienteModel>(new QueryWhereModel());
+					dadosCliente = await eterDb.ActionDb.GETFIELDS<ClienteDbModel>(new QueryWhereModel());
 					break;
 			}
 
@@ -74,7 +74,7 @@ namespace EterPharmaPro.Controllers.Manipulacao
 			try
 			{
 
-				(long? IDC, long? IDE) = await eterDb.EterDbController.RegisterCliente((ClienteModel)model.DADOSCLIENTE);
+				(long? IDC, long? IDE) = await eterDb.EterDbController.RegisterCliente((ClienteDbModel)model.DADOSCLIENTE);
 
 				model.DADOSCLIENTE = new DadosClienteManipulacao { ID_CLIENTE = IDC, ID_ENDERECO = IDE };
 
@@ -175,9 +175,9 @@ namespace EterPharmaPro.Controllers.Manipulacao
 				ManipulacaoModel temp = new ManipulacaoModel().ConvertDb(tempM);
 				DadosClienteManipulacao dadosClienteManipulacao = (DadosClienteManipulacao)temp.DADOSCLIENTE;
 
-				temp.DADOSCLIENTE = (await eterDb.ActionDb.GETFIELDS<ClienteModel>(new QueryWhereModel().SetWhere("ID", tempM.CLIENTE_ID))).FirstOrDefault();
+				temp.DADOSCLIENTE = (await eterDb.ActionDb.GETFIELDS<ClienteDbModel>(new QueryWhereModel().SetWhere("ID", tempM.CLIENTE_ID))).FirstOrDefault();
 
-				((ClienteModel)temp.DADOSCLIENTE).ENDERECO = (await eterDb.ActionDb.GETFIELDS<EnderecoClienteDbModel>(new QueryWhereModel().SetWhere("ID", tempM.ENDERECO_ID))).FirstOrDefault();
+				((ClienteDbModel)temp.DADOSCLIENTE).ENDERECO = (await eterDb.ActionDb.GETFIELDS<EnderecoClienteDbModel>(new QueryWhereModel().SetWhere("ID", tempM.ENDERECO_ID))).FirstOrDefault();
 
 				temp.MEDICAMENTOS = await eterDb.ActionDb.GETFIELDS<MedicamentosManipuladosDbModal>(new QueryWhereModel().SetWhere("MANIPULADOS_ID", tempM.ID));
 

@@ -329,7 +329,7 @@ namespace EterPharmaPro.Utils.Extencions
 			return null;
 
 		}
-		public static ClienteModel GetClienteArray(this List<ClienteModel> clienteModels)
+		public static ClienteDbModel GetClienteArray(this List<ClienteDbModel> clienteModels)
 		{
 			try
 			{
@@ -351,14 +351,14 @@ namespace EterPharmaPro.Utils.Extencions
 					{
 						return null;
 					}
-					ClienteModel tempSelect = clienteModels[retList];
+					ClienteDbModel tempSelect = clienteModels[retList];
 					tempSelect.ENDERECO = ((List<EnderecoClienteDbModel>)tempSelect.ENDERECO).GetEnderecoModel();
 					return tempSelect;
 
 				}
 				else
 				{
-					ClienteModel tempSelect = clienteModels[0];
+					ClienteDbModel tempSelect = clienteModels[0];
 					tempSelect.ENDERECO = ((List<EnderecoClienteDbModel>)tempSelect.ENDERECO).GetEnderecoModel();
 					return tempSelect;
 				}
