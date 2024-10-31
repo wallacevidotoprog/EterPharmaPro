@@ -1,18 +1,43 @@
-﻿using EterPharmaPro.Models.DbModels;
+﻿using EterPharmaPro.DatabaseSQLite;
+using EterPharmaPro.Models.DbModels;
+using Newtonsoft.Json;
 using System;
 
 namespace EterPharmaPro.Models.FirebaseModel
 {
-	public class EntregaFbModel : EntregaDbModel
+	public class EntregaFbModel 
 	{
+		[JsonProperty("ID")]
+		public long? ID { get; set; }
 
-		public new (long? ID, string NAME) USER_ID { get; set; }
+		[JsonProperty("FIREBASE_ID")]
+		public string FIREBASE_ID { get; set; }
 
-		public new (long? ID, string NAME) CLIENTE_ID { get; set; }
+		[JsonProperty("UID")]
+		public string UID { get; set; }
 
-		public new (long? ID, string NAME, string OBS) ENDERECO_ID { get; set; }
+		[JsonProperty("DATE")]
+		public DateTime? DATE { get; set; }
 
-        public EntregaFbModel()
+		[JsonProperty("VALUE")]
+		public decimal VALUE { get; set; }
+
+		[JsonProperty("KM")]
+		public int? KM { get; set; }
+
+		[JsonProperty("TYPE_DELIVERY")]
+		public int? TYPE_DELIVERY { get; set; }
+
+		[JsonProperty("USER_ID")]
+		public INDENT USER_ID { get; set; }
+
+		[JsonProperty("CLIENTE_ID")]
+		public INDENT CLIENTE_ID { get; set; }
+
+		[JsonProperty("ENDERECO_ID")]
+		public INDENT ENDERECO_ID { get; set; }
+
+		public EntregaFbModel()
         {
 				
         }
@@ -24,8 +49,32 @@ namespace EterPharmaPro.Models.FirebaseModel
 			VALUE = model.VALUE;
 			KM = model.KM;
 			TYPE_DELIVERY = model.TYPE_DELIVERY;
-			TABLE_NAME = model.TABLE_NAME;
 
+		}
+	}
+
+	public class INDENT
+	{
+		[JsonProperty("ID")]
+		public long? ID { get; set; }
+
+		[JsonProperty("NAME")]
+		public string NAME { get; set; }
+
+		[JsonProperty("OBS")]
+		public string OBS { get; set; }
+
+		public INDENT() { }
+		public INDENT(long? iD, string nAME)
+		{
+			ID = iD;
+			NAME = nAME;
+		}
+
+		public INDENT(long? iD, string nAME, string oBS) : this(iD, nAME)
+		{
+
+			OBS = oBS;
 		}
 	}
 }

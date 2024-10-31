@@ -1,4 +1,5 @@
 using DocumentFormat.OpenXml.Office2010.Excel;
+using EterPharmaPro.API;
 using EterPharmaPro.Controllers;
 using EterPharmaPro.DatabaseFireBase;
 using EterPharmaPro.Interfaces;
@@ -87,7 +88,9 @@ namespace EterPharmaPro.DatabaseSQLite
 
 		async void testeFb()
 		{
-			//cliente 53 end 43
+
+
+			////cliente 53 end 43
 
 			var c = (await ActionDb.GETFIELDS<ClienteDbModel>(new QueryWhereModel().SetWhere("ID", 53))).FirstOrDefault();
 			var e = (await ActionDb.GETFIELDS<EnderecoClienteDbModel>(new QueryWhereModel().SetWhere("ID", 43))).FirstOrDefault();
@@ -126,13 +129,37 @@ namespace EterPharmaPro.DatabaseSQLite
 
 
 			EntregaFbModel entregaFbModel = new EntregaFbModel(entregaDbModel);
-			entregaFbModel.USER_ID = (8, "WALLACE VIDOTO");
-			entregaFbModel.CLIENTE_ID = (c.ID, c.NOME);
-			entregaFbModel.ENDERECO_ID = (e.ID, e.ENDERECO, e.OBSERVACAO);
+			entregaFbModel.USER_ID = new INDENT(8, "WALLACE VIDOTO");
+			entregaFbModel.CLIENTE_ID = new INDENT(c.ID, c.NOME);
+			entregaFbModel.ENDERECO_ID = new INDENT(e.ID, e.ENDERECO, e.OBSERVACAO);
 
-			var temp = await firebaseDb.AddDataAsync<EntregaFbModel>(entregaFbModel);
+			ActionAPI actionAPI = new ActionAPI();
+			entregaDbModel.FIREBASE_ID = await actionAPI.SEND(entregaFbModel);
+			//string stop = null;
 
-			var temp2 = await firebaseDb.GetDataAsync<EntregaFbModel>();
+
+			//var temp = await firebaseDb.AddDataAsync<EntregaFbModel>(entregaFbModel);
+			//entregaDbModel.FIREBASE_ID = temp;
+			using (var connection = new SQLiteConnection(DatabaseConnection))
+			{
+				await connection.OpenAsync().ConfigureAwait(false);
+				using (var transaction = connection.BeginTransaction())
+				{
+					try
+					{
+						await ActionDb.UPDATE(entregaDbModel, connection, transaction);
+						transaction.Commit();
+					}
+					catch (Exception ex)
+					{
+						transaction.Rollback();
+						ex.ErrorGet();
+					}
+				}
+			}
+
+			var temp3 = await actionAPI.GETALL();
+			//var temp2 = await firebaseDb.GetDataAsync<EntregaFbModel>();
 		}
 
 		//------ EXEMPLO ------

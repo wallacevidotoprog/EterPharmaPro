@@ -8,6 +8,7 @@ namespace EterPharmaPro.Models.DbModels
 		[Ignore(ignoreOnInsert: true, ignoreOnUpdate: true)]
 		public string TABLE_NAME { get; set; } = "DELIVERY";
 
+		public string FIREBASE_ID { get; set; }
 		public string UID { get; set; }
 		public long? USER_ID { get; set; }
 
