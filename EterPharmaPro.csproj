@@ -268,6 +268,7 @@
   <ItemGroup>
     <Compile Include="API\ActionAPI.cs" />
     <Compile Include="API\ConnectionAPI.cs" />
+    <Compile Include="API\Models\ResponseConnectedModel.cs" />
     <Compile Include="Controllers\Configs\ConfigsPageController.cs" />
     <Compile Include="Controllers\Impressos\ControleReqNotaController.cs" />
     <Compile Include="Controllers\Impressos\CreateLoteControladosController.cs" />
@@ -342,7 +343,7 @@
     <Compile Include="Models\DbModels\QueryWhereModel.cs" />
     <Compile Include="Models\DbModels\ReqNotaDbModal.cs" />
     <Compile Include="Models\DbModels\ValidadeDbModal.cs" />
-    <Compile Include="Models\FirebaseModel\EntregaFbModel.cs" />
+    <Compile Include="Models\API\EntregaFbModel.cs" />
     <Compile Include="Models\ManipulacaoModel.cs" />
     <Compile Include="Models\DbModels\UserModel.cs" />
     <Compile Include="Models\Tag\PrintTagPriceModel.cs" />

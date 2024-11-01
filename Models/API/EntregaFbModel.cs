@@ -3,7 +3,7 @@ using EterPharmaPro.Models.DbModels;
 using Newtonsoft.Json;
 using System;
 
-namespace EterPharmaPro.Models.FirebaseModel
+namespace EterPharmaPro.Models.API
 {
 	public class EntregaFbModel 
 	{

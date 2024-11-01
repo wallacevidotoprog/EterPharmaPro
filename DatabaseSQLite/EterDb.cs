@@ -3,6 +3,7 @@ using EterPharmaPro.API;
 using EterPharmaPro.Controllers;
 using EterPharmaPro.DatabaseFireBase;
 using EterPharmaPro.Interfaces;
+using EterPharmaPro.Models.API;
 using EterPharmaPro.Models.DbModels;
 using EterPharmaPro.Models.FirebaseModel;
 using EterPharmaPro.Utils.Extencions;
