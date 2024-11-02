@@ -1,11 +1,10 @@
-﻿using EterPharmaPro.DatabaseSQLite;
-using EterPharmaPro.Models.DbModels;
+﻿using EterPharmaPro.Models.DbModels;
 using Newtonsoft.Json;
 using System;
 
 namespace EterPharmaPro.Models.API
 {
-	public class EntregaFbModel 
+	public class EntregaFbModel
 	{
 		[JsonProperty("ID")]
 		public long? ID { get; set; }
@@ -38,10 +37,10 @@ namespace EterPharmaPro.Models.API
 		public INDENT ENDERECO_ID { get; set; }
 
 		public EntregaFbModel()
-        {
-				
-        }
-        public EntregaFbModel(EntregaDbModel model)
+		{
+
+		}
+		public EntregaFbModel(EntregaDbModel model)
 		{
 			ID = model.ID;
 			UID = model.UID;

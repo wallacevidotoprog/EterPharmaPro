@@ -269,6 +269,7 @@
     <Compile Include="API\ActionAPI.cs" />
     <Compile Include="API\ConnectionAPI.cs" />
     <Compile Include="API\Models\ResponseConnectedModel.cs" />
+    <Compile Include="API\Models\ResponseModel.cs" />
     <Compile Include="Controllers\Configs\ConfigsPageController.cs" />
     <Compile Include="Controllers\Impressos\ControleReqNotaController.cs" />
     <Compile Include="Controllers\Impressos\CreateLoteControladosController.cs" />

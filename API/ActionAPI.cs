@@ -1,6 +1,5 @@
 ﻿using EterPharmaPro.API.Models;
 using EterPharmaPro.Models.API;
-using EterPharmaPro.Models.FirebaseModel;
 using EterPharmaPro.Utils.Extencions;
 using Newtonsoft.Json;
 using System;
@@ -15,16 +14,20 @@ namespace EterPharmaPro.API
 	{
 		private readonly ConnectionAPI connection;
 		public bool isConnected { get; private set; }
-		public bool isConnectedAPI { get; private set; }
-		public bool isConnectedDb { get; private set; }
+		private bool isConnectedAPI { get;  set; }
+		private bool isConnectedDb { get;  set; }
 
 		public ActionAPI()
 		{
 			connection = new ConnectionAPI();
-
-			_=TestConnectionAsync();
 		}
 
+		public static async Task<ActionAPI> CreateAsync()
+		{
+			var instance = new ActionAPI();
+			await instance.TestConnectionAsync();
+			return instance;
+		}
 		private async Task TestConnectionAsync()
 		{
 			try
@@ -45,25 +48,32 @@ namespace EterPharmaPro.API
 				isConnectedAPI = false;
 				isConnectedDb = false;
 			}
-			isConnected = isConnectedAPI = isConnectedDb;
+			isConnected = isConnectedAPI && isConnectedDb;
 		}
-
-		public async Task<List<EntregaFbModel>> GETALL()
+		private void TesteConnect()
+		{
+			if (!isConnected)
+			{
+				throw new InvalidOperationException($"Não esta conectado corretamente. (isConnectedAPI:{isConnectedAPI} - isConnectedDb:{isConnectedDb})");
+			}
+		}
+		public async Task<List<EntregaFbModel>> GETALL(object table)
 		{
 			try
 			{
-				HttpResponseMessage response = await connection.client.GetAsync(connection.host + "delivery");
+				TesteConnect();
+				HttpResponseMessage response = await connection.client.GetAsync(connection.host + table.ToString().ToLower());
 				if (response.IsSuccessStatusCode)
 				{
 					string responseData = await response.Content.ReadAsStringAsync();
 
-					var temp = JsonConvert.DeserializeObject<Dictionary<string, EntregaFbModel>>(responseData);
-                    foreach (var item in temp)
-                    {
+					var temp = JsonConvert.DeserializeObject<ResponseModel<Dictionary<string, EntregaFbModel>>>(responseData);
+					foreach (var item in temp.data)
+					{
 						item.Value.FIREBASE_ID = item.Key;
 
 					}
-					return temp.Values.ToList();
+					return temp.data.Values.ToList();
 				}
 			}
 			catch (Exception ex)
@@ -73,15 +83,38 @@ namespace EterPharmaPro.API
 			return null;
 		}
 
-		public async Task<string> INSERT<T>(T model)
+		public async Task<T> GET<T>(object id, object table)
 		{
 			try
 			{
-				var content = new StringContent(JsonConvert.SerializeObject(model), System.Text.Encoding.UTF8, "application/json");
-				HttpResponseMessage response = await connection.client.PostAsync(connection.host + "delivery", content);
+				TesteConnect();
+				HttpResponseMessage response = await connection.client.GetAsync(connection.host +table.ToString().ToLower()+ "/" + id);
 				if (response.IsSuccessStatusCode)
 				{
-					return await response.Content.ReadAsStringAsync();
+					string responseData = await response.Content.ReadAsStringAsync();
+					var temp = JsonConvert.DeserializeObject<ResponseModel<T>>(responseData);
+					return temp.data;
+				}
+			}
+			catch (Exception ex)
+			{
+				ex.ErrorGet();
+			}
+			return default;
+		}
+
+		public async Task<string> INSERT<T>(T model, object table)
+		{
+			try
+			{
+				TesteConnect();
+				StringContent content = new StringContent(JsonConvert.SerializeObject(model), System.Text.Encoding.UTF8, "application/json");
+				HttpResponseMessage response = await connection.client.PostAsync(connection.host + table.ToString().ToLower(), content);
+
+				if (response.IsSuccessStatusCode)
+				{
+					var resp = JsonConvert.DeserializeObject<ResponseModel<object>>(await response.Content.ReadAsStringAsync());
+					return resp.actionResult ? (string)resp.data : null;
 				}
 			}
 			catch (Exception ex)
@@ -91,15 +124,15 @@ namespace EterPharmaPro.API
 			return null;
 		}
 
-		public async Task<bool> UPDATE<T>(T model)
+		public async Task<bool> UPDATE(object id, object table)
 		{
 			try
 			{
-				var content = new StringContent(JsonConvert.SerializeObject(model), System.Text.Encoding.UTF8, "application/json");
-				HttpResponseMessage response = await connection.client.PostAsync(connection.host + "delivery", content);
+				TesteConnect();
+				HttpResponseMessage response = await connection.client.DeleteAsync(connection.host + table.ToString().ToLower() + "/" + id);
 				if (response.IsSuccessStatusCode)
 				{
-					 await response.Content.ReadAsStringAsync();
+					await response.Content.ReadAsStringAsync();
 					return true;
 				}
 			}
@@ -110,12 +143,13 @@ namespace EterPharmaPro.API
 			return false;
 		}
 
-		public async Task<bool> DELETE<T>(T model)
+		public async Task<bool> DELETE(object id, object table)
 		{
 			try
 			{
-				var content = new StringContent(JsonConvert.SerializeObject(model), System.Text.Encoding.UTF8, "application/json");
-				HttpResponseMessage response = await connection.client.PostAsync(connection.host + "delivery", content);
+				TesteConnect();
+
+				HttpResponseMessage response = await connection.client.DeleteAsync(connection.host + table.ToString().ToLower() + "/" + id);
 				if (response.IsSuccessStatusCode)
 				{
 					await response.Content.ReadAsStringAsync();
