@@ -20,9 +20,11 @@ namespace EterPharmaPro.Models.DbModels
 		public DateTime? UPDATE { get; set; }
 
 
-		public string FIREBASE_ID { get; set; }
-
 		public string ReturnName() => nameof(ID);
+		public string SetUID()
+		{
+			return  Guid.NewGuid().ToString().ToUpper();
+		}
 
 	}
 }

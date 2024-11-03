@@ -164,6 +164,43 @@ namespace EterPharmaPro.Utils.Extencions
 			cb.SelectedIndex = 0;
 			return cb;
 		}
+		public static ComboBox CBListUser(this ComboBox cb, List<UserModel> list, bool isStatusAll = false)
+		{
+			Dictionary<string, string> users = new Dictionary<string, string>();
+
+			foreach (var user in list)
+			{
+				string key = user.ID.ToString();
+
+				string value = $"{user.ID_LOJA.ToString().PadLeft(4, '0')} - {user.NOME}";
+				if (user.STATUS && !isStatusAll)
+				{
+					if (!users.ContainsKey(key))
+					{
+						users.Add(key, value);
+					}
+				}
+				else if (isStatusAll)
+				{
+					if (!users.ContainsKey(key))
+					{
+						users.Add(key, value);
+					}
+				}
+
+			}
+
+			BindingSource bindingSource = new BindingSource
+			{
+				DataSource = users
+			};
+
+			cb.DataSource = bindingSource;
+			cb.DisplayMember = "Value";
+			cb.ValueMember = "Key";
+			cb.SelectedIndex = 0;
+			return cb;
+		}
 
 		public static ComboBox CBListCategory(this ComboBox cb, List<CategoriaDbModal> categoriaDbModal)
 		{
@@ -206,6 +243,34 @@ namespace EterPharmaPro.Utils.Extencions
 				if (!func.ContainsKey(key))
 				{
 					func.Add(key, funcaoDbModels[i].NOME);
+				}
+			}
+
+			BindingSource bindingSource = new BindingSource
+			{
+				DataSource = func
+			};
+
+			cb.DataSource = bindingSource;
+			cb.DisplayMember = "Value";
+			cb.ValueMember = "Key";
+			cb.SelectedIndex = 0;
+			return cb;
+		}
+
+		public static ComboBox CBListTypeDelivery(this ComboBox cb, List<TypeDeliveryDbModel> type)
+		{
+			Dictionary<long?, string> func = new Dictionary<long?, string>();
+
+			func.Add(1, "PADRÃO");
+
+
+			for (int i = 0; i < type.Count; i++)
+			{
+				long? key = type[i].ID;
+				if (!func.ContainsKey(key))
+				{
+					func.Add(key, type[i].NAME);
 				}
 			}
 

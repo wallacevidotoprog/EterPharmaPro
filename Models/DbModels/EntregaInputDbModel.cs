@@ -4,23 +4,23 @@ using System;
 
 namespace EterPharmaPro.Models.DbModels
 {
-	public class EntregaDbModel : BaseDbModal, IBaseFbModel
+	public class EntregaInputDbModel : BaseDbModal, IBaseFbModel
 	{
 		[Ignore(ignoreOnInsert: true, ignoreOnUpdate: true)]
-		public string TABLE_NAME { get; set; } = "DELIVERY";
-
+		public string TABLE_NAME { get; set; } = "DELIVERY_INPUT";
 		public string UID { get; set; }
 		public string FIREBASE_ID { get; set; }
 
-		public long? USER_ID { get; set; }
+		public int CLIENTE_ID { get; set; }
 
-		public DateTime? DATE { get; set; }
+		public int ENDERECO_ID { get; set; }
 
 		public decimal VALUE { get; set; }
 
-		public int? KM { get; set; }
+		public int TYPE_DELIVERY { get; set; }
 
-		public long? DELIVERY_INPUT_ID { get; set; }
+		public DateTime? DATA { get; set; }
+
 
 	}
 }

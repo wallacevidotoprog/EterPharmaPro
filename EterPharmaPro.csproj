@@ -271,6 +271,7 @@
     <Compile Include="API\Models\ResponseConnectedModel.cs" />
     <Compile Include="API\Models\ResponseModel.cs" />
     <Compile Include="Controllers\Configs\ConfigsPageController.cs" />
+    <Compile Include="Controllers\Entrega\EntregaController.cs" />
     <Compile Include="Controllers\Impressos\ControleReqNotaController.cs" />
     <Compile Include="Controllers\Impressos\CreateLoteControladosController.cs" />
     <Compile Include="Controllers\EterDbController.cs" />
@@ -286,6 +287,7 @@
     <Compile Include="DatabaseSQLite\IgnoreAttribute.cs" />
     <Compile Include="DatabaseSQLite\QueryDeleteModel.cs" />
     <Compile Include="Enums\ListViewActionsEnum.cs" />
+    <Compile Include="Enums\ModeDeliveryEnum.cs" />
     <Compile Include="Enums\QueryProdutoEnum.cs" />
     <Compile Include="Enums\SizeTableTagEnum.cs" />
     <Compile Include="Interfaces\IActionDbBase.cs" />
@@ -293,6 +295,7 @@
     <Compile Include="Interfaces\IEterDbProdutoValidade.cs" />
     <Compile Include="Interfaces\IEterDbValidade.cs" />
     <Compile Include="Interfaces\IEterProps.cs" />
+    <Compile Include="Models\API\IBaseFbModel.cs" />
     <Compile Include="Models\DbModels\BaseDbModal.cs" />
     <Compile Include="DatabaseSQLite\DatabaseTransactionHandler.cs" />
     <Compile Include="DatabaseSQLite\MapDbEter.cs" />
@@ -334,8 +337,10 @@
     <Compile Include="Models\DbModels\ClienteDbModel.cs" />
     <Compile Include="Models\DadosAtendimentoModel.cs" />
     <Compile Include="Models\DbModels\ControlReqNotaDbModal.cs" />
+    <Compile Include="Models\DbModels\DeliveryViewDbModel.cs" />
     <Compile Include="Models\DbModels\EnderecoClienteDbModel.cs" />
     <Compile Include="Models\DbModels\EntregaDbModel.cs" />
+    <Compile Include="Models\DbModels\EntregaInputDbModel.cs" />
     <Compile Include="Models\DbModels\FuncaoDbModel.cs" />
     <Compile Include="Models\DbModels\ManipulacaoDbModel.cs" />
     <Compile Include="Models\DbModels\MedicamentosControladoDbModel.cs" />
@@ -343,6 +348,7 @@
     <Compile Include="Models\DbModels\ProdutoValidadeDbModal.cs" />
     <Compile Include="Models\DbModels\QueryWhereModel.cs" />
     <Compile Include="Models\DbModels\ReqNotaDbModal.cs" />
+    <Compile Include="Models\DbModels\TypeDeliveryDbModel.cs" />
     <Compile Include="Models\DbModels\ValidadeDbModal.cs" />
     <Compile Include="Models\API\EntregaFbModel.cs" />
     <Compile Include="Models\ManipulacaoModel.cs" />
@@ -427,6 +433,12 @@
     </Compile>
     <Compile Include="Views\Configuracoes\Produtos.Designer.cs">
       <DependentUpon>Produtos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Entrega\Delivery.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Entrega\Delivery.Designer.cs">
+      <DependentUpon>Delivery.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\TagViewer.cs">
       <SubType>Form</SubType>
@@ -515,6 +527,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Configuracoes\Produtos.resx">
       <DependentUpon>Produtos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Entrega\Delivery.resx">
+      <DependentUpon>Delivery.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\TagViewer.resx">
       <DependentUpon>TagViewer.cs</DependentUpon>
@@ -630,6 +645,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="farmacia.ico" />
+    <None Include="Resources\bicicleta-de-entrega.png" />
     <None Include="Resources\verificado.png" />
     <None Include="Resources\botao-x.png" />
     <None Include="Resources\database-security.png" />

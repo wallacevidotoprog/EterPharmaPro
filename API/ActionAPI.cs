@@ -25,10 +25,10 @@ namespace EterPharmaPro.API
 		public static async Task<ActionAPI> CreateAsync()
 		{
 			var instance = new ActionAPI();
-			await instance.TestConnectionAsync();
+			await instance.ConnectionAsync();
 			return instance;
 		}
-		private async Task TestConnectionAsync()
+		private async Task ConnectionAsync()
 		{
 			try
 			{
@@ -161,6 +161,11 @@ namespace EterPharmaPro.API
 				ex.ErrorGet();
 			}
 			return false;
+		}
+
+		internal async Task GetAllUserAsync()
+		{
+			throw new NotImplementedException();
 		}
 	}
 }

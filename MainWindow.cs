@@ -7,6 +7,7 @@ using EterPharmaPro.Utils;
 using EterPharmaPro.Utils.Extencions;
 using EterPharmaPro.Views;
 using EterPharmaPro.Views.Configuracoes;
+using EterPharmaPro.Views.Entrega;
 using EterPharmaPro.Views.Manipulados;
 using EterPharmaPro.Views.Remanejo;
 using EterPharmaPro.Views.Validade;
@@ -212,5 +213,8 @@ namespace EterPharmaPro
 		private void rELATÓRIOToolStripMenuItem1_Click(object sender, EventArgs e) => OpenForm(new ReportManipulacao(eterDb));
 
 		private void tAGToolStripMenuItem_Click(object sender, EventArgs e) => OpenForm(new TagViewer(eterDb, DatabaseProdutosDb));
+
+		private void toolStripButton_delivery_Click(object sender, EventArgs e) => OpenForm(new Delivery(eterDb));
+		
 	}
 }
