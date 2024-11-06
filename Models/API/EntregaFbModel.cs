@@ -40,16 +40,16 @@ namespace EterPharmaPro.Models.API
 		{
 
 		}
-		public EntregaFbModel(EntregaDbModel model)
-		{
-			ID = model.ID;
-			UID = model.UID;
-			DATE = model.DATE;
-			VALUE = model.VALUE;
-			KM = model.KM;
-			TYPE_DELIVERY = model.TYPE_DELIVERY;
+		//public EntregaFbModel(EntregaDbModel model)
+		//{
+		//	ID = model.ID;
+		//	UID = model.UID;
+		//	DATE = model.DATE;
+		//	VALUE = model.VALUE;
+		//	KM = model.KM;
+		//	TYPE_DELIVERY = model..TYPE_DELIVERY;
 
-		}
+		//}
 	}
 
 	public class INDENT

@@ -1,15 +1,13 @@
-﻿using EterPharmaPro.DatabaseSQLite;
+﻿using EterPharmaPro.API;
+using EterPharmaPro.DatabaseSQLite;
 using EterPharmaPro.DbProdutos.Services;
 using EterPharmaPro.Interfaces;
 using EterPharmaPro.Models.DbModels;
-using EterPharmaPro.Services.XLSX;
-using EterPharmaPro.Utils;
 using EterPharmaPro.Utils.Extencions;
 using EterPharmaPro.Views;
 using EterPharmaPro.Views.Configuracoes;
 using EterPharmaPro.Views.Entrega;
 using EterPharmaPro.Views.Manipulados;
-using EterPharmaPro.Views.Remanejo;
 using EterPharmaPro.Views.Validade;
 using System;
 using System.Data.SQLite;
@@ -18,7 +16,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using ToastNotification;
 using ToastNotification.Enum;
-using ToastNotifications;
+using WebSocket4Net;
 
 namespace EterPharmaPro
 {
@@ -26,9 +24,11 @@ namespace EterPharmaPro
 	{
 		private readonly IEterDb eterDb;
 		private DatabaseProdutosDb DatabaseProdutosDb;
-
-
 		private CancellationTokenSource cancellationTokenSource;
+
+		//private WebSocketClient webSocketClient;
+		private WebSocket webSocket;
+
 		public MainWindow()
 		{
 			//(new RemanejoPrint()).ShowDialog();
@@ -38,11 +38,19 @@ namespace EterPharmaPro
 		}
 		private async void MainWindow_Load(object sender, EventArgs e)
 		{
-			DatabaseProdutosDb = new DatabaseProdutosDb(toolStripProgressBar_status, cancellationTokenSource.Token);
-			SetLogin();
-			await NotifyValite.CheckeVality(eterDb);		
+			//DatabaseProdutosDb = new DatabaseProdutosDb(toolStripProgressBar_status, cancellationTokenSource.Token);
+			//SetLogin();
+			//await NotifyValite.CheckeVality(eterDb);
+
+
+			string uri = "ws://192.168.1.6:3000/socket.io/?EIO=4&transport=websocket";
+
+			//webSocketClient = new WebSocketClient(uri);
+			//webSocketClient.Connect();
+
 			
 		}
+
 
 		private async Task testeAsync()
 		{
@@ -153,14 +161,14 @@ namespace EterPharmaPro
 					this.Text = $"ETER PHARMA PRO [ {eterDb.EterDbController.UserModelAcess.ID_LOJA.ToString().PadLeft(4, '0')} - {eterDb.EterDbController.UserModelAcess.NOME} - {eterDb.EterDbController.UserModelAcess.FUNCAO_NAME} ]";
 
 					//Task.Run(() => { new Notifications().Show("VB", $"Bem Vindo {eterDb.EterDbController.UserModelAcess.FUNCAO_NAME} {eterDb.EterDbController.UserModelAcess.NOME} "); });
-					
 
-					SendAlertBox.SendT($"Bem Vindo {eterDb.EterDbController.UserModelAcess.FUNCAO_NAME} {eterDb.EterDbController.UserModelAcess.NOME}", TypeAlertEnum.Info, this);
+
+					SendAlertBox.SendT($"Bem Vindo {eterDb.EterDbController.UserModelAcess.FUNCAO_NAME} {eterDb.EterDbController.UserModelAcess.NOME}", TypeAlertEnum.Info);
 					toolStripButton_conf.Visible = (eterDb.EterDbController.UserModelAcess.FUNCAO_NAME == "DEV") ? true : false;
 				}
 			}
 
-			
+
 		}
 		private void OpenForm(Form form)
 		{
@@ -215,6 +223,6 @@ namespace EterPharmaPro
 		private void tAGToolStripMenuItem_Click(object sender, EventArgs e) => OpenForm(new TagViewer(eterDb, DatabaseProdutosDb));
 
 		private void toolStripButton_delivery_Click(object sender, EventArgs e) => OpenForm(new Delivery(eterDb));
-		
+
 	}
 }

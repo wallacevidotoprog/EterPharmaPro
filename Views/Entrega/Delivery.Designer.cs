@@ -588,6 +588,7 @@
 			this.ePictureBox_search.TabIndex = 15;
 			this.ePictureBox_search.TabStop = false;
 			this.ePictureBox_search.ToolTipText = "Buscar Cliente";
+			this.ePictureBox_search.Click += new System.EventHandler(this.ePictureBox_search_Click);
 			// 
 			// dataGridViewTextBoxColumn1
 			// 

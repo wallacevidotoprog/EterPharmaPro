@@ -1,16 +1,14 @@
 ﻿using EterPharmaPro.Controllers.Entrega;
-using EterPharmaPro.DatabaseSQLite;
+using EterPharmaPro.Controllers.Manipulacao;
 using EterPharmaPro.Enums;
 using EterPharmaPro.Interfaces;
 using EterPharmaPro.Models;
 using EterPharmaPro.Models.DbModels;
 using EterPharmaPro.Properties;
 using EterPharmaPro.Utils.Extencions;
-using Google.Type;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace EterPharmaPro.Views.Entrega
@@ -18,11 +16,19 @@ namespace EterPharmaPro.Views.Entrega
 	public partial class Delivery : Form
 	{
 		private readonly EntregaController entregaController;
+
+		bool isNew = false;
 		public Delivery(IEterDb eterDb)
 		{
 			InitializeComponent();
 			entregaController = new EntregaController(eterDb);
 			entregaController.loadCompleteLists += EntregaController_loadComplete;
+			entregaController.loadCompleteListsDelivery += EntregaController_loadCompleteListsDelivery;
+		}
+
+		private void EntregaController_loadCompleteListsDelivery(object sender, EventArgs e)
+		{
+			InsertDatagrid(entregaController.ModelViewDeliveryByDate(dateTime: System.DateTime.Now));
 		}
 
 		private void EntregaController_loadComplete(object sender, EventArgs e)
@@ -53,9 +59,41 @@ namespace EterPharmaPro.Views.Entrega
 			}
 		}
 
-		private void toolStripDropDownButton_new_Click(object sender, EventArgs e)
+		private async void toolStripDropDownButton_new_Click(object sender, EventArgs e)
 		{
-			SendDelivery(ModeDeliveryEnum.DELIVERY);
+			if (!isNew)
+			{
+				SendDelivery(ModeDeliveryEnum.DELIVERY);
+			}
+			else
+			{
+				if (true)
+				{
+					if (await entregaController.CreateDeliveryInput(new EntregaInputModel
+					{
+						useridvend = Convert.ToInt32(comboBox_user.SelectedValue.ToString()),
+						clienteDbModel = new ClienteDbModel
+						{
+							CPF = !string.IsNullOrEmpty(textBox_cpf.Text.ReturnInt()) ? textBox_cpf.Text.ReturnInt() : null,
+							RG = !string.IsNullOrEmpty(textBox_rg.Text.ReturnInt()) ? textBox_rg.Text.ReturnInt() : null,
+							NOME = textBox_nomeC.Text,
+							TELEFONE = textBox5_tel.Text.ReturnInt(),
+							ENDERECO = new EnderecoClienteDbModel
+							{
+								ENDERECO = textBox_log.Text,
+								OBSERVACAO = !string.IsNullOrEmpty(textBox_obsEnd.Text.ReturnInt()) ? textBox_obsEnd.Text.ReturnInt() : null,
+							}
+						},
+						data = dateTimePicker_dataD.Value,
+						tipo = Convert.ToInt32(comboBox_typeD.SelectedValue.ToString()),
+						valor = Convert.ToDecimal(textBox_valor.Text)
+					}))
+					{
+
+					}
+				}
+			}
+
 		}
 
 		private void toolStripDropDownButton_cancel_Click(object sender, EventArgs e)
@@ -75,6 +113,9 @@ namespace EterPharmaPro.Views.Entrega
 			comboBox_typeD.CBListTypeDelivery(entregaController.listTypeDelivery);
 
 			dateTimePicker_dataD.Value = dateTimePicker_dataE.Value = System.DateTime.Now;
+
+			SetDatagrid();
+
 		}
 
 		private void textBox_cpf_Validated(object sender, EventArgs e)
@@ -125,7 +166,7 @@ namespace EterPharmaPro.Views.Entrega
 
 		private void SetDatagrid()
 		{
-
+			InsertDatagrid(entregaController.ModelViewDeliveryByDate(null));
 		}
 		private void InsertDatagrid(List<DeliveryViewDbModel> model)
 		{
@@ -139,7 +180,7 @@ namespace EterPharmaPro.Views.Entrega
 					model[i].Endereco,
 					model[i].Tipo,
 					string.Format(CultureInfo.CurrentCulture, "{0:C2}", model[i].entregaInputDbModel.VALUE),
-					false,
+					model[i].entregaDbModel.COMPLETED,
 					"Finalizar"
 
 				});
@@ -147,5 +188,34 @@ namespace EterPharmaPro.Views.Entrega
 
 		}
 
+		private async void ePictureBox_search_Click(object sender, EventArgs e)
+		{
+			List<ClienteDbModel> temp = null;
+			ClienteDbModel tempSelect = null;
+			try
+			{
+				temp = ((textBox_cpf.Text != "") ? await entregaController.GetCliente(textBox_cpf.Text.ReturnInt(), TypeDoc.CPF) :
+					(((textBox_rg.Text != "")) ? await entregaController.GetCliente(textBox_rg.Text.ReturnInt(), TypeDoc.RG) :
+					 await entregaController.GetCliente()));
+
+				if (temp.Count <= 0)
+				{
+					return;
+				}
+				tempSelect = temp.GetClienteArray();
+
+				textBox_cpf.Text = tempSelect?.CPF.ReturnFormation(FormatationEnum.CPF);
+				textBox_rg.Text = tempSelect?.RG.ReturnFormation(FormatationEnum.RG);
+				textBox_nomeC.Text = tempSelect?.NOME;
+				textBox5_tel.Text = tempSelect?.TELEFONE.ReturnFormation(FormatationEnum.TELEFONE);
+				textBox_log.Text = ((EnderecoClienteDbModel)tempSelect?.ENDERECO).ENDERECO;
+				textBox_obsEnd.Text = ((EnderecoClienteDbModel)tempSelect?.ENDERECO).OBSERVACAO;
+
+			}
+			catch (Exception ex)
+			{
+				ex.ErrorGet();
+			}
+		}
 	}
 }

@@ -1,4 +1,5 @@
 ﻿using EterPharmaPro.API.Models;
+using EterPharmaPro.DatabaseSQLite;
 using EterPharmaPro.Models.API;
 using EterPharmaPro.Utils.Extencions;
 using Newtonsoft.Json;
@@ -7,6 +8,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using ToastNotification.Enum;
+using ToastNotification;
 
 namespace EterPharmaPro.API
 {
@@ -20,6 +23,11 @@ namespace EterPharmaPro.API
 		public ActionAPI()
 		{
 			connection = new ConnectionAPI();
+			connection.serveMsg += Connection_serveMsg;
+		}
+		private void Connection_serveMsg(object sender, string e)
+		{
+			SendAlertBox.Send(e, TypeAlertEnum.Info);
 		}
 
 		public static async Task<ActionAPI> CreateAsync()

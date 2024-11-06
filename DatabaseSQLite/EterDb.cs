@@ -1,15 +1,12 @@
-using DocumentFormat.OpenXml.Office2010.Excel;
 using EterPharmaPro.API;
 using EterPharmaPro.Controllers;
 using EterPharmaPro.DatabaseFireBase;
 using EterPharmaPro.Interfaces;
-using EterPharmaPro.Models.API;
 using EterPharmaPro.Models.DbModels;
 using EterPharmaPro.Utils.Extencions;
 using System;
 using System.Data.SQLite;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace EterPharmaPro.DatabaseSQLite
@@ -23,6 +20,8 @@ namespace EterPharmaPro.DatabaseSQLite
 		public DatabaseTransactionHandler _transactionHandler;
 
 		public FirebaseDb firebaseDb { get; set; }
+
+		public ActionAPI actionAPI { get; set; }
 
 		public UserModel UserModelAcess { get; set; }
 
@@ -40,7 +39,7 @@ namespace EterPharmaPro.DatabaseSQLite
 				SQLiteConnection connection = new SQLiteConnection(_databaseConnection);
 				connection.Open();
 				ServeConnection = true;
-				SetDb();
+				SetDbAsync();
 
 				_transactionHandler = new DatabaseTransactionHandler(new SQLiteTransactionManager(connection));
 
@@ -53,12 +52,13 @@ namespace EterPharmaPro.DatabaseSQLite
 			}
 		}
 
-		private void SetDb()
+		private async void SetDbAsync()
 		{
 			ActionDb = new ActionDbBase(_databaseConnection);
 			firebaseDb = new FirebaseDb();
 			testeFb();
 			EterDbController = new EterDbController(this);
+			actionAPI = await ActionAPI.CreateAsync();
 		}
 
 		public async Task<bool> ExecuteTransactionAsync(params Func<Task<bool>>[] databaseOperations)
@@ -133,7 +133,7 @@ namespace EterPharmaPro.DatabaseSQLite
 			//entregaFbModel.CLIENTE_ID = new INDENT(c.ID, c.NOME);
 			//entregaFbModel.ENDERECO_ID = new INDENT(e.ID, e.ENDERECO, e.OBSERVACAO);
 
-			//ActionAPI actionAPI =await ActionAPI.CreateAsync();
+			
 			//var t = await ActionDb.GETFIELDS<MedicamentosControladoDbModel>(new QueryWhereModel());
 			//         for (int i = 0; i < t.Count; i++)
 			//         {
