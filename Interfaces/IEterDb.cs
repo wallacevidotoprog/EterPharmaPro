@@ -12,7 +12,7 @@ namespace EterPharmaPro.Interfaces
 
 		IActionDbBase ActionDb { get; set; }
 
-		ActionAPI actionAPI { get; set; }
+		ActionAPI ActionAPI { get; set; }
 
 		Task<bool> ExecuteTransactionAsync(params Func<Task<bool>>[] databaseOperations);
 		Task<object> ExecuteTransactionAsync(Func<Task<object>> databaseOperations);

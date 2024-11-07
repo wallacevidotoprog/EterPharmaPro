@@ -20,7 +20,6 @@ namespace EterPharmaPro.API
 			host = ini.Read("API", "HOST");
 
 			_=webSocketClient = new WebSocketClient(ini.Read("API", "WEBSOCKET"));
-			//webSocketClient
 		}
 
 

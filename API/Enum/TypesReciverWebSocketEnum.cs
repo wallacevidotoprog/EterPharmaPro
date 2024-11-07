@@ -8,5 +8,7 @@
 		public const string Clients = "listClients";
 		public const string Online = "online";
 		public const string Offline = "offline";
+		public const string NewDelivery = "new_delivery";
+		public const string FinishDelivery = "finish_delivery";
 	}
 }

@@ -16,6 +16,7 @@ namespace EterPharmaPro.API
 	public class ActionAPI
 	{
 		private readonly ConnectionAPI connection;
+		public readonly ApiServices apiController;
 		public bool isConnected { get; private set; }
 		private bool isConnectedAPI { get;  set; }
 		private bool isConnectedDb { get;  set; }
@@ -23,13 +24,11 @@ namespace EterPharmaPro.API
 		public ActionAPI()
 		{
 			connection = new ConnectionAPI();
-			connection.serveMsg += Connection_serveMsg;
-		}
-		private void Connection_serveMsg(object sender, string e)
-		{
-			SendAlertBox.Send(e, TypeAlertEnum.Info);
-		}
+			apiController = new ApiServices(connection.webSocketClient);
 
+
+		}
+		
 		public static async Task<ActionAPI> CreateAsync()
 		{
 			var instance = new ActionAPI();
@@ -65,7 +64,7 @@ namespace EterPharmaPro.API
 				throw new InvalidOperationException($"Não esta conectado corretamente. (isConnectedAPI:{isConnectedAPI} - isConnectedDb:{isConnectedDb})");
 			}
 		}
-		public async Task<List<EntregaFbModel>> GETALL(object table)
+		public async Task<List<EntregaApiModel>> GETALL(object table)
 		{
 			try
 			{
@@ -75,7 +74,7 @@ namespace EterPharmaPro.API
 				{
 					string responseData = await response.Content.ReadAsStringAsync();
 
-					var temp = JsonConvert.DeserializeObject<ResponseModel<Dictionary<string, EntregaFbModel>>>(responseData);
+					var temp = JsonConvert.DeserializeObject<ResponseModel<Dictionary<string, EntregaApiModel>>>(responseData);
 					foreach (var item in temp.data)
 					{
 						item.Value.FIREBASE_ID = item.Key;
@@ -116,6 +115,7 @@ namespace EterPharmaPro.API
 			try
 			{
 				TesteConnect();
+				string teste = connection.host + table.ToString().ToLower();
 				StringContent content = new StringContent(JsonConvert.SerializeObject(model), System.Text.Encoding.UTF8, "application/json");
 				HttpResponseMessage response = await connection.client.PostAsync(connection.host + table.ToString().ToLower(), content);
 

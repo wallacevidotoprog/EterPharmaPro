@@ -329,6 +329,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="API\ActionAPI.cs" />
+    <Compile Include="API\ApiController.cs" />
+    <Compile Include="API\ApiServices.cs" />
     <Compile Include="API\ConnectionAPI.cs" />
     <Compile Include="API\Enum\TypesReciverWebSocketEnum.cs" />
     <Compile Include="API\Models\MessageWebSockerModel.cs" />
@@ -361,6 +363,7 @@
     <Compile Include="Interfaces\IEterDbProdutoValidade.cs" />
     <Compile Include="Interfaces\IEterDbValidade.cs" />
     <Compile Include="Interfaces\IEterProps.cs" />
+    <Compile Include="Interfaces\IFirebaseDb.cs" />
     <Compile Include="Models\API\IBaseFbModel.cs" />
     <Compile Include="Models\DbModels\BaseDbModal.cs" />
     <Compile Include="DatabaseSQLite\DatabaseTransactionHandler.cs" />
@@ -403,6 +406,8 @@
     <Compile Include="Models\DbModels\ClienteDbModel.cs" />
     <Compile Include="Models\DadosAtendimentoModel.cs" />
     <Compile Include="Models\DbModels\ControlReqNotaDbModal.cs" />
+    <Compile Include="Models\DbModels\DeliveryDbModel.cs" />
+    <Compile Include="Models\DbModels\DeliveryInputDbModel.cs" />
     <Compile Include="Models\DbModels\DeliveryViewDbModel.cs" />
     <Compile Include="Models\DbModels\EnderecoClienteDbModel.cs" />
     <Compile Include="Models\DbModels\EntregaDbModel.cs" />
@@ -416,7 +421,7 @@
     <Compile Include="Models\DbModels\ReqNotaDbModal.cs" />
     <Compile Include="Models\DbModels\TypeDeliveryDbModel.cs" />
     <Compile Include="Models\DbModels\ValidadeDbModal.cs" />
-    <Compile Include="Models\API\EntregaFbModel.cs" />
+    <Compile Include="Models\API\EntregaApiModel.cs" />
     <Compile Include="Models\EntregaInputModel.cs" />
     <Compile Include="Models\ManipulacaoModel.cs" />
     <Compile Include="Models\DbModels\UserModel.cs" />

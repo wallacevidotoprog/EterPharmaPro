@@ -64,6 +64,7 @@ namespace EterPharmaPro.Views.Entrega
 			if (!isNew)
 			{
 				SendDelivery(ModeDeliveryEnum.DELIVERY);
+				isNew = true;
 			}
 			else
 			{
@@ -174,13 +175,14 @@ namespace EterPharmaPro.Views.Entrega
 			{
 				dataGridView_report.Rows.Add(new object[]
 				{
-					model[i].entregaInputDbModel.ID,
-					model[i].UserV,
-					model[i].Cliente,
-					model[i].Endereco,
-					model[i].Tipo,
-					string.Format(CultureInfo.CurrentCulture, "{0:C2}", model[i].entregaInputDbModel.VALUE),
-					model[i].entregaDbModel.COMPLETED,
+					model[i]?.entregaInputDbModel.ID,
+					model[i]?.UserV,
+					model[i]?.entregaInputDbModel.DATA.ToString(),
+					model[i]?.Cliente,
+					model[i]?.Endereco,
+					model[i]?.Tipo,
+					string.Format(CultureInfo.CurrentCulture, "{0:C2}", model[i]?.entregaInputDbModel?.VALUE),
+					model[i].entregaDbModel?.COMPLETED??false,
 					"Finalizar"
 
 				});

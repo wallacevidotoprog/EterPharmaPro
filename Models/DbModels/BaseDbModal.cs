@@ -19,12 +19,5 @@ namespace EterPharmaPro.Models.DbModels
 		[Ignore(ignoreOnInsert: true, ignoreOnUpdate: true)]
 		public DateTime? UPDATE { get; set; }
 
-
-		public string ReturnName() => nameof(ID);
-		public string SetUID()
-		{
-			return  Guid.NewGuid().ToString().ToUpper();
-		}
-
 	}
 }

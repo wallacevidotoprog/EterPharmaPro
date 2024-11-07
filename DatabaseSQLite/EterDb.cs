@@ -21,7 +21,7 @@ namespace EterPharmaPro.DatabaseSQLite
 
 		public FirebaseDb firebaseDb { get; set; }
 
-		public ActionAPI actionAPI { get; set; }
+		public ActionAPI ActionAPI { get; set; }
 
 		public UserModel UserModelAcess { get; set; }
 
@@ -58,7 +58,7 @@ namespace EterPharmaPro.DatabaseSQLite
 			firebaseDb = new FirebaseDb();
 			testeFb();
 			EterDbController = new EterDbController(this);
-			actionAPI = await ActionAPI.CreateAsync();
+			ActionAPI = await ActionAPI.CreateAsync();
 		}
 
 		public async Task<bool> ExecuteTransactionAsync(params Func<Task<bool>>[] databaseOperations)

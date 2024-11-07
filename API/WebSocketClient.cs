@@ -6,15 +6,19 @@ using WebSocket4Net;
 using Newtonsoft.Json;
 using EterPharmaPro.API.Enum;
 using EterPharmaPro.Models.DbModels;
+using System.Windows.Forms;
+using FirebaseAdmin.Messaging;
+using System.Threading;
 
 namespace EterPharmaPro.API
 {
 	public class WebSocketClient
 	{
 		public event EventHandler<MessageWebSockerModel> MessageReceived;
+		public WebSocketState webSocketState;
 
 		private readonly WebSocket webSocket;
-
+		private System.Windows.Forms.Timer time_reload;
 		public WebSocketClient(string url)
 		{
 			webSocket = new WebSocket(url);
@@ -29,14 +33,24 @@ namespace EterPharmaPro.API
 
 			webSocket.Closed += WebSocket_Closed;
 
+			
+			webSocket.Open();
 
+			time_reload = new System.Windows.Forms.Timer();
+			time_reload.Interval = 1;
+			time_reload.Tick += Time_reload_Tick;
+		}
+
+		private void Time_reload_Tick(object sender, EventArgs e)
+		{
+			Thread.Sleep(1000);
 			webSocket.Open();
 
 		}
 
-		public void InitClient(MessageWebSockerModel model) => EnviarMensagem(model);
+		public void InitClient(MessageWebSockerModel model) => SendMessage(model);
 
-		public void EnviarMensagem(MessageWebSockerModel message)
+		public void SendMessage(MessageWebSockerModel message)
 		{
 			if (webSocket.State == WebSocketState.Open)
 			{
@@ -55,6 +69,7 @@ namespace EterPharmaPro.API
 		private void WebSocket_Closed(object sender, System.EventArgs e)
 		{
 			SendAlertBox.SendT("WebSocket desconectado.", ToastNotification.Enum.TypeAlertEnum.Info);
+			time_reload.Start();
 		}
 
 		private void WebSocket_Error(object sender, ErrorEventArgs e)
@@ -65,7 +80,7 @@ namespace EterPharmaPro.API
 		private void WebSocket_MessageReceived(object sender, MessageReceivedEventArgs e)
 		{
 			MessageWebSockerModel resp = JsonConvert.DeserializeObject<MessageWebSockerModel>(e.Message);
-			if (resp.type == TypesReciverWebSocketEnum.Message)
+			if (resp.type == TypesReciverWebSocketEnum.NewDelivery || resp.type == TypesReciverWebSocketEnum.FinishDelivery)
 			{
 				SendAlertBox.SendT($"{resp.name}: {resp.message}", ToastNotification.Enum.TypeAlertEnum.Success);
 			}
@@ -74,6 +89,8 @@ namespace EterPharmaPro.API
 
 		private void WebSocket_Opened(object sender, System.EventArgs e)
 		{
+			webSocketState = webSocket.State;
+			time_reload.Stop();
 			SendAlertBox.SendT("WebSocket conectado.", ToastNotification.Enum.TypeAlertEnum.Success);
 
 			InitClient(new MessageWebSockerModel
@@ -83,7 +100,7 @@ namespace EterPharmaPro.API
 				{
 					ID = 1515,
 					ID_LOJA = 1515,
-					NOME = "LOJA 15",
+					NOME = "LOJA 15 - PDV",
 					STATUS = true
 				}
 			});
