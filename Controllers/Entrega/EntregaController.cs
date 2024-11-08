@@ -1,8 +1,11 @@
-﻿using EterPharmaPro.Enums;
+﻿using EterPharmaPro.API;
+using EterPharmaPro.API.Models;
+using EterPharmaPro.Enums;
 using EterPharmaPro.Interfaces;
 using EterPharmaPro.Models;
 using EterPharmaPro.Models.API;
 using EterPharmaPro.Models.DbModels;
+using EterPharmaPro.Utils;
 using EterPharmaPro.Utils.Extencions;
 using System;
 using System.Collections.Generic;
@@ -23,10 +26,16 @@ namespace EterPharmaPro.Controllers.Entrega
 
 		public List<DeliveryViewDbModel> deliveryViewDbModels { get; private set; }
 
+
 		public EntregaController(IEterDb eterDb)
 		{
 			this.eterDb = eterDb;
 			_ = GetAllUserAsync();
+			EventGlobal.Subscribe<MessageWebSockerModel>(SocketDelivery);
+		}
+		void SocketDelivery(MessageWebSockerModel e)
+		{
+			ReloadModelViewDeliveryAsync();
 		}
 		private async Task GetAllUserAsync()
 		{

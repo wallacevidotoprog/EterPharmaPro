@@ -1,9 +1,8 @@
-﻿using EterPharmaPro.API.Models;
+﻿using EterPharmaPro.API.Enum;
+using EterPharmaPro.API.Models;
+using EterPharmaPro.Models.DbModels;
+using EterPharmaPro.Utils;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WebSocket4Net;
 
 namespace EterPharmaPro.API
@@ -19,16 +18,19 @@ namespace EterPharmaPro.API
 			webSocketClient.MessageReceived += WebSocketClient_MessageReceived;
 		}
 
+		public void AccessUser(UserModel userModelAcess)
+		{
+			webSocketClient.InitClient(new MessageWebSockerModel
+			{
+				type = TypesReciverWebSocketEnum.Register,
+				user = userModelAcess
+			});
+		}
+
 		private void WebSocketClient_MessageReceived(object sender, MessageWebSockerModel e)
 		{
-			//throw new NotImplementedException();
+			EventGlobal.Publish(e);
 		}
-		private void WebSocketClient_SendMessage(MessageWebSockerModel model)
-		{
-			if (webSocketClient.webSocketState == WebSocketState.Open)
-			{
-				webSocketClient.SendMessage(model);
-			}
-		}
+		
 	}
 }

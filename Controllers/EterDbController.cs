@@ -1,4 +1,5 @@
 ﻿using DocumentFormat.OpenXml.EMMA;
+using EterPharmaPro.API;
 using EterPharmaPro.DatabaseSQLite;
 using EterPharmaPro.Interfaces;
 using EterPharmaPro.Models;
@@ -168,7 +169,10 @@ namespace EterPharmaPro.Controllers
 				return (false, false);
 			}
 		}
-
+		public void InitUserSocket()
+		{
+			eterDb.ActionAPI.apiService.AccessUser(UserModelAcess);
+		}
 
 	}
 }

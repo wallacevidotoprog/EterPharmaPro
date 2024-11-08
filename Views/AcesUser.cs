@@ -69,6 +69,7 @@ namespace EterPharmaPro.Views
 			}
 			if (temp.acOk)
 			{
+				eterDb.EterDbController.InitUserSocket();
 				loginSucced = true;
 				this.Close();
 			}

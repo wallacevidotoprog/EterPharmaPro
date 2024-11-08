@@ -18,7 +18,7 @@ namespace EterPharmaPro.Models.DbModels
 
 		public int KM { get; set; }
 
-		public int COMPLETED { get; set; }  
+		public int STATS { get; set; }  
 
 		public long DATE_COMPLETED { get; set; } 
 	}

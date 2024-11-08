@@ -213,6 +213,36 @@ namespace EterPharmaPro.Properties {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap delivery_canceled {
+            get {
+                object obj = ResourceManager.GetObject("delivery_canceled", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap delivery_finalized {
+            get {
+                object obj = ResourceManager.GetObject("delivery_finalized", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap delivery_open {
+            get {
+                object obj = ResourceManager.GetObject("delivery_open", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap documento_new {
             get {
                 object obj = ResourceManager.GetObject("documento_new", resourceCulture);
@@ -356,6 +386,16 @@ namespace EterPharmaPro.Properties {
         internal static System.Drawing.Bitmap novo_arquivo__1_ {
             get {
                 object obj = ResourceManager.GetObject("novo-arquivo (1)", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap on_route {
+            get {
+                object obj = ResourceManager.GetObject("on_route", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

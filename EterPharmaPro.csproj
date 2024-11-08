@@ -358,6 +358,7 @@
     <Compile Include="Enums\ModeDeliveryEnum.cs" />
     <Compile Include="Enums\QueryProdutoEnum.cs" />
     <Compile Include="Enums\SizeTableTagEnum.cs" />
+    <Compile Include="Enums\StatsDeliveryEnum.cs" />
     <Compile Include="Interfaces\IActionDbBase.cs" />
     <Compile Include="Interfaces\IEterDbCategoria.cs" />
     <Compile Include="Interfaces\IEterDbProdutoValidade.cs" />
@@ -466,7 +467,9 @@
     <Compile Include="Utils\eControl\ToolStripDateTimePicker.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Utils\EventGlobal.cs" />
     <Compile Include="Utils\Events\ControlReqsViewEventArgs.cs" />
+    <Compile Include="Utils\Extencions\StatsDeliveryDataGridViewColumn.cs" />
     <Compile Include="Utils\Extencions\DataGridViewCheckBoxImage.cs" />
     <Compile Include="Utils\Extencions\ExceptionError.cs" />
     <Compile Include="Utils\Extencions\ExtensionsDefault.cs" />
@@ -717,6 +720,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="farmacia.ico" />
+    <None Include="Resources\delivery_canceled.png" />
+    <None Include="Resources\on_route.png" />
+    <None Include="Resources\delivery_open.png" />
+    <None Include="Resources\delivery_finalized.png" />
     <None Include="Resources\bicicleta-de-entrega.png" />
     <None Include="Resources\verificado.png" />
     <None Include="Resources\botao-x.png" />

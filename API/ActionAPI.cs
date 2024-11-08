@@ -10,13 +10,14 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using ToastNotification.Enum;
 using ToastNotification;
+using EterPharmaPro.Models.DbModels;
 
 namespace EterPharmaPro.API
 {
 	public class ActionAPI
 	{
 		private readonly ConnectionAPI connection;
-		public readonly ApiServices apiController;
+		public readonly ApiServices apiService;
 		public bool isConnected { get; private set; }
 		private bool isConnectedAPI { get;  set; }
 		private bool isConnectedDb { get;  set; }
@@ -24,7 +25,7 @@ namespace EterPharmaPro.API
 		public ActionAPI()
 		{
 			connection = new ConnectionAPI();
-			apiController = new ApiServices(connection.webSocketClient);
+			apiService = new ApiServices(connection.webSocketClient);
 
 
 		}
@@ -57,12 +58,14 @@ namespace EterPharmaPro.API
 			}
 			isConnected = isConnectedAPI && isConnectedDb;
 		}
-		private void TesteConnect()
+		private async void TesteConnect()
 		{
 			if (!isConnected)
 			{
-				throw new InvalidOperationException($"Não esta conectado corretamente. (isConnectedAPI:{isConnectedAPI} - isConnectedDb:{isConnectedDb})");
+				await ConnectionAsync();
+				throw new InvalidOperationException($"*Entente novamente* Não esta conectado corretamente. (isConnectedAPI:{isConnectedAPI} - isConnectedDb:{isConnectedDb})");
 			}
+			
 		}
 		public async Task<List<EntregaApiModel>> GETALL(object table)
 		{
@@ -172,6 +175,11 @@ namespace EterPharmaPro.API
 		}
 
 		internal async Task GetAllUserAsync()
+		{
+			throw new NotImplementedException();
+		}
+
+		internal void AccessUser(UserModel userModelAcess)
 		{
 			throw new NotImplementedException();
 		}

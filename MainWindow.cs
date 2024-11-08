@@ -26,27 +26,18 @@ namespace EterPharmaPro
 		private DatabaseProdutosDb DatabaseProdutosDb;
 		private CancellationTokenSource cancellationTokenSource;
 
-		//private WebSocketClient webSocketClient;
-		private WebSocket webSocket;
-
 		public MainWindow()
 		{
-			//(new RemanejoPrint()).ShowDialog();
 			InitializeComponent();
 			eterDb = new EterDb();
 			cancellationTokenSource = new CancellationTokenSource();
 		}
-		private async void MainWindow_Load(object sender, EventArgs e)
+		private  void MainWindow_Load(object sender, EventArgs e)
 		{
-			//DatabaseProdutosDb = new DatabaseProdutosDb(toolStripProgressBar_status, cancellationTokenSource.Token);
-			//SetLogin();
+			DatabaseProdutosDb = new DatabaseProdutosDb(toolStripProgressBar_status, cancellationTokenSource.Token);
+			SetLogin();
+
 			//await NotifyValite.CheckeVality(eterDb);
-
-
-			string uri = "ws://192.168.1.6:3000/socket.io/?EIO=4&transport=websocket";
-
-			//webSocketClient = new WebSocketClient(uri);
-			//webSocketClient.Connect();
 
 			
 		}
@@ -165,6 +156,7 @@ namespace EterPharmaPro
 
 					SendAlertBox.SendT($"Bem Vindo {eterDb.EterDbController.UserModelAcess.FUNCAO_NAME} {eterDb.EterDbController.UserModelAcess.NOME}", TypeAlertEnum.Info);
 					toolStripButton_conf.Visible = (eterDb.EterDbController.UserModelAcess.FUNCAO_NAME == "DEV") ? true : false;
+					
 				}
 			}
 

@@ -30,6 +30,8 @@
 		{
 			this.toolStrip_topMenu = new System.Windows.Forms.ToolStrip();
 			this.toolStripButton_exit = new System.Windows.Forms.ToolStripButton();
+			this.toolStripDropDownButton_new = new System.Windows.Forms.ToolStripButton();
+			this.toolStripDropDownButton_cancel = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.groupBox_input = new System.Windows.Forms.GroupBox();
 			this.groupBox_deliveryman = new System.Windows.Forms.GroupBox();
@@ -65,18 +67,16 @@
 			this.label2 = new System.Windows.Forms.Label();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.dataGridView_report = new System.Windows.Forms.DataGridView();
-			this.toolStripDropDownButton_cancel = new System.Windows.Forms.ToolStripButton();
-			this.toolStripDropDownButton_new = new System.Windows.Forms.ToolStripButton();
 			this.ePictureBox_search = new EterPharmaPro.Utils.eControl.ePictureBox();
-			this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.END = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.Column4 = new EterPharmaPro.Utils.Extencions.DataGridViewCheckBoxImageColumn();
-			this.Column5 = new System.Windows.Forms.DataGridViewButtonColumn();
+			this.ColumnID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ColumnVEND = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ColumnDATA = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ColumnCLIENTE = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ColumnEND = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ColumnTIPO = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ColumnVALOR = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ColumnSTATS = new System.Windows.Forms.DataGridViewImageColumn();
+			this.ColumnACTION = new System.Windows.Forms.DataGridViewButtonColumn();
 			this.toolStrip_topMenu.SuspendLayout();
 			this.groupBox_input.SuspendLayout();
 			this.groupBox_deliveryman.SuspendLayout();
@@ -121,6 +121,41 @@
 			this.toolStripButton_exit.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
 			this.toolStripButton_exit.ToolTipText = "SAIR";
 			this.toolStripButton_exit.Click += new System.EventHandler(this.toolStripButton_exit_Click);
+			// 
+			// toolStripDropDownButton_new
+			// 
+			this.toolStripDropDownButton_new.AutoSize = false;
+			this.toolStripDropDownButton_new.Font = new System.Drawing.Font("Segoe UI", 8F);
+			this.toolStripDropDownButton_new.Image = global::EterPharmaPro.Properties.Resources.documento_new;
+			this.toolStripDropDownButton_new.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+			this.toolStripDropDownButton_new.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.toolStripDropDownButton_new.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.toolStripDropDownButton_new.Name = "toolStripDropDownButton_new";
+			this.toolStripDropDownButton_new.Size = new System.Drawing.Size(90, 90);
+			this.toolStripDropDownButton_new.Tag = "";
+			this.toolStripDropDownButton_new.Text = "NOVO";
+			this.toolStripDropDownButton_new.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+			this.toolStripDropDownButton_new.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+			this.toolStripDropDownButton_new.ToolTipText = "Criar um Documento";
+			this.toolStripDropDownButton_new.Click += new System.EventHandler(this.toolStripDropDownButton_new_Click);
+			// 
+			// toolStripDropDownButton_cancel
+			// 
+			this.toolStripDropDownButton_cancel.AutoSize = false;
+			this.toolStripDropDownButton_cancel.Font = new System.Drawing.Font("Segoe UI", 8F);
+			this.toolStripDropDownButton_cancel.Image = global::EterPharmaPro.Properties.Resources.cancelar;
+			this.toolStripDropDownButton_cancel.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+			this.toolStripDropDownButton_cancel.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.toolStripDropDownButton_cancel.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.toolStripDropDownButton_cancel.Name = "toolStripDropDownButton_cancel";
+			this.toolStripDropDownButton_cancel.Size = new System.Drawing.Size(90, 90);
+			this.toolStripDropDownButton_cancel.Tag = "";
+			this.toolStripDropDownButton_cancel.Text = "CANCELAR";
+			this.toolStripDropDownButton_cancel.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+			this.toolStripDropDownButton_cancel.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+			this.toolStripDropDownButton_cancel.ToolTipText = "Cancelar o  Documento";
+			this.toolStripDropDownButton_cancel.Visible = false;
+			this.toolStripDropDownButton_cancel.Click += new System.EventHandler(this.toolStripDropDownButton_cancel_Click);
 			// 
 			// toolStripSeparator1
 			// 
@@ -512,6 +547,7 @@
 			// 
 			// dataGridView_report
 			// 
+			this.dataGridView_report.AllowUserToAddRows = false;
 			this.dataGridView_report.AllowUserToDeleteRows = false;
 			this.dataGridView_report.AllowUserToResizeColumns = false;
 			this.dataGridView_report.AllowUserToResizeRows = false;
@@ -520,15 +556,15 @@
 			this.dataGridView_report.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
 			this.dataGridView_report.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
 			this.dataGridView_report.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dataGridViewTextBoxColumn1,
-            this.dataGridViewTextBoxColumn2,
-            this.dataGridViewTextBoxColumn3,
-            this.Column1,
-            this.END,
-            this.Column2,
-            this.Column3,
-            this.Column4,
-            this.Column5});
+            this.ColumnID,
+            this.ColumnVEND,
+            this.ColumnDATA,
+            this.ColumnCLIENTE,
+            this.ColumnEND,
+            this.ColumnTIPO,
+            this.ColumnVALOR,
+            this.ColumnSTATS,
+            this.ColumnACTION});
 			this.dataGridView_report.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.dataGridView_report.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.dataGridView_report.GridColor = System.Drawing.SystemColors.ActiveCaptionText;
@@ -538,44 +574,10 @@
 			this.dataGridView_report.ReadOnly = true;
 			this.dataGridView_report.RowHeadersVisible = false;
 			this.dataGridView_report.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+			this.dataGridView_report.RowTemplate.Height = 35;
 			this.dataGridView_report.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
 			this.dataGridView_report.Size = new System.Drawing.Size(947, 218);
 			this.dataGridView_report.TabIndex = 6;
-			// 
-			// toolStripDropDownButton_cancel
-			// 
-			this.toolStripDropDownButton_cancel.AutoSize = false;
-			this.toolStripDropDownButton_cancel.Font = new System.Drawing.Font("Segoe UI", 8F);
-			this.toolStripDropDownButton_cancel.Image = global::EterPharmaPro.Properties.Resources.cancelar;
-			this.toolStripDropDownButton_cancel.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-			this.toolStripDropDownButton_cancel.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-			this.toolStripDropDownButton_cancel.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.toolStripDropDownButton_cancel.Name = "toolStripDropDownButton_cancel";
-			this.toolStripDropDownButton_cancel.Size = new System.Drawing.Size(90, 90);
-			this.toolStripDropDownButton_cancel.Tag = "";
-			this.toolStripDropDownButton_cancel.Text = "CANCELAR";
-			this.toolStripDropDownButton_cancel.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-			this.toolStripDropDownButton_cancel.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-			this.toolStripDropDownButton_cancel.ToolTipText = "Cancelar o  Documento";
-			this.toolStripDropDownButton_cancel.Visible = false;
-			this.toolStripDropDownButton_cancel.Click += new System.EventHandler(this.toolStripDropDownButton_cancel_Click);
-			// 
-			// toolStripDropDownButton_new
-			// 
-			this.toolStripDropDownButton_new.AutoSize = false;
-			this.toolStripDropDownButton_new.Font = new System.Drawing.Font("Segoe UI", 8F);
-			this.toolStripDropDownButton_new.Image = global::EterPharmaPro.Properties.Resources.documento_new;
-			this.toolStripDropDownButton_new.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-			this.toolStripDropDownButton_new.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-			this.toolStripDropDownButton_new.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.toolStripDropDownButton_new.Name = "toolStripDropDownButton_new";
-			this.toolStripDropDownButton_new.Size = new System.Drawing.Size(90, 90);
-			this.toolStripDropDownButton_new.Tag = "";
-			this.toolStripDropDownButton_new.Text = "NOVO";
-			this.toolStripDropDownButton_new.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-			this.toolStripDropDownButton_new.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-			this.toolStripDropDownButton_new.ToolTipText = "Criar um Documento";
-			this.toolStripDropDownButton_new.Click += new System.EventHandler(this.toolStripDropDownButton_new_Click);
 			// 
 			// ePictureBox_search
 			// 
@@ -590,75 +592,76 @@
 			this.ePictureBox_search.ToolTipText = "Buscar Cliente";
 			this.ePictureBox_search.Click += new System.EventHandler(this.ePictureBox_search_Click);
 			// 
-			// dataGridViewTextBoxColumn1
+			// ColumnID
 			// 
-			this.dataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-			this.dataGridViewTextBoxColumn1.DataPropertyName = "ID";
-			this.dataGridViewTextBoxColumn1.FillWeight = 68.96552F;
-			this.dataGridViewTextBoxColumn1.HeaderText = "ID";
-			this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-			this.dataGridViewTextBoxColumn1.ReadOnly = true;
-			this.dataGridViewTextBoxColumn1.Visible = false;
-			this.dataGridViewTextBoxColumn1.Width = 43;
+			this.ColumnID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+			this.ColumnID.DataPropertyName = "ID";
+			this.ColumnID.FillWeight = 68.96552F;
+			this.ColumnID.HeaderText = "ID";
+			this.ColumnID.Name = "ColumnID";
+			this.ColumnID.ReadOnly = true;
+			this.ColumnID.Visible = false;
+			this.ColumnID.Width = 43;
 			// 
-			// dataGridViewTextBoxColumn2
+			// ColumnVEND
 			// 
-			this.dataGridViewTextBoxColumn2.DataPropertyName = "Nome";
-			this.dataGridViewTextBoxColumn2.FillWeight = 50F;
-			this.dataGridViewTextBoxColumn2.HeaderText = "VENDEDOR(A)";
-			this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-			this.dataGridViewTextBoxColumn2.ReadOnly = true;
+			this.ColumnVEND.DataPropertyName = "Nome";
+			this.ColumnVEND.FillWeight = 50F;
+			this.ColumnVEND.HeaderText = "VENDEDOR(A)";
+			this.ColumnVEND.Name = "ColumnVEND";
+			this.ColumnVEND.ReadOnly = true;
 			// 
-			// dataGridViewTextBoxColumn3
+			// ColumnDATA
 			// 
-			this.dataGridViewTextBoxColumn3.DataPropertyName = "Data";
-			this.dataGridViewTextBoxColumn3.FillWeight = 50F;
-			this.dataGridViewTextBoxColumn3.HeaderText = "DATA";
-			this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-			this.dataGridViewTextBoxColumn3.ReadOnly = true;
+			this.ColumnDATA.DataPropertyName = "Data";
+			this.ColumnDATA.FillWeight = 50F;
+			this.ColumnDATA.HeaderText = "DATA";
+			this.ColumnDATA.Name = "ColumnDATA";
+			this.ColumnDATA.ReadOnly = true;
 			// 
-			// Column1
+			// ColumnCLIENTE
 			// 
-			this.Column1.HeaderText = "CLIENTE";
-			this.Column1.Name = "Column1";
-			this.Column1.ReadOnly = true;
+			this.ColumnCLIENTE.HeaderText = "CLIENTE";
+			this.ColumnCLIENTE.Name = "ColumnCLIENTE";
+			this.ColumnCLIENTE.ReadOnly = true;
 			// 
-			// END
+			// ColumnEND
 			// 
-			this.END.HeaderText = "ENDEREÇO";
-			this.END.Name = "END";
-			this.END.ReadOnly = true;
+			this.ColumnEND.HeaderText = "ENDEREÇO";
+			this.ColumnEND.Name = "ColumnEND";
+			this.ColumnEND.ReadOnly = true;
 			// 
-			// Column2
+			// ColumnTIPO
 			// 
-			this.Column2.FillWeight = 50F;
-			this.Column2.HeaderText = "TIPO";
-			this.Column2.Name = "Column2";
-			this.Column2.ReadOnly = true;
+			this.ColumnTIPO.FillWeight = 50F;
+			this.ColumnTIPO.HeaderText = "TIPO";
+			this.ColumnTIPO.Name = "ColumnTIPO";
+			this.ColumnTIPO.ReadOnly = true;
 			// 
-			// Column3
+			// ColumnVALOR
 			// 
-			this.Column3.FillWeight = 50F;
-			this.Column3.HeaderText = "VALOR";
-			this.Column3.Name = "Column3";
-			this.Column3.ReadOnly = true;
+			this.ColumnVALOR.FillWeight = 50F;
+			this.ColumnVALOR.HeaderText = "VALOR";
+			this.ColumnVALOR.Name = "ColumnVALOR";
+			this.ColumnVALOR.ReadOnly = true;
 			// 
-			// Column4
+			// ColumnSTATS
 			// 
-			this.Column4.FillWeight = 30F;
-			this.Column4.HeaderText = "STATUS";
-			this.Column4.Name = "Column4";
-			this.Column4.ReadOnly = true;
-			this.Column4.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-			this.Column4.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+			this.ColumnSTATS.FillWeight = 30F;
+			this.ColumnSTATS.HeaderText = "STATUS";
+			this.ColumnSTATS.Name = "ColumnSTATS";
+			this.ColumnSTATS.ReadOnly = true;
+			this.ColumnSTATS.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+			this.ColumnSTATS.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
 			// 
-			// Column5
+			// ColumnACTION
 			// 
-			this.Column5.FillWeight = 50F;
-			this.Column5.HeaderText = "AÇÃO";
-			this.Column5.Name = "Column5";
-			this.Column5.ReadOnly = true;
-			this.Column5.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+			this.ColumnACTION.FillWeight = 50F;
+			this.ColumnACTION.HeaderText = "AÇÃO";
+			this.ColumnACTION.Name = "ColumnACTION";
+			this.ColumnACTION.ReadOnly = true;
+			this.ColumnACTION.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+			this.ColumnACTION.Visible = false;
 			// 
 			// Delivery
 			// 
@@ -733,14 +736,15 @@
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
 		private System.Windows.Forms.ToolStripButton toolStripDropDownButton_new;
 		private System.Windows.Forms.ToolStripButton toolStripDropDownButton_cancel;
-		private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
-		private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
-		private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
-		private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
-		private System.Windows.Forms.DataGridViewTextBoxColumn END;
-		private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
-		private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
-		private Utils.Extencions.DataGridViewCheckBoxImageColumn Column4;
-		private System.Windows.Forms.DataGridViewButtonColumn Column5;
+		private Utils.Extencions.DataGridViewCheckBoxImageColumn dataGridViewCheckBoxImageColumn1;
+		private System.Windows.Forms.DataGridViewTextBoxColumn ColumnID;
+		private System.Windows.Forms.DataGridViewTextBoxColumn ColumnVEND;
+		private System.Windows.Forms.DataGridViewTextBoxColumn ColumnDATA;
+		private System.Windows.Forms.DataGridViewTextBoxColumn ColumnCLIENTE;
+		private System.Windows.Forms.DataGridViewTextBoxColumn ColumnEND;
+		private System.Windows.Forms.DataGridViewTextBoxColumn ColumnTIPO;
+		private System.Windows.Forms.DataGridViewTextBoxColumn ColumnVALOR;
+		private System.Windows.Forms.DataGridViewImageColumn ColumnSTATS;
+		private System.Windows.Forms.DataGridViewButtonColumn ColumnACTION;
 	}
 }

@@ -8,6 +8,7 @@ using EterPharmaPro.Properties;
 using EterPharmaPro.Utils.Extencions;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Globalization;
 using System.Windows.Forms;
 
@@ -48,13 +49,25 @@ namespace EterPharmaPro.Views.Entrega
 			groupBox_input.Visible = true;
 			toolStripDropDownButton_cancel.Visible = true;
 			toolStripDropDownButton_new.Image = Resources.salve;
+			Size xz = groupBox_input.Size;
 			switch (delivery)
 			{
 				case ModeDeliveryEnum.DELIVERY:
 					groupBox_deliveryman.Visible = false;
+
+					if (xz.Height == 315)
+					{
+						groupBox_input.Size = new Size(groupBox_input.Width, groupBox_input.Height - groupBox_deliveryman.Height);
+					}
+
+
 					break;
 				case ModeDeliveryEnum.DELIVERY_MAN:
 					groupBox_deliveryman.Visible = true;
+					if (xz.Height != 315)
+					{
+						groupBox_input.Size = new Size(groupBox_input.Width, groupBox_input.Height + groupBox_deliveryman.Height);
+					}
 					break;
 			}
 		}
@@ -103,6 +116,7 @@ namespace EterPharmaPro.Views.Entrega
 			toolStripDropDownButton_new.Image = Resources.documento_new;
 			toolStripDropDownButton_cancel.Visible = false;
 			groupBox_input.Visible = false;
+			isNew = false;
 
 
 		}
@@ -171,10 +185,14 @@ namespace EterPharmaPro.Views.Entrega
 		}
 		private void InsertDatagrid(List<DeliveryViewDbModel> model)
 		{
-			for (int i = 0; i < model.Count; i++)
+
+			dataGridView_report.Invoke((Action)delegate
 			{
-				dataGridView_report.Rows.Add(new object[]
+				dataGridView_report.Rows.Clear();
+				for (int i = 0; i < model.Count; i++)
 				{
+					dataGridView_report.Rows.Add(new object[]
+					{
 					model[i]?.entregaInputDbModel.ID,
 					model[i]?.UserV,
 					model[i]?.entregaInputDbModel.DATA.ToString(),
@@ -182,11 +200,13 @@ namespace EterPharmaPro.Views.Entrega
 					model[i]?.Endereco,
 					model[i]?.Tipo,
 					string.Format(CultureInfo.CurrentCulture, "{0:C2}", model[i]?.entregaInputDbModel?.VALUE),
-					model[i].entregaDbModel?.COMPLETED??false,
+					 StatsDeliveryDataGridViewColumn.ObterIconeEstado((StatsDeliveryEnum)2),
 					"Finalizar"
 
-				});
-			}
+					});
+				}
+			});
+
 
 		}
 

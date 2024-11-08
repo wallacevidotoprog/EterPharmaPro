@@ -85,6 +85,7 @@ namespace EterPharmaPro.DatabaseSQLite
 			});
 		}
 
+		
 
 		async void testeFb()
 		{

@@ -17,5 +17,7 @@ namespace EterPharmaPro.Interfaces
 		Task<bool> ExecuteTransactionAsync(params Func<Task<bool>>[] databaseOperations);
 		Task<object> ExecuteTransactionAsync(Func<Task<object>> databaseOperations);
 
+
+
 	}
 }

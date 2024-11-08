@@ -9,6 +9,8 @@ using EterPharmaPro.Models.DbModels;
 using System.Windows.Forms;
 using FirebaseAdmin.Messaging;
 using System.Threading;
+using System.Threading.Tasks;
+using EterPharmaPro.Utils.Extencions;
 
 namespace EterPharmaPro.API
 {
@@ -16,9 +18,9 @@ namespace EterPharmaPro.API
 	{
 		public event EventHandler<MessageWebSockerModel> MessageReceived;
 		public WebSocketState webSocketState;
-
+		private bool isTryReconnect;
 		private readonly WebSocket webSocket;
-		private System.Windows.Forms.Timer time_reload;
+
 		public WebSocketClient(string url)
 		{
 			webSocket = new WebSocket(url);
@@ -33,21 +35,36 @@ namespace EterPharmaPro.API
 
 			webSocket.Closed += WebSocket_Closed;
 
-			
+
 			webSocket.Open();
 
-			time_reload = new System.Windows.Forms.Timer();
-			time_reload.Interval = 1;
-			time_reload.Tick += Time_reload_Tick;
 		}
 
-		private void Time_reload_Tick(object sender, EventArgs e)
+		private async Task TryReconnectAsync()
 		{
-			Thread.Sleep(1000);
-			webSocket.Open();
+			isTryReconnect = true;
+			while (webSocket.State == WebSocketState.Closed || webSocket.State == WebSocketState.Connecting)
+			{
+				try
+				{
+					webSocket.Open();
+					await Task.Delay(100000);
+
+					if (webSocket.State == WebSocketState.Open)
+					{
+						SendAlertBox.SendT("Reconexão com WebSocket bem-sucedida.", ToastNotification.Enum.TypeAlertEnum.Success);
+						isTryReconnect = false;
+						break;
+					}
+				}
+				catch (Exception ex)
+				{
+					ex.ErrorGet();
+					//SendAlertBox.SendT($"Erro ao tentar reconectar: {ex.Message}", ToastNotification.Enum.TypeAlertEnum.Error);
+				}
+			}
 
 		}
-
 		public void InitClient(MessageWebSockerModel model) => SendMessage(model);
 
 		public void SendMessage(MessageWebSockerModel message)
@@ -66,21 +83,28 @@ namespace EterPharmaPro.API
 			SendAlertBox.SendT(e.Data.ToString(), ToastNotification.Enum.TypeAlertEnum.Success);
 		}
 
-		private void WebSocket_Closed(object sender, System.EventArgs e)
+		private async void WebSocket_Closed(object sender, System.EventArgs e)
 		{
-			SendAlertBox.SendT("WebSocket desconectado.", ToastNotification.Enum.TypeAlertEnum.Info);
-			time_reload.Start();
+			if (!isTryReconnect)
+			{
+				SendAlertBox.SendT("WebSocket desconectado.", ToastNotification.Enum.TypeAlertEnum.Info);
+			}
+			await TryReconnectAsync();
 		}
 
 		private void WebSocket_Error(object sender, ErrorEventArgs e)
 		{
-			SendAlertBox.SendT(e.Exception.Message, ToastNotification.Enum.TypeAlertEnum.Error);
+			if (!isTryReconnect)
+			{
+
+				SendAlertBox.SendT(e.Exception.Message, ToastNotification.Enum.TypeAlertEnum.Error);
+			}
 		}
 
 		private void WebSocket_MessageReceived(object sender, MessageReceivedEventArgs e)
 		{
 			MessageWebSockerModel resp = JsonConvert.DeserializeObject<MessageWebSockerModel>(e.Message);
-			if (resp.type == TypesReciverWebSocketEnum.NewDelivery || resp.type == TypesReciverWebSocketEnum.FinishDelivery)
+			if (resp.type == TypesReciverWebSocketEnum.Delivery)
 			{
 				SendAlertBox.SendT($"{resp.name}: {resp.message}", ToastNotification.Enum.TypeAlertEnum.Success);
 			}
@@ -90,20 +114,9 @@ namespace EterPharmaPro.API
 		private void WebSocket_Opened(object sender, System.EventArgs e)
 		{
 			webSocketState = webSocket.State;
-			time_reload.Stop();
 			SendAlertBox.SendT("WebSocket conectado.", ToastNotification.Enum.TypeAlertEnum.Success);
 
-			InitClient(new MessageWebSockerModel
-			{
-				type = TypesReciverWebSocketEnum.Register,
-				user = new UserModel
-				{
-					ID = 1515,
-					ID_LOJA = 1515,
-					NOME = "LOJA 15 - PDV",
-					STATUS = true
-				}
-			});
+			
 		}
 	}
 }
