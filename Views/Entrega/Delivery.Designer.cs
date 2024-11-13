@@ -28,6 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.components = new System.ComponentModel.Container();
 			this.toolStrip_topMenu = new System.Windows.Forms.ToolStrip();
 			this.toolStripButton_exit = new System.Windows.Forms.ToolStripButton();
 			this.toolStripDropDownButton_new = new System.Windows.Forms.ToolStripButton();
@@ -67,7 +68,6 @@
 			this.label2 = new System.Windows.Forms.Label();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.dataGridView_report = new System.Windows.Forms.DataGridView();
-			this.ePictureBox_search = new EterPharmaPro.Utils.eControl.ePictureBox();
 			this.ColumnID = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.ColumnVEND = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.ColumnDATA = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -77,6 +77,15 @@
 			this.ColumnVALOR = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.ColumnSTATS = new System.Windows.Forms.DataGridViewImageColumn();
 			this.ColumnACTION = new System.Windows.Forms.DataGridViewButtonColumn();
+			this.contextMenuStrip_produtos = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.eDITARToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.eXCLUIRToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.eNTREGADORToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+			this.eDITARToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+			this.eXCLUIRToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+			this.lANÇARToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.ePictureBox_search = new EterPharmaPro.Utils.eControl.ePictureBox();
 			this.toolStrip_topMenu.SuspendLayout();
 			this.groupBox_input.SuspendLayout();
 			this.groupBox_deliveryman.SuspendLayout();
@@ -86,6 +95,7 @@
 			this.groupBox7.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView_report)).BeginInit();
+			this.contextMenuStrip_produtos.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.ePictureBox_search)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -565,6 +575,7 @@
             this.ColumnVALOR,
             this.ColumnSTATS,
             this.ColumnACTION});
+			this.dataGridView_report.ContextMenuStrip = this.contextMenuStrip_produtos;
 			this.dataGridView_report.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.dataGridView_report.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.dataGridView_report.GridColor = System.Drawing.SystemColors.ActiveCaptionText;
@@ -578,19 +589,7 @@
 			this.dataGridView_report.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
 			this.dataGridView_report.Size = new System.Drawing.Size(947, 218);
 			this.dataGridView_report.TabIndex = 6;
-			// 
-			// ePictureBox_search
-			// 
-			this.ePictureBox_search.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.ePictureBox_search.Image = global::EterPharmaPro.Properties.Resources.lupa;
-			this.ePictureBox_search.Location = new System.Drawing.Point(386, 35);
-			this.ePictureBox_search.Name = "ePictureBox_search";
-			this.ePictureBox_search.Size = new System.Drawing.Size(22, 22);
-			this.ePictureBox_search.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-			this.ePictureBox_search.TabIndex = 15;
-			this.ePictureBox_search.TabStop = false;
-			this.ePictureBox_search.ToolTipText = "Buscar Cliente";
-			this.ePictureBox_search.Click += new System.EventHandler(this.ePictureBox_search_Click);
+			this.dataGridView_report.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView_report_CellMouseDown);
 			// 
 			// ColumnID
 			// 
@@ -663,6 +662,77 @@
 			this.ColumnACTION.Resizable = System.Windows.Forms.DataGridViewTriState.True;
 			this.ColumnACTION.Visible = false;
 			// 
+			// contextMenuStrip_produtos
+			// 
+			this.contextMenuStrip_produtos.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.eNTREGADORToolStripMenuItem,
+            this.toolStripSeparator2,
+            this.eDITARToolStripMenuItem,
+            this.eXCLUIRToolStripMenuItem});
+			this.contextMenuStrip_produtos.Name = "contextMenuStrip1";
+			this.contextMenuStrip_produtos.Size = new System.Drawing.Size(149, 76);
+			// 
+			// eDITARToolStripMenuItem
+			// 
+			this.eDITARToolStripMenuItem.Image = global::EterPharmaPro.Properties.Resources.arquivo_v;
+			this.eDITARToolStripMenuItem.Name = "eDITARToolStripMenuItem";
+			this.eDITARToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+			this.eDITARToolStripMenuItem.Text = "EDITAR";
+			// 
+			// eXCLUIRToolStripMenuItem
+			// 
+			this.eXCLUIRToolStripMenuItem.Image = global::EterPharmaPro.Properties.Resources.arquivo__;
+			this.eXCLUIRToolStripMenuItem.Name = "eXCLUIRToolStripMenuItem";
+			this.eXCLUIRToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+			this.eXCLUIRToolStripMenuItem.Text = "EXCLUIR";
+			// 
+			// eNTREGADORToolStripMenuItem
+			// 
+			this.eNTREGADORToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.lANÇARToolStripMenuItem,
+            this.eDITARToolStripMenuItem1,
+            this.eXCLUIRToolStripMenuItem1});
+			this.eNTREGADORToolStripMenuItem.Name = "eNTREGADORToolStripMenuItem";
+			this.eNTREGADORToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+			this.eNTREGADORToolStripMenuItem.Text = "ENTREGADOR";
+			// 
+			// toolStripSeparator2
+			// 
+			this.toolStripSeparator2.Name = "toolStripSeparator2";
+			this.toolStripSeparator2.Size = new System.Drawing.Size(145, 6);
+			// 
+			// eDITARToolStripMenuItem1
+			// 
+			this.eDITARToolStripMenuItem1.Name = "eDITARToolStripMenuItem1";
+			this.eDITARToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+			this.eDITARToolStripMenuItem1.Text = "EDITAR";
+			// 
+			// eXCLUIRToolStripMenuItem1
+			// 
+			this.eXCLUIRToolStripMenuItem1.Name = "eXCLUIRToolStripMenuItem1";
+			this.eXCLUIRToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+			this.eXCLUIRToolStripMenuItem1.Text = "EXCLUIR";
+			// 
+			// lANÇARToolStripMenuItem
+			// 
+			this.lANÇARToolStripMenuItem.Name = "lANÇARToolStripMenuItem";
+			this.lANÇARToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.lANÇARToolStripMenuItem.Text = "LANÇAR";
+			this.lANÇARToolStripMenuItem.Click += new System.EventHandler(this.lANÇARToolStripMenuItem_Click);
+			// 
+			// ePictureBox_search
+			// 
+			this.ePictureBox_search.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.ePictureBox_search.Image = global::EterPharmaPro.Properties.Resources.lupa;
+			this.ePictureBox_search.Location = new System.Drawing.Point(386, 35);
+			this.ePictureBox_search.Name = "ePictureBox_search";
+			this.ePictureBox_search.Size = new System.Drawing.Size(22, 22);
+			this.ePictureBox_search.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+			this.ePictureBox_search.TabIndex = 15;
+			this.ePictureBox_search.TabStop = false;
+			this.ePictureBox_search.ToolTipText = "Buscar Cliente";
+			this.ePictureBox_search.Click += new System.EventHandler(this.ePictureBox_search_Click);
+			// 
 			// Delivery
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -688,6 +758,7 @@
 			this.groupBox7.PerformLayout();
 			this.groupBox2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView_report)).EndInit();
+			this.contextMenuStrip_produtos.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.ePictureBox_search)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
@@ -734,7 +805,6 @@
 		private System.Windows.Forms.ComboBox comboBox_user;
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-		private System.Windows.Forms.ToolStripButton toolStripDropDownButton_new;
 		private System.Windows.Forms.ToolStripButton toolStripDropDownButton_cancel;
 		private Utils.Extencions.DataGridViewCheckBoxImageColumn dataGridViewCheckBoxImageColumn1;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ColumnID;
@@ -746,5 +816,14 @@
 		private System.Windows.Forms.DataGridViewTextBoxColumn ColumnVALOR;
 		private System.Windows.Forms.DataGridViewImageColumn ColumnSTATS;
 		private System.Windows.Forms.DataGridViewButtonColumn ColumnACTION;
+		private System.Windows.Forms.ToolStripButton toolStripDropDownButton_new;
+		private System.Windows.Forms.ContextMenuStrip contextMenuStrip_produtos;
+		private System.Windows.Forms.ToolStripMenuItem eNTREGADORToolStripMenuItem;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+		private System.Windows.Forms.ToolStripMenuItem eDITARToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem eXCLUIRToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem lANÇARToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem eDITARToolStripMenuItem1;
+		private System.Windows.Forms.ToolStripMenuItem eXCLUIRToolStripMenuItem1;
 	}
 }

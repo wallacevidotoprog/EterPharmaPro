@@ -1,4 +1,5 @@
 using EterPharmaPro.Models.DbModels;
+using EterPharmaPro.Utils.Extencions;
 using System;
 
 namespace EterPharmaPro.Models
@@ -27,7 +28,7 @@ namespace EterPharmaPro.Models
 		{
 			
 			ID = db.ID;
-			DADOSATENDIMENTO = new DadosAtendimentoModel { ATEN_LOJA = db.ATEN_LOJA, DATA = db.DATA, ATEN_MANI = db.ATEN_MANI };
+			DADOSATENDIMENTO = new DadosAtendimentoModel { ATEN_LOJA = db.ATEN_LOJA, DATA = db.DATA.ToUnixDatetime(), ATEN_MANI = db.ATEN_MANI };
 			DADOSCLIENTE = new DadosClienteManipulacao { ID_CLIENTE = db.CLIENTE_ID, ID_ENDERECO = db.ENDERECO_ID };
 			OBSGERAL= db.OBSGERAL;
 			SITUCAO= db.SITUCAO;	

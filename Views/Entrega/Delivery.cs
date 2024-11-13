@@ -18,7 +18,11 @@ namespace EterPharmaPro.Views.Entrega
 	{
 		private readonly EntregaController entregaController;
 
-		bool isNew = false;
+		private bool isNew = false;
+		private bool isEdit = false;
+		private bool isDMan = false;
+		private long? DELIVERY_INPUT_ID = null;
+
 		public Delivery(IEterDb eterDb)
 		{
 			InitializeComponent();
@@ -74,39 +78,59 @@ namespace EterPharmaPro.Views.Entrega
 
 		private async void toolStripDropDownButton_new_Click(object sender, EventArgs e)
 		{
-			if (!isNew)
+
+			if (isNew && !isEdit && !isDMan)
+			{
+				if (await entregaController.CreateDeliveryInput(new EntregaInputModel
+				{
+					useridvend = Convert.ToInt32(comboBox_user.SelectedValue.ToString()),
+					clienteDbModel = new ClienteDbModel
+					{
+						CPF = !string.IsNullOrEmpty(textBox_cpf.Text.ReturnInt()) ? textBox_cpf.Text.ReturnInt() : null,
+						RG = !string.IsNullOrEmpty(textBox_rg.Text.ReturnInt()) ? textBox_rg.Text.ReturnInt() : null,
+						NOME = textBox_nomeC.Text,
+						TELEFONE = textBox5_tel.Text.ReturnInt(),
+						ENDERECO = new EnderecoClienteDbModel
+						{
+							ENDERECO = textBox_log.Text,
+							OBSERVACAO = !string.IsNullOrEmpty(textBox_obsEnd.Text.ReturnInt()) ? textBox_obsEnd.Text.ReturnInt() : null,
+						}
+					},
+					data = dateTimePicker_dataD.Value,
+					tipo = Convert.ToInt32(comboBox_typeD.SelectedValue.ToString()),
+					valor = Convert.ToDecimal(textBox_valor.Text)
+				}))
+				{
+					toolStripDropDownButton_cancel_Click(null,null);
+				}
+			}
+			else if (!isNew && isEdit && !isDMan)
+			{
+
+			}
+			else if (!isNew && !isEdit && isDMan)
+			{
+				if (await entregaController.CreateDelivery(new EntregaDbModel
+				{
+					DELIVERY_INPUT_ID = DELIVERY_INPUT_ID,
+					DATE = dateTimePicker_dataE.Value,
+					USER_ID = Convert.ToInt32(comboBox_userDM.SelectedValue.ToString()),
+					KM = Convert.ToInt32(textBox_km.Text.ReturnInt()),
+					STATS = (int)StatsDeliveryEnum.NEW,
+
+					
+				}))
+				{
+					toolStripDropDownButton_cancel_Click(null, null);
+					DELIVERY_INPUT_ID = null;
+				}
+			}
+			else if (!isNew && !isEdit && !isDMan)
 			{
 				SendDelivery(ModeDeliveryEnum.DELIVERY);
 				isNew = true;
 			}
-			else
-			{
-				if (true)
-				{
-					if (await entregaController.CreateDeliveryInput(new EntregaInputModel
-					{
-						useridvend = Convert.ToInt32(comboBox_user.SelectedValue.ToString()),
-						clienteDbModel = new ClienteDbModel
-						{
-							CPF = !string.IsNullOrEmpty(textBox_cpf.Text.ReturnInt()) ? textBox_cpf.Text.ReturnInt() : null,
-							RG = !string.IsNullOrEmpty(textBox_rg.Text.ReturnInt()) ? textBox_rg.Text.ReturnInt() : null,
-							NOME = textBox_nomeC.Text,
-							TELEFONE = textBox5_tel.Text.ReturnInt(),
-							ENDERECO = new EnderecoClienteDbModel
-							{
-								ENDERECO = textBox_log.Text,
-								OBSERVACAO = !string.IsNullOrEmpty(textBox_obsEnd.Text.ReturnInt()) ? textBox_obsEnd.Text.ReturnInt() : null,
-							}
-						},
-						data = dateTimePicker_dataD.Value,
-						tipo = Convert.ToInt32(comboBox_typeD.SelectedValue.ToString()),
-						valor = Convert.ToDecimal(textBox_valor.Text)
-					}))
-					{
 
-					}
-				}
-			}
 
 		}
 
@@ -117,6 +141,8 @@ namespace EterPharmaPro.Views.Entrega
 			toolStripDropDownButton_cancel.Visible = false;
 			groupBox_input.Visible = false;
 			isNew = false;
+			isEdit = false;
+			isDMan = false;
 
 
 		}
@@ -185,7 +211,10 @@ namespace EterPharmaPro.Views.Entrega
 		}
 		private void InsertDatagrid(List<DeliveryViewDbModel> model)
 		{
-
+			if (model is null)
+			{
+				return;
+			}
 			dataGridView_report.Invoke((Action)delegate
 			{
 				dataGridView_report.Rows.Clear();
@@ -200,7 +229,7 @@ namespace EterPharmaPro.Views.Entrega
 					model[i]?.Endereco,
 					model[i]?.Tipo,
 					string.Format(CultureInfo.CurrentCulture, "{0:C2}", model[i]?.entregaInputDbModel?.VALUE),
-					 StatsDeliveryDataGridViewColumn.ObterIconeEstado((StatsDeliveryEnum)2),
+					 StatsDeliveryDataGridViewColumn.ObterIconeEstado((StatsDeliveryEnum)model[i]?.Stats),
 					"Finalizar"
 
 					});
@@ -237,6 +266,30 @@ namespace EterPharmaPro.Views.Entrega
 			catch (Exception ex)
 			{
 				ex.ErrorGet();
+			}
+		}
+
+
+		private void lANÇARToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			if (!isNew && !isEdit && !isDMan)
+			{
+				SendDelivery(ModeDeliveryEnum.DELIVERY_MAN);
+				isDMan = true;
+
+				if (dataGridView_report.CurrentRow != null)
+				{
+					DELIVERY_INPUT_ID = (long)dataGridView_report.CurrentRow.Cells[0].Value;
+				}
+			}
+		}
+
+		private void dataGridView_report_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right && e.RowIndex >= 0)
+			{
+				dataGridView_report.ClearSelection();
+				dataGridView_report.Rows[e.RowIndex].Selected = true;
 			}
 		}
 	}

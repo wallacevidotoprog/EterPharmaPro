@@ -14,8 +14,6 @@ namespace EterPharmaPro.Models.DbModels
 
 		public string DATE { get; set; }  
 
-		public float VALUE { get; set; }
-
 		public int KM { get; set; }
 
 		public int STATS { get; set; }  

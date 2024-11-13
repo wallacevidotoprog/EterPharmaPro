@@ -15,5 +15,7 @@
 		public string Cliente { get; set; }
 		public string Endereco { get; set; }
 		public string Tipo { get; set; }
+
+		public int Stats { get; set; }
 	}
 }

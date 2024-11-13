@@ -14,7 +14,7 @@ using System.Windows.Forms;
 namespace EterPharmaPro.Utils.Extencions
 {
 	public static class ExtensionsDefault
-	{		
+	{
 		public static string ReturnInt(this string value)
 		{
 			return Regex.Replace(value, "[^0-9]", string.Empty);
@@ -262,9 +262,6 @@ namespace EterPharmaPro.Utils.Extencions
 		{
 			Dictionary<long?, string> func = new Dictionary<long?, string>();
 
-			func.Add(1, "PADRÃO");
-
-
 			for (int i = 0; i < type.Count; i++)
 			{
 				long? key = type[i].ID;
@@ -456,8 +453,8 @@ namespace EterPharmaPro.Utils.Extencions
 			return text.PadRight(totalWidth);
 		}
 
-		
-		}
 
-	
+	}
+
+
 }

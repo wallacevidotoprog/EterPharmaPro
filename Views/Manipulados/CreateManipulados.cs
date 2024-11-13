@@ -84,9 +84,9 @@ namespace EterPharmaPro.Views.Manipulados
 				textBox_log.Text = ((EnderecoClienteDbModel)(((ClienteDbModel)manipulados.DADOSCLIENTE)?.ENDERECO)).ENDERECO;
 				textBox_obsEnd.Text = ((EnderecoClienteDbModel)(((ClienteDbModel)manipulados.DADOSCLIENTE)?.ENDERECO)).OBSERVACAO;
 				dataGridView_medicamentos.Rows.Clear();
-				for (int i = 0; i < ((List<string>)manipulados.MEDICAMENTOS)?.Count; i++)
+				for (int i = 0; i < ((List<MedicamentosManipuladosDbModal>)manipulados.MEDICAMENTOS)?.Count; i++)
 				{
-					dataGridView_medicamentos.Rows.Add(((List<string>)manipulados.MEDICAMENTOS)[i].ToString());
+					dataGridView_medicamentos.Rows.Add(((List<MedicamentosManipuladosDbModal>)manipulados.MEDICAMENTOS)[i].NAME_M.ToString());
 				}
 				textBox_obsGeral.Text = manipulados?.OBSGERAL;
 				comboBox_situacao.SelectedIndex = manipulados.SITUCAO;
@@ -129,13 +129,16 @@ namespace EterPharmaPro.Views.Manipulados
 					return;
 				}
 				tempSelect = temp.GetClienteArray();
-				
+				if (tempSelect is null)
+				{
+					return;
+				}
 				textBox_cpf.Text = tempSelect?.CPF.ReturnFormation(FormatationEnum.CPF);
 				textBox_rg.Text = tempSelect?.RG.ReturnFormation(FormatationEnum.RG);
 				textBox_nomeC.Text = tempSelect?.NOME;
 				textBox5_tel.Text = tempSelect?.TELEFONE.ReturnFormation(FormatationEnum.TELEFONE);
-				textBox_log.Text = ((EnderecoClienteDbModel)tempSelect?.ENDERECO).ENDERECO;
-				textBox_obsEnd.Text = ((EnderecoClienteDbModel)tempSelect?.ENDERECO).OBSERVACAO;
+				textBox_log.Text = ((EnderecoClienteDbModel)tempSelect?.ENDERECO)?.ENDERECO;
+				textBox_obsEnd.Text = ((EnderecoClienteDbModel)tempSelect?.ENDERECO)?.OBSERVACAO;
 				
 			}
 			catch (Exception ex)

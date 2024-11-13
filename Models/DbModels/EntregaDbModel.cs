@@ -16,10 +16,9 @@ namespace EterPharmaPro.Models.DbModels
 
 		public DateTime? DATE { get; set; }
 		public DateTime? DATE_COMPLETED { get; set; }
-		public decimal VALUE { get; set; }
+		public int  STATS { get; set; }
 
 		public int? KM { get; set; }
-		public bool COMPLETED { get; set; }
 
 		public long? DELIVERY_INPUT_ID { get; set; }
 

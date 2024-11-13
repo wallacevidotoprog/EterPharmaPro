@@ -101,7 +101,8 @@ namespace EterPharmaPro.Controllers.Manipulacao
 							}
 							else
 							{
-								long? tempCM = await eterDb.ActionDb.INSERT(model, connection, transaction);
+								var temp = new ManipulacaoDbModel().Convert(model);
+								long? tempCM = await eterDb.ActionDb.INSERT(temp, connection, transaction);
 
 								((List<MedicamentosManipuladosDbModal>)model.MEDICAMENTOS).ForEach(m => m.MANIPULADOS_ID = tempCM);
 
@@ -148,7 +149,7 @@ namespace EterPharmaPro.Controllers.Manipulacao
 
 					temp.DADOSATENDIMENTO.ATEN_LOJA_NAME = (await eterDb.ActionDb.GETFIELDS<UserModel>(new QueryWhereModel().SetWhere("ID", temp.DADOSATENDIMENTO.ATEN_LOJA))).FirstOrDefault().NOME;
 
-					temp.DADOSCLIENTE = (await eterDb.ActionDb.GETFIELDS<UserModel>(new QueryWhereModel().SetWhere("ID", tempM[i].CLIENTE_ID))).FirstOrDefault().NOME;
+					temp.DADOSCLIENTE = (await eterDb.ActionDb.GETFIELDS<ClienteDbModel>(new QueryWhereModel().SetWhere("ID", tempM[i].CLIENTE_ID))).FirstOrDefault().NOME;
 					manipulacaoModels.Add(temp);
 				}
 

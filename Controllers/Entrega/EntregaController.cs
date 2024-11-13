@@ -1,4 +1,5 @@
-﻿using EterPharmaPro.API;
+﻿using DocumentFormat.OpenXml.EMMA;
+using EterPharmaPro.API;
 using EterPharmaPro.API.Models;
 using EterPharmaPro.Enums;
 using EterPharmaPro.Interfaces;
@@ -33,56 +34,99 @@ namespace EterPharmaPro.Controllers.Entrega
 			_ = GetAllUserAsync();
 			EventGlobal.Subscribe<MessageWebSockerModel>(SocketDelivery);
 		}
-		void SocketDelivery(MessageWebSockerModel e)
+		private async void SocketDelivery(MessageWebSockerModel e)
 		{
-			ReloadModelViewDeliveryAsync();
+			var t = await eterDb.ActionAPI.GET<EntregaDbModel>(e.data, "DELIVERY");
+
+			using (var connection = new SQLiteConnection(eterDb.DatabaseConnection))
+			{
+				await connection.OpenAsync().ConfigureAwait(false);
+				using (var transaction = connection.BeginTransaction())
+				{
+					try
+					{
+
+						await eterDb.ActionDb.UPDATE(new EntregaDbModel
+						{
+							ID= t.ID,
+							DATE_COMPLETED=t.DATE_COMPLETED,
+							STATS=t.STATS,
+						}, connection, transaction);
+
+						transaction.Commit();
+					}
+					catch (Exception ex)
+					{
+						transaction.Rollback();
+						ex.ErrorGet();
+					}
+				}
+			}
+
+
+
+
+			await ReloadModelViewDeliveryAsync();
 		}
 		private async Task GetAllUserAsync()
 		{
 			listUser = await eterDb.ActionDb.GETFIELDS<UserModel>(new QueryWhereModel());
 			listTypeDelivery = await eterDb.ActionDb.GETFIELDS<TypeDeliveryDbModel>(new QueryWhereModel());
+			deliveryViewDbModels = await ModelViewDeliveryAsync();
 
 			loadCompleteLists?.Invoke(this, new EventArgs());
 
-			deliveryViewDbModels = await ModelViewDeliveryAsync();
-
 			loadCompleteListsDelivery?.Invoke(this, new EventArgs());
 		}
 
-		private async void ReloadModelViewDeliveryAsync()
+		private async Task ReloadModelViewDeliveryAsync()
 		{
 			deliveryViewDbModels = await ModelViewDeliveryAsync();
 
 			loadCompleteListsDelivery?.Invoke(this, new EventArgs());
 		}
+
+		public async Task<List<DeliveryViewDbModel>> RetModelViewDeliveryAsync() => await ModelViewDeliveryAsync();
+
 		private async Task<List<DeliveryViewDbModel>> ModelViewDeliveryAsync()
 		{
-			
 			List<DeliveryViewDbModel> models = new List<DeliveryViewDbModel>();
-
-			var di = await eterDb.ActionDb.GETFIELDS<EntregaInputDbModel>(new QueryWhereModel());
-			var d = await eterDb.ActionDb.GETFIELDS<EntregaDbModel>(new QueryWhereModel());
-
-			for (int i = 0; i < di.Count; i++)
+			try
 			{
-				string clienteName = (await eterDb.ActionDb.GETFIELDS<ClienteDbModel>(new QueryWhereModel().SetWhere("ID", di[i].CLIENTE_ID))).FirstOrDefault()?.NOME;
-				EnderecoClienteDbModel tempEnd = (await eterDb.ActionDb.GETFIELDS<EnderecoClienteDbModel>(new QueryWhereModel().SetWhere("ID", di[i].ENDERECO_ID))).FirstOrDefault();
-				string endereco = $"{tempEnd?.ENDERECO} - {tempEnd?.OBSERVACAO}";
-				EntregaDbModel tempc = d.Where(x => x.DELIVERY_INPUT_ID == di[i].ID).FirstOrDefault();
-				string dMan = listUser.Where(x => x.ID == tempc?.USER_ID)?.FirstOrDefault()?.NOME;
-				string dVend = listUser.Where(x => x.ID == d[i].USER_ID).FirstOrDefault()?.NOME;
 
-				models.Add(new DeliveryViewDbModel(tempc, di[i])
+				var entregaInputDbModel = await eterDb.ActionDb.GETFIELDS<EntregaInputDbModel>(new QueryWhereModel());
+				var entregaDbModel = await eterDb.ActionDb.GETFIELDS<EntregaDbModel>(new QueryWhereModel());
+
+				for (int i = 0; i < entregaInputDbModel.Count; i++)
 				{
-					Cliente = clienteName,
-					Endereco = endereco,
-					UserE = dMan,
-					UserV = dVend,
-					Tipo = listTypeDelivery.Where(x => x.ID == di[i].TYPE_DELIVERY).FirstOrDefault()?.NAME
+					string clienteName = (await eterDb.ActionDb.GETFIELDS<ClienteDbModel>(new QueryWhereModel().SetWhere("ID", entregaInputDbModel[i].CLIENTE_ID))).FirstOrDefault()?.NOME;
 
-				});
+					EnderecoClienteDbModel tempEnd = (await eterDb.ActionDb.GETFIELDS<EnderecoClienteDbModel>(new QueryWhereModel().SetWhere("ID", entregaInputDbModel[i].ENDERECO_ID))).FirstOrDefault();
+					string endereco = $"{tempEnd?.ENDERECO} - {tempEnd?.OBSERVACAO}";
 
+					string dVend = listUser.Where(x => x.ID == entregaInputDbModel[i]?.USER_ID).FirstOrDefault()?.NOME;
+
+					EntregaDbModel tempc = entregaDbModel.Where(x => x.DELIVERY_INPUT_ID == entregaInputDbModel[i].ID).FirstOrDefault();
+					string dMan = listUser.Where(x => x.ID == tempc?.USER_ID)?.FirstOrDefault()?.NOME;
+
+					models.Add(new DeliveryViewDbModel(tempc, entregaInputDbModel[i])
+					{
+						Cliente = clienteName,
+						Endereco = endereco,
+						UserE = dMan,
+						UserV = dVend,
+						Tipo = listTypeDelivery.Where(x => x.ID == entregaInputDbModel[i].TYPE_DELIVERY).FirstOrDefault()?.NAME,
+						Stats = tempc.STATS
+
+					});
+
+				}
 			}
+			catch (Exception ex)
+			{
+				ex.ErrorGet();
+			}
+
 			return models;
 		}
 
@@ -126,7 +170,7 @@ namespace EterPharmaPro.Controllers.Entrega
 
 				(long? IDC, long? IDE) = await eterDb.EterDbController.RegisterCliente(model.clienteDbModel);
 
-				if ( IDC is null || IDE is null)
+				if (IDC is null || IDE is null)
 				{
 					throw new Exception($"Erro ao cadatrar o cliente IDC={IDC} e IDE={IDE}");
 				}
@@ -141,9 +185,9 @@ namespace EterPharmaPro.Controllers.Entrega
 					ENDERECO_ID = IDE,
 					DATA = model.data.ToDatetimeUnix(),
 					VALUE = model.valor,
-					USER_ID=model.useridvend,
-					TYPE_DELIVERY=model.tipo
-				};				
+					USER_ID = model.useridvend,
+					TYPE_DELIVERY = model.tipo
+				};
 
 				using (var connection = new SQLiteConnection(eterDb.DatabaseConnection))
 				{
@@ -168,7 +212,7 @@ namespace EterPharmaPro.Controllers.Entrega
 							}
 							else
 							{
-								long? tempID  = await eterDb.ActionDb.INSERT(inputDbModel, connection, transaction);
+								long? tempID = await eterDb.ActionDb.INSERT(inputDbModel, connection, transaction);
 								inputDbModel.ID = tempID;
 							}
 
@@ -185,7 +229,7 @@ namespace EterPharmaPro.Controllers.Entrega
 				}
 
 				EntregaApiModel modelApi = new EntregaApiModel(inputDbModel);
-				modelApi.SetUSERID(listUser.Where(x=>x.ID == inputDbModel.USER_ID).FirstOrDefault());
+				modelApi.SetUSERID(listUser.Where(x => x.ID == inputDbModel.USER_ID).FirstOrDefault());
 				modelApi.SetCliente(modelC);
 				modelApi.SetEndereco(modelE);
 				modelApi.SetType(listTypeDelivery.Where(x => x.ID == inputDbModel.TYPE_DELIVERY).FirstOrDefault());
@@ -210,7 +254,7 @@ namespace EterPharmaPro.Controllers.Entrega
 							{
 								ID = inputDbModel.ID,
 								FIREBASE_ID = IDF
-							} , connection, transaction);
+							}, connection, transaction);
 
 							transaction.Commit();
 						}
@@ -222,7 +266,7 @@ namespace EterPharmaPro.Controllers.Entrega
 						}
 					}
 				}
-				ReloadModelViewDeliveryAsync();
+				_ = ReloadModelViewDeliveryAsync();
 			}
 			catch (Exception ex)
 			{
@@ -232,7 +276,7 @@ namespace EterPharmaPro.Controllers.Entrega
 			return false;
 		}
 
-		private async Task<(string IDF,bool isSucess)> INSERT_CLOUD<T>(T model,string table)
+		private async Task<(string IDF, bool isSucess)> INSERT_CLOUD<T>(T model, string table)
 		{
 
 			try
@@ -248,7 +292,93 @@ namespace EterPharmaPro.Controllers.Entrega
 				return (string.Empty, false);
 			}
 
-			return (string.Empty, false);
+		}
+
+		public async Task<bool> CreateDelivery(EntregaDbModel entregaDbModel,bool edit=false)
+		{
+			try
+			{
+				using (var connection = new SQLiteConnection(eterDb.DatabaseConnection))
+				{
+					await connection.OpenAsync().ConfigureAwait(false);
+					using (var transaction = connection.BeginTransaction())
+					{
+						try
+						{
+
+
+							if (edit)
+							{
+								//await eterDb.ActionDb.DELETE<MedicamentosManipuladosDbModal>(new QueryDeleteModel().SetWhere("ID", model.ID), connection, transaction);
+								//await eterDb.ActionDb.UPDATE(model, connection, transaction);
+
+								//((List<MedicamentosManipuladosDbModal>)model.MEDICAMENTOS).ForEach(m => m.MANIPULADOS_ID = model.ID);
+
+								//foreach (var medicamento in (List<MedicamentosManipuladosDbModal>)model.MEDICAMENTOS)
+								//{
+								//	await eterDb.ActionDb.INSERT(medicamento, connection, transaction);
+								//}
+							}
+							else
+							{
+								entregaDbModel.UID = Guid.NewGuid().ToString();
+								long? tempID = await eterDb.ActionDb.INSERT(entregaDbModel, connection, transaction);
+								entregaDbModel.ID = tempID;
+							}
+
+							transaction.Commit();
+							//return true;
+						}
+						catch (Exception ex)
+						{
+							transaction.Rollback();
+							ex.ErrorGet();
+							return false;
+						}
+					}
+				}
+
+				(string IDF, bool isSucess) = await INSERT_CLOUD(entregaDbModel, entregaDbModel.TABLE_NAME);
+
+				if (!isSucess)
+				{
+					throw new Exception($"Erro ao cadatrar a entrega na Cloud");
+				}
+
+
+				using (var connection = new SQLiteConnection(eterDb.DatabaseConnection))
+				{
+					await connection.OpenAsync().ConfigureAwait(false);
+					using (var transaction = connection.BeginTransaction())
+					{
+						try
+						{
+							await eterDb.ActionDb.UPDATE(new EntregaDbModel
+							{
+								ID = entregaDbModel.ID,
+								FIREBASE_ID = IDF
+							}, connection, transaction);
+
+							transaction.Commit();
+						}
+						catch (Exception ex)
+						{
+							transaction.Rollback();
+							ex.ErrorGet();
+							return false;
+						}
+					}
+				}
+
+				_ = ReloadModelViewDeliveryAsync();
+				return true;
+			}
+			catch (Exception ex)
+			{
+				ex.ErrorGet();
+				return false;
+			}
+			
 		}
 	}
 }
