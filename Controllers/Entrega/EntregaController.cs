@@ -36,32 +36,32 @@ namespace EterPharmaPro.Controllers.Entrega
 		}
 		private async void SocketDelivery(MessageWebSockerModel e)
 		{
-			var t = await eterDb.ActionAPI.GET<EntregaDbModel>(e.data, "DELIVERY");
+			//var t = await eterDb.ActionAPI.GET<EntregaDbModel>(e.data, "DELIVERY");
 
-			using (var connection = new SQLiteConnection(eterDb.DatabaseConnection))
-			{
-				await connection.OpenAsync().ConfigureAwait(false);
-				using (var transaction = connection.BeginTransaction())
-				{
-					try
-					{
+			//using (var connection = new SQLiteConnection(eterDb.DatabaseConnection))
+			//{
+			//	await connection.OpenAsync().ConfigureAwait(false);
+			//	using (var transaction = connection.BeginTransaction())
+			//	{
+			//		try
+			//		{
 
-						await eterDb.ActionDb.UPDATE(new EntregaDbModel
-						{
-							ID= t.ID,
-							DATE_COMPLETED=t.DATE_COMPLETED,
-							STATS=t.STATS,
-						}, connection, transaction);
+			//			await eterDb.ActionDb.UPDATE(new EntregaDbModel
+			//			{
+			//				ID= t.ID,
+			//				DATE_COMPLETED=t.DATE_COMPLETED,
+			//				STATS=t.STATS,
+			//			}, connection, transaction);
 
-						transaction.Commit();
-					}
-					catch (Exception ex)
-					{
-						transaction.Rollback();
-						ex.ErrorGet();
-					}
-				}
-			}
+			//			transaction.Commit();
+			//		}
+			//		catch (Exception ex)
+			//		{
+			//			transaction.Rollback();
+			//			ex.ErrorGet();
+			//		}
+			//	}
+			//}
 
 
 

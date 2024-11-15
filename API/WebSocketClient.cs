@@ -104,7 +104,7 @@ namespace EterPharmaPro.API
 		private void WebSocket_MessageReceived(object sender, MessageReceivedEventArgs e)
 		{
 			MessageWebSockerModel resp = JsonConvert.DeserializeObject<MessageWebSockerModel>(e.Message);
-			if (resp.type == TypesReciverWebSocketEnum.Delivery)
+			if (resp.type == TypesReciverWebSocketConst.Delivery)
 			{
 				SendAlertBox.SendT($"{resp.name}: {resp.message}", ToastNotification.Enum.TypeAlertEnum.Success);
 			}

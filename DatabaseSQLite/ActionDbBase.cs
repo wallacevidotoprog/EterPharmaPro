@@ -3,6 +3,7 @@ using EterPharmaPro.Models.DbModels;
 using EterPharmaPro.Utils.Extencions;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data.SQLite;
 using System.Linq;
 using System.Reflection;
@@ -22,10 +23,19 @@ namespace EterPharmaPro.DatabaseSQLite
 
 		protected string GetTableName<T>(T model)
 		{
-			var tableNameProperty = typeof(T).GetProperty("TABLE_NAME");
+
+
+
+			var tableNameProperty = typeof(T).GetProperty("TABLE_NAME", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.FlattenHierarchy);
 			if (tableNameProperty == null)
 			{
-				throw new Exception("O modelo não possui uma propriedade TABLE_NAME.");
+				Type modelType = model.GetType();
+				tableNameProperty = modelType.GetProperty("TABLE_NAME", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+				if (tableNameProperty == null)
+				{
+
+					throw new Exception("O modelo não possui uma propriedade TABLE_NAME.");
+				}
 			}
 
 			return tableNameProperty.GetValue(model)?.ToString();
@@ -48,6 +58,17 @@ namespace EterPharmaPro.DatabaseSQLite
 							   !(value is int num && num == -1);
 					});
 
+					if (properties == null || !properties.Any())
+					{
+						Type modelType = model.GetType();
+						properties = modelType.GetProperties().Where(p => p.GetCustomAttribute<IgnoreAttribute>()?.IgnoreOnInsert != true).Where(p =>
+						{
+							var value = p.GetValue(model);
+							return value != null &&
+								   !(value is string str && string.IsNullOrEmpty(str)) &&
+								   !(value is int num && num == -1);
+						});
+					}
 					string columnNames = string.Join(", ", properties.Select(p => p.Name));
 					string parameterNames = string.Join(", ", properties.Select(p => $"@{p.Name}"));
 
@@ -98,6 +119,20 @@ namespace EterPharmaPro.DatabaseSQLite
 							   !(value is string str && string.IsNullOrEmpty(str)) &&
 							   !(value is int num && num == -1);
 					});
+
+					if (properties == null || !properties.Any())
+					{
+						Type modelType = model.GetType();
+						properties = modelType.GetProperties().Where(p => p.GetCustomAttribute<IgnoreAttribute>()?.IgnoreOnUpdate != true).Where(p =>
+						{
+							var value = p.GetValue(model);
+							return value != null &&
+								   !(value is string str && string.IsNullOrEmpty(str)) &&
+								   !(value is int num && num == -1);
+						});
+					}
+
+
 
 					string setClauses = string.Join(", ", properties.Select(p => $"{p.Name} = @{p.Name}"));
 					string Query = $"UPDATE {tableName} SET {setClauses} WHERE ID = @ID";

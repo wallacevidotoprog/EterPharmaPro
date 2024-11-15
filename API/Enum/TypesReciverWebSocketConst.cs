@@ -1,6 +1,6 @@
 ﻿namespace EterPharmaPro.API.Enum
 {
-	public static class TypesReciverWebSocketEnum
+	public static class TypesReciverWebSocketConst
 	{
 		public const string Register = "register";
 		public const string Message = "message";

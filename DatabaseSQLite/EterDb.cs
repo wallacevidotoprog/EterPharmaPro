@@ -55,10 +55,10 @@ namespace EterPharmaPro.DatabaseSQLite
 		private async void SetDbAsync()
 		{
 			ActionDb = new ActionDbBase(_databaseConnection);
-			firebaseDb = new FirebaseDb();
-			testeFb();
+			//firebaseDb = new FirebaseDb();
+			//testeFb();
 			EterDbController = new EterDbController(this);
-			ActionAPI = await ActionAPI.CreateAsync();
+			ActionAPI = await ActionAPI.CreateAsync(this);
 		}
 
 		public async Task<bool> ExecuteTransactionAsync(params Func<Task<bool>>[] databaseOperations)

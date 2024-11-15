@@ -332,7 +332,10 @@
     <Compile Include="API\ApiController.cs" />
     <Compile Include="API\ApiServices.cs" />
     <Compile Include="API\ConnectionAPI.cs" />
-    <Compile Include="API\Enum\TypesReciverWebSocketEnum.cs" />
+    <Compile Include="API\Enum\ClassNameConst.cs" />
+    <Compile Include="API\Enum\ResponseDeliveryConst.cs" />
+    <Compile Include="API\Models\ResponseDeliveryModel.cs" />
+    <Compile Include="API\Enum\TypesReciverWebSocketConst.cs" />
     <Compile Include="API\Models\MessageWebSockerModel.cs" />
     <Compile Include="API\Models\ResponseConnectedModel.cs" />
     <Compile Include="API\Models\ResponseModel.cs" />

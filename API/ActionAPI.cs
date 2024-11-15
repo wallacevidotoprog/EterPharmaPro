@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using ToastNotification.Enum;
 using ToastNotification;
 using EterPharmaPro.Models.DbModels;
+using EterPharmaPro.Interfaces;
 
 namespace EterPharmaPro.API
 {
@@ -22,17 +23,17 @@ namespace EterPharmaPro.API
 		private bool isConnectedAPI { get;  set; }
 		private bool isConnectedDb { get;  set; }
 
-		public ActionAPI()
+		public ActionAPI(IEterDb eterDb)
 		{
 			connection = new ConnectionAPI();
-			apiService = new ApiServices(connection.webSocketClient);
+			apiService = new ApiServices(connection.webSocketClient, eterDb);
 
 
 		}
 		
-		public static async Task<ActionAPI> CreateAsync()
+		public static async Task<ActionAPI> CreateAsync(IEterDb eterDb)
 		{
-			var instance = new ActionAPI();
+			var instance = new ActionAPI(eterDb);
 			await instance.ConnectionAsync();
 			return instance;
 		}
@@ -172,16 +173,6 @@ namespace EterPharmaPro.API
 				ex.ErrorGet();
 			}
 			return false;
-		}
-
-		internal async Task GetAllUserAsync()
-		{
-			throw new NotImplementedException();
-		}
-
-		internal void AccessUser(UserModel userModelAcess)
-		{
-			throw new NotImplementedException();
 		}
 	}
 }
