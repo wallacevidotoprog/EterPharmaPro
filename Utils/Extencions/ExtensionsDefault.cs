@@ -283,6 +283,30 @@ namespace EterPharmaPro.Utils.Extencions
 			return cb;
 		}
 
+		public static ComboBox CBListProps<T>(this ComboBox cb, List<T> type)
+		{
+			Dictionary<long?, string> func = new Dictionary<long?, string>();
+
+			foreach (var item in type)
+			{
+				long? key = Convert.ToUInt32(typeof(T).GetProperty("ID").GetValue(item));
+				if (!func.ContainsKey(key))
+				{
+					func.Add(key, typeof(T).GetProperty("NAME").GetValue(item).ToString());
+				}
+			}
+			BindingSource bindingSource = new BindingSource
+			{
+				DataSource = func
+			};
+
+			cb.DataSource = bindingSource;
+			cb.DisplayMember = "Value";
+			cb.ValueMember = "Key";
+			cb.SelectedIndex = 0;
+			return cb;
+		}
+
 		public static async Task<AddressHttpModel> BuscaCepAsync(string cep)
 		{
 			HttpClient client = new HttpClient();

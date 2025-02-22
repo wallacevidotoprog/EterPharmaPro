@@ -241,8 +241,7 @@
 			this.comboBox_pag.Font = new System.Drawing.Font("Microsoft Tai Le", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.comboBox_pag.FormattingEnabled = true;
 			this.comboBox_pag.Items.AddRange(new object[] {
-            "CRÉDITO",
-            "DÉBITO",
+            "CARTÃO",
             "PIX",
             "DINHEIRO",
             "CONVENIO",

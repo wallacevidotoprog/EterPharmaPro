@@ -37,8 +37,7 @@ namespace EterPharmaPro.API
 		}
 
 		private async void WebSocketClient_MessageReceived(object sender, MessageWebSockerModel e)
-		{
-			EventGlobal.Publish(e);
+		{	
 
 			if (e.type == TypesReciverWebSocketConst.Delivery)
 			{
@@ -47,31 +46,33 @@ namespace EterPharmaPro.API
 				Type classType = GetClassByTableName(resp.table);
 
 
-				object classData = JsonConvert.DeserializeObject(resp.data.ToString(), classType);
+				object classData = resp.type== ResponseDeliveryConst.UPDATE?  JsonConvert.DeserializeObject(resp.data.ToString(), classType):null;
+
 				switch (resp.type)
 				{
 					case ResponseDeliveryConst.INSERT:
-						await INSERT(resp, classData);
+						await INSERT(classData);
 						break;
 					case ResponseDeliveryConst.UPDATE:
-						await UPDATE(resp, classData);
+						await UPDATE(classData);
 						break;
 					case ResponseDeliveryConst.DELETE:
-						await DELETE(resp, classData);
+						await DELETE(classData);
 						break;
 					default:
 						break;
 				}
 			}
+			EventGlobal.Publish(e);
 		}
 
 
 
-		private async Task INSERT(ResponseDeliveryModel model, object classData)
+		private async Task INSERT( object classData)
 		{
 
 		}
-		private async Task UPDATE(ResponseDeliveryModel model, object classData)
+		private async Task UPDATE(object classData)
 		{
 			try
 			{
@@ -102,7 +103,7 @@ namespace EterPharmaPro.API
 			
 			
 		}
-		private async Task DELETE(ResponseDeliveryModel model, object classData)
+		private async Task DELETE(object classData)
 		{
 			using (var connection = new SQLiteConnection(eterDb.DatabaseConnection))
 			{
@@ -114,35 +115,35 @@ namespace EterPharmaPro.API
 						/// ex: await eterDb.ActionDb.DELETE<ReqNotaDbModal>(new QueryDeleteModel().SetWhere("CQN_ID", requisicaoNotas.ID), connection, transaction);
 						/// 
 
-						object tempObj = model.data;
+						//object tempObj = model.data;
 
-						Type objectType = tempObj.GetType();
+						//Type objectType = tempObj.GetType();
 
-						var tempID = tempObj.GetType().GetProperty("ID", BindingFlags.Public | BindingFlags.Instance).GetValue(tempObj)?.ToString();
+						//var tempID = tempObj.GetType().GetProperty("ID", BindingFlags.Public | BindingFlags.Instance).GetValue(tempObj)?.ToString();
 
-						//await eterDb.ActionDb.DELETE<tempObj> (new QueryDeleteModel().SetWhere("ID", tempID), connection, transaction);
+						////await eterDb.ActionDb.DELETE<tempObj> (new QueryDeleteModel().SetWhere("ID", tempID), connection, transaction);
 
-						// Obter o método DELETE da classe ActionDb
-						var deleteMethod = eterDb.ActionDb.GetType().GetMethod("DELETE");
-						if (deleteMethod == null)
-						{
-							throw new Exception("Método DELETE não encontrado.");
-						}
+						//// Obter o método DELETE da classe ActionDb
+						//var deleteMethod = eterDb.ActionDb.GetType().GetMethod("DELETE");
+						//if (deleteMethod == null)
+						//{
+						//	throw new Exception("Método DELETE não encontrado.");
+						//}
 
-						// Criar a versão concreta do método DELETE com o tipo de tempObj
-						var genericDeleteMethod = deleteMethod.MakeGenericMethod(objectType);
+						//// Criar a versão concreta do método DELETE com o tipo de tempObj
+						//var genericDeleteMethod = deleteMethod.MakeGenericMethod(objectType);
 
-						// Criar a consulta de exclusão
-						var queryModel = new QueryDeleteModel().SetWhere("ID", tempID);
+						//// Criar a consulta de exclusão
+						//var queryModel = new QueryDeleteModel().SetWhere("ID", tempID);
 
-						// Invocar o método DELETE dinamicamente
-						var task = (Task)genericDeleteMethod.Invoke(eterDb.ActionDb, new object[] { queryModel, connection, transaction });
+						//// Invocar o método DELETE dinamicamente
+						//var task = (Task)genericDeleteMethod.Invoke(eterDb.ActionDb, new object[] { queryModel, connection, transaction });
 
-						// Aguardar a execução assíncrona
-						await task;
+						//// Aguardar a execução assíncrona
+						//await task;
 
-						transaction.Commit();
-						//return true;
+						//transaction.Commit();
+						////return true;
 					}
 					catch (Exception ex)
 					{

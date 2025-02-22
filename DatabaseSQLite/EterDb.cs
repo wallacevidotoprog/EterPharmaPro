@@ -3,8 +3,10 @@ using EterPharmaPro.Controllers;
 using EterPharmaPro.DatabaseFireBase;
 using EterPharmaPro.Interfaces;
 using EterPharmaPro.Models.DbModels;
+using EterPharmaPro.Utils;
 using EterPharmaPro.Utils.Extencions;
 using System;
+using System.Collections.Generic;
 using System.Data.SQLite;
 using System.IO;
 using System.Threading.Tasks;
@@ -23,8 +25,6 @@ namespace EterPharmaPro.DatabaseSQLite
 
 		public ActionAPI ActionAPI { get; set; }
 
-		public UserModel UserModelAcess { get; set; }
-
 		public IActionDbBase ActionDb { get; set; }
 
 		public EterDbController EterDbController { get; set; }
@@ -39,7 +39,7 @@ namespace EterPharmaPro.DatabaseSQLite
 				SQLiteConnection connection = new SQLiteConnection(_databaseConnection);
 				connection.Open();
 				ServeConnection = true;
-				SetDbAsync();
+				SetDb();
 
 				_transactionHandler = new DatabaseTransactionHandler(new SQLiteTransactionManager(connection));
 
@@ -52,13 +52,21 @@ namespace EterPharmaPro.DatabaseSQLite
 			}
 		}
 
-		private async void SetDbAsync()
+		private void SetDb()
 		{
 			ActionDb = new ActionDbBase(_databaseConnection);
-			//firebaseDb = new FirebaseDb();
-			//testeFb();
 			EterDbController = new EterDbController(this);
-			ActionAPI = await ActionAPI.CreateAsync(this);
+			SetCache();
+		}
+
+		private async void SetCache()
+		{
+
+			
+			(List<PaymentDbModal> paymente, List<SituationDbModal> situation, List<DeliveryMethodDbModal> deliveryMethod) temp = await EterDbController.ReturnPropsAsync();
+			Cache.Instance.Situation = temp.situation;
+			Cache.Instance.Paymente = temp.paymente;
+			Cache.Instance.DeliveryMethod = temp.deliveryMethod;
 		}
 
 		public async Task<bool> ExecuteTransactionAsync(params Func<Task<bool>>[] databaseOperations)

@@ -101,15 +101,7 @@ namespace EterPharmaPro.API
 			}
 		}
 
-		private void WebSocket_MessageReceived(object sender, MessageReceivedEventArgs e)
-		{
-			MessageWebSockerModel resp = JsonConvert.DeserializeObject<MessageWebSockerModel>(e.Message);
-			if (resp.type == TypesReciverWebSocketConst.Delivery)
-			{
-				SendAlertBox.SendT($"{resp.name}: {resp.message}", ToastNotification.Enum.TypeAlertEnum.Success);
-			}
-			MessageReceived?.Invoke(this, resp);
-		}
+		private void WebSocket_MessageReceived(object sender, MessageReceivedEventArgs e)=> MessageReceived?.Invoke(this, JsonConvert.DeserializeObject<MessageWebSockerModel>(e.Message));
 
 		private void WebSocket_Opened(object sender, System.EventArgs e)
 		{

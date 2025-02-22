@@ -4,6 +4,7 @@ using EterPharmaPro.Enums;
 using EterPharmaPro.Interfaces;
 using EterPharmaPro.Models;
 using EterPharmaPro.Models.DbModels;
+using EterPharmaPro.Utils;
 using EterPharmaPro.Utils.Extencions;
 using System;
 using System.Collections.Generic;
@@ -39,6 +40,13 @@ namespace EterPharmaPro.Views.Manipulados
 			}
 		}
 
+		private void LoadDropDown()
+		{
+			comboBox_situacao.CBListProps<SituationDbModal>(Cache.Instance.Situation);
+			comboBox_pag.CBListProps<PaymentDbModal>(Cache.Instance.Paymente);
+			comboBox_modo.CBListProps<DeliveryMethodDbModal>(Cache.Instance.DeliveryMethod);
+		}
+
 		private void toolStripButton_sair_Click(object sender, EventArgs e)
 		{
 			if (MessageBox.Show("Deseja sair o formulário ?", base.Name, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
@@ -70,6 +78,7 @@ namespace EterPharmaPro.Views.Manipulados
 		{
 			CleanAll(null, null);
 			await comboBox_user.CBListUserAsync(eterDb);
+			LoadDropDown();
 			comboBox_user.SelectedIndex = comboBox_user.ReturnIndexUserCB(eterDb.EterDbController.UserModelAcess.ID);
 
 			if (manipulados != null && edit)

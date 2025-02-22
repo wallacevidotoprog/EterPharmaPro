@@ -25,6 +25,16 @@ namespace EterPharmaPro.Controllers
 			this.eterDb = eterDb;
 		}
 
+		public async Task<(List<PaymentDbModal> paymente, List<SituationDbModal> situation, List<DeliveryMethodDbModal> deliveryMethod)> ReturnPropsAsync()
+		{
+			List<PaymentDbModal> pay = await eterDb.ActionDb.GETFIELDS<PaymentDbModal>(new QueryWhereModel());
+			List<SituationDbModal> sit = await eterDb.ActionDb.GETFIELDS<SituationDbModal>(new QueryWhereModel());
+			List<DeliveryMethodDbModal> dm = await eterDb.ActionDb.GETFIELDS<DeliveryMethodDbModal>(new QueryWhereModel());
+
+
+			return (pay, sit, dm);
+		}
+
 		public async Task<(bool exist, EnderecoClienteDbModel end)> ExistAdressCliente(EnderecoClienteDbModel enderecoCliente)
 		{
 			List<EnderecoClienteDbModel> tempA = await eterDb.ActionDb.GETFIELDS<EnderecoClienteDbModel>(

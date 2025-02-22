@@ -1,8 +1,8 @@
-﻿using EterPharmaPro.API;
-using EterPharmaPro.DatabaseSQLite;
+﻿using EterPharmaPro.DatabaseSQLite;
 using EterPharmaPro.DbProdutos.Services;
 using EterPharmaPro.Interfaces;
 using EterPharmaPro.Models.DbModels;
+using EterPharmaPro.Utils;
 using EterPharmaPro.Utils.Extencions;
 using EterPharmaPro.Views;
 using EterPharmaPro.Views.Configuracoes;
@@ -16,7 +16,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using ToastNotification;
 using ToastNotification.Enum;
-using WebSocket4Net;
 
 namespace EterPharmaPro
 {
@@ -34,6 +33,8 @@ namespace EterPharmaPro
 		}
 		private  void MainWindow_Load(object sender, EventArgs e)
 		{
+			
+
 			DatabaseProdutosDb = new DatabaseProdutosDb(toolStripProgressBar_status, cancellationTokenSource.Token);
 			SetLogin();
 
@@ -149,12 +150,19 @@ namespace EterPharmaPro
 				}
 				else
 				{
+					
+
+					Cache.Instance.UserModelAcess = eterDb.EterDbController.UserModelAcess;
 					this.Text = $"ETER PHARMA PRO [ {eterDb.EterDbController.UserModelAcess.ID_LOJA.ToString().PadLeft(4, '0')} - {eterDb.EterDbController.UserModelAcess.NOME} - {eterDb.EterDbController.UserModelAcess.FUNCAO_NAME} ]";
 
 					//Task.Run(() => { new Notifications().Show("VB", $"Bem Vindo {eterDb.EterDbController.UserModelAcess.FUNCAO_NAME} {eterDb.EterDbController.UserModelAcess.NOME} "); });
 
-
+				Task.Run(() => {
 					SendAlertBox.SendT($"Bem Vindo {eterDb.EterDbController.UserModelAcess.FUNCAO_NAME} {eterDb.EterDbController.UserModelAcess.NOME}", TypeAlertEnum.Info);
+				});
+
+
+					
 					toolStripButton_conf.Visible = (eterDb.EterDbController.UserModelAcess.FUNCAO_NAME == "DEV") ? true : false;
 					
 				}

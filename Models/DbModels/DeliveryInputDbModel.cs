@@ -1,5 +1,6 @@
 ﻿using EterPharmaPro.DatabaseSQLite;
 using EterPharmaPro.Interfaces;
+using System;
 
 namespace EterPharmaPro.Models.DbModels
 {
@@ -13,7 +14,7 @@ namespace EterPharmaPro.Models.DbModels
 		public string FIREBASE_ID { get; set; }
 
 		public long? USER_ID { get; set; }
-		public long? DATA { get; set; }
+		public DateTime? DATE { get; set; }
 
 		public long? CLIENTE_ID { get; set; }
 

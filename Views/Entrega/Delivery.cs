@@ -33,6 +33,8 @@ namespace EterPharmaPro.Views.Entrega
 
 		private void EntregaController_loadCompleteListsDelivery(object sender, EventArgs e)
 		{
+			SetDatagrid();
+			return;//modo dev
 			InsertDatagrid(entregaController.ModelViewDeliveryByDate(dateTime: System.DateTime.Now));
 		}
 

@@ -34,40 +34,7 @@ namespace EterPharmaPro.Controllers.Entrega
 			_ = GetAllUserAsync();
 			EventGlobal.Subscribe<MessageWebSockerModel>(SocketDelivery);
 		}
-		private async void SocketDelivery(MessageWebSockerModel e)
-		{
-			//var t = await eterDb.ActionAPI.GET<EntregaDbModel>(e.data, "DELIVERY");
-
-			//using (var connection = new SQLiteConnection(eterDb.DatabaseConnection))
-			//{
-			//	await connection.OpenAsync().ConfigureAwait(false);
-			//	using (var transaction = connection.BeginTransaction())
-			//	{
-			//		try
-			//		{
-
-			//			await eterDb.ActionDb.UPDATE(new EntregaDbModel
-			//			{
-			//				ID= t.ID,
-			//				DATE_COMPLETED=t.DATE_COMPLETED,
-			//				STATS=t.STATS,
-			//			}, connection, transaction);
-
-			//			transaction.Commit();
-			//		}
-			//		catch (Exception ex)
-			//		{
-			//			transaction.Rollback();
-			//			ex.ErrorGet();
-			//		}
-			//	}
-			//}
-
-
-
-
-			await ReloadModelViewDeliveryAsync();
-		}
+		private async void SocketDelivery(MessageWebSockerModel e) => await ReloadModelViewDeliveryAsync();// MUDAR
 		private async Task GetAllUserAsync()
 		{
 			listUser = await eterDb.ActionDb.GETFIELDS<UserModel>(new QueryWhereModel());
@@ -116,7 +83,7 @@ namespace EterPharmaPro.Controllers.Entrega
 						UserE = dMan,
 						UserV = dVend,
 						Tipo = listTypeDelivery.Where(x => x.ID == entregaInputDbModel[i].TYPE_DELIVERY).FirstOrDefault()?.NAME,
-						Stats = tempc.STATS
+						Stats = tempc?.STATS??0
 
 					});
 
@@ -174,7 +141,7 @@ namespace EterPharmaPro.Controllers.Entrega
 				{
 					throw new Exception($"Erro ao cadatrar o cliente IDC={IDC} e IDE={IDE}");
 				}
-				//UserModel modeU = (await eterDb.ActionDb.GETFIELDS<UserModel>(new QueryWhereModel().SetWhere("ID", model.useridvend))).FirstOrDefault();
+
 				ClienteDbModel modelC = (await eterDb.ActionDb.GETFIELDS<ClienteDbModel>(new QueryWhereModel().SetWhere("ID", IDC))).FirstOrDefault();
 				EnderecoClienteDbModel modelE = (await eterDb.ActionDb.GETFIELDS<EnderecoClienteDbModel>(new QueryWhereModel().SetWhere("ID", IDE))).FirstOrDefault();
 
@@ -183,7 +150,7 @@ namespace EterPharmaPro.Controllers.Entrega
 					UID = Guid.NewGuid().ToString(),
 					CLIENTE_ID = IDC,
 					ENDERECO_ID = IDE,
-					DATA = model.data.ToDatetimeUnix(),
+					DATE = model.data,
 					VALUE = model.valor,
 					USER_ID = model.useridvend,
 					TYPE_DELIVERY = model.tipo
@@ -228,11 +195,17 @@ namespace EterPharmaPro.Controllers.Entrega
 					}
 				}
 
-				EntregaApiModel modelApi = new EntregaApiModel(inputDbModel);
-				modelApi.SetUSERID(listUser.Where(x => x.ID == inputDbModel.USER_ID).FirstOrDefault());
-				modelApi.SetCliente(modelC);
-				modelApi.SetEndereco(modelE);
-				modelApi.SetType(listTypeDelivery.Where(x => x.ID == inputDbModel.TYPE_DELIVERY).FirstOrDefault());
+				EntregaApiModel modelApi = new EntregaApiModel(
+					inputDbModel,
+					listUser.Where(x => x.ID == inputDbModel.USER_ID).FirstOrDefault(),
+					modelC,
+					modelE,
+					listTypeDelivery.Where(x => x.ID == inputDbModel.TYPE_DELIVERY).FirstOrDefault()
+					);
+				//modelApi.SetUSERID(listUser.Where(x => x.ID == inputDbModel.USER_ID).FirstOrDefault());
+				//modelApi.SetCliente(modelC);
+				//modelApi.SetEndereco(modelE);
+				//modelApi.SetType(listTypeDelivery.Where(x => x.ID == inputDbModel.TYPE_DELIVERY).FirstOrDefault());
 
 
 				(string IDF, bool isSucess) = await INSERT_CLOUD(modelApi, inputDbModel.TABLE_NAME);
@@ -294,7 +267,7 @@ namespace EterPharmaPro.Controllers.Entrega
 
 		}
 
-		public async Task<bool> CreateDelivery(EntregaDbModel entregaDbModel,bool edit=false)
+		public async Task<bool> CreateDelivery(EntregaDbModel entregaDbModel, bool edit = false)
 		{
 			try
 			{
@@ -378,7 +351,7 @@ namespace EterPharmaPro.Controllers.Entrega
 				ex.ErrorGet();
 				return false;
 			}
-			
+
 		}
 	}
 }

@@ -348,6 +348,7 @@
     <Compile Include="Controllers\EterDbController.cs" />
     <Compile Include="Controllers\Impressos\RemanejoController.cs" />
     <Compile Include="Controllers\Manipulacao\ManipuladoController.cs" />
+    <Compile Include="Controllers\PermissoesController.cs" />
     <Compile Include="Controllers\Validade\ValidadeController.cs" />
     <Compile Include="DatabaseFireBase\FirebaseDb.cs" />
     <Compile Include="DatabaseSQLite\ActionDbBase.cs" />
@@ -359,6 +360,7 @@
     <Compile Include="DatabaseSQLite\QueryDeleteModel.cs" />
     <Compile Include="Enums\ListViewActionsEnum.cs" />
     <Compile Include="Enums\ModeDeliveryEnum.cs" />
+    <Compile Include="Enums\PermissionsEnum.cs" />
     <Compile Include="Enums\QueryProdutoEnum.cs" />
     <Compile Include="Enums\SizeTableTagEnum.cs" />
     <Compile Include="Enums\StatsDeliveryEnum.cs" />
@@ -406,6 +408,9 @@
     <Compile Include="DatabaseSQLite\SQLiteTransactionManager.cs" />
     <Compile Include="Models\AddressHttpModel.cs" />
     <Compile Include="Models\DadosClienteManipulacao.cs" />
+    <Compile Include="Models\DbModels\DeliveryMethodDbModal.cs" />
+    <Compile Include="Models\DbModels\PaymentDbModal.cs" />
+    <Compile Include="Models\DbModels\SituationDbModal.cs" />
     <Compile Include="Models\DbModels\CategoriaDbModal.cs" />
     <Compile Include="Models\DbModels\ClienteDbModel.cs" />
     <Compile Include="Models\DadosAtendimentoModel.cs" />
@@ -449,6 +454,7 @@
     <Compile Include="Services\XLSX\ReadProdutoXLSX.cs" />
     <Compile Include="Services\XLSX\WriteValityExport.cs" />
     <Compile Include="Temps\ImportValidadeXMLold.cs" />
+    <Compile Include="Utils\Cache.cs" />
     <Compile Include="Utils\eControl\eButton.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -771,10 +777,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\OneDrive\Área de Trabalho\ToastNotifications-master\ToastNotifications\ToastNotifications\ToastNotifications.csproj">
-      <Project>{484a5bfa-7405-48b3-bc97-1fd3e7b108f3}</Project>
-      <Name>ToastNotifications</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ToastNotification\ToastNotification.csproj">
       <Project>{648eb6db-c0ab-4e78-9046-a3e69c802de2}</Project>
       <Name>ToastNotification</Name>

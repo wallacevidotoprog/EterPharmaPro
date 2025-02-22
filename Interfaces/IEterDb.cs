@@ -1,5 +1,6 @@
 using EterPharmaPro.API;
 using EterPharmaPro.Controllers;
+using EterPharmaPro.Utils;
 using System;
 using System.Threading.Tasks;
 
@@ -15,6 +16,7 @@ namespace EterPharmaPro.Interfaces
 		ActionAPI ActionAPI { get; set; }
 
 		Task<bool> ExecuteTransactionAsync(params Func<Task<bool>>[] databaseOperations);
+
 		Task<object> ExecuteTransactionAsync(Func<Task<object>> databaseOperations);
 
 

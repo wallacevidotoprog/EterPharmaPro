@@ -41,8 +41,30 @@ namespace EterPharmaPro.Models.API
 		{
 			ID = model.ID;
 			UID = model.UID;
-			DATA = model.DATA.ToUnixDatetime();
+			DATA = model.DATE;
 			VALUE = model.VALUE;
+		}
+
+
+		/// <summary>
+		/// Convert um DeliveryInputDbModel e seus derivador para um EntregaApiModel
+		/// </summary>
+		/// <param name="model"></param>
+		/// <param name="modelUser"></param>
+		/// <param name="modelClient"></param>
+		/// <param name="modelEnd"></param>
+		/// <param name="modelType"></param>
+		public EntregaApiModel(DeliveryInputDbModel model, UserModel modelUser, ClienteDbModel modelClient, EnderecoClienteDbModel modelEnd, TypeDeliveryDbModel modelType)
+		{
+			ID = model.ID;
+			UID = model.UID;
+			DATA = model.DATE;
+			VALUE = model.VALUE;
+			SetUSERID(modelUser);
+			SetCliente(modelClient);
+			SetEndereco(modelEnd);
+			SetType(modelType);
+
 		}
 		public void SetUSERID(UserModel model)
 		{

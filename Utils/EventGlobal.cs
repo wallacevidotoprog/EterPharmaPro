@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EterPharmaPro.Utils
 {
@@ -22,11 +20,11 @@ namespace EterPharmaPro.Utils
 		{
 			if (subscriptions.ContainsKey(typeof(TEvent)))
 			{
-                foreach (var handler in subscriptions[typeof(TEvent)].Cast<Action<TEvent>>())
-                {
+				foreach (var handler in subscriptions[typeof(TEvent)].Cast<Action<TEvent>>())
+				{
 					handler?.Invoke(evengArgs);
-                }
-            }
+				}
+			}
 		}
 	}
 }

@@ -1,5 +1,6 @@
 ﻿using EterPharmaPro.DatabaseSQLite;
 using EterPharmaPro.Interfaces;
+using System;
 
 namespace EterPharmaPro.Models.DbModels
 {
@@ -12,7 +13,7 @@ namespace EterPharmaPro.Models.DbModels
 
 		public int USER_ID { get; set; }  
 
-		public string DATE { get; set; }  
+		public DateTime? DATE { get; set; }  
 
 		public int KM { get; set; }
 

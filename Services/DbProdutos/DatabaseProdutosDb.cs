@@ -33,7 +33,7 @@ namespace EterPharmaPro.DbProdutos.Services
 			try
 			{
 				ini = new IniFile("config.ini");
-				InitWatch();
+				//InitWatch();
 			}
 			catch (Exception ex)
 			{

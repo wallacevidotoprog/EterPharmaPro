@@ -59,6 +59,7 @@ namespace EterPharmaPro.Views
 		{
 			string pass = groupBox_pass.Visible == true ? textBox_pass.Text : null;
 
+		
 			var temp = await eterDb.EterDbController.Login(comboBox_user.SelectedValue.ToString(), pass);
 			if (temp.acPass)
 			{
@@ -69,7 +70,7 @@ namespace EterPharmaPro.Views
 			}
 			if (temp.acOk)
 			{
-				eterDb.EterDbController.InitUserSocket();
+				//eterDb.EterDbController.InitUserSocket();
 				loginSucced = true;
 				this.Close();
 			}

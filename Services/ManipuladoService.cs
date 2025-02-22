@@ -4,6 +4,7 @@ using EterPharmaPro.Models;
 using EterPharmaPro.Models.DbModels;
 using EterPharmaPro.Models.Print;
 using EterPharmaPro.Services.Prints;
+using EterPharmaPro.Utils;
 using EterPharmaPro.Utils.Extencions;
 using System;
 using System.Collections.Generic;
@@ -176,6 +177,8 @@ namespace EterPharmaPro.Services
 			printerHelper.AddLine(new TextPrintFormaterModel
 			{
 				tilte = "SITUAÇÃO: ",
+
+				texto = Cache.Instance.Situation.Where(x => x.ID == model.SITUCAO).First().NAME,
 				//texto = DGERAL.SITUACAO(model.SITUCAO),
 				alignmentText = AlignmentTextPrintEnum.Left,
 				fontStyle = FormatTextPrintEnum.Default
@@ -183,14 +186,14 @@ namespace EterPharmaPro.Services
 			printerHelper.AddLine(new TextPrintFormaterModel
 			{
 				tilte = "FORMA DE PAGAMENTO: ",
-				//texto = DGERAL.FORMAPAGAMENTO(model.FORMAPAGAMENTO),
+				texto = Cache.Instance.Paymente.Where(x => x.ID == model.FORMAPAGAMENTO).First().NAME,
 				alignmentText = AlignmentTextPrintEnum.Left,
 				fontStyle = FormatTextPrintEnum.Default
 			});
 			printerHelper.AddLine(new TextPrintFormaterModel
 			{
 				tilte = "MODO DE ENTREGA: ",
-				//texto = DGERAL.MODOENTREGA(model.MODOENTREGA),
+				texto = Cache.Instance.DeliveryMethod.Where(x => x.ID == model.MODOENTREGA).First().NAME,
 				alignmentText = AlignmentTextPrintEnum.Left,
 				fontStyle = FormatTextPrintEnum.Default
 			});
